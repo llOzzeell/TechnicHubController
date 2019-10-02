@@ -6,12 +6,41 @@ Hubconnector::Hubconnector(SmartHubFinder *f)
     connect(finder, &SmartHubFinder::devicesFound, this, &Hubconnector::setDeviceList);
 }
 
+Hubconnector::~Hubconnector()
+{
+    if(hub)delete hub;
+}
+
+void Hubconnector::setMotorRun(int angle)
+{
+    if(hub){
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::ReadWrite);
+        stream.setByteOrder(QDataStream::LittleEndian);
+
+        quint32 a =  (angle + (360 * ((angle - 180) / 360)));
+
+        stream << quint8(0);
+        stream << quint8(0);
+        stream << quint8(0x81);
+        stream << quint8(0x01);
+        stream << quint8(0x11);
+        stream << quint8(0x0d);
+        stream << a;
+        stream << quint8(30);
+        stream << quint8(0x64);
+        stream << quint8(0x7e);
+        stream << quint8(0);
+        data[0] = data.count();
+        hub->writeData(data);
+    }
+}
+
 void Hubconnector::setRGBColor(int color)
 {
     if(hub){
         QByteArray data;
         data.resize(8);
-        //[8]{0x08,0,0x81,0x32,0x11,0x51,0,0}
         data[0] = 0x08;
          data[1] = 0;
           data[2] = 0x81;

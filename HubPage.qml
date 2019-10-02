@@ -94,7 +94,7 @@ Item {
 
         onCurrentIndexChanged: {
 
-            if(currentIndex > 0 && currentIndex < 10){
+            if(currentIndex >= 0 && currentIndex < 10){
                 smartHubConnector.setRGBColor(currentIndex);
                 smartHub.ledColor = colorArray[currentIndex];
             }
@@ -149,6 +149,28 @@ Item {
                 text: "Белый"
             }
         }
+    }
+
+    Slider {
+        id: slider
+        x: 220
+        anchors.horizontalCenter: parent.horizontalCenter
+        stepSize: 1
+        to: 180
+        anchors.top: comboBox.bottom
+        anchors.topMargin: 20
+        value: 0
+        onValueChanged: smartHubConnector.setMotorRun(value);
+    }
+
+    Button {
+        id: button1
+        x: 250
+        y: 361
+        width: 140
+        height: 48
+        text: qsTr("Button")
+        onClicked: smartHubConnector.setMotorRun();
     }
 
 }

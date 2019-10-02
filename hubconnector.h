@@ -14,6 +14,7 @@ class Hubconnector : public QObject
     Q_OBJECT
 public:
     explicit Hubconnector(SmartHubFinder *f);
+    ~Hubconnector();
 
 private:
 
@@ -33,6 +34,8 @@ signals:
 
 
 public slots:
+
+    void setMotorRun(int angle);
 
     void setRGBColor(int color);
 

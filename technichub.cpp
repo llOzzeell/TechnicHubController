@@ -7,6 +7,7 @@ TechnicHub::TechnicHub(): debugOut(false)
 
 TechnicHub::~TechnicHub()
 {
+    qDebug() << "TH dtor";
     controller->disconnectFromDevice();
     delete controller;
     delete service1623;
@@ -30,6 +31,10 @@ void TechnicHub::tryConnect(const QBluetoothDeviceInfo device)
 
 void TechnicHub::writeData(QByteArray &data)
 {
+    QString str;
+    for(int i = 0; i < data.count(); i++) str +=  " " + QString::number(data[i],16);
+    qDebug() << str;
+
     if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithoutResponse);
     else if(debugOut)qDebug() << "service1623 == nullptr: "<< service1623;
 }

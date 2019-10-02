@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>icons/hub.svg</file>
+        <file>icons/connect.svg</file>
+        <file>HubListItem.qml</file>
+        <file>FinderPage.qml</file>
+        <file>HubPage.qml</file>
+        <file>SmartHub.qml</file>
+        <file>icons/connected.svg</file>
+        <file>ConnectionLoader.qml</file>
+        <file>fonts/RobotoCondensed-Regular.ttf</file>
+        <file>icons/radar.svg</file>
+        <file>icons/radar.png</file>
+        <file>icons/connect.png</file>
+        <file>icons/connected.png</file>
+        <file>icons/hub.png</file>
+    </qresource>
+</RCC>

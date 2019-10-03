@@ -21,5 +21,7 @@
         <file>Temp_RunMotor_module.qml</file>
         <file>Temp_RunMotorForTime_module.qml</file>
         <file>Temp_RunMotorForDegrees_module.qml</file>
+        <file>Control_Steering.qml</file>
+        <file>Control_Moving.qml</file>
     </qresource>
 </RCC>

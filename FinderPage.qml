@@ -23,6 +23,7 @@ Item {
 
     Button {
         id: button
+        height: 69
         text: qsTr("Поиск устройств")
         font.pointSize: 14
         font.bold: true
@@ -65,8 +66,8 @@ Item {
             id: image
             x: 689
             y: -11
-            width: 100
-            height: 100
+            width: 80
+            height: 80
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             fillMode: Image.PreserveAspectFit
@@ -74,9 +75,11 @@ Item {
         }
     }
 
+
     ListModel{
         id:mymodel
     }
+
 
     Component{
         id:hubListItem
@@ -90,6 +93,7 @@ Item {
             }
         }
     }
+
 
     ParallelAnimation{
         id:radarAnimation
@@ -164,5 +168,9 @@ Item {
         }
 
     }
+
+
+
+
 
 }

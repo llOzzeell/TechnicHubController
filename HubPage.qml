@@ -78,4 +78,26 @@ Item {
             anchors.leftMargin: 0
         }
     }
+
+    Control_Moving {
+        id: control_Moving
+        x: 10
+        y: 470
+        width: 160
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+        port: "A"
+        anchors.verticalCenter: parent.verticalCenter
+        onCurrentSpeedReady: smartHubOperator.motor_RunPermanent(port, currentSpeed)
+    }
+
+    Control_Steering {
+        id: control_Steering
+        width: 160
+        port: "B"
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        onCurrentDegreesReady: smartHubOperator.motor_TurnToDegrees(port, currentDegrees)
+    }
 }

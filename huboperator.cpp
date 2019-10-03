@@ -102,7 +102,7 @@ void HubOperator::motor_RunPermanent(QString port, int speed)
         stream << qint8(speed);
         stream << quint8(0x64);
         stream << quint8(0x7f);
-        stream << quint8(0x03);
+        stream << quint8(0x01);
         data[0] = data.count();
         hub->writeNoResponce(data);
     }

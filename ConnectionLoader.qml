@@ -8,21 +8,23 @@ Item {
 
     BusyIndicator {
         id: busyIndicator
-        width: 60
-        height: 60
+        width: 70
+        height: 70
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
         Label {
             id: label1
             text: counter
-            font.pointSize: 18
+            font.family: robotoCondensed
+            font.pointSize: 22
             font.bold: true
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.fill: parent
 
             property int counter: root.timeOutConnection/1000
+            width: 70
         }
     }
 
@@ -40,7 +42,7 @@ Item {
         text: "Подключение к " + deviceNameString
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        font.pointSize: 12
+        font.pointSize: 16
         font.bold: true
         anchors.top: busyIndicator.bottom
         anchors.topMargin: 0

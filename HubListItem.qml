@@ -20,8 +20,8 @@ Item {
         id: image
         x: 10
         y: -19
-        width: 24
-        height: 24
+        width: 20
+        height: 20
         fillMode: Image.PreserveAspectFit
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -31,8 +31,6 @@ Item {
 
     Label {
         id: label
-        x: 44
-        y: 0
         height: 35
         text: name
         font.underline: false
@@ -41,8 +39,8 @@ Item {
         anchors.rightMargin: 10
         font.bold: true
         verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignLeft
-        font.pointSize: 10
+        horizontalAlignment: Text.AlignHCenter
+        font.pointSize: 16
         anchors.left: image.right
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter

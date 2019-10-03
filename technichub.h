@@ -30,10 +30,10 @@ signals:
 public slots:
 
     void setDebugOut(bool value);
-
     void tryConnect(const QBluetoothDeviceInfo device);
 
-    void writeData(QByteArray &data);
+    void writeNoResponce(QByteArray &data);
+    void writeResponce(QByteArray &data);
 
 private slots:
 
@@ -44,6 +44,10 @@ private slots:
     void serviceScanDone();
 
     void serviceDetailsDiscovered();
+
+    void getCharsValue(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue);
+
+    void debugOutHex(const QByteArray &arr, QString description);
 };
 
 #endif // TECHNICHUB_H

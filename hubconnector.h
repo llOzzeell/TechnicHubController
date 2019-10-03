@@ -23,7 +23,6 @@ private:
     SmartHubFinder *finder;
     TechnicHub *hub;
 
-
 signals:
 
     void deviceConnectedQML();
@@ -32,12 +31,10 @@ signals:
 
     void deviceNameNotify(QString name);
 
+    void hubLinkUpdate(TechnicHub *link);
+
 
 public slots:
-
-    void setMotorRun(int angle);
-
-    void setRGBColor(int color);
 
     void setDebugOut(bool value);
 
@@ -46,9 +43,6 @@ public slots:
     void connectTo(int index);
 
     void disconnectFromDevice();
-
-
-
 };
 
 #endif // HUBCONNECTOR_H

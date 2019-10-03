@@ -7,7 +7,6 @@ TechnicHub::TechnicHub(): debugOut(false)
 
 TechnicHub::~TechnicHub()
 {
-    qDebug() << "TH dtor";
     controller->disconnectFromDevice();
     delete controller;
     delete service1623;
@@ -29,13 +28,19 @@ void TechnicHub::tryConnect(const QBluetoothDeviceInfo device)
     controller->connectToDevice();
 }
 
-void TechnicHub::writeData(QByteArray &data)
+void TechnicHub::writeNoResponce(QByteArray &data)
 {
-    QString str;
-    for(int i = 0; i < data.count(); i++) str +=  " " + QString::number(data[i],16);
-    qDebug() << str;
+    debugOutHex(data, "set:");
 
     if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithoutResponse);
+    else if(debugOut)qDebug() << "service1623 == nullptr: "<< service1623;
+}
+
+void TechnicHub::writeResponce(QByteArray &data)
+{
+    debugOutHex(data, "set:");
+
+    if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithResponse);
     else if(debugOut)qDebug() << "service1623 == nullptr: "<< service1623;
 }
 
@@ -45,7 +50,7 @@ void TechnicHub::getNewService(const QBluetoothUuid &s)
 
     if (service1623) {
         delete service1623;
-        service1623 = 0;
+        service1623 = nullptr;
     }
 
     if(s.toString().contains("1623")) service1623 = controller->createServiceObject(s);
@@ -70,6 +75,7 @@ void TechnicHub::serviceScanDone()
     if (service1623->state() == QLowEnergyService::DiscoveryRequired) {
         if(debugOut)qDebug() << "Service state: QLowEnergyService::DiscoveryRequired";
         connect(service1623, &QLowEnergyService::stateChanged, this, &TechnicHub::serviceDetailsDiscovered);
+        connect(service1623, &QLowEnergyService::characteristicRead, this, &TechnicHub::getCharsValue);
         service1623->discoverDetails();
         return;
     }
@@ -87,4 +93,18 @@ void TechnicHub::serviceDetailsDiscovered()
             if(debugOut)qDebug() << "Chars 1624 found.";
         }
     }
+}
+
+void TechnicHub::getCharsValue(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue)
+{
+    debugOutHex(newValue, "get:");
+}
+
+void TechnicHub::debugOutHex(const QByteArray &arr, QString description)
+{
+    QString str = description + " ";
+    for(int i = 0; i < arr.count(); i++) str += "|" + QString::number(arr[i], 16);
+    str += " len=";
+    str += QString::number(arr.count());
+    qDebug() << str;
 }

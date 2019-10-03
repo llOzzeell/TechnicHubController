@@ -12,7 +12,7 @@ Item {
     Connections{
         target: smartHubFinder
         onDevicesFound:{
-            mymodel.clear();
+            root.clear();
             var list = smartHubFinder.getDeviceInfoFromQML();
             list.forEach(function(item,i,arr){
                 var data = {'name': item};
@@ -24,13 +24,14 @@ Item {
     Button {
         id: button
         text: qsTr("Поиск устройств")
+        font.pointSize: 14
         font.bold: true
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.left: parent.left
         anchors.leftMargin: 10
-        onClicked: { smartHubFinder.startScan(); radarAnimation.running = true;}
+        onClicked: { root.clear(); smartHubFinder.startScan(); radarAnimation.running = true;}
         Material.background: Material.accent
         font.family: robotoCondensed
     }

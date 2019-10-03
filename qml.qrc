@@ -16,5 +16,10 @@
         <file>icons/connect.png</file>
         <file>icons/connected.png</file>
         <file>icons/hub.png</file>
+        <file>Temp_LED_module.qml</file>
+        <file>Temp_ServoTest_module.qml</file>
+        <file>Temp_RunMotor_module.qml</file>
+        <file>Temp_RunMotorForTime_module.qml</file>
+        <file>Temp_RunMotorForDegrees_module.qml</file>
     </qresource>
 </RCC>

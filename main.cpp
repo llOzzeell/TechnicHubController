@@ -1,8 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QObject>
 #include "smarthubfinder.h"
 #include "hubconnector.h"
+#include "huboperator.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,8 +21,15 @@ int main(int argc, char *argv[])
 
     Hubconnector hubconnector(&hubFinder);
     hubconnector.setDebugOut(false);
-    QQmlContext *context_hubconnector= engine.rootContext();
+    QQmlContext *context_hubconnector = engine.rootContext();
     context_hubconnector ->setContextProperty("smartHubConnector", &hubconnector);
+
+    HubOperator hubOperator;
+    hubOperator.setDebugOut(false);
+    QQmlContext *context_huboperator = engine.rootContext();
+    context_huboperator ->setContextProperty("smartHubOperator", &hubOperator);
+
+    QObject::connect(&hubconnector, &Hubconnector::hubLinkUpdate, &hubOperator, &HubOperator::setHubLink);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

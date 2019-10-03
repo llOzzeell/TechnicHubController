@@ -5,7 +5,7 @@ import QtQuick.Controls.Material 2.2
 ApplicationWindow {
     id: applicationWindow
     visible: true
-    width: 300
+    width: 400
     height: (width/9)*18
 
     Component.onCompleted: {
@@ -19,6 +19,7 @@ ApplicationWindow {
 
     SwipeView{
         id:layout
+        clip: true
         interactive: false
         anchors.fill: parent
         currentIndex: 0

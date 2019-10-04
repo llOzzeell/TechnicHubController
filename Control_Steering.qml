@@ -10,9 +10,8 @@ Item {
     property string port: "A"
     property int steeringDegrees: 90
     property int steeringSteps: 10
-    property int steeringSpeed: 30
+    property int steeringSpeed: 50
     property int currentDegrees:0
-    onCurrentDegreesChanged: console.log(currentDegrees)
 
     Rectangle {
         id: backgroundRectangle
@@ -104,11 +103,13 @@ Item {
             onReleased: {
                 toCenter.running = true;
                 backgroundRectangle.color = "#474646"
-                discreteTimer.savedLastDegrees = 0;
-                var speed = currentDegrees < 0 ? steeringSpeed : -steeringSpeed;
-                smartHubOperator.motor_RunForDegrees(port, speed , (Math.abs(currentDegrees)))
+                smartHubOperator.motor_RunForDegrees(port,currentDegrees, 0, steeringDegrees );
+                savedLastDegrees = 0;
+
 
             }
+
+            property int savedLastDegrees:0
             onMouseXChanged: {
                 var mouseXNormalized = mouseX - width/2;
                 if(mouseXNormalized > steeringItem.steeringLenght || mouseXNormalized < -steeringItem.steeringLenght){
@@ -116,27 +117,29 @@ Item {
                 }
                 else shift = mouseXNormalized
 
+                if(Math.abs(currentDegrees)-Math.abs(savedLastDegrees) >= (steeringDegrees/steeringSteps)){
+
+                    //QString port, int lastAngle, int angle, int maxServoAngle
+                    smartHubOperator.motor_RunForDegrees(port,savedLastDegrees, currentDegrees, steeringDegrees );
+
+                    savedLastDegrees = currentDegrees;
+                }
+
             }
             property int shift:0
         }
 
-        Timer{
-            id: discreteTimer
-            running: steeringZone.pressed
-            interval: 50
-            repeat: true
-            property int savedLastDegrees:0
-            onTriggered:{
-                var speed=0;
-                if(Math.abs(currentDegrees)-Math.abs(savedLastDegrees) > (steeringDegrees/steeringSteps)){
+//        Timer{
+//            id: discreteTimer
+//            running: steeringZone.pressed
+//            interval: 1
+//            repeat: true
+//            property int savedLastDegrees:0
+//            onTriggered:{
+//                var speed=0;
 
-                    speed = currentDegrees < 0 ? -steeringSpeed : steeringSpeed;
-                    smartHubOperator.motor_RunForDegrees(port, speed , (Math.abs(currentDegrees)-Math.abs(savedLastDegrees)))
-
-                    savedLastDegrees = currentDegrees;
-                }
-            }
-        }
+//            }
+//        }
 
     }
 

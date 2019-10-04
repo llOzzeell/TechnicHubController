@@ -2,6 +2,7 @@
 #define HUBOPERATOR_H
 
 #include <QObject>
+#include <QtMath>
 #include "technichub.h"
 
 struct PortsAddress{
@@ -48,7 +49,9 @@ public slots:
 
     void motor_RunForTime(QString port, int speed, int time);
 
-    void motor_RunForDegrees(QString port, int speed, int angle);
+    void motor_RunForDegrees(QString port, int lastAngle, int angle, int maxServoAngle);
+
+    quint8 servoSpeedCalculate(int curr, int target);
 
 };
 

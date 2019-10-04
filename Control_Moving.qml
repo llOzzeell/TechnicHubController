@@ -123,7 +123,7 @@ Item {
         Timer{
             id: discreteTimer
             running: steeringZone.pressed
-            interval: 50
+            interval: 200
             repeat: true
             property int savedLastSpeed:0
             onTriggered:{

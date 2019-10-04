@@ -28,7 +28,7 @@ Item {
         onCurrentIndexChanged: {
 
             if(currentIndex >= 0 && currentIndex <= 10){
-                smartHubOperator.setRGBColor(currentIndex);
+                smartHubOperator.hub_SetRGB(currentIndex)
             }
         }
 

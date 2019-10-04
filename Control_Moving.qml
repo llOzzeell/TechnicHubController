@@ -21,6 +21,12 @@ Item {
         border.width: item1.height/30
         border.color: "#302f2f"
         anchors.fill: parent
+
+        Behavior on color{
+            ColorAnimation{
+                duration: 500
+            }
+        }
     }
 
     Item {
@@ -59,10 +65,8 @@ Item {
             border.color: "#696969"
             anchors.verticalCenterOffset: 0
             anchors.verticalCenter: parent.verticalCenter
-            layer.enabled: true
+            layer.enabled: false
             layer.effect: DropShadow{
-                //transparentBorder: true
-                //smooth: true
                 radius:8
             }
             onXChanged: {
@@ -93,9 +97,14 @@ Item {
             anchors.top: parent.top
             anchors.bottomMargin: 0
             anchors.topMargin: 0
+            onPressed: {
+                backgroundRectangle.color = Qt.lighter("#474646", 1.4)
+            }
             onReleased: {
+                backgroundRectangle.color = "#474646"
                 toCenter.running = true;
                 item1.currentSpeedReady(0)
+                discreteTimer.savedLastSpeed = 0;
             }
             onMouseXChanged: {
                 var mouseXNormalized = mouseX - width/2;
@@ -114,10 +123,15 @@ Item {
         Timer{
             id: discreteTimer
             running: steeringZone.pressed
-            interval: 200
+            interval: 50
             repeat: true
+            property int savedLastSpeed:0
             onTriggered:{
-                item1.currentSpeedReady(item1.currentSpeed)
+                if(savedLastSpeed != currentSpeed){
+
+                    item1.currentSpeedReady(currentSpeed);
+                    savedLastSpeed = currentSpeed;
+                }
             }
         }
 

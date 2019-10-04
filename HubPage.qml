@@ -4,6 +4,8 @@ import QtQuick.Controls.Material 2.2
 
 Item {
     id: root
+    width: 400
+    height: (width/9)*18
 
     function clearColor(){
         temp_LED_module.clearColor();
@@ -12,6 +14,7 @@ Item {
     Button {
         id: disconnectButton
         y: 424
+        height: 79
         text: qsTr("Отключить")
         anchors.right: parent.right
         anchors.rightMargin: 10
@@ -23,11 +26,12 @@ Item {
         anchors.bottomMargin: 50
         onClicked: { smartHubConnector.disconnectFromDevice(); layout.setFinderPage();}
         font.family: robotoCondensed
-        Material.background: Material.primary
+        Material.background: Material.color(Material.Red, Material.Shade400)
     }
 
     Column {
         id: row
+        visible: true
         spacing: 20
         anchors.bottom: disconnectButton.top
         anchors.bottomMargin: 10
@@ -79,25 +83,33 @@ Item {
         }
     }
 
-    Control_Moving {
-        id: control_Moving
-        x: 10
-        y: 470
-        width: 160
-        anchors.right: parent.right
-        anchors.rightMargin: 20
-        port: "A"
-        anchors.verticalCenter: parent.verticalCenter
-        onCurrentSpeedReady: smartHubOperator.motor_RunPermanent(port, currentSpeed)
+    ListModel{
+        id:portModel
+        ListElement{
+            name: "A"
+        }
+        ListElement{
+            name: "B"
+        }
+        ListElement{
+            name: "C"
+        }
+        ListElement{
+            name: "D"
+        }
     }
 
-    Control_Steering {
-        id: control_Steering
-        width: 160
-        port: "B"
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.leftMargin: 20
-        onCurrentDegreesReady: smartHubOperator.motor_TurnToDegrees(port, currentDegrees)
+    Button {
+        id: button
+        x: 10
+        y: 8
+        width: 175
+        height: 35
+        text: qsTr("Экран управления")
+        anchors.bottom: disconnectButton.top
+        anchors.bottomMargin: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+        Material.background: Material.primary
+        onClicked: layout.currentIndex = 3
     }
 }

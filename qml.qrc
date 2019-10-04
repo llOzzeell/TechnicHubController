@@ -23,5 +23,7 @@
         <file>Temp_RunMotorForDegrees_module.qml</file>
         <file>Control_Steering.qml</file>
         <file>Control_Moving.qml</file>
+        <file>Control_FunctionButtonHold.qml</file>
+        <file>Test_ControlScreen.qml</file>
     </qresource>
 </RCC>

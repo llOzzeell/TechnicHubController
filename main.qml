@@ -36,6 +36,10 @@ ApplicationWindow {
             id:hubPage
         }
 
+        Test_ControlScreen{
+            id:controlScreen
+        }
+
         function setLoaderPage(){
             loaderPage.opacity = 1;
             layout.currentIndex = 1;

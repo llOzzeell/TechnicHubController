@@ -80,7 +80,7 @@ Item {
         anchors.topMargin: 0
         to: 100
         from: -100
-        stepSize: 5
+        stepSize: 1
         value: 0
     }
 
@@ -112,7 +112,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         from: 0
-        stepSize: 10
+        stepSize: 1
         value: 0
         to: 180
     }

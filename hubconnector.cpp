@@ -1,9 +1,9 @@
 #include "hubconnector.h"
 
-Hubconnector::Hubconnector(SmartHubFinder *f)
+Hubconnector::Hubconnector(HubFinder *f)
 {
     finder = f;
-    connect(finder, &SmartHubFinder::devicesFound, this, &Hubconnector::setDeviceList);
+    connect(finder, &HubFinder::devicesFound, this, &Hubconnector::setDeviceList);
 }
 
 Hubconnector::~Hubconnector()

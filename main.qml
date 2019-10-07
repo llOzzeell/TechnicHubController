@@ -1,62 +1,94 @@
 import QtQuick 2.11
+import QtQuick.Window 2.11
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import "."
 
 ApplicationWindow {
-    id: applicationWindow
+    id: window
     visible: true
-    width: 400
-    height: (width/9)*18
 
-    Component.onCompleted: {
-        Material.background = Material.color(Material.Grey, Material.Shade900);
-        Material.primary = Material.color(Material.Grey, Material.Shade700);
-        Material.accent = Material.color(Material.Teal, Material.Shade500);
+//    width: 400
+//    height: width/9*18
+
+    height: 400
+    width: height/9*18
+
+//    function setLandscape(value){
+//        if(value){
+//                width= 400
+//                height= width/9*18
+//        }
+//        else{
+//            height= 400
+//            width= height/9*18
+//        }
+//    }
+
+    Component.onCompleted:{ setTheme(true); }
+
+    function setTheme(param){
+            return param? setDark():setLight();
+        }
+    function setDark(){
+
+            Material.theme = Material.Dark
+            Material.background = Style.dark_background;
+            Material.primary = Style.dark_primary;
+            Material.accent = Style.dark_accent;
+            Material.foreground = Style.dark_foreground
+        }
+    function setLight(){
+            Material.theme = Material.Light
+            Material.background = Style.light_background;
+            Material.primary = Style.light_primary;
+            Material.accent = Style.light_accent;
+            Material.foreground = Style.light_foreground
+        }
+
+    header: Gui_TopBar{
+        id:topBar
     }
 
-    property string robotoCondensed: regularFont.name
-    property FontLoader regularFont: FontLoader { source: "fonts/RobotoCondensed-Regular.ttf" }
+    Component{
+        id:finder
+        Page_Finder{
+            onDeviceClicked: { stackView.push(tryConnect); stackView.currentItem.start(); hubConnector.connectTo(index); }
+        }
+    }
 
-    SwipeView{
-        id:layout
-        clip: true
-        interactive: false
+    Component{
+        id:tryConnect
+        Page_Connect{
+            onNoConnected: stackView.push(finder);
+            onDeviceConnected: {stackView.push(profile); }
+        }
+    }
+
+    Component{
+        id:usersProfile
+        Page_UsersProfile{
+
+        }
+    }
+
+    Component{
+        id:settingsPage
+        Page_SettingsPage{
+
+        }
+    }
+
+    Component{
+        id:profile
+        Page_Profile{
+
+        }
+    }
+
+    StackView{
+        id:stackView
         anchors.fill: parent
-        currentIndex: 0
-
-        FinderPage{
-            id:finderPage
-        }
-
-        ConnectionLoader{
-            id:loaderPage
-        }
-
-        HubPage{
-            id:hubPage
-        }
-
-        Test_ControlScreen{
-            id:controlScreen
-        }
-
-        function setLoaderPage(){
-            loaderPage.opacity = 1;
-            layout.currentIndex = 1;
-        }
-
-        function setFinderPage(){
-            layout.currentIndex = 0;
-            finderPage.clear();
-
-        }
-
-        function setHubPage(){
-            layout.currentIndex = 2;
-            loaderPage.opacity = 0;
-            hubPage.clearColor();
-        }
-
+        initialItem: profile
     }
-
 }

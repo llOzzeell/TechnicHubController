@@ -2,9 +2,11 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QObject>
-#include "smarthubfinder.h"
+
+#include "hubfinder.h"
 #include "hubconnector.h"
 #include "huboperator.h"
+//#include "AndroidFunction.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,26 +16,35 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    SmartHubFinder hubFinder;
+//    AndroidFunction afunc;
+//    QQmlContext *context_afunc = engine.rootContext();
+//    context_afunc ->setContextProperty("androidFunc", &afunc);
+
+    HubFinder hubFinder;
     hubFinder.setDebugOut(false);
     QQmlContext *context_hubFinder = engine.rootContext();
-    context_hubFinder ->setContextProperty("smartHubFinder", &hubFinder);
+    context_hubFinder ->setContextProperty("hubFinder", &hubFinder);
 
     Hubconnector hubconnector(&hubFinder);
     hubconnector.setDebugOut(false);
     QQmlContext *context_hubconnector = engine.rootContext();
-    context_hubconnector ->setContextProperty("smartHubConnector", &hubconnector);
+    context_hubconnector ->setContextProperty("hubConnector", &hubconnector);
 
     HubOperator hubOperator;
     hubOperator.setDebugOut(false);
     QQmlContext *context_huboperator = engine.rootContext();
-    context_huboperator ->setContextProperty("smartHubOperator", &hubOperator);
+    context_huboperator ->setContextProperty("hubOperator", &hubOperator);
 
     QObject::connect(&hubconnector, &Hubconnector::hubLinkUpdate, &hubOperator, &HubOperator::setHubLink);
 
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    if (engine.rootObjects().isEmpty())
-        return -1;
+
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
+    engine.load(url);
 
     return app.exec();
 }

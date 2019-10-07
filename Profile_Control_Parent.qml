@@ -15,7 +15,6 @@ Item {
     property bool editorMode: true
     property string port: portModel.get(comboBox.currentIndex).name
     property bool inverted: false
-    property bool isSteering:false
 
     width: implicitWidth
     height: implicitheight

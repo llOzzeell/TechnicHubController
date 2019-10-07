@@ -6,7 +6,7 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
     width: 310
-    height: 140
+    height: parent.height
     implicitHeight: 128
     implicitWidth: 300
 
@@ -14,9 +14,15 @@ Item {
 
     readonly property int spacing : profileView.spacing
 
+    function getControlName(index){
+        if(index >=0 && index < profileModel.count){
+            return profileModel.get(index).element
+        }
+    }
+
     Rectangle {
         id: rectangle
-        color: Material.primary
+        color: "#7d3d3d"
         visible: false
         anchors.fill: parent
     }
@@ -24,9 +30,7 @@ Item {
     ListView {
         id: profileView
         anchors.fill: parent
-        interactive: false
-        boundsBehavior: Flickable.StopAtBounds
-        flickableDirection: Flickable.AutoFlickDirection
+        interactive: true
         clip: false
         visible: true
         spacing: 4
@@ -107,6 +111,7 @@ Item {
             element:"Profile_Control_HoldButtons.qml"
         }
     }
+
 
 
 }

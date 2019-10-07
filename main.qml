@@ -25,7 +25,7 @@ ApplicationWindow {
 //        }
 //    }
 
-    Component.onCompleted:{ setTheme(true); }
+    Component.onCompleted:{ setTheme(false); }
 
     function setTheme(param){
             return param? setDark():setLight();
@@ -66,7 +66,7 @@ ApplicationWindow {
     }
 
     Component{
-        id:usersProfile
+        id:userProfile
         Page_UsersProfile{
 
         }

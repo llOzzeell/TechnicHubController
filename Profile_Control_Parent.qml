@@ -139,7 +139,7 @@ Item {
             topPadding: 8
             font.capitalization: Font.AllUppercase
             font.family: Style.robotoCondensed
-            font.pointSize: 8
+            font.pointSize: 10
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
@@ -147,6 +147,9 @@ Item {
             opacity: 1
             Material.background: Material.primary
             onCheckedChanged: inverted = checked;
+//            Material.foreground: checked? Material.accent : textColor
+//            property color textColor : Material.theme == Material.Dark ? Style.dark_foreground : Style.light_foreground
+
         }
     }
 

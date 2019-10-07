@@ -44,7 +44,7 @@ Item {
 
             Image {
                 id: icon
-                width: 26
+                width: 24
                 height:width
                 anchors.left: parent.left
                 anchors.leftMargin: 10
@@ -94,12 +94,12 @@ Item {
         ListElement{
             name: "Рулевое управление";
             ico: "icons/steering.svg"
-            element:"Profile_Control_SteeringNew.qml"
+            element:"Profile_Control_Steering.qml"
         }
         ListElement{
             name: "Управление передвижением";
             ico: "icons/moving.svg"
-            element:"Profile_Control_MovingNew.qml"
+            element:"Profile_Control_Moving.qml"
         }
         ListElement{
             name: "Линейная кнопка";

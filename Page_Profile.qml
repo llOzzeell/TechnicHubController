@@ -34,6 +34,13 @@ Item {
         if(dynamicControlsArray[index] !== undefined)dynamicControlsArray[index].destroy();
     }
 
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        enabled: editorMode && controlsList.isVisible
+        onClicked: if(controlsList.isVisible) controlsList.hide();
+    }
+
     Gui_Profile_Button {
         id: editorButton
         x: 190
@@ -82,10 +89,11 @@ Item {
     }
 
     Gui_Profile_CircleButton{
-        id:roundButton
-        width: 32
+        id:addButton
+        width: 48
+        anchors.top: parent.top
+        anchors.topMargin: 10
         z: 1
-        anchors.verticalCenter: saveButton.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
         visible: editorMode && !controlsList.isVisible
@@ -101,6 +109,7 @@ Item {
     Gui_Profile_Editor_ControlsList {
         id: controlsList
         y: hidedY
+        z: 2
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -122,7 +131,7 @@ Item {
                 duration: 200
             }
         }
-        z: 2
+
         onControlChoosed: { createControl(element); hide(); }
 
     }

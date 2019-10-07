@@ -23,7 +23,6 @@ Item {
 
     }
 
-
     Image {
         id: image
         width: root.width/2
@@ -43,8 +42,6 @@ Item {
         id: mouseArea
         anchors.fill: parent
         onClicked: {
-
-            console.log("clicked")
             clickAnimation.start();
             root.clicked();
         }

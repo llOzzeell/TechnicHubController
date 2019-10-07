@@ -20,7 +20,7 @@ Item {
 
     Image {
         id: image
-        width: 28
+        width: 30
         height: width
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left

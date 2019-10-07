@@ -31,8 +31,8 @@
         <file>icons/plus.svg</file>
         <file>icons/delete.svg</file>
         <file>Profile_Control_Parent.qml</file>
-        <file>Profile_Control_MovingNew.qml</file>
-        <file>Profile_Control_SteeringNew.qml</file>
+        <file>Profile_Control_Moving.qml</file>
+        <file>Profile_Control_Steering.qml</file>
         <file>Profile_Control_HoldButtons.qml</file>
         <file>icons/remove.svg</file>
     </qresource>

@@ -19,13 +19,11 @@ Item {
 
     Image {
         id: icon
-        width: height
+        width: 30
+        height: width
+        anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
         fillMode: Image.PreserveAspectFit
         source: "icons/profile.svg"
         ColorOverlay{

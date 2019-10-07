@@ -1,22 +1,18 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
+import QtQuick.Controls.Material 2.2
 
-Item {
-    id: root
-    width: 120
+Profile_Control_Parent{
+    id:root
+
+    width:120
     height: width
-    rotation: 0
-
-    property int createIndex: -1
-    onCreateIndexChanged: console.log(createIndex)
-
-    property string port: "A"
 
     property int steeringAngle: 90
 
     signal angleChanged(int currentAngle, int lastAngle)
     onAngleChanged: {
-        //smartHubOperator.motor_RunForDegrees(port, lastAngle, currentAngle, steeringAngle)
+        hubOperator.motor_RunForDegrees(port, lastAngle, currentAngle, steeringAngle)
     }
 
     Rectangle {
@@ -36,13 +32,13 @@ Item {
 
     Item {
         id: steeringItem
-        y: 100
         height: root.height/2
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
+        onHeightChanged: toCenter.start();
 
         property int center: steeringItem.width/2 - steeringPoint.width/2
         property int steeringLenght: steeringPoint.width/1.8
@@ -101,7 +97,7 @@ Item {
             onReleased: {
                 toCenter.running = true;
                 backgroundRectangle.color = "#474646"
-                //smartHubOperator.motor_RunForDegrees(port, currentDegrees, 0, steeringAngle)
+                hubOperator.motor_RunForDegrees(port, currentDegrees, 0, steeringAngle)
             }
             property int currentDegrees:0
             onCurrentDegreesChanged: {
@@ -119,7 +115,9 @@ Item {
                 else shift = mouseXNormalized
 
                 var angle = parseInt((steeringAngle/steeringItem.steeringLenght)*Math.abs(shift));
-                var _currentDegrees = shift>0 ? angle : -angle;
+                var _currentDegrees = 0;
+                if(!inverted)_currentDegrees = shift>0 ? angle : -angle;
+                else _currentDegrees = shift>0 ? -angle : angle;
                 if( _currentDegrees % 10 == 0) {
                     currentDegrees = _currentDegrees;
                 }
@@ -128,15 +126,5 @@ Item {
         }
     }
 
-    property bool editorMode: false
-    onEditorModeChanged: console.log(editorMode)
 
-    Drag.active: movingMouseArea.drag.active
-
-    MouseArea {
-        id: movingMouseArea
-        anchors.fill: parent
-        visible: editorMode
-        drag.target: parent
-    }
 }

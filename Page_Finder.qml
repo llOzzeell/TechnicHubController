@@ -4,10 +4,6 @@ import QtQuick.Controls.Material 2.2
 
 Item {
     id:root
-    Component.onCompleted:{
-        //androidFunc.setOrientation("portraite");
-        //window.header.visible = false;
-    }
 
     signal deviceWasConnected
     signal deviceClicked(int index)

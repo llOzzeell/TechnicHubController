@@ -6,10 +6,6 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
     clip: true
-    Component.onCompleted: {
-        //androidFunc.setOrientation("portraite");
-        //window.header.visible = true;
-    }
 
     function addProfile(){
         var data = {'name': "New"};
@@ -22,6 +18,7 @@ Item {
 
     ListView {
         id: profileView
+        interactive: (contentItem.height > profileView.height)
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
         anchors.top: topBar.bottom
@@ -32,7 +29,7 @@ Item {
         anchors.leftMargin: 10
         clip: false
         visible: true
-        spacing: 4
+        spacing: 10
         model: profileModel
         delegate: profileDelegate
     }

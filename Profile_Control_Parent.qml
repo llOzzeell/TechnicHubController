@@ -44,102 +44,93 @@ Item {
         z: 2
         anchors.fill: parent
 
-        Gui_Profile_CircleButton {
-            id: scalePlus
-            y: 14
-            width: 36
-            height: width
-            backgroundColor: Material.primary
-            anchors.left: scaleMinus.right
-            anchors.leftMargin: 6
+        Row {
+            id: column1
+            x: -27
+            y: -48
+            width: content.width
+            height: 38
             anchors.bottom: parent.top
             anchors.bottomMargin: 10
-            iconSource: "icons/plus.svg"
-            visible: editorMode
-            onClicked: setScalePlus();
-            opacity: root.width === maxControlWidth ? 0.3 : 1
-        }
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 10
 
-        Gui_Profile_CircleButton {
-            id: scaleMinus
-            y: 14
-            width: 36
-            backgroundColor: Material.primary
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            iconSource: "icons/minus.svg"
-            anchors.verticalCenter: scalePlus.verticalCenter
-            visible: editorMode
-            onClicked: setScaleMinus();
-            opacity: root.width === minControlWidth ? 0.3 : 1
-        }
+            Gui_Profile_CircleButton {
+                id: deleteButton
+                width: 36
+                height: width
+                backgroundColor: Style.remove_Red
+                iconSource: "icons/remove.svg"
+                visible: editorMode
+                onClicked: root.parent.deleteControl(createIndex)
+            }
 
-        Gui_Profile_CircleButton {
-            id: deleteButton
-            x: -118
-            width: 32
-            height: 32
-            anchors.right: scaleMinus.left
-            anchors.rightMargin: 20
-            anchors.verticalCenterOffset: 0
-            backgroundColor: Material.color(Material.red, Material.Shade400)
-            anchors.verticalCenter: scalePlus.verticalCenter
-            iconSource: "icons/remove.svg"
-            visible: editorMode
-            onClicked: root.parent.deleteControl(createIndex)
+
+
+            Gui_Profile_CircleButton {
+                id: scaleMinus
+                width: 36
+                backgroundColor: Material.primary
+                iconSource: "icons/minus.svg"
+                visible: editorMode
+                onClicked: setScaleMinus();
+                opacity: root.width === minControlWidth ? 0.3 : 1
+            }
+
+
+            Gui_Profile_CircleButton {
+                id: scalePlus
+                width: 36
+                height: width
+                backgroundColor: Material.primary
+                iconSource: "icons/plus.svg"
+                visible: editorMode
+                onClicked: setScalePlus();
+                opacity: root.width === maxControlWidth ? 0.3 : 1
+            }
+
+            Gui_Profile_CircleButton {
+                id: propButton
+                width: 36
+                height: width
+                z: 0
+                visible: editorMode
+                backgroundColor: Material.primary
+                opacity: root.width === maxControlWidth ? 0.3 : 1
+                iconSource: "icons/profileEdit.svg"
+                onClicked: paramItem.visible = true
+            }
         }
 
         Rectangle {
             id: rectangle1
             color: "#00000000"
+            radius: 2
             border.color: Material.primary
-            opacity: 0.3
+            opacity: 0.5
             border.width: 2
             anchors.fill: parent
         }
 
 
-        Gui_Profile_CircleButton {
-            id: propButton
-            x: 9
-            y: 23
-            width: 36
-            height: width
-            z: 0
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.verticalCenter: scalePlus.verticalCenter
-            visible: editorMode
-            backgroundColor: Material.primary
-            opacity: root.width === maxControlWidth ? 0.3 : 1
-            iconSource: "icons/profileEdit.svg"
-            onClicked: paramItem.visible = true
-        }
 
         Item {
             id: paramItem
-            anchors.right: propButton.right
-            anchors.rightMargin: 0
-            visible: false
-            anchors.left: deleteButton.left
-            anchors.leftMargin: 0
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
-            anchors.top: scalePlus.top
+            anchors.right: column1.right
+            anchors.rightMargin: -6
+            visible: false
+            anchors.left: column1.left
+            anchors.leftMargin: -6
+            anchors.top: column1.top
             anchors.topMargin: 0
 
-            Rectangle {
+            Pane {
                 id: background
-                color: Material.primary
-                radius: 2
+                Material.background: Material.primary
                 anchors.fill: parent
-                layer.enabled: true
-                layer.effect: DropShadow{
-                    radius: 8
-                    samples: 12
-                    color: "black"
-                    opacity: 0.5
-                }
+                Material.elevation: 2
             }
 
             Column {
@@ -224,17 +215,25 @@ Item {
 
             Gui_Profile_Button {
                 id: gui_Profile_Button
-                x: 0
                 y: 0
-                width: 90
                 height: 26
                 text: "Закрыть"
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                anchors.left: parent.left
+                anchors.leftMargin: 10
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 10
-                anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: paramItem.visible = false
             }
         }
+
     }
 
 }
+
+/*##^##
+Designer {
+    D{i:4;anchors_width:90;anchors_x:0}D{i:23;anchors_width:90;anchors_x:0}
+}
+##^##*/

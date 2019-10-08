@@ -12,18 +12,19 @@ Item {
     property string _name
     property string _icon
 
-    Rectangle {
+    Pane {
         id: background
-        color: Material.primary
-        radius: 2
+        Material.background: Material.primary
+        //radius: 2
+        Material.elevation: 4
         anchors.fill: parent
-        layer.enabled: true
-        layer.effect: DropShadow{
-            radius: 8
-            samples: 12
-            color: "black"
-            opacity: 0.5
-        }
+//        layer.enabled: true
+//        layer.effect: DropShadow{
+//            radius: 8
+//            samples: 12
+//            color: "black"
+//            opacity: 0.5
+//        }
     }
 
     Image {
@@ -54,7 +55,7 @@ Item {
         verticalAlignment: Text.AlignVCenter
         anchors.right: parent.right
         anchors.rightMargin: 10
-        font.pointSize: 12
+        font.pointSize: 14
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: icon.right
         anchors.leftMargin: 10

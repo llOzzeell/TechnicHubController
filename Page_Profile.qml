@@ -5,16 +5,13 @@ import QtGraphicalEffects 1.0
 
 Item {
     id:root
-    Component.onCompleted:{
-        //androidFunc.setOrientation("landscape");
-        //window.header.visible = false;
-    }
 
     property bool editorMode: true
     onEditorModeChanged:{
         setEditorModeToAllControls(editorMode);
     }
 
+    readonly property string name: "profile"
     property int objectCounter:0
     property var dynamicControlsArray:[]
 
@@ -61,7 +58,7 @@ Item {
     Gui_Profile_CircleButton {
         id: saveButton
         x: 199
-        width: 36
+        width: 48
         height: width
         anchors.top: parent.top
         anchors.topMargin: 10
@@ -74,6 +71,8 @@ Item {
             editorMode = false;
             if(controlsList.isVisible) controlsList.hide();
             saveProfile();
+            setOrientation("portraite");
+            androidFunc.setOrientation("portraite");
             stackView.pop();
         }
 
@@ -86,7 +85,7 @@ Item {
 
     Gui_Profile_CircleButton{
         id:addButton
-        width: 36
+        width: 48
         anchors.top: parent.top
         anchors.topMargin: 10
         z: 2
@@ -134,3 +133,9 @@ Item {
     }
 
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

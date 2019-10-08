@@ -5,7 +5,7 @@ import QtGraphicalEffects 1.0
 
 Gui_ProfileView_Delegate{
     id: root
-    height: 40
+    height: 60
     _name: name
 
     property bool isCurrent:false
@@ -42,13 +42,15 @@ Gui_ProfileView_Delegate{
                 startPoint = point1.x
             }
             else{
-                if(startPoint - point1.x > 100 && !delItem.isExpanded){
+                if(startPoint - point1.x > 20 && !delItem.isExpanded){
 
                     delItem.expand();
                 }
                 else{
                     if(delItem.isExpanded) { delItem.collapse(); }
                     else{
+                        setOrientation("landscape");
+                        androidFunc.setOrientation("landscape");
                         stackView.push(profile);
                         stackView.currentItem.editorMode = false;
                         startPoint = 0;
@@ -86,6 +88,8 @@ Gui_ProfileView_Delegate{
         anchors.verticalCenter: image.verticalCenter
         onClicked:{
             profileView.currentIndex = _index
+            setOrientation("landscape");
+            androidFunc.setOrientation("landscape");
             stackView.push(profile);
             stackView.currentItem.editorMode = true;
         }
@@ -123,7 +127,7 @@ Gui_ProfileView_Delegate{
 
         Rectangle {
             id: deleteRectangle
-            color: Material.color(Material.Red, Material.Shade400)
+            color: Style.remove_Red
             radius: 2
             anchors.rightMargin: 0
             visible: true

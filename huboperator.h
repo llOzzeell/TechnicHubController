@@ -31,8 +31,6 @@ private slots:
 
     quint8 getPortAddress(QString port);
 
-    qint32 normalizeAngle(int angle);
-
 public slots:
 
     void setDebugOut(bool value);

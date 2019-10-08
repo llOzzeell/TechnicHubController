@@ -6,21 +6,21 @@
 #include <QList>
 #include <QBluetoothDeviceInfo>
 
-#include "smarthubfinder.h"
+#include "hubfinder.h"
 #include "technichub.h"
 
 class Hubconnector : public QObject
 {
     Q_OBJECT
 public:
-    explicit Hubconnector(SmartHubFinder *f);
+    explicit Hubconnector(HubFinder *f);
     ~Hubconnector();
 
 private:
 
     bool debugOut;
     QList<QBluetoothDeviceInfo> devicesList;
-    SmartHubFinder *finder;
+    HubFinder *finder;
     TechnicHub *hub;
 
 signals:

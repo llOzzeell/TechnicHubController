@@ -19,17 +19,6 @@ quint8 HubOperator::getPortAddress(QString port)
     else return 0;
 }
 
-qint32 HubOperator::normalizeAngle(int angle)
-{
-    if (angle >= 180) {
-        return angle - (360 * ((angle + 180) / 360));
-    }
-    else if (angle < -180) {
-        return angle + (360 * ((180 - angle) / 360));
-    }
-    return angle;
-}
-
 void HubOperator::setDebugOut(bool value)
 {
     debugOut = value;
@@ -55,7 +44,7 @@ void HubOperator::motor_TurnToDegrees(QString port, int angle)
         stream << getPortAddress(port);
         stream << quint8(0x11);
         stream << quint8(0x0d);
-        stream << normalizeAngle(angle);
+        stream << quint32(angle);
         stream << quint8(50);
         stream << quint8(50);
         stream << quint8(0x7e);
@@ -147,7 +136,7 @@ void HubOperator::motor_RunForDegrees(QString port, int lastAngle, int angle, in
         QDataStream stream(&data, QIODevice::ReadWrite);
         stream.setByteOrder(QDataStream::LittleEndian);
 
-        quint32 servovalue = maxServoAngle * angle / 100;
+        int servovalue = maxServoAngle * angle / 100;
 
         stream << quint8(0);
         stream << quint8(0);
@@ -155,20 +144,18 @@ void HubOperator::motor_RunForDegrees(QString port, int lastAngle, int angle, in
         stream << getPortAddress(port);
         stream << quint8(0x11);
         stream << quint8(0x0d);
-        stream << servovalue;
+        stream << quint32(servovalue);
         stream << servoSpeedCalculate(maxServoAngle * lastAngle / 100, servovalue);
         stream << quint8(50);
         stream << quint8(0x7e);
         stream << quint8(0x00);
-        data[0] = data.count();
+        data[0] = quint8(data.count());
         hub->writeNoResponce(data);
     }
 }
 
 quint8 HubOperator::servoSpeedCalculate(int curr, int target)
 {
-    quint8 diff = qAbs(curr - target);
-    quint8 result = qMax(40, qMin(100, diff * 3));
-    return result;
+    return quint8(qMax(40, qMin(100, qAbs(curr - target) * 3)));
 }
 

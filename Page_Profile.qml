@@ -5,14 +5,15 @@ import QtGraphicalEffects 1.0
 
 Item {
     id:root
-    width:  parent.width
-    height: parent.height
     Component.onCompleted:{
-        androidFunc.setOrientation("landscape");
-        window.header.visible = false;
+        //androidFunc.setOrientation("landscape");
+        //window.header.visible = false;
     }
 
     property bool editorMode: false
+    onEditorModeChanged:{
+        setEditorModeToAllControls(editorMode);
+    }
 
     property int objectCounter:0
     property var dynamicControlsArray:[]
@@ -58,44 +59,21 @@ Item {
     }
 
     Gui_Profile_Button {
-        id: editorButton
-        x: 190
-        text: "Редактор"
-        z: 2
-        opacity: 1
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        iconSource: "icons/editor.svg"
-        visible: !editorMode
-        onClicked: {
-            editorMode = true;
-            setEditorModeToAllControls(editorMode);
-        }
-
-        Behavior on visible {
-            NumberAnimation{
-                duration: 100
-            }
-        }
-    }
-
-    Gui_Profile_Button {
         id: saveButton
         x: 199
         text: "Сохранить"
+        anchors.top: parent.top
+        anchors.topMargin: 10
         z: 2
-        anchors.verticalCenter: editorButton.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 10
         iconSource: "icons/save.svg"
         visible: editorMode
         onClicked: {
             editorMode = false;
-            setEditorModeToAllControls(editorMode);
             if(controlsList.isVisible) controlsList.hide();
             saveProfile();
+            stackView.pop();
         }
 
         Behavior on visible {
@@ -107,18 +85,19 @@ Item {
 
     Gui_Profile_CircleButton{
         id:addButton
-        width: 48
+        width: 36
         anchors.top: parent.top
         anchors.topMargin: 10
         z: 2
         anchors.left: parent.left
         anchors.leftMargin: 10
         visible: editorMode && !controlsList.isVisible
-        Behavior on visible {
-            NumberAnimation{
-                duration: 100
-            }
-        }
+
+//        Behavior on visible {
+//            NumberAnimation{
+//                duration: 100
+//            }
+//        }
 
         onClicked: { controlsList.show(); }
     }
@@ -131,7 +110,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         property bool isVisible: false
-        property int hidedY: -height
+        property int hidedY: -height-10
 
         function hide(){
             controlsList.y = hidedY;

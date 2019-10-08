@@ -8,76 +8,71 @@ ApplicationWindow {
     id: window
     visible: true
 
-//    width: 400
-//    height: width/9*18
+    width: 400
+    height: width/9*18
 
-//    height: 400
-//    width: height/9*18
+    //    height: 400
+    //    width: height/9*18
 
-    Component.onCompleted:{ setTheme(true); }
+    Component.onCompleted:{ setTheme(true); swipe.currentIndex = 1 }
 
     function setTheme(param){
-            return param? setDark():setLight();
-        }
+        return param? setDark():setLight();
+    }
     function setDark(){
 
-            Material.theme = Material.Dark
-            Material.background = Style.dark_background;
-            Material.primary = Style.dark_primary;
-            Material.accent = Style.dark_accent;
-            Material.foreground = Style.dark_foreground
-        }
+        Material.theme = Material.Dark
+        Material.background = Style.dark_background;
+        Material.primary = Style.dark_primary;
+        Material.accent = Style.dark_accent;
+        Material.foreground = Style.dark_foreground
+    }
     function setLight(){
-            Material.theme = Material.Light
-            Material.background = Style.light_background;
-            Material.primary = Style.light_primary;
-            Material.accent = Style.light_accent;
-            Material.foreground = Style.light_foreground
-        }
-
-    header: Gui_TopBar{
-        id:topBar
+        Material.theme = Material.Light
+        Material.background = Style.light_background;
+        Material.primary = Style.light_primary;
+        Material.accent = Style.light_accent;
+        Material.foreground = Style.light_foreground
     }
 
-    Component{
-        id:finder
+    Shortcut {
+        sequence: "Backspace"
+        onActivated: stackView.pop()
+    }
+
+    SwipeView{
+        id:swipe
+        anchors.fill: parent
+        clip: true
+        visible: true
+        interactive: false
+        currentIndex: -1
+
         Page_Finder{
-            onDeviceClicked: { stackView.push(tryConnect); stackView.currentItem.start(); hubConnector.connectTo(index); }
+            id:finder
+            onDeviceWasConnected: {
+                swipe.incrementCurrentIndex();
+            }
+
+        }
+
+        StackView{
+            id:stackView
+            initialItem: usrProfiles
         }
     }
 
     Component{
-        id:tryConnect
-        Page_Connect{
-            onNoConnected: stackView.push(finder);
-            onDeviceConnected: {stackView.push(profile); }
-        }
-    }
-
-    Component{
-        id:userProfile
+        id:usrProfiles
         Page_UsersProfile{
-
-        }
-    }
-
-    Component{
-        id:settingsPage
-        Page_SettingsPage{
-
+            id:usrProfilesItem
         }
     }
 
     Component{
         id:profile
         Page_Profile{
-
+            id:profileItem
         }
-    }
-
-    StackView{
-        id:stackView
-        anchors.fill: parent
-        initialItem: finder
     }
 }

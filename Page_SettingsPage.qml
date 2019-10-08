@@ -33,9 +33,8 @@ Item {
             Label {
                 id: label
                 text: qsTr("Темная тема")
-                font.family: Style.robotoCondensed
-                font.bold: true
-                font.pointSize: 14
+                font.weight: Font.Light
+                font.pointSize: 16
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 0

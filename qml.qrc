@@ -35,5 +35,10 @@
         <file>Profile_Control_Steering.qml</file>
         <file>Profile_Control_HoldButtons.qml</file>
         <file>icons/remove.svg</file>
+        <file>icons/arrow_back.svg</file>
+        <file>Gui_ControlList_Delegate.qml</file>
+        <file>icons/profileEdit.svg</file>
+        <file>Gui_ProfileView_Delegate_Extension.qml</file>
+        <file>icons/remove48.svg</file>
     </qresource>
 </RCC>

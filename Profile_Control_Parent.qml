@@ -79,7 +79,7 @@ Item {
             height: 32
             anchors.right: parent.right
             anchors.rightMargin: 0
-            backgroundColor: Material.color(Material.red, Material.Shade400)
+            backgroundColor: Material.color(Material.red, Material.Shade500)
             anchors.verticalCenter: scalePlus.verticalCenter
             iconSource: "icons/remove.svg"
             visible: editorMode

@@ -31,28 +31,28 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         source: ""
         fillMode: Image.PreserveAspectFit
-        ColorOverlay{
-            width: 20
-            height: 20
-            source: icon
-            color: Style.dark_background
-            anchors.fill: parent
-        }
+        opacity: 0
+    }
+
+    ColorOverlay{
+        source: icon
+        color: Material.foreground
+        anchors.fill: icon
+        smooth: true
     }
 
     Label {
         id: label
         text: qsTr("")
-        font.pointSize: 14
-        font.bold: false
-        font.family: Style.robotoCondensed
+        font.weight: Font.Light
+        font.pointSize: 12
         horizontalAlignment: Text.AlignHCenter
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: icon.right
         anchors.leftMargin: 0
         anchors.verticalCenter: parent.verticalCenter
-        color: Style.dark_background
+        color: Material.foreground
     }
 
     MouseArea {

@@ -6,7 +6,7 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
     width: 310
-    height: parent.height
+    height: profileView.height
     implicitHeight: 128
     implicitWidth: 300
 
@@ -29,69 +29,34 @@ Item {
 
     ListView {
         id: profileView
-        anchors.fill: parent
-        interactive: true
+        height: profileView.count * profileView.currentItem.delegateHeight + profileView.spacing * (profileView.count-1)
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        interactive: false
         clip: false
         visible: true
         spacing: 4
         model: profileModel
-        delegate:Item {
-            height: 32
-            width:parent.width
+        delegate:controlsListDelegate
 
-            Rectangle {
-                id: background
-                color: Material.accent
-                radius: 2
-                anchors.fill: parent
-            }
+    }
 
-            Image {
-                id: icon
-                width: 24
-                height:width
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                fillMode: Image.PreserveAspectFit
-                source: ico
-                ColorOverlay{
-                    source: icon
-                    color: Style.dark_background
-                    anchors.fill: parent
-                }
-            }
-
-            Label {
-                id: label
-                text: name
-                font.bold: false
-                font.family: Style.robotoCondensed
-                horizontalAlignment: Text.AlignLeft
-                verticalAlignment: Text.AlignVCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                font.pointSize: 14
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: icon.right
-                anchors.leftMargin: 10
-                color: Style.dark_background
-            }
-
+    Component{
+        id:controlsListDelegate
+        Gui_ControlList_Delegate{
+            _name:name
+            _icon:ico
             MouseArea{
                 id:ma
                 anchors.fill: parent
                 onClicked: root.controlChoosed(index, profileModel.get(index).element);
             }
-
         }
-
-
     }
-
 
     ListModel{
         id:profileModel

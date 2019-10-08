@@ -13,7 +13,7 @@ QtObject{
     // COLORS
 
     property color dark_background: Material.color(Material.Grey, Material.Shade900);
-    property color dark_primary: Material.color(Material.Grey, Material.Shade700);
+    property color dark_primary: Material.color(Material.Grey, Material.Shade600);
     property color dark_accent: Material.color(Material.Teal, Material.Shade400);
     property color dark_foreground: Material.color(Material.Grey, Material.Shade300);
 

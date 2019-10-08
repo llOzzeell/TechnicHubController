@@ -25,18 +25,20 @@ Item {
 
     Image {
         id: image
-        width: root.width/2
+        width: root.width/1.7
         height: width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         source: iconSource
-        ColorOverlay{
-            source: image
-            anchors.fill: parent
-            color: Style.dark_background
-        }
+        opacity: 0
     }
 
+    ColorOverlay{
+        source: image
+        color: Material.foreground
+        anchors.fill: image
+        smooth: true
+    }
 
     MouseArea {
         id: mouseArea

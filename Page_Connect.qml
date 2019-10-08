@@ -4,12 +4,10 @@ import QtQuick.Controls.Material 2.2
 
 Item {
     id:root
-    width: parent.width
-    height: parent.height
     Component.onCompleted:
     {
-        androidFunc.setOrientation("portraite");
-        window.header.visible = false;
+        //androidFunc.setOrientation("portraite");
+        //window.header.visible = false;
     }
 
     property int timeout: 10000
@@ -39,12 +37,18 @@ Item {
         }
     }
 
+    Rectangle {
+        id: rectangle
+        color: Material.background
+        anchors.fill: parent
+    }
+
     Label {
         id: label
         text: qsTr("Подключение к ") + deviceName
-        font.bold: true
-        font.family: Style.robotoCondensed
-        font.pointSize: 20
+        font.weight: Font.Light
+        font.bold: false
+        font.pointSize: 18
         anchors.bottom: countDownRectangle.top
         anchors.bottomMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
@@ -52,6 +56,7 @@ Item {
         property string deviceName: ""
 
     }
+
 
     Rectangle {
         id: countDownRectangle
@@ -73,4 +78,5 @@ Item {
             duration: timeout
         }
     }
+
 }

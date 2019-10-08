@@ -10,44 +10,57 @@ Item {
 
     property string _name
 
+    property int _index:0
+
     Rectangle {
         id: background
-        color: Material.accent
+        color: Material.primary
         radius: 2
         anchors.fill: parent
+        layer.enabled: true
+        layer.effect: DropShadow{
+            radius: 8
+            samples: 12
+            color: "black"
+            opacity: 0.5
+        }
     }
 
     Image {
         id: icon
-        width: 30
+        width: 40
         height: width
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
         fillMode: Image.PreserveAspectFit
         source: "icons/profile.svg"
-        ColorOverlay{
-            source: icon
-            color: Style.dark_background
-            anchors.fill: parent
-        }
+        visible: false
+    }
+
+    ColorOverlay{
+        source: icon
+        color: Material.foreground
+        visible: false
+        anchors.fill: icon
+        smooth: true
     }
 
 
     Label {
         id: label
+        color: Material.foreground
         text: _name
-        font.bold: true
-        font.family: Style.robotoCondensed
+        font.weight: Font.Light
+        font.bold: false
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         anchors.right: parent.right
-        anchors.rightMargin: 10
+        anchors.rightMargin: 0
         font.pointSize: 16
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: icon.right
+        anchors.left: parent.left
         anchors.leftMargin: 10
-        color: Style.dark_background
     }
 
 

@@ -9,12 +9,13 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="48"
    height="48"
+   viewBox="0 0 48 48"
    version="1.1"
-   id="svg19"
+   id="svg4"
    sodipodi:docname="linear.svg"
    inkscape:version="0.92.1 r15371">
   <metadata
-     id="metadata25">
+     id="metadata10">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -25,7 +26,7 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs23" />
+     id="defs8" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -35,75 +36,19 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1007"
-     id="namedview21"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview6"
      showgrid="false"
      inkscape:zoom="4.9166667"
      inkscape:cx="24"
      inkscape:cy="24"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg19" />
-  <g
-     id="g5"
-     style="fill:#ffffff">
-    <title
-       id="title2">background</title>
-    <rect
-       fill="none"
-       id="canvas_background"
-       height="50"
-       width="50"
-       y="-1"
-       x="-1"
-       style="fill:#ffffff" />
-  </g>
-  <g
-     id="g17"
-     style="fill:#ffffff"
-     transform="matrix(1.0766388,0,0,1.0766388,-1.9223046,-1.9223042)">
-    <title
-       id="title7">Layer 1</title>
-    <g
-       id="Bounding_Box"
-       style="fill:#ffffff">
-      <rect
-         id="svg_1"
-         height="2.886343"
-         width="3.2809908"
-         style="fill:#ffffff"
-         x="20.719009"
-         y="21.113657" />
-    </g>
-    <g
-       stroke="null"
-       id="Master"
-       style="fill:#ffffff">
-      <g
-         stroke="null"
-         id="svg_3"
-         style="fill:#ffffff">
-        <path
-           stroke="null"
-           id="svg_4"
-           d="m 17.509774,24.15682 c 0,3.678032 2.969014,6.647046 6.647046,6.647046 3.678032,0 6.647046,-2.969014 6.647046,-6.647046 0,-3.678032 -2.969014,-6.647046 -6.647046,-6.647046 -3.678032,0 -6.647046,2.969014 -6.647046,6.647046 z"
-           style="fill:#ffffff"
-           inkscape:connector-curvature="0" />
-        <path
-           stroke="null"
-           id="svg_5"
-           d="m 15.294092,17.509774 v 0 c 0,-1.218625 -0.997057,-2.215682 -2.215682,-2.215682 H 8.846457 c 3.057641,-5.29548 8.774101,-8.862728 15.310363,-8.862728 7.73273,0 14.291149,4.963128 16.706243,11.876056 0.310195,0.864116 1.174311,1.418036 2.082741,1.418036 v 0 c 1.506664,0 2.614505,-1.484507 2.127055,-2.902543 C 42.037375,8.181753 33.817194,2 24.156821,2 16.911541,2 10.463906,5.500778 6.431365,10.884885 V 8.647046 c 0,-1.218625 -0.997057,-2.215682 -2.215682,-2.215682 v 0 c -1.218625,0 -2.215682,0.997057 -2.215682,2.215682 v 8.862728 c 0,1.218625 0.997057,2.215682 2.215682,2.215682 h 8.862728 c 1.218625,0 2.215682,-0.997057 2.215681,-2.215682 z"
-           style="fill:#ffffff"
-           inkscape:connector-curvature="0" />
-        <path
-           stroke="null"
-           id="svg_6"
-           d="m 33.019548,30.803866 v 0 c 0,1.218625 0.997057,2.215682 2.215682,2.215682 h 4.231953 c -3.057641,5.29548 -8.774101,8.862728 -15.310363,8.862728 -7.73273,0 -14.291149,-4.963128 -16.706243,-11.876056 C 7.140382,29.142104 6.276266,28.588184 5.367836,28.588184 v 0 c -1.506664,0 -2.614505,1.484507 -2.127055,2.902543 3.035484,8.64116 11.255665,14.822913 20.916038,14.822913 7.24528,0 13.692915,-3.500778 17.725456,-8.884885 v 2.237839 c 0,1.218625 0.997057,2.215682 2.215682,2.215682 v 0 c 1.218625,0 2.215682,-0.997057 2.215682,-2.215682 v -8.862728 c 0,-1.218625 -0.997057,-2.215682 -2.215682,-2.215682 h -8.862728 c -1.218625,0 -2.215682,0.997057 -2.215681,2.215682 z"
-           style="fill:#ffffff"
-           inkscape:connector-curvature="0" />
-      </g>
-    </g>
-  </g>
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg4" />
+  <path
+     d="M14 14h20v6l8-8-8-8v6H10v12h4v-8zm20 20H14v-6l-8 8 8 8v-6h24V26h-4v8z"
+     id="path2"
+     style="fill:#ffffff" />
 </svg>

@@ -4,14 +4,19 @@ import QtQuick.Controls.Material 2.2
 
 Item {
     id:root
-    width: parent.width
-    height: parent.height
     Component.onCompleted:{
-        androidFunc.setOrientation("portraite");
-        window.header.visible = false;
+        //androidFunc.setOrientation("portraite");
+        //window.header.visible = false;
     }
 
+    signal deviceWasConnected
     signal deviceClicked(int index)
+    onDeviceClicked:{
+
+        page_Connect.visible = true;
+        page_Connect.start();
+        hubConnector.connectTo(index);
+    }
 
     Gui_Radar {
         id: gui_Radar
@@ -32,8 +37,9 @@ Item {
         id: scanButton
         height: 58
         text: qsTr("Поиск устройств")
-        font.bold: true
-        font.pointSize: 20
+        font.weight: Font.Light
+        font.bold: false
+        font.pointSize: 18
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.left: parent.left
@@ -42,7 +48,6 @@ Item {
         anchors.topMargin: 10
         Material.background: Material.accent
         Material.foreground: Style.dark_background
-        font.family: Style.robotoCondensed
         onClicked: {
             if(!hubFinder.scanIsRunning()){
                 gui_Radar.start();
@@ -94,4 +99,14 @@ Item {
                 }
         }
     }
+
+    Page_Connect {
+        id: page_Connect
+        anchors.fill: parent
+        visible: false
+        onNoConnected: page_Connect.visible = false;
+        onDeviceConnected: root.deviceWasConnected();
+    }
+
+
 }

@@ -46,7 +46,7 @@ Profile_Control_Parent {
             }
         }
 
-        MouseArea {
+        MultiPointTouchArea{
             id: mouseArea
             anchors.fill: parent
 
@@ -107,7 +107,7 @@ Profile_Control_Parent {
             }
         }
 
-        MouseArea {
+        MultiPointTouchArea{
             id: mouseArea1
             anchors.fill: parent
             onPressed: {

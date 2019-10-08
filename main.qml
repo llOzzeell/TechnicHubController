@@ -50,6 +50,7 @@ ApplicationWindow {
 
         Page_Finder{
             id:finder
+            clip: true
             onDeviceWasConnected: {
                 swipe.incrementCurrentIndex();
             }
@@ -58,6 +59,7 @@ ApplicationWindow {
 
         StackView{
             id:stackView
+            clip: true
             initialItem: usrProfiles
         }
     }

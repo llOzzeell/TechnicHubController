@@ -10,7 +10,7 @@ Item {
         //window.header.visible = false;
     }
 
-    property bool editorMode: false
+    property bool editorMode: true
     onEditorModeChanged:{
         setEditorModeToAllControls(editorMode);
     }
@@ -58,10 +58,11 @@ Item {
         onClicked: if(controlsList.isVisible) controlsList.hide();
     }
 
-    Gui_Profile_Button {
+    Gui_Profile_CircleButton {
         id: saveButton
         x: 199
-        text: "Сохранить"
+        width: 36
+        height: width
         anchors.top: parent.top
         anchors.topMargin: 10
         z: 2

@@ -123,7 +123,7 @@ Gui_ProfileView_Delegate{
 
         Rectangle {
             id: deleteRectangle
-            color: Material.color(Material.Red, Material.Shade500)
+            color: Material.color(Material.Red, Material.Shade400)
             radius: 2
             anchors.rightMargin: 0
             visible: true
@@ -155,7 +155,7 @@ Gui_ProfileView_Delegate{
 
         Image {
             id: delIco
-            width: 26
+            width: 20
             height: width
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter

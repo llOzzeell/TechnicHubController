@@ -26,6 +26,7 @@ Item {
         id: icon
         width: 20
         height: 20
+        visible: false
         anchors.left: parent.left
         anchors.leftMargin: 6
         anchors.verticalCenter: parent.verticalCenter
@@ -49,7 +50,7 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         anchors.right: parent.right
         anchors.rightMargin: 0
-        anchors.left: icon.right
+        anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.verticalCenter: parent.verticalCenter
         color: Material.foreground

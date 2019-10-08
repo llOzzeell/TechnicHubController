@@ -6,7 +6,10 @@ Item {
     id:root
     width: parent.width
     height: parent.height
-    Component.onCompleted:{ /*androidFunc.setOrientation("portraite");*/ window.header.visible = false; }
+    Component.onCompleted:{
+        androidFunc.setOrientation("portraite");
+        window.header.visible = false;
+    }
 
     signal deviceClicked(int index)
 

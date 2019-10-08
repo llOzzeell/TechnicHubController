@@ -81,7 +81,7 @@ Profile_Control_Parent{
             duration: 80
         }
 
-        MouseArea {
+        MultiPointTouchArea{
             id: steeringZone
             anchors.right: parent.right
             anchors.rightMargin: 0
@@ -91,6 +91,25 @@ Profile_Control_Parent{
             anchors.top: parent.top
             anchors.bottomMargin: 0
             anchors.topMargin: 0
+            minimumTouchPoints: 1
+            touchPoints: [ TouchPoint { id: point1 } ]
+
+            onTouchUpdated: {
+                var mouseXNormalized = point1.x - width/2;
+                if(mouseXNormalized > steeringItem.steeringLenght || mouseXNormalized < -steeringItem.steeringLenght){
+                    shift = mouseXNormalized < 0 ? -steeringItem.steeringLenght : steeringItem.steeringLenght
+                }
+                else shift = mouseXNormalized
+
+                var angle = parseInt((steeringAngle/steeringItem.steeringLenght)*Math.abs(shift));
+                var _currentDegrees = 0;
+                if(!inverted)_currentDegrees = shift>0 ? angle : -angle;
+                else _currentDegrees = shift>0 ? -angle : angle;
+                if( _currentDegrees % 10 == 0) {
+                    currentDegrees = _currentDegrees;
+                }
+            }
+
             onPressed: {
                 backgroundRectangle.color = Qt.lighter("#474646", 1.4)
             }
@@ -107,22 +126,6 @@ Profile_Control_Parent{
 
             property int lastDegrees:0
             property int shift:0
-            onMouseXChanged: {
-                var mouseXNormalized = mouseX - width/2;
-                if(mouseXNormalized > steeringItem.steeringLenght || mouseXNormalized < -steeringItem.steeringLenght){
-                    shift = mouseXNormalized < 0 ? -steeringItem.steeringLenght : steeringItem.steeringLenght
-                }
-                else shift = mouseXNormalized
-
-                var angle = parseInt((steeringAngle/steeringItem.steeringLenght)*Math.abs(shift));
-                var _currentDegrees = 0;
-                if(!inverted)_currentDegrees = shift>0 ? angle : -angle;
-                else _currentDegrees = shift>0 ? -angle : angle;
-                if( _currentDegrees % 10 == 0) {
-                    currentDegrees = _currentDegrees;
-                }
-            }
-
         }
     }
 

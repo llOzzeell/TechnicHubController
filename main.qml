@@ -11,21 +11,10 @@ ApplicationWindow {
 //    width: 400
 //    height: width/9*18
 
-    height: 400
-    width: height/9*18
+//    height: 400
+//    width: height/9*18
 
-//    function setLandscape(value){
-//        if(value){
-//                width= 400
-//                height= width/9*18
-//        }
-//        else{
-//            height= 400
-//            width= height/9*18
-//        }
-//    }
-
-    Component.onCompleted:{ setTheme(false); }
+    Component.onCompleted:{ setTheme(true); }
 
     function setTheme(param){
             return param? setDark():setLight();
@@ -89,6 +78,6 @@ ApplicationWindow {
     StackView{
         id:stackView
         anchors.fill: parent
-        initialItem: profile
+        initialItem: finder
     }
 }

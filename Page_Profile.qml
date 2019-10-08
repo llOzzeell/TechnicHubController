@@ -7,7 +7,10 @@ Item {
     id:root
     width:  parent.width
     height: parent.height
-    Component.onCompleted: { /*androidFunc.setOrientation("landscape");*/ window.header.visible = false; }
+    Component.onCompleted:{
+        androidFunc.setOrientation("landscape");
+        window.header.visible = false;
+    }
 
     property bool editorMode: false
 
@@ -26,7 +29,7 @@ Item {
 
     function setEditorModeToAllControls(value){
         dynamicControlsArray.forEach(function(item){
-            item.editorMode = value;
+            if(item !== undefined)item.editorMode = value;
         })
     }
 
@@ -48,6 +51,7 @@ Item {
 
     MouseArea {
         id: mouseArea
+        z: 2
         anchors.fill: parent
         enabled: editorMode && controlsList.isVisible
         onClicked: if(controlsList.isVisible) controlsList.hide();
@@ -57,7 +61,7 @@ Item {
         id: editorButton
         x: 190
         text: "Редактор"
-        z: 1
+        z: 2
         opacity: 1
         anchors.top: parent.top
         anchors.topMargin: 10
@@ -81,7 +85,7 @@ Item {
         id: saveButton
         x: 199
         text: "Сохранить"
-        z: 1
+        z: 2
         anchors.verticalCenter: editorButton.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 10
@@ -106,7 +110,7 @@ Item {
         width: 48
         anchors.top: parent.top
         anchors.topMargin: 10
-        z: 1
+        z: 2
         anchors.left: parent.left
         anchors.leftMargin: 10
         visible: editorMode && !controlsList.isVisible

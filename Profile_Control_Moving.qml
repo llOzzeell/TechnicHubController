@@ -96,7 +96,7 @@ Profile_Control_Parent{
                 duration: 80
             }
 
-            MouseArea {
+            MultiPointTouchArea {
                 id: steeringZone
                 anchors.right: parent.right
                 anchors.rightMargin: 0
@@ -106,17 +106,11 @@ Profile_Control_Parent{
                 anchors.top: parent.top
                 anchors.bottomMargin: 0
                 anchors.topMargin: 0
-                onPressed: {
-                    backgroundRectangle.color = Qt.lighter("#474646", 1.4)
-                }
-                onReleased: {
-                    backgroundRectangle.color = "#474646"
-                    toCenter.start();
-                    currentSpeedReady(0)
-                    discreteTimer.savedLastSpeed = 0;
-                }
-                onMouseXChanged: {
-                    var mouseXNormalized = mouseX - width/2;
+                minimumTouchPoints: 1
+                touchPoints: [ TouchPoint { id: point1 } ]
+                property int shift:0
+                onTouchUpdated: {
+                    var mouseXNormalized = point1.x - width/2;
 
                     if(mouseXNormalized > steeringItem.steeringLenght || mouseXNormalized < -steeringItem.steeringLenght){
 
@@ -126,7 +120,15 @@ Profile_Control_Parent{
 
                 }
 
-                property int shift:0
+                onPressed: {
+                    backgroundRectangle.color = Qt.lighter("#474646", 1.4)
+                }
+                onReleased: {
+                    backgroundRectangle.color = "#474646"
+                    toCenter.start();
+                    currentSpeedReady(0)
+                    discreteTimer.savedLastSpeed = 0;
+                }
             }
 
             Timer{

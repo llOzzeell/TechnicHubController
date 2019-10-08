@@ -1,5 +1,4 @@
-QT += quick svg bluetooth
-#androidextras
+QT += quick svg bluetooth androidextras
 
 CONFIG += c++11
 
@@ -35,7 +34,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    androidfunction.h \
+    androidext.h \
     hubconnector.h \
     hubfinder.h \
     huboperator.h \

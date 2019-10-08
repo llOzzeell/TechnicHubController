@@ -96,7 +96,6 @@ Item {
                 z: 0
                 visible: editorMode
                 backgroundColor: Material.primary
-                opacity: root.width === maxControlWidth ? 0.3 : 1
                 iconSource: "icons/profileEdit.svg"
                 onClicked: paramItem.visible = true
             }
@@ -111,8 +110,6 @@ Item {
             border.width: 2
             anchors.fill: parent
         }
-
-
 
         Item {
             id: paramItem

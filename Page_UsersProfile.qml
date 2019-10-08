@@ -8,12 +8,16 @@ Item {
     clip: true
 
     function addProfile(){
-        var data = {'name': "New"};
+        var data = {'name': "New profile"};
         profileModel.append(data);
     }
 
     function deleteProfile(index){
         if(index < profileModel.count)profileModel.remove(index);
+    }
+
+    function changeName(value){
+        profileModel.setProperty(profileView.currentIndex, "name", value );
     }
 
     ListView {

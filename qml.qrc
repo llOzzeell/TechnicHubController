@@ -40,5 +40,6 @@
         <file>icons/profileEdit.svg</file>
         <file>Gui_ProfileView_Delegate_Extension.qml</file>
         <file>icons/remove48.svg</file>
+        <file>icons/accepted.svg</file>
     </qresource>
 </RCC>

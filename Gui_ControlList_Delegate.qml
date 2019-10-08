@@ -15,16 +15,8 @@ Item {
     Pane {
         id: background
         Material.background: Material.primary
-        //radius: 2
         Material.elevation: 4
         anchors.fill: parent
-//        layer.enabled: true
-//        layer.effect: DropShadow{
-//            radius: 8
-//            samples: 12
-//            color: "black"
-//            opacity: 0.5
-//        }
     }
 
     Image {

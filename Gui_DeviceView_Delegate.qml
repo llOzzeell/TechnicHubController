@@ -10,19 +10,12 @@ Item {
 
     property string _name
 
-    Rectangle {
-        id: rectangle
+    Pane {
+        id: background
         height: 36
-        color: Material.primary
-        radius: 2
+        Material.background: Material.primary
+        Material.elevation: 4
         anchors.fill: parent
-        layer.enabled: true
-        layer.effect: DropShadow{
-            radius: 8
-            samples: 12
-            color: "black"
-            opacity: 0.5
-        }
     }
 
     Image {
@@ -49,7 +42,7 @@ Item {
         color: Material.foreground
         text: _name
         font.capitalization: Font.AllUppercase
-        font.weight: Font.Normal
+        font.weight: Font.Light
         font.pointSize: 16
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter

@@ -5,63 +5,53 @@ import QtGraphicalEffects 1.0
 
 Item {
     id: root
-    height: 40
+    height: 60
+    clip: true
     width:parent.width
 
     property string _name
 
     property int _index:0
+    property int nameLabelWidth: nameLabel.width+10
+    property alias nameLabelVisible: nameLabel.visible
+
+    signal nameLabelClicked
 
     Pane {
         id: background
         Material.background: Material.primary
-        //radius: 2
         Material.elevation: 4
         anchors.fill: parent
-//        layer.enabled: true
-//        layer.effect: DropShadow{
-//            radius: 8
-//            samples: 12
-//            color: "black"
-//            opacity: 0.5
-//        }
     }
-
-    Image {
-        id: icon
-        width: 40
-        height: width
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        fillMode: Image.PreserveAspectFit
-        source: "icons/profile.svg"
-        visible: false
-    }
-
-    ColorOverlay{
-        source: icon
-        color: Material.foreground
-        visible: false
-        anchors.fill: icon
-        smooth: true
-    }
-
 
     Label {
-        id: label
+        id: nameLabel
         color: Material.foreground
-        text: _name
+        text: name
+        renderType: Text.QtRendering
+        visible: true
         font.weight: Font.Light
         font.bold: false
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
-        anchors.right: parent.right
-        anchors.rightMargin: 0
         font.pointSize: 16
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
+
+        onWidthChanged: {
+            console.log("nameWidth: " + width )
+        }
+
+        MouseArea {
+            id: profileNameMouseArea
+            anchors.leftMargin: -6
+            anchors.bottomMargin: -6
+            anchors.topMargin: -6
+            z: 1
+            anchors.fill: parent
+            onClicked: root.nameLabelClicked()
+        }
     }
 
 
@@ -69,6 +59,7 @@ Item {
 
 /*##^##
 Designer {
-    D{i:1;anchors_height:200;anchors_width:200}D{i:2;anchors_height:100}
+    D{i:1;anchors_height:200;anchors_width:200}D{i:2;anchors_height:100}D{i:5;anchors_height:100;anchors_width:100;anchors_x:0;anchors_y:0}
+D{i:4;anchors_height:40}
 }
 ##^##*/

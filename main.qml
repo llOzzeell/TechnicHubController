@@ -51,9 +51,18 @@ ApplicationWindow {
     Shortcut {
         sequence: "Back"
         onActivated:{
-            var prevoius = stackView.pop()
-            if(prevoius.name === "profile"){
-                setOrientation("P"); androidFunc.setOrientation("portraite");
+            var previous = stackView.pop();
+            if(previous !== null && previous !== undefined){
+                if(previous.name === "profile"){
+                    setOrientation("P");
+                    androidFunc.setOrientation("portraite");
+                }
+            }
+
+            console.log(swipe.currentIndex)
+            if(swipe.currentIndex == 0){
+                console.log("quit");
+                Qt.quit();
             }
         }
     }

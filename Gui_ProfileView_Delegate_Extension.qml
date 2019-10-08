@@ -9,6 +9,7 @@ Gui_ProfileView_Delegate{
     _name: name
 
     property bool isCurrent:false
+    width: 400
     onIsCurrentChanged: {
         if(!isCurrent && delItem.isExpanded) delItem.collapse()
     }
@@ -16,6 +17,14 @@ Gui_ProfileView_Delegate{
     function forseCollapse(){
         if(delItem.isExpanded) delItem.collapse();
     }
+
+    onNameLabelClicked: {
+        profileView.currentIndex = _index
+        root.nameLabelVisible = false;
+        nameInput.visible = !root.nameLabelVisible
+        nameInput.text = name;
+    }
+
 
     MultiPointTouchArea{
         id:mouseArea
@@ -30,7 +39,7 @@ Gui_ProfileView_Delegate{
         }
 
         property int startPoint:0
-
+        anchors.leftMargin: nameLabelWidth
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.bottom: parent.bottom
@@ -58,7 +67,6 @@ Gui_ProfileView_Delegate{
                 }
             }
         }
-
     }
 
     ColorOverlay{
@@ -181,4 +189,46 @@ Gui_ProfileView_Delegate{
 
 
     }
+
+    TextField {
+        id: nameInput
+        width: 348
+        height: 43
+        z: 3
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        visible: false
+    }
+
+    Gui_Profile_CircleButton {
+        id: gui_Profile_CircleButton
+        width: 32
+        z: 3
+        iconSource: "icons/accepted.svg"
+        anchors.left: nameInput.right
+        anchors.leftMargin: 0
+        anchors.verticalCenter: parent.verticalCenter
+        visible: nameInput.visible
+        onClicked: {
+            if(nameInput.text !== ""){
+                root.nameLabelVisible = true;
+                nameInput.visible = !root.nameLabelVisible
+                name = nameInput.text;
+                nameInput.text = "";
+                changeName(name);
+            }
+            else{
+                root.nameLabelVisible = true;
+                nameInput.visible = !root.nameLabelVisible
+                nameInput.text = "";
+            }
+        }
+    }
 }
+
+/*##^##
+Designer {
+    D{i:3;anchors_height:200;anchors_width:200}D{i:12;anchors_height:200;anchors_width:200;anchors_x:21}
+}
+##^##*/

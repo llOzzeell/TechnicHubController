@@ -16,6 +16,7 @@ Item {
     onIndexChanged: console.log(index)
     property int objectCounter:0
     property var dynamicControlsArray:[]
+    rotation: 0
 
     function createControl(control){
         var component = Qt.createComponent(control)
@@ -58,9 +59,10 @@ Item {
         id: saveButton
         x: 199
         width: 48
-        height: width
-        anchors.top: parent.top
-        anchors.topMargin: 10
+        height: 48
+        rotation: 90
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
         z: 2
         anchors.right: parent.right
         anchors.rightMargin: 10
@@ -70,7 +72,6 @@ Item {
             editorMode = false;
             if(controlsList.isVisible) controlsList.hide();
             //saveProfile();
-            setOrientation("portraite");
             stackView.pop();
         }
 
@@ -84,11 +85,12 @@ Item {
     Gui_Profile_CircleButton{
         id:addButton
         width: 48
+        rotation: 90
+        anchors.right: parent.right
+        anchors.rightMargin: 10
         anchors.top: parent.top
         anchors.topMargin: 10
         z: 2
-        anchors.left: parent.left
-        anchors.leftMargin: 10
         visible: editorMode && !controlsList.isVisible
 
         Behavior on visible {
@@ -102,37 +104,39 @@ Item {
 
     Gui_Profile_Editor_ControlsList {
         id: controlsList
-        y: hidedY
+        x: root.width+5 - 91
         z: 2
-        anchors.horizontalCenterOffset: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-
         property bool isVisible: false
-        property int hidedY: -height-10
+        anchors.verticalCenterOffset: 0
+
+        Behavior on x{
+            NumberAnimation{
+                duration: 100
+            }
+        }
 
         function hide(){
-            controlsList.y = hidedY;
+            controlsList.x = root.width+5 - 91;
             isVisible = false;
         }
 
         function show(){
-            controlsList.y = controlsList.spacing;
+            controlsList.x = root.width - width + 91  - 5;
             isVisible = true;
         }
 
-        Behavior on y{
-            NumberAnimation{
-                duration: 200
-            }
-        }
+        rotation: 90
+        anchors.verticalCenter: parent.verticalCenter
 
         onControlChoosed: { createControl(element); hide(); }
     }
 
 }
 
+
+
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    D{i:0;autoSize:true;height:480;width:640}D{i:2;anchors_height:48}D{i:3;anchors_width:48}
 }
 ##^##*/

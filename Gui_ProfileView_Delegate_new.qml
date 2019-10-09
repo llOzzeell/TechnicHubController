@@ -15,21 +15,16 @@ Item {
     }
 
     function removeClick(){
-        console.log("REM")
         deleteProfile(index);
     }
 
     function editorClick(){
-        console.log("EDIT")
-        setOrientation("landscape");
         stackView.push(profile);
         stackView.currentItem.editorMode = true;
         stackView.currentItem.index = index;
     }
 
     function runProfileClick(){
-        console.log("RUN")
-        setOrientation("landscape");
         stackView.push(profile);
         stackView.currentItem.editorMode = false;
         stackView.currentItem.index = index;
@@ -37,10 +32,6 @@ Item {
 
     function clearCard(){
         if(fieldItem.middleState || fieldItem.expanded){ collapseAnimation.start(); }
-    }
-
-    function labelEditClick(){
-        console.log("name edit")
     }
 
     Pane{

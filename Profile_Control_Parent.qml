@@ -9,6 +9,8 @@ Item {
     implicitWidth: 120
     implicitHeight: 120
 
+    rotation: 90
+
     property int minControlWidth:120
     property int maxControlWidth:260
 

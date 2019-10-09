@@ -7,7 +7,6 @@ Profile_Control_Parent{
 
     width:120
     height: width
-    rotation: 0
     onHeightChanged: toCenter.start();
 
     property int speedLimit: 100

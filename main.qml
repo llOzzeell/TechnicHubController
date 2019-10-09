@@ -7,30 +7,11 @@ import "."
 ApplicationWindow {
     id: window
     visible: true
-
-    width: 400
-    height: width/9*18
     color: Material.background
 
     Component.onCompleted:{
         setDarkTheme(true);
-    }
-
-    function setOrientation(value){
-        if(value === "landscape")setLandscape();
-        else setPortraite();
-    }
-
-    function setPortraite(){
-        window.width = 400
-        window.height = width/9*18
         androidFunc.setOrientation("portraite");
-    }
-
-    function setLandscape(){
-        window.height = 400
-        window.width = height/9*18
-        androidFunc.setOrientation("landscape");
     }
 
     function setDarkTheme(param){

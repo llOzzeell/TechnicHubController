@@ -202,7 +202,6 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
-        width: 100
         maximumLength: 20
         focus: isCurrent
 

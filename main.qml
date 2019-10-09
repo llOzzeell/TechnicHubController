@@ -69,21 +69,13 @@ ApplicationWindow {
         }
     }
 
-    Shortcut {
-        sequence: "Enter"
-        //sequence: "Backspace"
-        onActivated:{
-            Console.log("Enter")
-        }
-    }
-
     SwipeView{
         id:swipe
         anchors.fill: parent
         clip: true
         visible: true
         interactive: false
-        currentIndex: 1
+        currentIndex: 0
 
         Page_Finder{
             id:finder

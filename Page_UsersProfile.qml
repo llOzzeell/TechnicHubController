@@ -37,6 +37,7 @@ Item {
         spacing: 10
         model: profileModel
         delegate: profileDelegate
+        onCountChanged: currentIndex = -1
     }
 
     Gui_TopBar{
@@ -58,8 +59,7 @@ Item {
     Component{
         id:profileDelegate
         Gui_ProfileView_Delegate_new{
-//            isCurrent: ListView.isCurrentItem
-//            _index:index
+            isCurrent: ListView.isCurrentItem
         }
     }
 }

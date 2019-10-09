@@ -9,6 +9,9 @@ Item {
     width: parent.width
     height: 60
 
+    property bool isCurrent: false
+    onIsCurrentChanged: clearCard();
+
     function removeClick(){
         console.log("REM")
         deleteProfile(index);
@@ -26,6 +29,14 @@ Item {
         setOrientation("landscape");
         stackView.push(profile);
         stackView.currentItem.editorMode = false;
+    }
+
+    function clearCard(){
+        if(fieldItem.middleState || fieldItem.expanded){ collapseAnimation.start(); }
+    }
+
+    function labelEditClick(){
+        console.log("name edit")
     }
 
     Pane{
@@ -62,10 +73,11 @@ Item {
             anchors.topMargin: 0
             anchors.right: parent.right
             anchors.rightMargin: 0
+            visible: fieldItem.fieldRightShift >= mouseArea.minimumFingerSHift
         }
 
         Gui_IconButton {
-            id: gui_IconButton
+            id: removeButton
             width: 32
             source: "icons/delete.svg"
             iconColor: Material.primary
@@ -91,7 +103,6 @@ Item {
         anchors.topMargin: 0
 
         property int fieldRightShift:0
-        onFieldRightShiftChanged: console.log(fieldRightShift)
         property bool expanded: (fieldRightShift >= deleteItem.deleteFieldWidth)
         property bool middleState: (fieldRightShift > 0)
 
@@ -117,6 +128,8 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onPressed: {
+
+                profileView.currentIndex = index;
                 if(fieldItem.middleState || fieldItem.expanded){
                     collapseAnimation.start()
                     wasExpanded = true;
@@ -140,6 +153,7 @@ Item {
             property int minimumFingerSHift:10
             property int shift:0
             property int startPoint:0
+            z: 0
 
             onMouseXChanged: {
                 if(pressed && !fieldItem.expanded && !wasExpanded){
@@ -157,8 +171,9 @@ Item {
         }
 
         Gui_IconButton {
-            id: gui_IconButton1
+            id: propertyButton
             width: 32
+            z: 1
             source: "icons/profileEdit.svg"
             iconColor: Material.foreground
             anchors.rightMargin: (deleteItem.deleteFieldWidth - width)/2
@@ -168,6 +183,28 @@ Item {
             visible: opacity > 0
             onClicked: {
                 if(opacity === 1)root.editorClick()
+            }
+        }
+    }
+
+    Label {
+        id: nameLabel
+        height: root.height/2
+        text: name
+        fontSizeMode: Text.HorizontalFit
+        anchors.rightMargin: 10
+        font.weight: Font.Light
+        font.pointSize: 14
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
+
+        MouseArea {
+            id: labelEditArea
+            anchors.fill: parent
+            onClicked: {
+                labelEditClick();
             }
         }
     }

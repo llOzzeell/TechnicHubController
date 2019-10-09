@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 
 Item {
     id:root
@@ -22,6 +24,7 @@ Item {
     ColorOverlay{
         source:image
         color: iconColor
+        visible: true
         smooth: true
         anchors.fill: image
     }

@@ -12,6 +12,10 @@ ApplicationWindow {
     height: width/9*18
     color: Material.background
 
+    Component.onCompleted:{
+        setDarkTheme(true);
+    }
+
     function setOrientation(value){
         if(value === "landscape")setLandscape();
         else setPortraite();
@@ -29,11 +33,7 @@ ApplicationWindow {
         //androidFunc.setOrientation("landscape");
     }
 
-    Component.onCompleted:{
-        setTheme(true);
-    }
-
-    function setTheme(param){
+    function setDarkTheme(param){
         return param? setDark():setLight();
     }
     function setDark(){
@@ -62,12 +62,18 @@ ApplicationWindow {
                     setOrientation("portraite");
                 }
             }
-
-            console.log(swipe.currentIndex)
             if(swipe.currentIndex == 0){
                 console.log("quit");
                 Qt.quit();
             }
+        }
+    }
+
+    Shortcut {
+        //sequence: "Back"
+        sequence: "Enter"
+        onActivated:{
+            console.log("Enter");
         }
     }
 

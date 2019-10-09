@@ -22,7 +22,10 @@ Item {
 
     ListView {
         id: profileView
-        interactive: (contentItem.height > profileView.height)
+        boundsBehavior: Flickable.DragAndOvershootBounds
+        flickableDirection: Flickable.AutoFlickDirection
+        //interactive: (contentItem.height > profileView.height)
+        interactive: true
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
         anchors.top: topBar.bottom
@@ -56,9 +59,9 @@ Item {
 
     Component{
         id:profileDelegate
-        Gui_ProfileView_Delegate_Extension{
-            isCurrent: ListView.isCurrentItem
-            _index:index
+        Gui_ProfileView_Delegate_new{
+//            isCurrent: ListView.isCurrentItem
+//            _index:index
         }
     }
 }

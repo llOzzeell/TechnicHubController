@@ -41,5 +41,7 @@
         <file>Gui_ProfileView_Delegate_Extension.qml</file>
         <file>icons/remove48.svg</file>
         <file>icons/accepted.svg</file>
+        <file>Gui_ProfileView_Delegate_new.qml</file>
+        <file>Gui_IconButton.qml</file>
     </qresource>
 </RCC>

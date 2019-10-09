@@ -20,14 +20,18 @@ ApplicationWindow {
     function setPortraite(){
         window.width = 400
         window.height = width/9*18
+        //androidFunc.setOrientation("portraite");
     }
 
     function setLandscape(){
         window.height = 400
         window.width = height/9*18
+        //androidFunc.setOrientation("landscape");
     }
 
-    Component.onCompleted:{ setTheme(true); androidFunc.setOrientation("portraite"); }
+    Component.onCompleted:{
+        setTheme(true);
+    }
 
     function setTheme(param){
         return param? setDark():setLight();
@@ -49,13 +53,13 @@ ApplicationWindow {
     }
 
     Shortcut {
-        sequence: "Back"
+        //sequence: "Back"
+        sequence: "Backspace"
         onActivated:{
             var previous = stackView.pop();
             if(previous !== null && previous !== undefined){
                 if(previous.name === "profile"){
-                    setOrientation("P");
-                    androidFunc.setOrientation("portraite");
+                    setOrientation("portraite");
                 }
             }
 
@@ -73,7 +77,7 @@ ApplicationWindow {
         clip: true
         visible: true
         interactive: false
-        currentIndex: 0
+        currentIndex: 1
 
         Page_Finder{
             id:finder

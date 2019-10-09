@@ -7,9 +7,9 @@ Gui_ProfileView_Delegate{
     id: root
     height: 60
     _name: name
+    width:parent.width
 
     property bool isCurrent:false
-    width: 400
     onIsCurrentChanged: {
         if(!isCurrent && delItem.isExpanded) delItem.collapse()
     }
@@ -59,7 +59,7 @@ Gui_ProfileView_Delegate{
                     if(delItem.isExpanded) { delItem.collapse(); }
                     else{
                         setOrientation("landscape");
-                        androidFunc.setOrientation("landscape");
+                        //androidFunc.setOrientation("landscape");
                         stackView.push(profile);
                         stackView.currentItem.editorMode = false;
                         startPoint = 0;
@@ -97,7 +97,7 @@ Gui_ProfileView_Delegate{
         onClicked:{
             profileView.currentIndex = _index
             setOrientation("landscape");
-            androidFunc.setOrientation("landscape");
+            //androidFunc.setOrientation("landscape");
             stackView.push(profile);
             stackView.currentItem.editorMode = true;
         }

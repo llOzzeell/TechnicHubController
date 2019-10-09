@@ -72,7 +72,7 @@ Item {
             if(controlsList.isVisible) controlsList.hide();
             saveProfile();
             setOrientation("portraite");
-            androidFunc.setOrientation("portraite");
+            //androidFunc.setOrientation("portraite");
             stackView.pop();
         }
 

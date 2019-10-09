@@ -46,9 +46,6 @@ Item {
 
         Row {
             id: column1
-            x: -27
-            y: -48
-            width: content.width
             height: 38
             anchors.bottom: parent.top
             anchors.bottomMargin: 10
@@ -228,9 +225,3 @@ Item {
     }
 
 }
-
-/*##^##
-Designer {
-    D{i:4;anchors_width:90;anchors_x:0}D{i:23;anchors_width:90;anchors_x:0}
-}
-##^##*/

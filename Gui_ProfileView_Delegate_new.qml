@@ -22,6 +22,7 @@ Item {
         setOrientation("landscape");
         stackView.push(profile);
         stackView.currentItem.editorMode = true;
+        stackView.currentItem.index = index;
     }
 
     function runProfileClick(){
@@ -29,6 +30,7 @@ Item {
         setOrientation("landscape");
         stackView.push(profile);
         stackView.currentItem.editorMode = false;
+        stackView.currentItem.index = index;
     }
 
     function clearCard(){

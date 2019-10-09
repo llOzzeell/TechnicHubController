@@ -19,7 +19,8 @@ SOURCES += \
         hubfinder.cpp \
         huboperator.cpp \
         main.cpp \
-        technichub.cpp
+        technichub.cpp \
+    profiles.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,7 +40,8 @@ HEADERS += \
     hubconnector.h \
     hubfinder.h \
     huboperator.h \
-    technichub.h
+    technichub.h \
+    profiles.h
 
 DISTFILES += \
     android/AndroidManifest.xml \

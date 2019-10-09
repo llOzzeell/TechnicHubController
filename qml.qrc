@@ -14,7 +14,6 @@
         <file>Page_UsersProfile.qml</file>
         <file>Gui_TopBar.qml</file>
         <file>Page_SettingsPage.qml</file>
-        <file>Gui_ProfileView_Delegate.qml</file>
         <file>icons/profile.svg</file>
         <file>Page_Profile.qml</file>
         <file>icons/editor.svg</file>
@@ -38,7 +37,6 @@
         <file>icons/arrow_back.svg</file>
         <file>Gui_ControlList_Delegate.qml</file>
         <file>icons/profileEdit.svg</file>
-        <file>Gui_ProfileView_Delegate_Extension.qml</file>
         <file>icons/remove48.svg</file>
         <file>icons/accepted.svg</file>
         <file>Gui_ProfileView_Delegate_new.qml</file>

@@ -12,6 +12,8 @@ Item {
     }
 
     readonly property string name: "profile"
+    property int index:-1
+    onIndexChanged: console.log(index)
     property int objectCounter:0
     property var dynamicControlsArray:[]
 
@@ -33,18 +35,6 @@ Item {
 
     function deleteControl(index){
         if(dynamicControlsArray[index] !== undefined ){ dynamicControlsArray[index].destroy(); dynamicControlsArray[index] = undefined; }
-    }
-
-    function loadProfile(){
-
-    }
-
-    function saveProfile(){
-        console.log("-----------------------------")
-        dynamicControlsArray.forEach(function(item){
-            if(item !== undefined)console.log(item.width + " " + item.inverted + " " + item.port + " " + item.x + " " + item.y)
-        })
-        console.log("-----------------------------")
     }
 
     MouseArea {

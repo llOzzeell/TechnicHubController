@@ -69,12 +69,9 @@ ApplicationWindow {
         }
     }
 
-    Shortcut {
-        //sequence: "Back"
-        sequence: "Enter"
-        onActivated:{
-            console.log("Enter");
-        }
+    property var linkToUsrProfileOBject
+    function setLinkToUsrProfileOBject(link){
+        linkToUsrProfileOBject = link;
     }
 
     SwipeView{

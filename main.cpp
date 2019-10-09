@@ -6,6 +6,7 @@
 #include "hubfinder.h"
 #include "hubconnector.h"
 #include "huboperator.h"
+#include "profiles.h"
 //#include "androidext.h"
 
 int main(int argc, char *argv[])
@@ -36,6 +37,11 @@ int main(int argc, char *argv[])
     context_huboperator ->setContextProperty("hubOperator", &hubOperator);
 
     QObject::connect(&hubconnector, &Hubconnector::hubLinkUpdate, &hubOperator, &HubOperator::setHubLink);
+
+    Profiles prof;
+    QQmlContext *context_prof = engine.rootContext();
+    context_prof ->setContextProperty("profiles", &prof);
+
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

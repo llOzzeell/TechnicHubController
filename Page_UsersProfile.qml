@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
     clip: true
+    Component.onCompleted: setLinkToUsrProfileOBject(this);
 
     function addProfile(){
         var data = {'name': "New profile"};

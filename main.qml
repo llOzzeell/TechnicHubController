@@ -69,6 +69,14 @@ ApplicationWindow {
         }
     }
 
+    Shortcut {
+        sequence: "Enter"
+        //sequence: "Backspace"
+        onActivated:{
+            Console.log("Enter")
+        }
+    }
+
     SwipeView{
         id:swipe
         anchors.fill: parent

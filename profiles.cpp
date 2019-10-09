@@ -106,6 +106,11 @@ QList<QString> Profiles::getProfilesNames()
     return names;
 }
 
+void Profiles::updateProfileName(int index, QString name)
+{
+    profiles[index].setName(name);
+}
+
 void Profiles::saveProfile()
 {
 

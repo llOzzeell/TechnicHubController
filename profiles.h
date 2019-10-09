@@ -74,6 +74,7 @@ public slots:
     bool deleteProfile(int index);
 
     QList<QString> getProfilesNames();
+    void updateProfileName(int index, QString name);
 
     void saveProfile();
 

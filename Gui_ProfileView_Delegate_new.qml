@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.3
 import QtQuick.Controls.Material 2.2
 
 Item {
@@ -10,7 +10,9 @@ Item {
     height: 60
 
     property bool isCurrent: false
-    onIsCurrentChanged: clearCard();
+    onIsCurrentChanged:{
+        clearCard();
+    }
 
     function removeClick(){
         console.log("REM")
@@ -130,7 +132,6 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onPressed: {
-
                 profileView.currentIndex = index;
                 if(fieldItem.middleState || fieldItem.expanded){
                     collapseAnimation.start()
@@ -184,32 +185,55 @@ Item {
             opacity: (100-(100/deleteItem.deleteFieldWidth * fieldItem.fieldRightShift))/100
             visible: opacity > 0
             onClicked: {
-                if(opacity === 1)root.editorClick()
+                if(opacity === 1 && !nameLabel.isEditing)root.editorClick()
             }
         }
     }
 
-    Label {
+    TextInput {
         id: nameLabel
-        height: root.height/2
+        height: root.height
+        color: Material.foreground
         text: name
-        fontSizeMode: Text.HorizontalFit
-        anchors.rightMargin: 10
+        cursorVisible: false
         font.weight: Font.Light
-        font.pointSize: 14
+        font.pointSize: 18
         verticalAlignment: Text.AlignVCenter
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
+        width: 100
+        maximumLength: 20
 
-        MouseArea {
-            id: labelEditArea
-            anchors.fill: parent
-            onClicked: {
-                labelEditClick();
+        onFocusChanged: {
+            if(!focus && text == ""){
+                text = "No name"
+                profilesController.updateProfileName(index, text);
             }
         }
+        onAccepted: {
+            if(text != ""){
+                profilesController.updateProfileName(index, text);
+            }
+            else {
+                text = "No name"
+                profilesController.updateProfileName(index, text);
+            }
+            nameLabel.focus = false;
+
+//            else text = tempText;
+//            tempText = "";
+//            nameLabel.focus = false;
+//            isEditing = false;
+        }
+
     }
 
 
 }
+
+/*##^##
+Designer {
+    D{i:10;anchors_width:100}
+}
+##^##*/

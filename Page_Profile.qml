@@ -69,7 +69,7 @@ Item {
         onClicked: {
             editorMode = false;
             if(controlsList.isVisible) controlsList.hide();
-            saveProfile();
+            //saveProfile();
             setOrientation("portraite");
             stackView.pop();
         }

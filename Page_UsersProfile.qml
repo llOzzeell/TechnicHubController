@@ -11,10 +11,12 @@ Item {
     function addProfile(){
         var data = {'name': "New profile"};
         profileModel.append(data);
+        profilesController.addProfile();
     }
 
     function deleteProfile(index){
         if(index < profileModel.count)profileModel.remove(index);
+        console.log(profilesController.deleteProfile(index))
     }
 
     function changeName(value){

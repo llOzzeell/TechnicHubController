@@ -8,8 +8,19 @@
 #include <QVector>
 #include <QGuiApplication>
 
-struct Profile
+struct Control
 {
+    Control(){ type = 0;
+                name = "";
+                width = 0;
+                x = 0;
+                y = 0;
+                invert = false;
+                port1 = "A";
+                port2 = "A";
+                servoAngle = 0;
+                maxSpeed = 0;}
+
     quint8 type;
     QString name;
     quint8 width;
@@ -21,8 +32,8 @@ struct Profile
     quint8 servoAngle;
     quint8 maxSpeed;
 
-    friend QDataStream& operator<<(QDataStream &out, Profile &p);
-    friend QDataStream& operator>>(QDataStream &in, Profile &p);
+    friend QDataStream& operator<<(QDataStream &out, Control &p);
+    friend QDataStream& operator>>(QDataStream &in, Control &p);
 
 };
 
@@ -36,24 +47,15 @@ private:
 
     QFile file;
     const QString pathToFile = "/profiles.dat";
-    QVector<Profile> profilesVector;
-
-
-signals:
+    QVector<QVector<Control>> profiles;
 
 public slots:
 
     void loadFromFile();
-
     void saveToFile();
 
-    int getCount();
-
     void addProfile();
-
-    void updateProfile(int index, QString name);
-
-    void loadProfile(int index);
+    bool deleteProfile(int index);
 
 };
 

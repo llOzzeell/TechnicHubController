@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
     Profiles prof;
     QQmlContext *context_prof = engine.rootContext();
-    context_prof ->setContextProperty("profiles", &prof);
+    context_prof ->setContextProperty("profilesController", &prof);
 
 
 

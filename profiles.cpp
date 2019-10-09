@@ -1,10 +1,20 @@
 #include "profiles.h"
 
+// перегрузка операторов структур данных
+QDataStream& operator<<(QDataStream &out, Control &p)
+{
+    out << p.type << p.name << p.width << p.x << p.y << p.invert << p.port1 << p.port2 << p.servoAngle << p.maxSpeed;
+    return out;
+}
+QDataStream& operator>>(QDataStream &in, Control &p)
+{
+    in >> p.type >> p.name >> p.width >> p.x >> p.y >> p.invert >> p.port1 >> p.port2 >> p.servoAngle >> p.maxSpeed;
+    return in;
+}
+
+
 Profiles::Profiles(QObject *parent) : QObject(parent)
 {
-    //Profile p{0,"str",140,14,88,false,"A","C",90,100};
-    //profilesVector.append(p);
-    //saveToFile();
     loadFromFile();
 }
 
@@ -19,24 +29,18 @@ void Profiles::loadFromFile()
 
         int count; in >> count;
 
-        for(int i = 0; i < count; i ++){
-            Profile p; in >> p;
-            profilesVector.append(p);
+        for(int i = 0; i < count; i++){
+
+            int controlsInProfile = 0; in >> controlsInProfile;
+            QVector<Control> prof;
+            for(int j = 0; j < controlsInProfile; j++){
+                Control con; in >> con;
+                prof.push_back(con);
+            }
+            profiles.push_back(prof);
         }
     }
     file.close();
-
-//    Profile p = profilesVector.at(0);
-//    qDebug() << p.type;
-//    qDebug() << p.name;
-//    qDebug() << p.width;
-//    qDebug() << p.x;
-//    qDebug() << p.y;
-//    qDebug() << p.invert;
-//    qDebug() << p.port1;
-//    qDebug() << p.port2;
-//    qDebug() << p.servoAngle;
-//    qDebug() << p.maxSpeed;
 }
 
 void Profiles::saveToFile()
@@ -46,44 +50,30 @@ void Profiles::saveToFile()
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);
 
-    out << profilesVector.count();
+    out << profiles.count();
 
-    for ( auto item : profilesVector )
+    for ( auto item : profiles )
     {
-       out << item;
+        out << item.count();
+        for ( auto control : item )
+        {
+           out << control;
+        }
     }
     file.close();
 }
 
-int Profiles::getCount()
-{
-    return profilesVector.count();
-}
-
 void Profiles::addProfile()
 {
-
+    QVector<Control> zero;
+    profiles.push_back(zero);
 }
 
-void Profiles::updateProfile(int index, QString name)
+bool Profiles::deleteProfile(int index)
 {
-
-}
-
-void Profiles::loadProfile(int index)
-{
-
-}
-
-// перегрузка операторов структур данных
-QDataStream& operator<<(QDataStream &out, Profile &p)
-{
-    out << p.type << p.name << p.width << p.x << p.y << p.invert << p.port1 << p.port2 << p.servoAngle << p.maxSpeed;
-    return out;
-}
-
-QDataStream& operator>>(QDataStream &in, Profile &p)
-{
-    in >> p.type >> p.name >> p.width >> p.x >> p.y >> p.invert >> p.port1 >> p.port2 >> p.servoAngle >> p.maxSpeed;
-    return in;
+    if(index >= 0 && index < profiles.count()){
+        profiles.removeAt(index);
+        return true;
+    }
+    else return false;
 }

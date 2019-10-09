@@ -29,15 +29,11 @@ Item {
     }
 
     Pane{
-        anchors.rightMargin: 2
-        anchors.leftMargin: 2
-        anchors.bottomMargin: 2
-        anchors.topMargin: 2
+        anchors.fill: parent
         opacity: 1
         visible: true
-        anchors.fill: parent
         Material.elevation: 8
-        Material.background: Style.remove_Red
+        Material.background: Material.primary
     }
 
     Item {
@@ -54,6 +50,20 @@ Item {
 
         property int deleteFieldWidth:60
 
+
+        Rectangle {
+            id: redCard
+            width: fieldItem.fieldRightShift+2
+            color: Style.remove_Red
+            radius: 1
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+        }
+
         Gui_IconButton {
             id: gui_IconButton
             width: 32
@@ -67,7 +77,6 @@ Item {
                 root.removeClick();
             }
         }
-
     }
 
     Item {
@@ -124,6 +133,7 @@ Item {
 
                 if(fieldItem.middleState && !fieldItem.expanded)collapseAnimation.start()
                 if(wasExpanded) wasExpanded = false;
+                profileView.interactive = true;
             }
 
             property bool wasExpanded: false
@@ -139,6 +149,7 @@ Item {
                     if(shift > deleteItem.deleteFieldWidth)shift = deleteItem.deleteFieldWidth;
 
                     if(shift >= 0 && shift <= deleteItem.deleteFieldWidth && shift >= minimumFingerSHift){
+                        profileView.interactive = false;
                         fieldItem.fieldRightShift = shift;
                     }
                 }

@@ -16,14 +16,6 @@ ApplicationWindow {
         setDarkTheme(true);
     }
 
-    Connections{
-        target:profilesController
-        onProfilesLoaded:{
-            //list.forEach(function(item){loadProfile(item)})
-            Console.log("QML " + list)
-        }
-    }
-
     function setOrientation(value){
         if(value === "landscape")setLandscape();
         else setPortraite();

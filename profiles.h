@@ -53,13 +53,15 @@ class Profiles : public QObject
 {
     Q_OBJECT
 public:
-    explicit Profiles(QObject *parent = nullptr);
+
+    Profiles(QObject *parent = nullptr);
 
 private:
 
     QFile file;
     const QString pathToFile = "/profiles.dat";
     QVector<Profile> profiles;
+    QList<QString>names;
 
     void getProfilesNamesAndSendToQML();
 
@@ -71,10 +73,10 @@ public slots:
     void addProfile(QString name);
     bool deleteProfile(int index);
 
+    QList<QString> getProfilesNames();
+
     void saveProfile();
 
-signals:
-    void profilesLoaded(QList<QString> list);
 };
 
 #endif // PROFILES_H

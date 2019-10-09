@@ -36,25 +36,12 @@ QDataStream& operator>>(QDataStream &in, Profile &p)
 Profiles::Profiles(QObject *parent) : QObject(parent)
 {
     loadFromFile();
-    getProfilesNamesAndSendToQML();
 }
 
-void Profiles::getProfilesNamesAndSendToQML()
-{
-    QList<QString> li;
-
-    for(auto profile : profiles){
-        li.append(profile.getName());
-        qDebug() << profile.getName();
-    }
-
-    emit profilesLoaded(li);
-}
 
 void Profiles::loadFromFile()
 {
     auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    qDebug() << path + pathToFile;
     QFile file(path + pathToFile);
 
     if(file.exists())
@@ -71,6 +58,10 @@ void Profiles::loadFromFile()
         }
     }
     file.close();
+
+    for(auto profile : profiles){
+        names.append(profile.getName());
+    }
 }
 
 void Profiles::saveToFile()
@@ -78,7 +69,6 @@ void Profiles::saveToFile()
     //AndroidExt::requestAndroidPermissions();
 
     auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    qDebug() << path + pathToFile;
     QFile file(path + pathToFile);
 
     file.open(QIODevice::WriteOnly);
@@ -105,9 +95,15 @@ bool Profiles::deleteProfile(int index)
 {
     if(index >= 0 && index < profiles.count()){
         profiles.removeAt(index);
+        saveToFile();
         return true;
     }
     else return false;
+}
+
+QList<QString> Profiles::getProfilesNames()
+{
+    return names;
 }
 
 void Profiles::saveProfile()

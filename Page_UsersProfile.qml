@@ -6,11 +6,14 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
     clip: true
+    Component.onCompleted: {
+        var list = profilesController.getProfilesNames();
+        list.forEach(function(name){loadProfile(name)})
+    }
 
     function loadProfile(name){
-        var data = {'name': defaultName};
+        var data = {'name': name};
         profileModel.append(data);
-        profilesController.addProfile(defaultName);
     }
 
     function addProfile(){

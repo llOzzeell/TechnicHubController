@@ -7,7 +7,7 @@
 #include "hubconnector.h"
 #include "huboperator.h"
 #include "profiles.h"
-//#include "androidext.h"
+#include "androidext.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,9 +17,9 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-//    AndroidExt afunc;
-//    QQmlContext *context_afunc = engine.rootContext();
-//    context_afunc ->setContextProperty("androidFunc", &afunc);
+    AndroidExt afunc;
+    QQmlContext *context_afunc = engine.rootContext();
+    context_afunc ->setContextProperty("androidFunc", &afunc);
 
     HubFinder hubFinder;
     hubFinder.setDebugOut(false);

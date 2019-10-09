@@ -4,25 +4,19 @@
 #include <QObject>
 #include <QDebug>
 #include <QFile>
+#include <QStandardPaths>
 #include <QDataStream>
 #include <QVector>
+#include <QList>
 #include <QGuiApplication>
+
+#include "androidext.h"
 
 struct Control
 {
-    Control(){ type = 0;
-                name = "";
-                width = 0;
-                x = 0;
-                y = 0;
-                invert = false;
-                port1 = "A";
-                port2 = "A";
-                servoAngle = 0;
-                maxSpeed = 0;}
+    Control(){ type = 0; width = 0; x = 0; y = 0; invert = false; port1 = "A"; port2 = "A"; servoAngle = 0; maxSpeed = 0;}
 
     quint8 type;
-    QString name;
     quint8 width;
     quint8 x;
     quint8 y;
@@ -37,6 +31,24 @@ struct Control
 
 };
 
+class Profile{
+public:
+    Profile(QString name = "New profile"): profName(name){}
+
+    QString getName(){return profName;}
+    void setName(QString name){profName = name;}
+
+    void clearProfile(){controls.clear();}
+    void addControl(Control &con){controls.push_back(con);}
+
+private:
+    QString profName;
+    QVector<Control> controls;
+
+    friend QDataStream& operator<<(QDataStream &out, Profile &p);
+    friend QDataStream& operator>>(QDataStream &in, Profile &p);
+};
+
 class Profiles : public QObject
 {
     Q_OBJECT
@@ -47,16 +59,22 @@ private:
 
     QFile file;
     const QString pathToFile = "/profiles.dat";
-    QVector<QVector<Control>> profiles;
+    QVector<Profile> profiles;
+
+    void getProfilesNamesAndSendToQML();
 
 public slots:
 
     void loadFromFile();
     void saveToFile();
 
-    void addProfile();
+    void addProfile(QString name);
     bool deleteProfile(int index);
 
+    void saveProfile();
+
+signals:
+    void profilesLoaded(QList<QString> list);
 };
 
 #endif // PROFILES_H

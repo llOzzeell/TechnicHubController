@@ -16,6 +16,14 @@ ApplicationWindow {
         setDarkTheme(true);
     }
 
+    Connections{
+        target:profilesController
+        onProfilesLoaded:{
+            //list.forEach(function(item){loadProfile(item)})
+            Console.log("QML " + list)
+        }
+    }
+
     function setOrientation(value){
         if(value === "landscape")setLandscape();
         else setPortraite();
@@ -24,13 +32,13 @@ ApplicationWindow {
     function setPortraite(){
         window.width = 400
         window.height = width/9*18
-        //androidFunc.setOrientation("portraite");
+        androidFunc.setOrientation("portraite");
     }
 
     function setLandscape(){
         window.height = 400
         window.width = height/9*18
-        //androidFunc.setOrientation("landscape");
+        androidFunc.setOrientation("landscape");
     }
 
     function setDarkTheme(param){
@@ -53,8 +61,8 @@ ApplicationWindow {
     }
 
     Shortcut {
-        //sequence: "Back"
-        sequence: "Backspace"
+        sequence: "Back"
+        //sequence: "Backspace"
         onActivated:{
             var previous = stackView.pop();
             if(previous !== null && previous !== undefined){
@@ -67,11 +75,6 @@ ApplicationWindow {
                 Qt.quit();
             }
         }
-    }
-
-    property var linkToUsrProfileOBject
-    function setLinkToUsrProfileOBject(link){
-        linkToUsrProfileOBject = link;
     }
 
     SwipeView{
@@ -101,14 +104,12 @@ ApplicationWindow {
     Component{
         id:usrProfiles
         Page_UsersProfile{
-            id:usrProfilesItem
         }
     }
 
     Component{
         id:profile
         Page_Profile{
-            id:profileItem
         }
     }
 }

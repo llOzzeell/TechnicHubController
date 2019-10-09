@@ -14,7 +14,9 @@ Item {
 
     property int createIndex: -1
     property bool editorMode: true
-    property string port: portModel.get(comboBox.currentIndex).name
+
+    property string port1: portModel.get(comboBox.currentIndex).name
+    property string port2: ""
     property bool inverted: false
 
     width: implicitWidth

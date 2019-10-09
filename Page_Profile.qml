@@ -27,6 +27,15 @@ Item {
         objectCounter++;
     }
 
+//    function createControl(type, name, width, x, y, invert, port1, port2, servoAngle, maxSpeed){
+
+//        var component = Qt.createComponent(control)
+//        var propObj = {"width":120, "x": _x - 12/2, "y": _y - 120/2, editorMode: root.editorMode, createIndex: objectCounter };
+//        var controlObject = component.createObject(root, propObj);
+//        dynamicControlsArray[objectCounter] = controlObject;
+//        objectCounter++;
+//    }
+
     function setEditorModeToAllControls(value){
         dynamicControlsArray.forEach(function(item){
             if(item !== undefined)item.editorMode = value;
@@ -62,7 +71,6 @@ Item {
             if(controlsList.isVisible) controlsList.hide();
             saveProfile();
             setOrientation("portraite");
-            //androidFunc.setOrientation("portraite");
             stackView.pop();
         }
 
@@ -83,11 +91,11 @@ Item {
         anchors.leftMargin: 10
         visible: editorMode && !controlsList.isVisible
 
-//        Behavior on visible {
-//            NumberAnimation{
-//                duration: 100
-//            }
-//        }
+        Behavior on visible {
+            NumberAnimation{
+                duration: 100
+            }
+        }
 
         onClicked: { controlsList.show(); }
     }
@@ -119,7 +127,6 @@ Item {
         }
 
         onControlChoosed: { createControl(element); hide(); }
-
     }
 
 }

@@ -6,12 +6,18 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
     clip: true
-    Component.onCompleted: setLinkToUsrProfileOBject(this);
+
+    function loadProfile(name){
+        var data = {'name': defaultName};
+        profileModel.append(data);
+        profilesController.addProfile(defaultName);
+    }
 
     function addProfile(){
-        var data = {'name': "New profile"};
+        var defaultName = "New profile";
+        var data = {'name': defaultName};
         profileModel.append(data);
-        profilesController.addProfile();
+        profilesController.addProfile(defaultName);
     }
 
     function deleteProfile(index){
@@ -25,7 +31,6 @@ Item {
 
     ListView {
         id: profileView
-        //interactive: (contentItem.height > profileView.height)
         interactive: true
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10

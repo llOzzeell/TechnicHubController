@@ -11,41 +11,95 @@ Item {
         setEditorModeToAllControls(editorMode);
     }
 
-    readonly property string name: "profile"
-    property int index:-1
-    onIndexChanged: console.log(index)
-    property int objectCounter:0
-    property var dynamicControlsArray:[]
-    rotation: 0
-
-    function createControl(control){
-        var component = Qt.createComponent(control)
-        var _x = width/2;
-        var _y = height/2;
-        var propObj = {"width":120, "x": _x - 12/2, "y": _y - 120/2, editorMode: root.editorMode, createIndex: objectCounter };
-        var controlObject = component.createObject(root, propObj);
-        dynamicControlsArray[objectCounter] = controlObject;
-        objectCounter++;
-    }
-
-//    function createControl(type, name, width, x, y, invert, port1, port2, servoAngle, maxSpeed){
-
-//        var component = Qt.createComponent(control)
-//        var propObj = {"width":120, "x": _x - 12/2, "y": _y - 120/2, editorMode: root.editorMode, createIndex: objectCounter };
-//        var controlObject = component.createObject(root, propObj);
-//        dynamicControlsArray[objectCounter] = controlObject;
-//        objectCounter++;
-//    }
-
     function setEditorModeToAllControls(value){
         dynamicControlsArray.forEach(function(item){
             if(item !== undefined)item.editorMode = value;
         })
     }
 
+    property var typeArr:[controlModel.get(0).element,controlModel.get(1).element,controlModel.get(2).element]
+    readonly property string name: "profile"
+    property int index:-1
+    onIndexChanged: loadProfile()
+
+    property int objectCounter:0
+    property var dynamicControlsArray:[]
+
+    function createNewControl(control){
+
+        var component = Qt.createComponent(control)
+        var _x = width/2;
+        var _y = height/2;
+        var _width = 140;
+        var _port1 = 0;
+        var _port2 = 0;
+        var _servo = 90;
+        var _maxspeed = 100;
+        var propObj = {
+            editorMode: root.editorMode,
+            createIndex: objectCounter,
+            "width":_width,
+            "x": _x,
+            "y": _y,
+            port1: _port1,
+            port2: _port2,
+            servoangle: _servo,
+            maxspeed:_maxspeed };
+        var controlObject = component.createObject(root, propObj);
+        dynamicControlsArray[objectCounter] = controlObject;
+        objectCounter++;
+    }
+
     function deleteControl(index){
         if(dynamicControlsArray[index] !== undefined ){ dynamicControlsArray[index].destroy(); dynamicControlsArray[index] = undefined; }
     }
+
+    function createWhileLoadControl(type, width, x, y, inverted, port1, port2, servoangle, maxspeed){
+
+        var component = Qt.createComponent(typeArr[type])
+        var propObj = {
+            editorMode: root.editorMode,
+            createIndex: objectCounter,
+            "width":width,
+            "x": x,
+            "y": y,
+            port1: port1,
+            port2: port2,
+            inverted:inverted,
+            servoangle: servoangle,
+            maxspeed:maxspeed };
+        var controlObject = component.createObject(root, propObj);
+        dynamicControlsArray[objectCounter] = controlObject;
+        objectCounter++;
+    }
+
+    function saveProfile(){
+        if(objectCounter > 0 && index >= 0){
+            profilesController.clearControlInProfile(index);
+            dynamicControlsArray.forEach(function(control){
+               if(control !== undefined){
+                   var inv = false; inv = (control.inverted > 0);
+                   console.log("QML SAVE INVERTED: " + inv);
+                   profilesController.addProfileControls(index, control.type, control.width, control.x, control.y, inv , control.port1, control.port2, control.servoangle, control.maxspeed);
+               }
+            })
+            profilesController.saveToFile();
+            index=-1;
+        }
+    }
+
+    function loadProfile(){
+        if(index >= 0){
+            var count = profilesController.getControlsCounts(index);
+            for(var i = 0; i < count; i++){
+                var list = profilesController.getProfileControls(index,i);
+                var inv = false; inv = (list[4] > 0);
+                console.log("QML LOAD INVERTED: " + inv);
+                createWhileLoadControl(list[0], list[1], list[2], list[3], inv, list[5], list[6], list[7], list[8]);
+            }
+        }
+    }
+
 
     MouseArea {
         id: mouseArea
@@ -71,7 +125,7 @@ Item {
         onClicked: {
             editorMode = false;
             if(controlsList.isVisible) controlsList.hide();
-            //saveProfile();
+            saveProfile();
             stackView.pop();
         }
 
@@ -128,15 +182,8 @@ Item {
         rotation: 90
         anchors.verticalCenter: parent.verticalCenter
 
-        onControlChoosed: { createControl(element); hide(); }
+        onControlChoosed: { createNewControl(element); hide(); }
     }
 
 }
 
-
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:2;anchors_height:48}D{i:3;anchors_width:48}
-}
-##^##*/

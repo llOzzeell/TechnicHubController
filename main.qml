@@ -37,16 +37,30 @@ ApplicationWindow {
         sequence: "Back"
         //sequence: "Backspace"
         onActivated:{
-            var previous = stackView.pop();
-            if(previous !== null && previous !== undefined){
-                if(previous.name === "profile"){
-                    setOrientation("portraite");
-                }
-            }
+            stackView.pop();
             if(swipe.currentIndex == 0){
                 console.log("quit");
                 Qt.quit();
             }
+        }
+    }
+
+    ListModel{
+        id:controlModel
+        ListElement{
+            name: "Рулевое управление";
+            ico: "icons/steering.svg"
+            element:"Profile_Control_Steering.qml"
+        }
+        ListElement{
+            name: "Управление передвижением";
+            ico: "icons/moving.svg"
+            element:"Profile_Control_Moving.qml"
+        }
+        ListElement{
+            name: "Линейная кнопка";
+            ico: "icons/linear.svg"
+            element:"Profile_Control_HoldButtons.qml"
         }
     }
 
@@ -56,7 +70,7 @@ ApplicationWindow {
         clip: true
         visible: true
         interactive: false
-        currentIndex: 0
+        currentIndex: 1
 
         Page_Finder{
             id:finder

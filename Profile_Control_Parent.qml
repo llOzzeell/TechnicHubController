@@ -17,9 +17,12 @@ Item {
     property int createIndex: -1
     property bool editorMode: true
 
-    property string port1: portModel.get(comboBox.currentIndex).name
-    property string port2: ""
-    property bool inverted: false
+    property int type;
+    property alias port1: comboBox.currentIndex
+    property int port2: 14
+    property alias inverted: switchD.checked
+    property int maxspeed;
+    property int servoangle;
 
     width: implicitWidth
     height: implicitheight
@@ -106,6 +109,7 @@ Item {
             id: rectangle1
             color: "#00000000"
             radius: 2
+            visible: editorMode
             border.color: Material.primary
             opacity: 0.5
             border.width: 2
@@ -200,13 +204,11 @@ Item {
                     }
 
                     Switch {
-                        id: delayButton1
+                        id: switchD
                         height: parent.height
-                        text: qsTr("")
                         anchors.right: parent.right
                         anchors.rightMargin: 10
                         anchors.verticalCenter: parent.verticalCenter
-                        onCheckedChanged: inverted = checked;
                     }
                 }
             }
@@ -228,4 +230,27 @@ Item {
 
     }
 
+    Label {
+        id: label2
+        y: 52
+        text: "x:" + root.x
+        anchors.left: parent.left
+        anchors.leftMargin: -59
+    }
+
+    Label {
+        id: label3
+        x: 44
+        y: -103
+        text: "y:" + root.y
+        anchors.right: parent.right
+        anchors.rightMargin: 44
+    }
+
 }
+
+/*##^##
+Designer {
+    D{i:24;anchors_x:-59;anchors_y:52}D{i:25;anchors_x:44}
+}
+##^##*/

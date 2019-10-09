@@ -106,13 +106,42 @@ QList<QString> Profiles::getProfilesNames()
     return names;
 }
 
-void Profiles::updateProfileName(int index, QString name)
+void Profiles::updateProfileName(int profileIndex, QString name)
 {
-    profiles[index].setName(name);
+    profiles[profileIndex].setName(name);
     saveToFile();
 }
 
-void Profiles::saveProfile()
+void Profiles::clearControlInProfile(int profileIndex)
 {
+    profiles[profileIndex].clearProfile();
+}
 
+void Profiles::addProfileControls(int profileIndex, int type, int width, int x, int y, bool inverted, int port1, int port2, int servo, int maxspeed)
+{
+    Control con{quint8(type), quint16(width), qint16(x), qint16(y), inverted, quint8(port1), quint8(port2), quint8(servo), quint8(maxspeed)};
+    profiles[profileIndex].addControl(con);
+}
+
+int Profiles::getControlsCounts(int profileIndex)
+{
+    return profiles[profileIndex].getCount();
+}
+
+QList<QString> Profiles::getProfileControls(int profileIndex, int controlIndex)
+{
+    QList<QString> list;
+    Control c = profiles[profileIndex].getControl(controlIndex);
+
+    list.append(QString::number(c.type));
+    list.append(QString::number(c.width));
+    list.append(QString::number(c.x));
+    list.append(QString::number(c.y));
+    list.append(QString::number(c.invert));
+    list.append(QString::number(c.port1));
+    list.append(QString::number(c.port2));
+    list.append(QString::number(c.servoAngle));
+    list.append(QString::number(c.maxSpeed));
+
+    return list;
 }

@@ -1,8 +1,12 @@
 #ifndef ANDROIDFUNCTION_H
 #define ANDROIDFUNCTION_H
 #include <QObject>
-#include <QtAndroid>
 #include <QDebug>
+#ifdef Q_OS_ANDROID
+    #include <QAndroidJniObject>
+    #include <QAndroidJniEnvironment>
+    #include <QtAndroid>
+#endif
 
 class AndroidExt: public QObject
 {

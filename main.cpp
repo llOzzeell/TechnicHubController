@@ -7,8 +7,9 @@
 #include "hubconnector.h"
 #include "huboperator.h"
 #include "profiles.h"
-#include "androidext.h"
-
+#ifdef Q_OS_ANDROID
+    #include "androidext.h"
+#endif
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -17,9 +18,11 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+#ifdef Q_OS_ANDROID
     AndroidExt afunc;
     QQmlContext *context_afunc = engine.rootContext();
     context_afunc ->setContextProperty("androidFunc", &afunc);
+#endif
 
     HubFinder hubFinder;
     hubFinder.setDebugOut(false);

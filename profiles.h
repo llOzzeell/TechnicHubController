@@ -14,15 +14,13 @@
 
 struct Control
 {
-    Control(){ type = 0; width = 0; x = 0; y = 0; invert = false; port1 = "A"; port2 = "A"; servoAngle = 0; maxSpeed = 0;}
-
     quint8 type;
-    quint8 width;
-    quint8 x;
-    quint8 y;
+    quint16 width;
+    qint16 x;
+    qint16 y;
     bool invert;
-    QString port1;
-    QString port2;
+    quint8 port1;
+    quint8 port2;
     quint8 servoAngle;
     quint8 maxSpeed;
 
@@ -40,6 +38,8 @@ public:
 
     void clearProfile(){controls.clear();}
     void addControl(Control &con){controls.push_back(con);}
+    Control& getControl(int index){ return controls[index]; }
+    int getCount(){return controls.count(); }
 
 private:
     QString profName;
@@ -59,7 +59,7 @@ public:
 private:
 
     QFile file;
-    const QString pathToFile = "/profiles.dat";
+    const QString pathToFile = "/profiles.pf1";
     QVector<Profile> profiles;
     QList<QString>names;
 
@@ -74,9 +74,11 @@ public slots:
     bool deleteProfile(int index);
 
     QList<QString> getProfilesNames();
-    void updateProfileName(int index, QString name);
-
-    void saveProfile();
+    void updateProfileName(int profileIndex, QString name);
+    void clearControlInProfile(int profileIndex);
+    void addProfileControls(int profileIndex, int type, int width, int x, int y, bool inverted, int port1, int port2, int servo, int maxspeed);
+    int getControlsCounts(int profileIndex);
+    QList<QString> getProfileControls(int profileIndex, int controlIndex);
 
 };
 

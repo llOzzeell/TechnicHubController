@@ -15,8 +15,8 @@ Item {
     readonly property int spacing : profileView.spacing
 
     function getControlName(index){
-        if(index >=0 && index < profileModel.count){
-            return profileModel.get(index).element
+        if(index >=0 && index < controlModel.count){
+            return controlModel.get(index).element
         }
     }
 
@@ -40,7 +40,7 @@ Item {
         clip: false
         visible: true
         spacing: 4
-        model: profileModel
+        model: controlModel
         delegate:controlsListDelegate
 
     }
@@ -53,30 +53,8 @@ Item {
             MouseArea{
                 id:ma
                 anchors.fill: parent
-                onClicked: root.controlChoosed(index, profileModel.get(index).element);
+                onClicked: root.controlChoosed(index, controlModel.get(index).element);
             }
         }
     }
-
-    ListModel{
-        id:profileModel
-        ListElement{
-            name: "Рулевое управление";
-            ico: "icons/steering.svg"
-            element:"Profile_Control_Steering.qml"
-        }
-        ListElement{
-            name: "Управление передвижением";
-            ico: "icons/moving.svg"
-            element:"Profile_Control_Moving.qml"
-        }
-        ListElement{
-            name: "Линейная кнопка";
-            ico: "icons/linear.svg"
-            element:"Profile_Control_HoldButtons.qml"
-        }
-    }
-
-
-
 }

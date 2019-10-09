@@ -204,6 +204,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         width: 100
         maximumLength: 20
+        focus: isCurrent
 
         onFocusChanged: {
             if(!focus && text == ""){
@@ -220,11 +221,6 @@ Item {
                 profilesController.updateProfileName(index, text);
             }
             nameLabel.focus = false;
-
-//            else text = tempText;
-//            tempText = "";
-//            nameLabel.focus = false;
-//            isEditing = false;
         }
 
     }

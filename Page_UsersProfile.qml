@@ -53,7 +53,7 @@ Item {
 
     Gui_TopBar{
         id:topBar
-        labelText: "Профили"
+        labelText: "Профили" + " (" + profileModel.count + ")"
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right

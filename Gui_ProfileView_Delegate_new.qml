@@ -84,6 +84,7 @@ Item {
         property int fieldRightShift:0
         onFieldRightShiftChanged: console.log(fieldRightShift)
         property bool expanded: (fieldRightShift >= deleteItem.deleteFieldWidth)
+        property bool middleState: (fieldRightShift > 0)
 
         PropertyAnimation{
             id:collapseAnimation
@@ -107,7 +108,7 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onPressed: {
-                if(fieldItem.expanded){
+                if(fieldItem.middleState || fieldItem.expanded){
                     collapseAnimation.start()
                     wasExpanded = true;
                     return;
@@ -115,12 +116,13 @@ Item {
                 if(!fieldItem.expanded)startPoint = mouseX;
             }
             onReleased: {
-                if(fieldItem.fieldRightShift < minimumFingerSHift){
-                    root.runProfileClick();
+                if(shift <= minimumFingerSHift){
+                    if(!fieldItem.middleState)root.runProfileClick();
+                    else collapseAnimation.start();
                     return;
                 }
 
-                if(!fieldItem.expanded)collapseAnimation.start()
+                if(fieldItem.middleState && !fieldItem.expanded)collapseAnimation.start()
                 if(wasExpanded) wasExpanded = false;
             }
 
@@ -152,6 +154,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             opacity: (100-(100/deleteItem.deleteFieldWidth * fieldItem.fieldRightShift))/100
+            visible: opacity > 0
             onClicked: {
                 if(opacity === 1)root.editorClick()
             }

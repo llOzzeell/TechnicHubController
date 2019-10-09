@@ -22,8 +22,6 @@ Item {
 
     ListView {
         id: profileView
-        boundsBehavior: Flickable.DragAndOvershootBounds
-        flickableDirection: Flickable.AutoFlickDirection
         //interactive: (contentItem.height > profileView.height)
         interactive: true
         anchors.bottom: parent.bottom

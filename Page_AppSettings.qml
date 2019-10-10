@@ -5,7 +5,9 @@ import QtQuick.Controls.Material 2.2
 Item {
     id:root
 
-    Component.onCompleted: darkModeSwitch.checked = window.currentDarkTheme;
+    Component.onCompleted: darkModeSwitch.checked = appSett.getDarkMode();
+
+    property int changeColorDuration:200
 
     Rectangle {
         id: rectangle
@@ -14,7 +16,7 @@ Item {
 
         Behavior on color{
             ColorAnimation {
-                duration: 300
+                duration: changeColorDuration
             }
         }
     }
@@ -47,7 +49,7 @@ Item {
 
                 Behavior on color{
                     ColorAnimation {
-                        duration: 300
+                        duration: changeColorDuration
                     }
                 }
             }
@@ -64,7 +66,6 @@ Item {
                 y: 0
                 width: 40
                 height: 48
-                text: qsTr("")
                 anchors.verticalCenter: parent.verticalCenter
                 checked: true
                 checkable: true
@@ -84,7 +85,7 @@ Item {
 
                 Behavior on color{
                     ColorAnimation {
-                        duration: 300
+                        duration: changeColorDuration
                     }
                 }
             }
@@ -94,6 +95,12 @@ Item {
 
     Gui_TopBar {
         id: gui_TopBar
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
         labelText: "Настройки"
         backButtonVisible: true
         right1ButtonVisible: false

@@ -106,6 +106,7 @@ Profile_Control_Parent{
                 anchors.bottomMargin: 0
                 anchors.topMargin: 0
                 minimumTouchPoints: 1
+                enabled: !editorMode
                 touchPoints: [ TouchPoint { id: point1 } ]
                 property int shift:0
                 onTouchUpdated: {

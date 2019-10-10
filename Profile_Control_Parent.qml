@@ -8,24 +8,22 @@ Item {
 
     implicitWidth: 120
     implicitHeight: 120
-
-
-    property int minControlWidth:120
-    property int maxControlWidth:260
-
-    property int createIndex: -1
-    property bool editorMode: true
-
-    property int type;
-    property alias port1: port1.currentIndex
-    property alias port2: port2.currentIndex
-    property alias inverted: switchD.checked
-    property int maxspeed;
-    property int servoangle;
-
     width: implicitWidth
     height: implicitheight
     rotation: 90
+
+    property int minControlWidth:120
+    property int maxControlWidth:220
+
+    property int createIndex: -1
+    property alias editorMode: editorItem.visible
+
+    property int type
+    property int port1
+    property int port2
+    property bool inverted
+    property int maxspeed
+    property int servoangle
 
     function setScalePlus(){
         if( width < maxControlWidth) width += 20;
@@ -35,11 +33,21 @@ Item {
         if( width > minControlWidth) width -= 20;
     }
 
-    Drag.active: movingMouseArea.drag.active
-
+    function highlight(trigger){
+        if(trigger){
+            frame.visible = true;
+        }
+        else{
+            frame.visible = false;
+        }
+    }
 
     Item {
         id: editorItem
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         visible: true
         z: 2
         anchors.fill: parent
@@ -47,6 +55,7 @@ Item {
         Row {
             id: circlebuttonPanel
             height: 38
+            enabled: true
             anchors.bottom: parent.top
             anchors.bottomMargin: 6
             anchors.horizontalCenter: parent.horizontalCenter
@@ -90,22 +99,38 @@ Item {
                 visible: editorMode
                 backgroundColor: Material.primary
                 iconSource: "icons/profileEdit.svg"
-                onClicked: paramItem.visible = true
+                onClicked:{
+
+                    root.highlight(true);
+                    root.parent.openControlParam(root);
+                }
             }
         }
 
         Rectangle {
             id: frame
-            color: "#00000000"
-            radius: 2
-            border.color: Material.foreground
-            visible: editorMode
-            opacity: 0.3
-            border.width: 2
+            color: "#99f48fb1"
+            radius: height/2
+            border.color: Material.accent
+            rotation: 0
+            anchors.rightMargin: -border.width/2
+            anchors.leftMargin: -border.width/2
+            anchors.bottomMargin: -border.width/2
+            anchors.topMargin: -border.width/2
+            visible: false
+            opacity: visible ? 1 : 0
+            border.width: 4
             anchors.fill: parent
-        }
 
+            Behavior on opacity {
+                NumberAnimation{
+                    duration:150
+                }
+            }
+        }
     }
+
+    Drag.active:  movingMouseArea.drag.active
 
     MouseArea {
         id: movingMouseArea
@@ -115,207 +140,5 @@ Item {
         drag.target: parent
     }
 
-    Item {
-        id: paramItem
-        x: -42
-        y: -74
-        width: 220
-        height: 251
-        z: 1
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        visible: false
-
-        Pane {
-            id: background
-            anchors.fill: parent
-            Material.background: Material.primary
-            Material.elevation: 4
-        }
-
-        Column {
-            id: column
-            height: 94
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            spacing: 2
-
-            Item {
-                id: propItem_1
-                width: parent.width
-                height: 40
-
-                Gui_ComboBox_Custom{
-                    id: port1
-                    x: 319
-                    y: 13
-                    width: 60
-                    height: parent.height
-                    rotation: 0
-                    anchors.right: parent.right
-                    anchors.rightMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                    font.bold: true
-                    font.pointSize: 12
-                    visible: editorMode
-                    model: portModel
-
-                    ListModel{
-                        id:portModel
-                        ListElement{
-                            name: "A"
-                        }
-                        ListElement{
-                            name: "B"
-                        }
-                        ListElement{
-                            name: "C"
-                        }
-                        ListElement{
-                            name: "D"
-                        }
-                    }
-                }
-
-                Label {
-                    id: label
-                    text: qsTr("Порт")
-                    font.weight: Font.Light
-                    font.pointSize: 10
-                    anchors.left: parent.left
-                    anchors.leftMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-            Item {
-                id: propItem_2
-                width: parent.width
-                height: 40
-                visible: false
-
-                Gui_ComboBox_Custom {
-                    id: port2
-                    width: 60
-                    height: parent.height
-                    anchors.verticalCenter: parent.verticalCenter
-                    model: portModel
-                    anchors.rightMargin: 10
-                    anchors.right: parent.right
-                    visible: editorMode
-                    font.bold: true
-                    font.pointSize: 12
-                }
-
-                Label {
-                    id: label2
-                    text: qsTr("Порт")
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    font.weight: Font.Light
-                    anchors.leftMargin: 10
-                    font.pointSize: 12
-                }
-            }
-
-            Item {
-                id: propItem_3
-                width: parent.width
-                height: 40
-
-                Label {
-                    id: label1
-                    text: qsTr("Инверсия")
-                    font.weight: Font.Light
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: 10
-                    anchors.left: parent.left
-                    font.pointSize: 10
-                }
-
-                Switch {
-                    id: switchD
-                    height: parent.height
-                    anchors.right: parent.right
-                    anchors.rightMargin: 10
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-            Item {
-                id: propItem_4
-                width: parent.width
-                height: 40
-                Label {
-                    id: label3
-                    text: qsTr("Угол серво")
-                    anchors.leftMargin: 10
-                    font.pointSize: 9
-                    anchors.left: parent.left
-                    font.weight: Font.Light
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                SpinBox {
-                    id: servoA
-                    x: 86
-                    y: 270
-                    width: 120
-                    height: 31
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    value: 90
-                    to: 179
-                }
-            }
-
-            Item {
-                id: propItem_5
-                width: parent.width
-                height: 40
-                Label {
-                    id: label4
-                    text: qsTr("Макс. скорость")
-                    anchors.leftMargin: 10
-                    font.pointSize: 9
-                    anchors.left: parent.left
-                    font.weight: Font.Light
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
-                SpinBox {
-                    id: servoA1
-                    x: 86
-                    y: 270
-                    width: 120
-                    height: 31
-                    from: 1
-                    anchors.right: parent.right
-                    value: 100
-                    anchors.rightMargin: 0
-                    to: 100
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-        }
-
-        Gui_Profile_Button {
-            id: gui_Profile_Button
-            height: 26
-            text: "Закрыть"
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 10
-            onClicked: paramItem.visible = false
-        }
-    }
 }
-
 

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFile>
 #include <QDataStream>
+#include <QStandardPaths>
 #include <QGuiApplication>
 
 class AppSettings: public QObject{
@@ -14,7 +15,7 @@ public:
 private:
 
     QFile file;
-    const QString pathToFile = "/config3.dat";
+    const QString pathToFile = "/config.z";
     bool darkMode;
 
 signals:
@@ -25,10 +26,10 @@ public slots:
 
     void loadFromFile(){
 
-        //auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-        //QFile file(path + pathToFile);
+        auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+        QFile file(path + pathToFile);
 
-        QFile file(qApp->applicationDirPath() + pathToFile);
+//      QFile file(qApp->applicationDirPath() + pathToFile);
 
         if(file.exists())
         {
@@ -42,10 +43,10 @@ public slots:
 
     void saveToFile(){
 
-        //auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-        //QFile file(path + pathToFile);
+        auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+        QFile file(path + pathToFile);
 
-        QFile file(qApp->applicationDirPath() + pathToFile);
+//      QFile file(qApp->applicationDirPath() + pathToFile);
 
         file.open(QIODevice::WriteOnly);
         QDataStream out(&file);

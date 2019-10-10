@@ -59,7 +59,7 @@ public:
 private:
 
     QFile file;
-    const QString pathToFile = "/profiles.pf1";
+    const QString pathToFile = "/profiles.dat";
     QVector<Profile> profiles;
     QList<QString>names;
 

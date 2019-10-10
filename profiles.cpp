@@ -41,10 +41,10 @@ Profiles::Profiles(QObject *parent) : QObject(parent)
 
 void Profiles::loadFromFile()
 {
-    //auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    //QFile file(path + pathToFile);
+    auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QFile file(path + pathToFile);
 
-    QFile file(qApp->applicationDirPath() + pathToFile);
+    //QFile file(qApp->applicationDirPath() + pathToFile);
 
     if(file.exists())
     {
@@ -68,10 +68,10 @@ void Profiles::loadFromFile()
 
 void Profiles::saveToFile()
 {
-    //auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    //QFile file(path + pathToFile);
+    auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QFile file(path + pathToFile);
 
-    QFile file(qApp->applicationDirPath() + pathToFile);
+    //QFile file(qApp->applicationDirPath() + pathToFile);
 
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);

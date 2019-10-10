@@ -10,6 +10,14 @@ Profile_Control_Parent {
 
     property int speed: 100
 
+    function forwardClicked(){
+
+    }
+
+    function reverseClicked(){
+
+    }
+
     Rectangle {
         id: rectangle
         color: "#302f2f"
@@ -49,6 +57,7 @@ Profile_Control_Parent {
         MultiPointTouchArea{
             id: mouseArea
             anchors.fill: parent
+            enabled: !editorMode
 
             onPressed: {
                 reverseButton.border.width = root.height/8

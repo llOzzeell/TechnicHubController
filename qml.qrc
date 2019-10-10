@@ -45,5 +45,6 @@
         <file>fonts/Montserrat-Thin.ttf</file>
         <file>Gui_ComboBox_Custom.qml</file>
         <file>CursorDelegate.qml</file>
+        <file>Gui_Profile_ControlParam.qml</file>
     </qresource>
 </RCC>

@@ -51,8 +51,6 @@ int main(int argc, char *argv[])
     QQmlContext *context_appsett = engine.rootContext();
     context_appsett->setContextProperty("appSett", &appsett);
 
-
-
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

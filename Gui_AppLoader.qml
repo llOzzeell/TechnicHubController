@@ -1,24 +1,23 @@
 import QtQuick 2.0
+import QtQuick.Window 2.11
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Material 2.2
 
 Item {
     id:root
-    width: window.width
-    height: window.height
-//    width: 640
-//    height: 480
+    width: Screen.width
+    height: Screen.height
 
     Rectangle {
         id: background
-        color: Material.background
+        color: Style.dark_background
         anchors.fill: parent
     }
 
     Rectangle {
         id: line
         height: loader.height/30
-        color: Material.accent
+        color: Style.dark_accent
         radius: height/2
         anchors.top: loader.bottom
         anchors.topMargin: 0
@@ -191,8 +190,8 @@ Item {
 
         Text {
             id: text1
-            color: Material.foreground
-            text: qsTr("Zcontro1")
+            color: Style.dark_foreground
+            text: qsTr("Contro1z")
             verticalAlignment: Text.AlignTop
             font.family: Style.logoFont
             font.weight: Font.Light

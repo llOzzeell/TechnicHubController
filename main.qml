@@ -7,30 +7,26 @@ import "."
 ApplicationWindow {
     id: window
     visible: true
-    color: Material.background
+    color: "#000000"
 
-    width: 400
-    height: width/9*18
+    //    width: 400
+    //    height: width/9*18
 
     Component.onCompleted:{
         setDarkTheme(appSett.getDarkMode());
-        //androidFunc.setOrientation("portraite");
+        androidFunc.setOrientation("portraite");
     }
 
-    property bool currentDarkTheme: true
     function setDarkTheme(param){
-        currentDarkTheme = param;
         appSett.setDarkMode(param);
         return param? setDark():setLight();
     }
     function setDark(){
-
         Material.theme = Material.Dark
         Material.background = Style.dark_background;
         Material.primary = Style.dark_primary;
         Material.accent = Style.dark_accent;
         Material.foreground = Style.dark_foreground
-
         return 0;
     }
     function setLight(){
@@ -39,15 +35,20 @@ ApplicationWindow {
         Material.primary = Style.light_primary;
         Material.accent = Style.light_accent;
         Material.foreground = Style.light_foreground
-
         return 0;
     }
 
+    function setColorToStatusBar(color){
+        androidFunc.setStatusBarColor(color);
+        window.color = color;
+    }
+
     Shortcut {
-        //sequence: "Back"
-        sequence: "Backspace"
+        sequence: "Back"
+        //sequence: "Backspace"
         onActivated:{
             stackView.pop();
+//            if(item !== null && item.name === "profile") androidFunc.setOrientation("portraite");
             if(swipe.currentIndex == 0){
                 Qt.quit();
             }
@@ -73,13 +74,19 @@ ApplicationWindow {
         }
     }
 
+    Rectangle {
+        id: rectangle
+        color: Material.background
+        anchors.fill: parent
+    }
+
     SwipeView{
         id:swipe
         anchors.fill: parent
         clip: true
         visible: true
         interactive: false
-        currentIndex: 1
+        currentIndex: 0
 
         Page_Finder{
             id:finder
@@ -94,6 +101,39 @@ ApplicationWindow {
             id:stackView
             clip: true
             initialItem: usrProfiles
+
+            pushEnter: Transition {
+                    PropertyAnimation {
+                        property: "opacity"
+                        from: 0
+                        to:1
+                        duration: 200
+                    }
+                }
+                pushExit: Transition {
+                    PropertyAnimation {
+                        property: "opacity"
+                        from: 1
+                        to:0
+                        duration: 200
+                    }
+                }
+                popEnter: Transition {
+                    PropertyAnimation {
+                        property: "opacity"
+                        from: 0
+                        to:1
+                        duration: 200
+                    }
+                }
+                popExit: Transition {
+                    PropertyAnimation {
+                        property: "opacity"
+                        from: 1
+                        to:0
+                        duration: 200
+                    }
+                }
         }
     }
 
@@ -119,13 +159,20 @@ ApplicationWindow {
     Loader{
         id:pageLoader
         anchors.fill: parent
-        //source: {"qrc:/Gui_AppLoader.qml"}
+        source: {"qrc:/Gui_AppLoader.qml"}
         Timer{
-            interval: 1200
+            interval: 2200
             repeat: false
             running: true
             onTriggered: pageLoader.source = "";
         }
     }
 
+
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:6;anchors_height:10;anchors_width:200}
+}
+##^##*/

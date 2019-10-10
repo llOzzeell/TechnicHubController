@@ -8,6 +8,8 @@ ComboBox{
     font.family: "Roboto"
     font.weight: Font.Light
 
+    Material.background: Material.primary
+
     delegate: MenuItem {
         width: parent.width-6
         height:36

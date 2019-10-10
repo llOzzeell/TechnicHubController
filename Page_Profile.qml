@@ -6,7 +6,7 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
 
-    property bool editorMode: true
+    property bool editorMode: false
     onEditorModeChanged:{
         setEditorModeToAllControls(editorMode);
     }
@@ -107,7 +107,6 @@ Item {
         }
     }
 
-
     MouseArea {
         id: mouseArea
         z: 2
@@ -130,12 +129,15 @@ Item {
         iconSource: "icons/save.svg"
         visible: editorMode
         onClicked: {
-            emptyprofile.visible = false;
-            editorMode = false;
-            if(controlsList.isVisible) controlsList.hide();
-            saveProfile();
-            stackView.pop();
+            if(!controlParam.visible){
+                emptyprofile.visible = false;
+                editorMode = false;
+                if(controlsList.isVisible) controlsList.hide();
+                saveProfile();
+                stackView.pop();
+            }
         }
+        backgroundColor: controlParam.visible ? Material.primary : Material.accent
 
         Behavior on visible {
             NumberAnimation{
@@ -153,7 +155,9 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 10
         z: 2
-        visible: editorMode && !controlsList.isVisible
+        visible: editorMode/* && !controlsList.isVisible*/
+
+        backgroundColor: controlParam.visible ? Material.primary : Material.accent
 
         Behavior on visible {
             NumberAnimation{
@@ -161,7 +165,7 @@ Item {
             }
         }
 
-        onClicked: { controlsList.show(); }
+        onClicked: {if(!controlParam.visible){ controlsList.show(); } }
     }
 
     Gui_Profile_Editor_ControlsList {
@@ -225,13 +229,24 @@ Item {
             y: 82
             height: 32
             text: "Редактор"
-            labelFontpointSize: 14
+            labelFontpointSize: 16
             iconSource: ""
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked:  { emptyprofile.visible = false; editorMode = true;   }
         }
+    }
+
+    function openControlParam(link){
+        controlParam.setLink(link);
+        controlParam.visible = true;
+    }
+
+    Gui_Profile_ControlParam{
+        id: controlParam
+        anchors.fill: parent
+        visible: false
     }
 
 }

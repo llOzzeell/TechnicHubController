@@ -41,5 +41,6 @@
         <file>icons/accepted.svg</file>
         <file>Gui_ProfileView_Delegate_new.qml</file>
         <file>Gui_IconButton.qml</file>
+        <file>Gui_AppLoader.qml</file>
     </qresource>
 </RCC>

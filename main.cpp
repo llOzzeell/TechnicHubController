@@ -10,6 +10,7 @@
 #ifdef Q_OS_ANDROID
     #include "androidext.h"
 #endif
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

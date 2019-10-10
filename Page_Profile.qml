@@ -130,6 +130,7 @@ Item {
         iconSource: "icons/save.svg"
         visible: editorMode
         onClicked: {
+            emptyprofile.visible = false;
             editorMode = false;
             if(controlsList.isVisible) controlsList.hide();
             saveProfile();
@@ -201,7 +202,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         rotation: 90
-        visible: (loadedControls <= 0)
+        visible: (loadedControls <= 0 && !editorMode)
 
         TextEdit {
             id: label
@@ -209,6 +210,7 @@ Item {
             text: qsTr("Профиль пуст. Добавьте элементы в режиме редактора.")
             textFormat: Text.PlainText
             readOnly: true
+            font.family: "Roboto"
             anchors.fill: parent
 
             horizontalAlignment: Text.AlignHCenter
@@ -228,7 +230,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.horizontalCenter: parent.horizontalCenter
-            onClicked:  { editorMode = true; emptyprofile.visible = false;  }
+            onClicked:  { emptyprofile.visible = false; editorMode = true;   }
         }
     }
 

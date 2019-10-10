@@ -186,6 +186,7 @@ Item {
         height: root.height
         color: Material.foreground
         text: name
+        font.family: "Roboto"
         cursorVisible: false
         font.weight: Font.Light
         font.pointSize: 18

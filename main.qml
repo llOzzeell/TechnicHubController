@@ -9,9 +9,13 @@ ApplicationWindow {
     visible: true
     color: Material.background
 
+    width: 400
+    height: width/9*18
+
     Component.onCompleted:{
         setDarkTheme(true);
-        androidFunc.setOrientation("portraite");
+        //androidFunc.setOrientation("portraite");
+
     }
 
     function setDarkTheme(param){
@@ -33,9 +37,10 @@ ApplicationWindow {
         Material.foreground = Style.light_foreground
     }
 
+
     Shortcut {
-        sequence: "Back"
-        //sequence: "Backspace"
+        //sequence: "Back"
+        sequence: "Backspace"
         onActivated:{
             stackView.pop();
             if(swipe.currentIndex == 0){
@@ -44,6 +49,9 @@ ApplicationWindow {
             }
         }
     }
+
+
+
 
     ListModel{
         id:controlModel
@@ -64,13 +72,15 @@ ApplicationWindow {
         }
     }
 
+
+
     SwipeView{
         id:swipe
         anchors.fill: parent
         clip: true
         visible: true
         interactive: false
-        currentIndex: 0
+        currentIndex: 1
 
         Page_Finder{
             id:finder
@@ -99,4 +109,17 @@ ApplicationWindow {
         Page_Profile{
         }
     }
+
+    Loader{
+        id:pageLoader
+        anchors.fill: parent
+        //source: {"qrc:/Gui_AppLoader.qml"}
+        Timer{
+            interval: 1200
+            repeat: false
+            //running: true
+            onTriggered: pageLoader.source = "";
+        }
+    }
+
 }

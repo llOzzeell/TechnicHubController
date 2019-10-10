@@ -7,6 +7,7 @@ Item {
     id:root
     width: 120
     height: 26
+    property alias labelFontpointSize: label.font.pointSize
     implicitHeight: 26
     implicitWidth: 120
 

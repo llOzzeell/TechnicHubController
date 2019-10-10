@@ -230,27 +230,6 @@ Item {
 
     }
 
-    Label {
-        id: label2
-        y: 52
-        text: "x:" + root.x
-        anchors.left: parent.left
-        anchors.leftMargin: -59
-    }
-
-    Label {
-        id: label3
-        x: 44
-        y: -103
-        text: "y:" + root.y
-        anchors.right: parent.right
-        anchors.rightMargin: 44
-    }
-
 }
 
-/*##^##
-Designer {
-    D{i:24;anchors_x:-59;anchors_y:52}D{i:25;anchors_x:44}
-}
-##^##*/
+

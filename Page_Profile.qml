@@ -22,12 +22,17 @@ Item {
     property int index:-1
     onIndexChanged: loadProfile()
 
+    property int loadedControls: 0
     property int objectCounter:0
     property var dynamicControlsArray:[]
 
     function createNewControl(control){
 
         var component = Qt.createComponent(control)
+        var _type;
+        if(control === typeArr[0])_type = 0;
+        if(control === typeArr[1])_type = 1;
+        if(control === typeArr[2])_type = 2;
         var _x = width/2;
         var _y = height/2;
         var _width = 140;
@@ -36,6 +41,7 @@ Item {
         var _servo = 90;
         var _maxspeed = 100;
         var propObj = {
+            type:_type,
             editorMode: root.editorMode,
             createIndex: objectCounter,
             "width":_width,
@@ -58,6 +64,7 @@ Item {
 
         var component = Qt.createComponent(typeArr[type])
         var propObj = {
+            type:type,
             editorMode: root.editorMode,
             createIndex: objectCounter,
             "width":width,
@@ -77,11 +84,10 @@ Item {
         if(objectCounter > 0 && index >= 0){
             profilesController.clearControlInProfile(index);
             dynamicControlsArray.forEach(function(control){
-               if(control !== undefined){
-                   var inv = false; inv = (control.inverted > 0);
-                   console.log("QML SAVE INVERTED: " + inv);
-                   profilesController.addProfileControls(index, control.type, control.width, control.x, control.y, inv , control.port1, control.port2, control.servoangle, control.maxspeed);
-               }
+                if(control !== undefined){
+                    var inv = false; inv = (control.inverted > 0);
+                    profilesController.addProfileControls(index, control.type, control.width, control.x, control.y, inv , control.port1, control.port2, control.servoangle, control.maxspeed);
+                }
             })
             profilesController.saveToFile();
             index=-1;
@@ -91,10 +97,11 @@ Item {
     function loadProfile(){
         if(index >= 0){
             var count = profilesController.getControlsCounts(index);
+            loadedControls = count;
             for(var i = 0; i < count; i++){
                 var list = profilesController.getProfileControls(index,i);
                 var inv = false; inv = (list[4] > 0);
-                console.log("QML LOAD INVERTED: " + inv);
+
                 createWhileLoadControl(list[0], list[1], list[2], list[3], inv, list[5], list[6], list[7], list[8]);
             }
         }
@@ -185,5 +192,52 @@ Item {
         onControlChoosed: { createNewControl(element); hide(); }
     }
 
+    Item {
+        id: emptyprofile
+        x: 170
+        y: 200
+        width: 360
+        height: 100
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        rotation: 90
+        visible: (loadedControls <= 0)
+
+        TextEdit {
+            id: label
+            color: Material.foreground
+            text: qsTr("Профиль пуст. Добавьте элементы в режиме редактора.")
+            textFormat: Text.PlainText
+            readOnly: true
+            anchors.fill: parent
+
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+            font.pointSize: 18
+            font.weight: Font.Light
+        }
+
+        Gui_Profile_Button {
+            id: gui_Profile_Button
+            x: 120
+            y: 82
+            height: 32
+            text: "Редактор"
+            labelFontpointSize: 14
+            iconSource: ""
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            onClicked:  { editorMode = true; emptyprofile.visible = false;  }
+        }
+    }
+
 }
 
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:2;anchors_height:48}D{i:3;anchors_width:48}
+D{i:4;anchors_x:555}D{i:6;anchors_height:80;anchors_width:502}
+}
+##^##*/

@@ -70,7 +70,7 @@ ApplicationWindow {
         clip: true
         visible: true
         interactive: false
-        currentIndex: 1
+        currentIndex: 0
 
         Page_Finder{
             id:finder

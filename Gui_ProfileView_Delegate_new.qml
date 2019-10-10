@@ -38,7 +38,7 @@ Item {
         anchors.fill: parent
         opacity: 1
         visible: true
-        Material.elevation: 8
+        Material.elevation: 3
         Material.background: Material.primary
     }
 
@@ -166,9 +166,9 @@ Item {
 
         Gui_IconButton {
             id: propertyButton
-            width: 32
+            width: 28
             z: 1
-            source: "icons/profileEdit.svg"
+            source: "icons/editor.svg"
             iconColor: Material.foreground
             anchors.rightMargin: (deleteItem.deleteFieldWidth - width)/2
             anchors.verticalCenter: parent.verticalCenter

@@ -13,7 +13,7 @@
         <file>icons/more.svg</file>
         <file>Page_UsersProfile.qml</file>
         <file>Gui_TopBar.qml</file>
-        <file>Page_SettingsPage.qml</file>
+        <file>Page_AppSettings.qml</file>
         <file>icons/profile.svg</file>
         <file>Page_Profile.qml</file>
         <file>icons/editor.svg</file>
@@ -42,5 +42,6 @@
         <file>Gui_ProfileView_Delegate_new.qml</file>
         <file>Gui_IconButton.qml</file>
         <file>Gui_AppLoader.qml</file>
+        <file>Gui_PortSelect.qml</file>
     </qresource>
 </RCC>

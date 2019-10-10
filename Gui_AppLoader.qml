@@ -1,23 +1,24 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
+import QtQuick.Controls.Material 2.2
 
 Item {
     id:root
-//    width: window.width
-//    height: window.height
-    width: 640
-    height: 480
+    width: window.width
+    height: window.height
+//    width: 640
+//    height: 480
 
     Rectangle {
         id: background
-        color: Style.dark_background
+        color: Material.background
         anchors.fill: parent
     }
 
     Rectangle {
         id: line
         height: loader.height/30
-        color: Style.dark_accent
+        color: Material.accent
         radius: height/2
         anchors.top: loader.bottom
         anchors.topMargin: 0
@@ -26,7 +27,7 @@ Item {
         anchors.right: loader.right
         anchors.left: loader.left
         layer.effect: DropShadow {
-            radius: 8
+            radius: 4
             color:Style.dark_background
         }
         layer.enabled: true
@@ -38,10 +39,10 @@ Item {
         y: line.y + 4
         width: line.width/4
         height: loader.height/30
-        color: Style.dark_foreground
+        color: Material.foreground
         radius: height/2
         layer.effect: DropShadow {
-            radius: 8
+            radius: 4
             color:Style.dark_background
         }
         layer.enabled: true
@@ -67,7 +68,7 @@ Item {
             border.color: "#302f2f"
             anchors.fill: parent
             layer.effect: DropShadow {
-                radius: 8
+                radius: 4
                 color:Style.dark_background
             }
             layer.enabled: true
@@ -114,7 +115,7 @@ Item {
                 property: "rotation"
                 from:0
                 to:180
-                duration: 300
+                duration: 400
             }
             loops: Animation.Infinite
         }
@@ -128,7 +129,7 @@ Item {
                     property: "x"
                     from:whiteLine.startX
                     to:whiteLine.stopX
-                    duration: 300
+                    duration: 400
                 }
                 NumberAnimation{
                     duration: 600
@@ -140,14 +141,14 @@ Item {
                     property: "opacity"
                     from:0
                     to:1
-                    duration: 150
+                    duration: 200
                 }
                 PropertyAnimation{
                     target:whiteLine
                     property: "opacity"
                     from:1
                     to:0
-                    duration: 150
+                    duration: 200
                 }
             }
             loops: Animation.Infinite
@@ -190,14 +191,14 @@ Item {
 
         Text {
             id: text1
-            color: Style.dark_foreground
+            color: Material.foreground
             text: qsTr("Zcontro1")
             verticalAlignment: Text.AlignTop
             font.family: "Roboto"
             font.weight: Font.Light
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            font.pixelSize: 60
+            font.pixelSize: 80
         }
     }
 

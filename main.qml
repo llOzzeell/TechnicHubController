@@ -13,12 +13,14 @@ ApplicationWindow {
     height: width/9*18
 
     Component.onCompleted:{
-        setDarkTheme(true);
+        setDarkTheme(appSett.getDarkMode());
         //androidFunc.setOrientation("portraite");
-
     }
 
+    property bool currentDarkTheme: true
     function setDarkTheme(param){
+        currentDarkTheme = param;
+        appSett.setDarkMode(param);
         return param? setDark():setLight();
     }
     function setDark(){
@@ -28,6 +30,8 @@ ApplicationWindow {
         Material.primary = Style.dark_primary;
         Material.accent = Style.dark_accent;
         Material.foreground = Style.dark_foreground
+
+        return 0;
     }
     function setLight(){
         Material.theme = Material.Light
@@ -35,8 +39,9 @@ ApplicationWindow {
         Material.primary = Style.light_primary;
         Material.accent = Style.light_accent;
         Material.foreground = Style.light_foreground
-    }
 
+        return 0;
+    }
 
     Shortcut {
         //sequence: "Back"
@@ -44,14 +49,10 @@ ApplicationWindow {
         onActivated:{
             stackView.pop();
             if(swipe.currentIndex == 0){
-                console.log("quit");
                 Qt.quit();
             }
         }
     }
-
-
-
 
     ListModel{
         id:controlModel
@@ -72,15 +73,13 @@ ApplicationWindow {
         }
     }
 
-
-
     SwipeView{
         id:swipe
         anchors.fill: parent
         clip: true
         visible: true
         interactive: false
-        currentIndex: 1
+        currentIndex: 0
 
         Page_Finder{
             id:finder
@@ -110,14 +109,21 @@ ApplicationWindow {
         }
     }
 
+    Component{
+        id:appSettings
+        Page_AppSettings{
+
+        }
+    }
+
     Loader{
         id:pageLoader
         anchors.fill: parent
-        //source: {"qrc:/Gui_AppLoader.qml"}
+        source: {"qrc:/Gui_AppLoader.qml"}
         Timer{
             interval: 1200
             repeat: false
-            //running: true
+            running: true
             onTriggered: pageLoader.source = "";
         }
     }

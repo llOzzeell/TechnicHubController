@@ -25,7 +25,7 @@ Item {
 
     function deleteProfile(index){
         if(index < profileModel.count)profileModel.remove(index);
-        console.log(profilesController.deleteProfile(index))
+        profilesController.deleteProfile(index)
     }
 
     function changeName(value){
@@ -60,7 +60,11 @@ Item {
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
-        onAddClick: addProfile();
+        onRight1ButtonClicked: addProfile();
+        right2ButtonVisible: true
+        right2ButtonIconSource: "icons/profileEdit.svg"
+        backButtonVisible: false
+        onRight2ButtonClicked: stackView.push(appSettings)
     }
 
     ListModel{

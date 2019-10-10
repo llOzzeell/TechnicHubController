@@ -10,7 +10,17 @@ Item {
     height: 48
     property alias labelText: label.text
 
-    signal addClick
+    property alias backButtonVisible: back.visible
+
+    property alias right1ButtonVisible: add.visible
+    property alias right1ButtonIconSource: add.icon.source
+    signal right1ButtonClicked
+
+    property alias right2ButtonVisible: more.visible
+    property alias right2ButtonIconSource: more.icon.source
+    signal right2ButtonClicked
+
+    property alias labelVisible: label.visible
 
     Rectangle {
         id: rectangle
@@ -27,15 +37,19 @@ Item {
         anchors.leftMargin: 0
         Material.background: Material.accent
         RowLayout{
+            spacing: 0
             Layout.fillWidth: true
             anchors.fill: parent
-//            ToolButton {
-//                id:back
-//                width:24
-//                height:width
-//                icon.source: "icons/arrow_back.svg"
-//                onClicked: stackView.pop()
-            //            }
+
+            ToolButton {
+                id:back
+                width:24
+                height:width
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                icon.source: "icons/arrow_back.svg"
+                onClicked: {if(visible)stackView.pop();}
+            }
+
             Label {
                 id: label
                 text: ""
@@ -48,13 +62,14 @@ Item {
                 Layout.fillWidth: true
                 color: Material.foreground
             }
+
             ToolButton {
                 id: add
                 width: 24
                 height: width
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 icon.source: "icons/plus.svg"
-                onClicked: root.addClick()
+                onClicked: {if(visible)root.right1ButtonClicked()}
             }
 
             ToolButton {
@@ -63,6 +78,7 @@ Item {
                 height:width
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 icon.source: "icons/more.svg"
+                onClicked: {if(visible)root.right2ButtonClicked()}
             }
 
         }

@@ -128,12 +128,14 @@ Item {
             anchors.top: column1.top
             anchors.topMargin: 0
 
+
             Pane {
                 id: background
                 Material.background: Material.primary
                 anchors.fill: parent
                 Material.elevation: 2
             }
+
 
             Column {
                 id: column
@@ -143,7 +145,7 @@ Item {
                 Item {
                     id: propItem_1
                     width: parent.width
-                    height: 30
+                    height: 40
 
                     ComboBox {
                         id: comboBox
@@ -151,6 +153,7 @@ Item {
                         y: 13
                         width: 60
                         height: parent.height
+                        rotation: 0
                         anchors.right: parent.right
                         anchors.rightMargin: 10
                         anchors.verticalCenter: parent.verticalCenter
@@ -189,9 +192,58 @@ Item {
                 }
 
                 Item {
+                    id: propItem_3
+                    width: parent.width
+                    height: 40
+                    ComboBox {
+                        id: comboBox1
+                        x: 319
+                        y: 13
+                        width: 60
+                        height: parent.height
+                        ListModel {
+                            id: portModel1
+                            ListElement {
+                                name: "A"
+                            }
+
+                            ListElement {
+                                name: "B"
+                            }
+
+                            ListElement {
+                                name: "C"
+                            }
+
+                            ListElement {
+                                name: "D"
+                            }
+                        }
+                        anchors.verticalCenter: parent.verticalCenter
+                        model: portModel1
+                        anchors.rightMargin: 10
+                        font.family: Style.robotoCondensed
+                        anchors.right: parent.right
+                        visible: editorMode
+                        font.bold: true
+                        font.pointSize: 12
+                    }
+
+                    Label {
+                        id: label2
+                        text: qsTr("Порт")
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        font.weight: Font.Light
+                        anchors.leftMargin: 10
+                        font.pointSize: 12
+                    }
+                }
+
+                Item {
                     id: propItem_2
                     width: parent.width
-                    height: 30
+                    height: 40
 
                     Label {
                         id: label1
@@ -211,7 +263,9 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                     }
                 }
+
             }
+
 
             Gui_Profile_Button {
                 id: gui_Profile_Button

@@ -41,7 +41,8 @@ HEADERS += \
     hubfinder.h \
     huboperator.h \
     technichub.h \
-    profiles.h
+    profiles.h \
+    appsettings.h
 
 DISTFILES += \
     android/AndroidManifest.xml \

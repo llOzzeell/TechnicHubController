@@ -7,6 +7,7 @@
 #include "hubconnector.h"
 #include "huboperator.h"
 #include "profiles.h"
+#include "appsettings.h"
 #ifdef Q_OS_ANDROID
     #include "androidext.h"
 #endif
@@ -45,6 +46,10 @@ int main(int argc, char *argv[])
     Profiles prof;
     QQmlContext *context_prof = engine.rootContext();
     context_prof ->setContextProperty("profilesController", &prof);
+
+    AppSettings appsett;
+    QQmlContext *context_appsett = engine.rootContext();
+    context_appsett->setContextProperty("appSett", &appsett);
 
 
 

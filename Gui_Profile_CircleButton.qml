@@ -25,7 +25,7 @@ Item {
 
     Image {
         id: image
-        width: (root.height/2.2)
+        width: (root.height/1.8)
         height: width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter

@@ -43,5 +43,7 @@
         <file>Gui_AppLoader.qml</file>
         <file>Gui_PortSelect.qml</file>
         <file>fonts/Montserrat-Thin.ttf</file>
+        <file>Gui_ComboBox_Custom.qml</file>
+        <file>CursorDelegate.qml</file>
     </qresource>
 </RCC>

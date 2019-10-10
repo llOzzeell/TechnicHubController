@@ -79,7 +79,7 @@ ApplicationWindow {
         clip: true
         visible: true
         interactive: false
-        currentIndex: 0
+        currentIndex: 1
 
         Page_Finder{
             id:finder
@@ -119,7 +119,7 @@ ApplicationWindow {
     Loader{
         id:pageLoader
         anchors.fill: parent
-        source: {"qrc:/Gui_AppLoader.qml"}
+        //source: {"qrc:/Gui_AppLoader.qml"}
         Timer{
             interval: 1200
             repeat: false

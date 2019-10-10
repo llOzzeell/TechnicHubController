@@ -5,7 +5,6 @@
         <file>Page_Finder.qml</file>
         <file>Gui_Radar.qml</file>
         <file>Style.qml</file>
-        <file>fonts/RobotoCondensed-Regular.ttf</file>
         <file>Page_Connect.qml</file>
         <file>qmldir</file>
         <file>Gui_DeviceView_Delegate.qml</file>
@@ -43,5 +42,6 @@
         <file>Gui_IconButton.qml</file>
         <file>Gui_AppLoader.qml</file>
         <file>Gui_PortSelect.qml</file>
+        <file>fonts/Montserrat-Thin.ttf</file>
     </qresource>
 </RCC>

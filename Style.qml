@@ -7,8 +7,8 @@ QtObject{
     id:root
 
     // FONTS
-    property string robotoCondensed: regularFont.name
-    property FontLoader regularFont: FontLoader { source: "fonts/RobotoCondensed-Regular.ttf" }
+    property string logoFont: font.name
+    property FontLoader font: FontLoader { source: "fonts/Montserrat-Thin.ttf" }
 
     // COLORS
 

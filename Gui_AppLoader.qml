@@ -194,14 +194,12 @@ Item {
             color: Material.foreground
             text: qsTr("Zcontro1")
             verticalAlignment: Text.AlignTop
-            font.family: "Roboto"
+            font.family: Style.logoFont
             font.weight: Font.Light
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 80
         }
     }
-
-
 
 }

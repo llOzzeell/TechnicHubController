@@ -41,7 +41,7 @@ Item {
         id: label
         color: Material.foreground
         text: _name
-        font.capitalization: Font.AllUppercase
+        font.capitalization: Font.MixedCase
         font.weight: Font.Light
         font.pointSize: 16
         verticalAlignment: Text.AlignVCenter

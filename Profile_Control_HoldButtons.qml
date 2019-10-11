@@ -44,18 +44,22 @@ Profile_Control_Parent {
             }
         }
 
+        property bool isPressed: false
+
         MultiPointTouchArea{
             id: mouseArea
             anchors.fill: parent
-            enabled: !editorMode
+            enabled: !editorMode && !forwardButton.isPressed
 
             onPressed: {
+                reverseButton.isPressed = true;
                 reverseButton.border.width = root.height/8
                 reverseButton.color = Qt.lighter("#474646", 1.2)
                 var spd = inverted ? maxspeed : - maxspeed;
                 hubOperator.motor_RunPermanent(port1, spd)
             }
             onReleased: {
+                reverseButton.isPressed = false;
                 reverseButton.border.width = root.height/20
                 reverseButton.color = "#474646"
                 hubOperator.motor_RunPermanent(port1, 0)
@@ -82,7 +86,6 @@ Profile_Control_Parent {
 
     Rectangle {
         id: forwardButton
-        x: -6
         width: root.height
         height: width
         color: "#474646"
@@ -106,16 +109,22 @@ Profile_Control_Parent {
             }
         }
 
+        property bool isPressed: false
+
         MultiPointTouchArea{
             id: mouseArea1
             anchors.fill: parent
+            enabled: !editorMode && !reverseButton.isPressed
+
             onPressed: {
+                forwardButton.isPressed = true;
                 forwardButton.border.width = root.height/8
                 forwardButton.color = Qt.lighter("#474646", 1.4)
                 var spd = inverted ? -maxspeed : maxspeed;
                 hubOperator.motor_RunPermanent(port1, spd)
             }
             onReleased: {
+                forwardButton.isPressed = false;
                 forwardButton.border.width = root.height/20
                 forwardButton.color = "#474646";
                 hubOperator.motor_RunPermanent(port1, 0)

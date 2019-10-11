@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QObject>
+#include <QQuickWindow>
 
 #include "hubfinder.h"
 #include "hubconnector.h"
@@ -52,12 +53,16 @@ int main(int argc, char *argv[])
     context_appsett->setContextProperty("appSett", &appsett);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
+
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+
+//    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first());
+//    window->showFullScreen();
 
     return app.exec();
 }

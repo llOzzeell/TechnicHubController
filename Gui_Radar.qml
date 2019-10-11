@@ -11,7 +11,7 @@ Item {
     Behavior on opacity {
         SequentialAnimation{
             NumberAnimation{
-                duration: 1000
+                duration: 500
             }
         }
 

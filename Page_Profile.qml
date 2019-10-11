@@ -5,22 +5,41 @@ import QtGraphicalEffects 1.0
 
 Item {
     id:root
+    Component.onCompleted: { setModeToAllControls(false); }
 
-    property bool editorMode: false
-    onEditorModeChanged:{
-        setEditorModeToAllControls(editorMode);
+    property int ind_temp:-1
+    onInd_tempChanged:{ console.log("INDEX CHANGED: " + ind_temp); profileParam.setIndex(ind_temp) }
+
+    QtObject{
+        id:profileParam
+
+        property int _index: root.ind_temp
+        property bool _mode: false
+
+        function getMode(){ console.log("getMode(): " + _mode); return _mode }
+
+        function getIndex(){ console.log("getIndex(): " + _index); return _index }
+
+        function setMode(value){
+            console.log("editorMode: " + value)
+            _mode = value;
+            root.setModeToAllControls(value);
+        }
+
+        function setIndex(value){
+            _index = value;
+            root.loadProfile(value);
+        }
     }
 
-    function setEditorModeToAllControls(value){
+    function setModeToAllControls(value){
+        console.log("setModeToAllControls: " + value)
         dynamicControlsArray.forEach(function(item){
             if(item !== undefined)item.editorMode = value;
         })
     }
 
     property var typeArr:[controlModel.get(0).element,controlModel.get(1).element,controlModel.get(2).element]
-    readonly property string name: "profile"
-    property int index:-1
-    onIndexChanged: loadProfile()
 
     property int loadedControls: 0
     property int objectCounter:0
@@ -42,7 +61,7 @@ Item {
         var _maxspeed = 100;
         var propObj = {
             type:_type,
-            editorMode: root.editorMode,
+            editorMode: profileParam.getMode(),
             createIndex: objectCounter,
             "width":_width,
             "x": _x,
@@ -56,8 +75,8 @@ Item {
         objectCounter++;
     }
 
-    function deleteControl(index){
-        if(dynamicControlsArray[index] !== undefined ){ dynamicControlsArray[index].destroy(); dynamicControlsArray[index] = undefined; }
+    function deleteControl(_index){
+        if(dynamicControlsArray[_index] !== undefined ){ dynamicControlsArray[_index].destroy(); dynamicControlsArray[_index] = undefined; }
     }
 
     function createWhileLoadControl(type, width, x, y, inverted, port1, port2, servoangle, maxspeed){
@@ -65,7 +84,7 @@ Item {
         var component = Qt.createComponent(typeArr[type])
         var propObj = {
             type:type,
-            editorMode: root.editorMode,
+            editorMode: profileParam.getMode(),
             createIndex: objectCounter,
             "width":width,
             "x": x,
@@ -80,26 +99,32 @@ Item {
         objectCounter++;
     }
 
-    function saveProfile(){
-        if(objectCounter > 0 && index >= 0){
-            profilesController.clearControlInProfile(index);
+    function saveProfile(_index){
+        console.log("saveProfile: " + _index)
+        if(objectCounter > 0 && _index >= 0){
+            profilesController.clearControlInProfile(_index);
             dynamicControlsArray.forEach(function(control){
                 if(control !== undefined){
                     var inv = false; inv = (control.inverted > 0);
-                    profilesController.addProfileControls(index, control.type, control.width, control.x, control.y, inv , control.port1, control.port2, control.servoangle, control.maxspeed);
+                    profilesController.addProfileControls(_index, control.type, control.width, control.x, control.y, inv , control.port1, control.port2, control.servoangle, control.maxspeed);
                 }
             })
             profilesController.saveToFile();
-            index=-1;
         }
     }
 
-    function loadProfile(){
-        if(index >= 0){
-            var count = profilesController.getControlsCounts(index);
+    function loadProfile(_index){
+        console.log("loadProfile: " + _index)
+        if(_index >= 0){
+
+            var count = profilesController.getControlsCounts(_index);
+            console.log("loaded: " + count)
+
+            if(profileParam.getMode() && count <= 0)emptyprofile.visible = true;
+
             loadedControls = count;
             for(var i = 0; i < count; i++){
-                var list = profilesController.getProfileControls(index,i);
+                var list = profilesController.getProfileControls(_index,i);
                 var inv = false; inv = (list[4] > 0);
 
                 createWhileLoadControl(list[0], list[1], list[2], list[3], inv, list[5], list[6], list[7], list[8]);
@@ -111,7 +136,7 @@ Item {
         id: mouseArea
         z: 2
         anchors.fill: parent
-        enabled: editorMode && controlsList.isVisible
+        enabled: profileParam.getMode() && controlsList.isVisible
         onClicked: if(controlsList.isVisible) controlsList.hide();
     }
 
@@ -127,14 +152,13 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 10
         iconSource: "icons/save.svg"
-        visible: editorMode
+        visible: profileParam.getMode()
         onClicked: {
             if(!controlParam.visible){
+                saveProfile(profileParam.getIndex());
                 emptyprofile.visible = false;
-                editorMode = false;
+                profileParam.setMode(false)
                 if(controlsList.isVisible) controlsList.hide();
-                saveProfile();
-                stackView.pop();
             }
         }
         backgroundColor: controlParam.visible ? Material.primary : Material.accent
@@ -155,7 +179,7 @@ Item {
         anchors.top: parent.top
         anchors.topMargin: 10
         z: 2
-        visible: editorMode/* && !controlsList.isVisible*/
+        visible: profileParam.getMode()
 
         backgroundColor: controlParam.visible ? Material.primary : Material.accent
 
@@ -199,14 +223,12 @@ Item {
 
     Item {
         id: emptyprofile
-        x: 170
-        y: 200
         width: 360
-        height: 100
+        height: 90
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         rotation: 90
-        visible: (loadedControls <= 0 && !editorMode)
+        visible: false
 
         TextEdit {
             id: label
@@ -234,7 +256,7 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.horizontalCenter: parent.horizontalCenter
-            onClicked:  { emptyprofile.visible = false; editorMode = true;   }
+            onClicked:  { parent.visible = false; profileParam.setMode(true); }
         }
     }
 
@@ -249,12 +271,21 @@ Item {
         visible: false
     }
 
+    Gui_IconButton {
+        id: editButton
+        x: 207
+        y: 3
+        width: 32
+        anchors.horizontalCenter: saveButton.horizontalCenter
+        anchors.verticalCenter: saveButton.verticalCenter
+        visible: !profileParam.getMode() && !emptyprofile.visible
+        iconColor: Material.foreground
+        source: "icons/profileEdit.svg"
+        z: 2
+        rotation: 90
+        onClicked: if(!controlParam.visible){ profileParam.setMode(true); }
+    }
+
 }
 
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:2;anchors_height:48}D{i:3;anchors_width:48}
-D{i:4;anchors_x:555}D{i:6;anchors_height:80;anchors_width:502}
-}
-##^##*/

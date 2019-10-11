@@ -49,13 +49,13 @@ ApplicationWindow {
         window.color = color;
     }
 
-//    Shortcut {
-//        sequence: "Back"
-//        //sequence: "Backspace"
-//        onActivated:{
-//            stackView.pop();
-//        }
-//    }
+    Shortcut {
+        sequence: "Back"
+        onActivated:{
+            if(stackView.depth  > 0) stackView.pop();
+            if(swipe.currentIndex <= 0)return 0;
+        }
+    }
 
     ListModel{
         id:controlModel

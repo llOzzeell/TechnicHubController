@@ -73,7 +73,7 @@ Item {
 
     Component{
         id:profileDelegate
-        Gui_ProfileView_Delegate_new{
+        Gui_ProfileView_Delegate{
             isCurrent: ListView.isCurrentItem
         }
     }

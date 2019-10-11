@@ -19,15 +19,14 @@ Item {
     }
 
     function editorClick(){
-        stackView.push(profile);
-        stackView.currentItem.editorMode = true;
-        stackView.currentItem.index = index;
+//        stackView.push(profile);
+//        stackView.currentItem.editorMode = true;
+//        stackView.currentItem.index = index;
     }
 
     function runProfileClick(){
         stackView.push(profile);
-        stackView.currentItem.editorMode = false;
-        stackView.currentItem.index = index;
+        stackView.currentItem.ind_temp = index;
     }
 
     function clearCard(){
@@ -164,21 +163,21 @@ Item {
             }
         }
 
-        Gui_IconButton {
-            id: propertyButton
-            width: 28
-            z: 1
-            source: "icons/editor.svg"
-            iconColor: Material.foreground
-            anchors.rightMargin: (deleteItem.deleteFieldWidth - width)/2
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            opacity: (100-(100/deleteItem.deleteFieldWidth * fieldItem.fieldRightShift))/100
-            visible: opacity > 0
-            onClicked: {
-                if(opacity === 1 && !nameLabel.isEditing)root.editorClick()
-            }
-        }
+//        Gui_IconButton {
+//            id: propertyButton
+//            width: 28
+//            z: 1
+//            source: "icons/editor.svg"
+//            iconColor: Material.foreground
+//            anchors.rightMargin: (deleteItem.deleteFieldWidth - width)/2
+//            anchors.verticalCenter: parent.verticalCenter
+//            anchors.right: parent.right
+//            opacity: (100-(100/deleteItem.deleteFieldWidth * fieldItem.fieldRightShift))/100
+//            visible: opacity > 0
+//            onClicked: {
+//                if(opacity === 1 && !nameLabel.isEditing)root.editorClick()
+//            }
+//        }
     }
 
     TextInput {

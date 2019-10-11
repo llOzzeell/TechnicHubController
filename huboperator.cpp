@@ -10,15 +10,6 @@ HubOperator::~HubOperator()
     delete hub;
 }
 
-quint8 HubOperator::getPortAddress(QString port)
-{
-    if(port == "A") return ports.portA;
-    else if(port == "B") return ports.portB;
-    else if(port == "C") return ports.portC;
-    else if(port == "D") return ports.portD;
-    else return 0;
-}
-
 void HubOperator::setDebugOut(bool value)
 {
     debugOut = value;
@@ -28,30 +19,6 @@ void HubOperator::setHubLink(TechnicHub *link)
 {
     if(debugOut)qDebug() << "Hublink updated : " << link;
     hub = link;
-}
-
-void HubOperator::motor_TurnToDegrees(QString port, int angle)
-{
-    if(hub){
-
-        QByteArray data;
-        QDataStream stream(&data, QIODevice::ReadWrite);
-        stream.setByteOrder(QDataStream::LittleEndian);
-
-        stream << quint8(0);
-        stream << quint8(0);
-        stream << quint8(0x81);
-        stream << getPortAddress(port);
-        stream << quint8(0x11);
-        stream << quint8(0x0d);
-        stream << quint32(angle);
-        stream << quint8(50);
-        stream << quint8(50);
-        stream << quint8(0x7e);
-        stream << quint8(0);
-        data[0] = data.count();
-        hub->writeNoResponce(data);
-    }
 }
 
 void HubOperator::hub_SetRGB(int colorNum)
@@ -72,7 +39,7 @@ void HubOperator::hub_SetRGB(int colorNum)
     }
 }
 
-void HubOperator::motor_RunPermanent(QString port, int speed)
+void HubOperator::motor_RunPermanent(int port, int speed)
 {
     if(hub){
 
@@ -85,7 +52,7 @@ void HubOperator::motor_RunPermanent(QString port, int speed)
         stream << quint8(0);
         stream << quint8(0);
         stream << quint8(0x81);
-        stream << getPortAddress(port);
+        stream << quint8(port);
         stream << quint8(0x11);
         stream << quint8(0x01);
         stream << qint8(speed);
@@ -97,12 +64,12 @@ void HubOperator::motor_RunPermanent(QString port, int speed)
     }
 }
 
-void HubOperator::motor_Stop(QString port)
+void HubOperator::motor_Stop(int port)
 {
     motor_RunPermanent(port, 0);
 }
 
-void HubOperator::motor_RunForTime(QString port, int speed, int time)
+void HubOperator::motor_RunForDegrees(int port, int lastAngle, int angle, int maxAngle)
 {
     if(hub){
 
@@ -110,42 +77,16 @@ void HubOperator::motor_RunForTime(QString port, int speed, int time)
         QDataStream stream(&data, QIODevice::ReadWrite);
         stream.setByteOrder(QDataStream::LittleEndian);
 
-        if(speed == 0) speed = 127;
+        int servovalue = maxAngle * angle / 100;
 
         stream << quint8(0);
         stream << quint8(0);
         stream << quint8(0x81);
-        stream << getPortAddress(port);
-        stream << quint8(0x11);
-        stream << quint8(0x09);
-        stream << quint16(time);
-        stream << qint8(speed);
-        stream << quint8(0x64);
-        stream << quint8(0x7f);
-        stream << quint8(0x03);
-        data[0] = data.count();
-        hub->writeNoResponce(data);
-    }
-}
-
-void HubOperator::motor_RunForDegrees(QString port, int lastAngle, int angle, int maxServoAngle)
-{
-    if(hub){
-
-        QByteArray data;
-        QDataStream stream(&data, QIODevice::ReadWrite);
-        stream.setByteOrder(QDataStream::LittleEndian);
-
-        int servovalue = maxServoAngle * angle / 100;
-
-        stream << quint8(0);
-        stream << quint8(0);
-        stream << quint8(0x81);
-        stream << getPortAddress(port);
+        stream << quint8(port);
         stream << quint8(0x11);
         stream << quint8(0x0d);
         stream << quint32(servovalue);
-        stream << servoSpeedCalculate(maxServoAngle * lastAngle / 100, servovalue);
+        stream << servoSpeedCalculate(maxAngle * lastAngle / 100, servovalue);
         stream << quint8(50);
         stream << quint8(0x7e);
         stream << quint8(0x00);
@@ -159,3 +100,80 @@ quint8 HubOperator::servoSpeedCalculate(int curr, int target)
     return quint8(qMax(40, qMin(100, qAbs(curr - target) * 3)));
 }
 
+void HubOperator::motor_SendServoAngle(int port, int angle, int maxAngle)
+{
+    if(hub && _lastValueArray[port] != angle){
+
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::ReadWrite);
+        stream.setByteOrder(QDataStream::LittleEndian);
+
+        int servovalue = maxAngle * angle / 100;
+
+        stream << quint8(0);
+        stream << quint8(0);
+        stream << quint8(0x81);
+        stream << quint8(port);
+        stream << quint8(0x11);
+        stream << quint8(0x0d);
+        stream << quint32(servovalue);
+        stream << servoSpeedCalculate(maxAngle * _lastValueArray[port] / 100, servovalue);
+        stream << quint8(50);
+        stream << quint8(0x7e);
+        stream << quint8(0x00);
+
+        data[0] = quint8(data.count());
+        hub->writeNoResponce(data);
+        _lastValueArray[port] = angle;
+    }
+}
+
+void HubOperator::motor_TurnToDegrees(int port, int angle)
+{
+    if(hub){
+
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::ReadWrite);
+        stream.setByteOrder(QDataStream::LittleEndian);
+
+        stream << quint8(0);
+        stream << quint8(0);
+        stream << quint8(0x81);
+        stream << quint8(port);
+        stream << quint8(0x11);
+        stream << quint8(0x0d);
+        stream << quint32(angle);
+        stream << quint8(50);
+        stream << quint8(50);
+        stream << quint8(0x7e);
+        stream << quint8(0);
+        data[0] = data.count();
+        hub->writeNoResponce(data);
+    }
+}
+
+void HubOperator::motor_RunForTime(int port, int speed, int time)
+{
+    if(hub){
+
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::ReadWrite);
+        stream.setByteOrder(QDataStream::LittleEndian);
+
+        if(speed == 0) speed = 127;
+
+        stream << quint8(0);
+        stream << quint8(0);
+        stream << quint8(0x81);
+        stream << quint8(port);
+        stream << quint8(0x11);
+        stream << quint8(0x09);
+        stream << quint16(time);
+        stream << qint8(speed);
+        stream << quint8(0x64);
+        stream << quint8(0x7f);
+        stream << quint8(0x03);
+        data[0] = data.count();
+        hub->writeNoResponce(data);
+    }
+}

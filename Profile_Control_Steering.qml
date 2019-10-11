@@ -8,11 +8,13 @@ Profile_Control_Parent{
     width:120
     height: width
 
-    property int steeringAngle: 90
-
     signal angleChanged(int currentAngle, int lastAngle)
     onAngleChanged: {
-        hubOperator.motor_RunForDegrees(port, lastAngle, currentAngle, steeringAngle)
+        root.send(port1, lastAngle, currentAngle, servoangle);
+    }
+
+    function send(port, last, current, maxservo){
+        hubOperator.motor_SendServoAngle(port, current, maxservo)
     }
 
     Rectangle {
@@ -102,7 +104,7 @@ Profile_Control_Parent{
                 }
                 else shift = mouseXNormalized
 
-                var angle = parseInt((steeringAngle/steeringItem.steeringLenght)*Math.abs(shift));
+                var angle = parseInt((servoangle/steeringItem.steeringLenght)*Math.abs(shift));
                 var _currentDegrees = 0;
                 if(!inverted)_currentDegrees = shift>0 ? angle : -angle;
                 else _currentDegrees = shift>0 ? -angle : angle;
@@ -117,7 +119,7 @@ Profile_Control_Parent{
             onReleased: {
                 toCenter.running = true;
                 backgroundRectangle.color = "#474646"
-                hubOperator.motor_RunForDegrees(port, currentDegrees, 0, steeringAngle)
+                root.send(port1, 0, 0, servoangle);
             }
             property int currentDegrees:0
             onCurrentDegreesChanged: {
@@ -129,6 +131,5 @@ Profile_Control_Parent{
             property int shift:0
         }
     }
-
 
 }

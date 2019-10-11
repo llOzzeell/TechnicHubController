@@ -9,12 +9,14 @@ Profile_Control_Parent{
     height: width
     onHeightChanged: toCenter.start();
 
-    property int speedLimit: 100
     property int currentSpeed:0
 
     signal currentSpeedReady(int currentSpeed)
-    onCurrentSpeedReady: hubOperator.motor_RunPermanent(port, currentSpeed)
+    onCurrentSpeedReady:{
+        hubOperator.motor_RunPermanent(port1, currentSpeed)
+    }
 
+    
     Item{
         id:controlItem
         rotation: -90
@@ -79,7 +81,7 @@ Profile_Control_Parent{
                 }
                 onXChanged: {
                     var shift = steeringItem.center - x;
-                    var angle = (speedLimit/steeringItem.steeringLenght)*Math.abs(shift);
+                    var angle = (100/steeringItem.steeringLenght)*Math.abs(shift);
                     if(!inverted) currentSpeed = shift < 0 ? angle : -angle;
                     else currentSpeed = shift < 0 ? -angle : angle;
                 }

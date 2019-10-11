@@ -10,7 +10,7 @@ Item {
     opacity: visible? 1 : 0
     enabled: true
     z: 1
-    visible: false
+    visible: true
 
     Behavior on opacity {
         NumberAnimation{
@@ -18,8 +18,11 @@ Item {
         }
     }
 
+    property bool someChanges:false
     property var link : this;
     function setLink(_link){
+
+        someChanges = false;
         link = undefined;
         link = _link;
 
@@ -74,7 +77,7 @@ Item {
         id: propsItem
         width: 260
         height: 300
-        z: 6
+        z: 8
         rotation: 90
         anchors.verticalCenterOffset: 36
         anchors.horizontalCenterOffset: 0
@@ -90,9 +93,8 @@ Item {
 
         Gui_Profile_Button {
             id: gui_Profile_Button
-            y: 175
             height: 26
-            text: "Закрыть"
+            text: root.someChanges ? qsTr("Сохранить")  :  qsTr("Закрыть")
             anchors.right: parent.right
             anchors.rightMargin: 10
             anchors.left: parent.left
@@ -106,8 +108,10 @@ Item {
         Column {
             id: column
             width: 240
+            smooth: true
+            enabled: true
             anchors.fill: parent
-            spacing: 2
+            spacing: 0
 
             Item {
                 id: propItem_1
@@ -127,7 +131,7 @@ Item {
                     font.pointSize: 12
                     //visible: editorMode
                     model: portModel
-                    onActivated: link.port1 = index;
+                    onActivated: {  link.port1 = index; root.someChanges = true; }
                 }
 
                 Label {
@@ -158,7 +162,7 @@ Item {
                     //visible: editorMode
                     font.bold: true
                     font.pointSize: 12
-                    onActivated: link.port2 = index;
+                    onActivated: { link.port2 = index; root.someChanges = true; }
                 }
 
                 Label {
@@ -194,7 +198,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
-                    onCheckedChanged: link.inverted = checked;
+                    onCheckedChanged: { link.inverted = checked; root.someChanges = true;}
                 }
             }
 
@@ -225,7 +229,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     value: 90
                     to: 179
-                    onValueChanged: link.servoangle = value;
+                    onValueChanged: { link.servoangle = value; root.someChanges = true; }
                 }
             }
 
@@ -255,7 +259,7 @@ Item {
                     anchors.rightMargin: 0
                     to: 100
                     anchors.verticalCenter: parent.verticalCenter
-                    onValueChanged: link.maxspeed = value;
+                    onValueChanged: { link.maxspeed = value; root.someChanges = true; }
                 }
             }
 

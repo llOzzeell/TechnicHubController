@@ -8,16 +8,6 @@ Profile_Control_Parent {
     width:120
     height: width/2
 
-    property int speed: 100
-
-    function forwardClicked(){
-
-    }
-
-    function reverseClicked(){
-
-    }
-
     Rectangle {
         id: rectangle
         color: "#302f2f"
@@ -62,13 +52,13 @@ Profile_Control_Parent {
             onPressed: {
                 reverseButton.border.width = root.height/8
                 reverseButton.color = Qt.lighter("#474646", 1.2)
-                var spd = inverted ? speed : - speed;
-                hubOperator.motor_RunPermanent(port, spd)
+                var spd = inverted ? maxspeed : - maxspeed;
+                hubOperator.motor_RunPermanent(port1, spd)
             }
             onReleased: {
                 reverseButton.border.width = root.height/20
                 reverseButton.color = "#474646"
-                hubOperator.motor_RunPermanent(port, 0)
+                hubOperator.motor_RunPermanent(port1, 0)
             }
         }
 
@@ -122,13 +112,13 @@ Profile_Control_Parent {
             onPressed: {
                 forwardButton.border.width = root.height/8
                 forwardButton.color = Qt.lighter("#474646", 1.4)
-                var spd = inverted ? -speed : speed;
-                hubOperator.motor_RunPermanent(port, spd)
+                var spd = inverted ? -maxspeed : maxspeed;
+                hubOperator.motor_RunPermanent(port1, spd)
             }
             onReleased: {
                 forwardButton.border.width = root.height/20
                 forwardButton.color = "#474646";
-                hubOperator.motor_RunPermanent(port, 0)
+                hubOperator.motor_RunPermanent(port1, 0)
             }
         }
 

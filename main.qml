@@ -9,12 +9,18 @@ ApplicationWindow {
     visible: true
     color: "#000000"
 
-    //    width: 400
-    //    height: width/9*18
-
     Component.onCompleted:{
         setDarkTheme(appSett.getDarkMode());
         androidFunc.setOrientation("portraite");
+    }
+
+    onClosing: {
+        if(stackView.depth > 1){
+            close.accepted = false
+            stackView.pop();
+        }else{
+            return;
+        }
     }
 
     function setDarkTheme(param){
@@ -43,17 +49,13 @@ ApplicationWindow {
         window.color = color;
     }
 
-    Shortcut {
-        sequence: "Back"
-        //sequence: "Backspace"
-        onActivated:{
-            stackView.pop();
-//            if(item !== null && item.name === "profile") androidFunc.setOrientation("portraite");
-            if(swipe.currentIndex == 0){
-                Qt.quit();
-            }
-        }
-    }
+//    Shortcut {
+//        sequence: "Back"
+//        //sequence: "Backspace"
+//        onActivated:{
+//            stackView.pop();
+//        }
+//    }
 
     ListModel{
         id:controlModel
@@ -167,12 +169,4 @@ ApplicationWindow {
             onTriggered: pageLoader.source = "";
         }
     }
-
-
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:6;anchors_height:10;anchors_width:200}
-}
-##^##*/

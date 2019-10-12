@@ -13,7 +13,7 @@ Profile_Control_Parent{
 
     signal currentSpeedReady(int currentSpeed)
     onCurrentSpeedReady:{
-        hubOperator.motor_RunPermanent(port1, currentSpeed)
+        if(!editorMode)hubOperator.motor_RunPermanent(port1, currentSpeed)
     }
 
     
@@ -30,6 +30,10 @@ Profile_Control_Parent{
             border.width: controlItem.height/30
             border.color: "#302f2f"
             anchors.fill: parent
+            layer.enabled: true
+            layer.effect: DropShadow{
+                radius:8
+            }
 
             Behavior on color{
                 ColorAnimation{
@@ -67,12 +71,12 @@ Profile_Control_Parent{
             Rectangle {
                 id: steeringPoint
                 x: steeringItem.center + steeringZone.shift
-                width: controlItem.height/2.2
+                width: root.height/2.2
                 height: width
                 color: "#868686"
                 radius: height/2
-                border.width: controlItem.height/20
-                border.color: "#696969"
+                border.width: root.height/30
+                border.color: "#302f2f"
                 anchors.verticalCenterOffset: 0
                 anchors.verticalCenter: parent.verticalCenter
                 layer.enabled: false

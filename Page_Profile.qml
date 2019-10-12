@@ -120,7 +120,7 @@ Item {
             var count = profilesController.getControlsCounts(_index);
             console.log("loaded: " + count)
 
-            if(profileParam.getMode() && count <= 0)emptyprofile.visible = true;
+            if(count === 0)emptyprofile.visible = true;
 
             loadedControls = count;
             for(var i = 0; i < count; i++){

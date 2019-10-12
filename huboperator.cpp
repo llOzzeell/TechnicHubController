@@ -97,7 +97,26 @@ void HubOperator::motor_RunForDegrees(int port, int lastAngle, int angle, int ma
 
 quint8 HubOperator::servoSpeedCalculate(int curr, int target)
 {
-    return quint8(qMax(40, qMin(100, qAbs(curr - target) * 3)));
+   //return quint8(qMax(30, qMin(100, qAbs(curr - target) * 3)));
+    if(qAbs(target - curr) <= 5) return quint8(10);
+    if(qAbs(target - curr) <= 10) return quint8(15);
+    if(qAbs(target - curr) <= 20) return quint8(25);
+    if(qAbs(target - curr) <= 40) return quint8(45);
+    if(qAbs(target - curr) >= 50) return quint8(65);
+    if(qAbs(target - curr) >= 70) return quint8(99);
+
+    return quint8(99);
+}
+
+quint8 HubOperator::powerCalculate(int curr, int target)
+{
+    if(qAbs(target - curr) <= 5) return quint8(30);
+    if(qAbs(target - curr) <= 10) return quint8(35);
+    if(qAbs(target - curr) <= 20) return quint8(45);
+    if(qAbs(target - curr) <= 40) return quint8(50);
+    if(qAbs(target - curr) >= 50) return quint8(60);
+
+    return quint8(59);
 }
 
 void HubOperator::motor_SendServoAngle(int port, int angle, int maxAngle)
@@ -110,17 +129,21 @@ void HubOperator::motor_SendServoAngle(int port, int angle, int maxAngle)
 
         int servovalue = maxAngle * angle / 100;
 
-        stream << quint8(0);
-        stream << quint8(0);
-        stream << quint8(0x81);
-        stream << quint8(port);
-        stream << quint8(0x11);
-        stream << quint8(0x0d);
-        stream << quint32(servovalue);
-        stream << servoSpeedCalculate(maxAngle * _lastValueArray[port] / 100, servovalue);
-        stream << quint8(50);
-        stream << quint8(0x7e);
-        stream << quint8(0x00);
+                stream << quint8(0);
+                stream << quint8(0);
+                stream << quint8(0x81);
+                stream << quint8(port);
+                stream << quint8(0x11);
+                stream << quint8(0x0d);
+                stream << qint32(angle);
+
+                stream << servoSpeedCalculate(_lastValueArray[port], angle);
+                stream << powerCalculate(_lastValueArray[port], angle);
+
+                stream << quint8(0x7e);
+                stream << quint8(0);
+
+                qDebug() << "delta: " << qAbs(angle - _lastValueArray[port])  << " speed: " << servoSpeedCalculate(_lastValueArray[port], angle) << " power: " << powerCalculate(_lastValueArray[port], angle);
 
         data[0] = quint8(data.count());
         hub->writeNoResponce(data);

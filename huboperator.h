@@ -42,6 +42,8 @@ public slots:
 
     quint8 servoSpeedCalculate(int curr, int target);
 
+    quint8 powerCalculate(int curr, int target);
+
     void motor_SendServoAngle(int port, int angle, int maxAngle);
 
 };

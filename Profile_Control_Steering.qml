@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
-import QtQuick.Controls.Material 2.2
+import QtQuick.Controls.Material 2.12
 
 Profile_Control_Parent{
     id:root
@@ -8,13 +8,8 @@ Profile_Control_Parent{
     width:120
     height: width
 
-    signal angleChanged(int currentAngle, int lastAngle)
-    onAngleChanged: {
-        root.send(port1, lastAngle, currentAngle, servoangle);
-    }
-
-    function send(port, last, current, maxservo){
-        hubOperator.motor_SendServoAngle(port, current, maxservo)
+    function send(curr){
+        hubOperator.motor_SendServoAngle(port1, curr, servoangle)
     }
 
     Rectangle {
@@ -24,6 +19,10 @@ Profile_Control_Parent{
         border.width: root.height/30
         border.color: "#302f2f"
         anchors.fill: parent
+        layer.enabled: true
+        layer.effect: DropShadow{
+            radius:8
+        }
 
         Behavior on color{
             ColorAnimation{
@@ -64,8 +63,8 @@ Profile_Control_Parent{
             height: width
             color: "#868686"
             radius: height/2
-            border.width: root.height/20
-            border.color: "#696969"
+            border.width: root.height/30
+            border.color: "#302f2f"
             anchors.verticalCenterOffset: 0
             anchors.verticalCenter: parent.verticalCenter
             layer.enabled: false
@@ -82,6 +81,7 @@ Profile_Control_Parent{
             to: steeringItem.center
             duration: 80
         }
+
 
         MultiPointTouchArea{
             id: steeringZone
@@ -108,28 +108,30 @@ Profile_Control_Parent{
                 var _currentDegrees = 0;
                 if(!inverted)_currentDegrees = shift>0 ? angle : -angle;
                 else _currentDegrees = shift>0 ? -angle : angle;
-                if( _currentDegrees % 10 == 0) {
+                if( _currentDegrees % 10 == 0 /*||  _currentDegrees % 10 == 5*/) {
                     currentDegrees = _currentDegrees;
                 }
             }
 
             onPressed: {
+                press = true
                 backgroundRectangle.color = Qt.lighter("#474646", 1.4)
             }
             onReleased: {
+                press = false
                 toCenter.running = true;
                 backgroundRectangle.color = "#474646"
-                root.send(port1, 0, 0, servoangle);
+                if(!editorMode)root.send(port1, 0, 0, servoangle);
             }
             property int currentDegrees:0
             onCurrentDegreesChanged: {
-                root.angleChanged(currentDegrees, lastDegrees)
+                if(!editorMode)root.send(steeringZone.currentDegrees)
                 lastDegrees = currentDegrees;
             }
 
+            property bool press: false
             property int lastDegrees:0
             property int shift:0
         }
     }
-
 }

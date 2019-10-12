@@ -13,7 +13,7 @@ Profile_Control_Parent {
         color: "#302f2f"
         radius: height/2
         anchors.fill: parent
-        layer.enabled: false
+        layer.enabled: true
         layer.effect: DropShadow{
             radius:8
         }
@@ -56,13 +56,13 @@ Profile_Control_Parent {
                 reverseButton.border.width = root.height/8
                 reverseButton.color = Qt.lighter("#474646", 1.2)
                 var spd = inverted ? maxspeed : - maxspeed;
-                hubOperator.motor_RunPermanent(port1, spd)
+                if(!editorMode)hubOperator.motor_RunPermanent(port1, spd)
             }
             onReleased: {
                 reverseButton.isPressed = false;
                 reverseButton.border.width = root.height/20
                 reverseButton.color = "#474646"
-                hubOperator.motor_RunPermanent(port1, 0)
+                if(!editorMode)hubOperator.motor_RunPermanent(port1, 0)
             }
         }
 
@@ -121,13 +121,13 @@ Profile_Control_Parent {
                 forwardButton.border.width = root.height/8
                 forwardButton.color = Qt.lighter("#474646", 1.4)
                 var spd = inverted ? -maxspeed : maxspeed;
-                hubOperator.motor_RunPermanent(port1, spd)
+                if(!editorMode)hubOperator.motor_RunPermanent(port1, spd)
             }
             onReleased: {
                 forwardButton.isPressed = false;
                 forwardButton.border.width = root.height/20
                 forwardButton.color = "#474646";
-                hubOperator.motor_RunPermanent(port1, 0)
+                if(!editorMode)hubOperator.motor_RunPermanent(port1, 0)
             }
         }
 

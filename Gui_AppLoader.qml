@@ -96,10 +96,10 @@ Item {
             height: width
             color: "#868686"
             radius: height/2
+            border.width: loader.height/30
+            border.color: "#302f2f"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            border.width: loader.height/20
-            border.color: "#696969"
             layer.enabled: false
             layer.effect: DropShadow{
                 radius:8

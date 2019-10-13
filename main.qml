@@ -9,6 +9,8 @@ ApplicationWindow {
     visible: true
     color: "#000000"
 
+    property bool tapTick: false
+
     Component.onCompleted:{
         setDarkTheme(appSett.getDarkMode());
         androidFunc.setOrientation("portraite");

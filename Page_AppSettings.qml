@@ -5,7 +5,12 @@ import QtQuick.Controls.Material 2.2
 Item {
     id:root
 
-    Component.onCompleted: darkModeSwitch.checked = appSett.getDarkMode();
+    Component.onCompleted: {
+
+        darkModeSwitch.checked = appSett.getDarkMode();
+        tapTickSwitch.checked = appSett.getTapTick()
+        window.tapTick = tapTickSwitch.checked;
+    }
 
     property int changeColorDuration:200
 
@@ -88,6 +93,50 @@ Item {
                         duration: changeColorDuration
                     }
                 }
+            }
+        }
+
+        Item {
+            id: element3
+            width: parent.width
+            height: 48
+            Label {
+                id: label2
+                text: qsTr("Управление")
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                font.pointSize: 16
+                anchors.verticalCenter: parent.verticalCenter
+                font.weight: Font.Normal
+            }
+        }
+
+        Item {
+            id: element1
+            width: parent.width
+            height: 36
+            Switch {
+                id: tapTickSwitch
+                x: 560
+                y: 0
+                width: 40
+                height: 48
+                checked: true
+                checkable: true
+                anchors.rightMargin: 0
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                onCheckedChanged: appSett.setTapTick(checked)
+            }
+
+            Label {
+                id: label3
+                text: qsTr("Тактильный отклик элементов управления")
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                font.pointSize: 16
+                anchors.verticalCenter: parent.verticalCenter
+                font.weight: Font.Light
             }
         }
 

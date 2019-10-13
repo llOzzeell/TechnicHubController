@@ -9,6 +9,7 @@ Profile_Control_Parent{
     height: width
 
     function send(curr){
+        if(tap)androidFunc.vibrate(10);
         hubOperator.motor_SendServoAngle(port1, curr, servoangle)
     }
 
@@ -116,6 +117,7 @@ Profile_Control_Parent{
             onPressed: {
                 press = true
                 backgroundRectangle.color = Qt.lighter("#474646", 1.4)
+                if(tap)androidFunc.vibrate(50);
             }
             onReleased: {
                 press = false

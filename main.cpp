@@ -9,12 +9,45 @@
 #include "huboperator.h"
 #include "profiles.h"
 #include "appsettings.h"
-#ifdef Q_OS_ANDROID
-    #include "androidext.h"
+
+#if defined (Q_OS_ANDROID)
+#include <QtAndroid>
+#include "androidext.h"
+
+bool requestAndroidPermissions(){
+
+    const QVector<QString> permissions({"android.permission.ACCESS_COARSE_LOCATION",
+                                        "android.permission.BLUETOOTH",
+                                        "android.permission.BLUETOOTH_ADMIN",
+                                        "android.permission.VIBRATE",
+                                        "android.permission.WRITE_EXTERNAL_STORAGE",
+                                        "android.permission.READ_EXTERNAL_STORAGE"});
+
+    for(const QString &permission : permissions){
+        auto result = QtAndroid::checkPermission(permission);
+
+        if(result == QtAndroid::PermissionResult::Granted)qDebug() << permission << " " << "GRANTED";
+        else qDebug() << permission << " " << "DENIED";
+
+
+        if(result == QtAndroid::PermissionResult::Denied){
+            auto resultHash = QtAndroid::requestPermissionsSync(QStringList({permission}));
+            if(resultHash[permission] == QtAndroid::PermissionResult::Denied)
+                return false;
+        }
+    }
+
+    return true;
+}
 #endif
 
 int main(int argc, char *argv[])
 {
+#if defined (Q_OS_ANDROID)
+    if(!requestAndroidPermissions())
+        return -1;
+#endif
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);

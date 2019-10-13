@@ -18,6 +18,8 @@ Item {
     property int createIndex: -1
     property alias editorMode: editorItem.visible
 
+    property bool tap : appSett.getTapTick()
+
     property int type
     property int port1
     property int port2

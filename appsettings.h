@@ -10,13 +10,14 @@
 class AppSettings: public QObject{
     Q_OBJECT
 public:
-    AppSettings():darkMode(true){loadFromFile();}
+    AppSettings():darkMode(true), tapTick(true){loadFromFile();}
 
 private:
 
     QFile file;
     const QString pathToFile = "/config.z";
     bool darkMode;
+    bool tapTick;
 
 signals:
 
@@ -37,6 +38,7 @@ public slots:
             QDataStream in(&file);
 
             in >> darkMode;
+            in >> tapTick;
         }
         file.close();
     }
@@ -52,6 +54,7 @@ public slots:
         QDataStream out(&file);
 
         out << darkMode;
+        out << tapTick;
 
         file.close();
 
@@ -63,6 +66,15 @@ public slots:
 
     void setDarkMode(bool value){
         darkMode = value;
+        saveToFile();
+    }
+
+    bool getTapTick(){
+        return tapTick;
+    }
+
+    void setTapTick(bool value){
+        tapTick = value;
         saveToFile();
     }
 

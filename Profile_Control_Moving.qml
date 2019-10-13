@@ -116,6 +116,7 @@ Profile_Control_Parent{
                 touchPoints: [ TouchPoint { id: point1 } ]
                 property int shift:0
                 onTouchUpdated: {
+
                     var mouseXNormalized = point1.x - width/2;
 
                     if(mouseXNormalized > steeringItem.steeringLenght || mouseXNormalized < -steeringItem.steeringLenght){
@@ -128,6 +129,7 @@ Profile_Control_Parent{
 
                 onPressed: {
                     backgroundRectangle.color = Qt.lighter("#474646", 1.4)
+                    if(tap)androidFunc.vibrate(50);
                 }
                 onReleased: {
                     backgroundRectangle.color = "#474646"
@@ -145,7 +147,7 @@ Profile_Control_Parent{
                 property int savedLastSpeed:0
                 onTriggered:{
                     if(savedLastSpeed != currentSpeed){
-
+                        if(tap)androidFunc.vibrate(10);
                         root.currentSpeedReady(currentSpeed);
                         savedLastSpeed = currentSpeed;
                     }

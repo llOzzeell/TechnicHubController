@@ -52,6 +52,7 @@ Profile_Control_Parent {
             enabled: !editorMode && !forwardButton.isPressed
 
             onPressed: {
+                if(tap)androidFunc.vibrate(50);
                 reverseButton.isPressed = true;
                 reverseButton.border.width = root.height/8
                 reverseButton.color = Qt.lighter("#474646", 1.2)
@@ -117,6 +118,7 @@ Profile_Control_Parent {
             enabled: !editorMode && !reverseButton.isPressed
 
             onPressed: {
+                if(tap)androidFunc.vibrate(50);
                 forwardButton.isPressed = true;
                 forwardButton.border.width = root.height/8
                 forwardButton.color = Qt.lighter("#474646", 1.4)
@@ -147,6 +149,8 @@ Profile_Control_Parent {
                 anchors.fill: parent
             }
         }
+
+
     }
 
 }

@@ -40,7 +40,7 @@ Item {
 
     Label {
         id: label
-        text: qsTr("Подключение к ") + deviceName
+        text: qsTr("Connect to ") + deviceName
         font.weight: Font.Light
         font.bold: false
         font.pointSize: 18

@@ -41,7 +41,8 @@ HEADERS += \
     huboperator.h \
     technichub.h \
     profiles.h \
-    appsettings.h
+    appsettings.h \
+    translator.h
 
 DISTFILES += \
     android/AndroidManifest.xml \
@@ -61,3 +62,8 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
 }
+
+TRANSLATIONS += \
+        lang_ru_RU.ts \
+        lang_de_DE.ts
+

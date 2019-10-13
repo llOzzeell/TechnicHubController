@@ -32,7 +32,7 @@ Item {
     Button {
         id: scanButton
         height: 58
-        text: qsTr("Поиск устройств")
+        text: qsTr("Device search")
         font.weight: Font.Light
         font.bold: false
         font.pointSize: 18

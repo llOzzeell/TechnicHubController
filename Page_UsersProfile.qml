@@ -17,7 +17,7 @@ Item {
     }
 
     function addProfile(){
-        var defaultName = "New profile";
+        var defaultName = qsTr("New profile");
         var data = {'name': defaultName};
         profileModel.append(data);
         profilesController.addProfile(defaultName);
@@ -53,7 +53,7 @@ Item {
 
     Gui_TopBar{
         id:topBar
-        labelText: "Профили" + " (" + profileModel.count + ")"
+        labelText: qsTr("Profiles") + " (" + profileModel.count + ")"
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right

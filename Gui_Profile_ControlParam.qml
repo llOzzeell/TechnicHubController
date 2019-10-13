@@ -94,7 +94,7 @@ Item {
         Gui_Profile_Button {
             id: gui_Profile_Button
             height: 26
-            text: root.someChanges ? qsTr("Сохранить")  :  qsTr("Закрыть")
+            text: root.someChanges ? qsTr("Save")  :  qsTr("Close")
             anchors.right: parent.right
             anchors.rightMargin: 10
             anchors.left: parent.left
@@ -136,7 +136,7 @@ Item {
 
                 Label {
                     id: label
-                    text: qsTr("Порт")
+                    text: qsTr("Port 1")
                     font.weight: Font.Light
                     font.pointSize: 16
                     anchors.left: parent.left
@@ -167,7 +167,7 @@ Item {
 
                 Label {
                     id: label2
-                    text: qsTr("Порт")
+                    text: qsTr("Port 2")
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     font.weight: Font.Light
@@ -184,7 +184,7 @@ Item {
 
                 Label {
                     id: label1
-                    text: qsTr("Инверсия")
+                    text: qsTr("Inversion")
                     font.weight: Font.Light
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: 10
@@ -210,7 +210,7 @@ Item {
 
                 Label {
                     id: label3
-                    text: qsTr("Угол серво")
+                    text: qsTr("Servo angle")
                     anchors.leftMargin: 10
                     font.pointSize: 16
                     anchors.left: parent.left
@@ -241,7 +241,7 @@ Item {
 
                 Label {
                     id: label4
-                    text: qsTr("Макс. скорость")
+                    text: qsTr("Speed limit")
                     anchors.leftMargin: 10
                     font.pointSize: 16
                     anchors.left: parent.left

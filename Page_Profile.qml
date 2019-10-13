@@ -233,7 +233,7 @@ Item {
         TextEdit {
             id: label
             color: Material.foreground
-            text: qsTr("Профиль пуст. Добавьте элементы в режиме редактора.")
+            text: qsTr("Profile is empty. Add items in editor mode.")
             textFormat: Text.PlainText
             readOnly: true
             font.family: "Roboto"
@@ -250,7 +250,7 @@ Item {
             x: 120
             y: 82
             height: 32
-            text: "Редактор"
+            text: qsTr("Editor")
             labelFontpointSize: 16
             iconSource: ""
             anchors.bottom: parent.bottom

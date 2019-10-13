@@ -191,7 +191,7 @@ Item {
         Text {
             id: text1
             color: Style.dark_foreground
-            text: qsTr("Contro1z")
+            text: "Contro1z"
             verticalAlignment: Text.AlignTop
             font.family: Style.logoFont
             font.weight: Font.Light

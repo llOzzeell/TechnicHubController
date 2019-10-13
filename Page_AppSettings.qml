@@ -10,6 +10,7 @@ Item {
         darkModeSwitch.checked = appSett.getDarkMode();
         tapTickSwitch.checked = appSett.getTapTick()
         window.tapTick = tapTickSwitch.checked;
+        comboBox.currentIndex = appSett.getLanguage();
     }
 
     property int changeColorDuration:200
@@ -45,7 +46,7 @@ Item {
 
             Label {
                 id: label1
-                text: qsTr("Внешний вид")
+                text: qsTr("View")
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 font.weight: Font.Normal
@@ -81,7 +82,7 @@ Item {
 
             Label {
                 id: label
-                text: qsTr("Темная тема")
+                text: qsTr("Dark theme")
                 font.weight: Font.Light
                 font.pointSize: 16
                 anchors.verticalCenter: parent.verticalCenter
@@ -102,7 +103,7 @@ Item {
             height: 48
             Label {
                 id: label2
-                text: qsTr("Управление")
+                text: qsTr("Control")
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 font.pointSize: 16
@@ -131,12 +132,59 @@ Item {
 
             Label {
                 id: label3
-                text: qsTr("Тактильный отклик элементов управления")
+                text: qsTr("Tactile response")
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 font.pointSize: 16
                 anchors.verticalCenter: parent.verticalCenter
                 font.weight: Font.Light
+            }
+        }
+
+        Item {
+            id: element4
+            width: parent.width
+            height: 48
+            Label {
+                id: label4
+                text: qsTr("Regional settings")
+                font.weight: Font.Normal
+                anchors.leftMargin: 0
+                font.pointSize: 16
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+            }
+        }
+
+        Item {
+            id: element5
+            width: parent.width
+            height: 36
+
+            Label {
+                id: label5
+                text: qsTr("Language")
+                font.weight: Font.Light
+                anchors.leftMargin: 0
+                font.pointSize: 16
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+            }
+
+            ComboBox {
+                id: comboBox
+                x: 440
+                y: 36
+                width: 160
+                height: 36
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.verticalCenter: parent.verticalCenter
+                model:langModel
+                onActivated:{
+                    appSett.setLanguage(currentIndex)
+                    translator.selectLanguage(localeModel.get(currentIndex).locale);
+                }
             }
         }
 
@@ -150,10 +198,42 @@ Item {
         anchors.leftMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
-        labelText: "Настройки"
+        labelText: qsTr("Settings")
         backButtonVisible: true
         right1ButtonVisible: false
         right2ButtonVisible: false
     }
 
+    ListModel{
+        id:langModel
+        ListElement{
+            name: "English"
+        }
+        ListElement{
+            name: "Русский"
+        }
+        ListElement{
+            name: "Deutsch"
+        }
+    }
+
+    ListModel{
+        id:localeModel
+        ListElement{
+            locale: "en_US"
+        }
+        ListElement{
+            locale: "ru_RU"
+        }
+        ListElement{
+            locale: "de_DE"
+        }
+    }
+
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

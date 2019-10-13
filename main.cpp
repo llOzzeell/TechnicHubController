@@ -9,6 +9,7 @@
 #include "huboperator.h"
 #include "profiles.h"
 #include "appsettings.h"
+#include "translator.h"
 
 #if defined (Q_OS_ANDROID)
 #include <QtAndroid>
@@ -84,6 +85,32 @@ int main(int argc, char *argv[])
     AppSettings appsett;
     QQmlContext *context_appsett = engine.rootContext();
     context_appsett->setContextProperty("appSett", &appsett);
+
+    Translator tran(&engine);
+    QQmlContext *context = engine.rootContext();
+    context->setContextProperty("translator", &tran);
+
+    if(!appsett.isLanguageOverrided()){
+
+        QString locale = QLocale::system().name();
+
+        if(locale == "en_US" || locale != "en_EN")appsett.setLanguage(0);
+        if(locale == "ru_RU")   appsett.setLanguage(1);
+        if(locale == "de_DE")   appsett.setLanguage(2);
+
+        if(locale != "en_US" && locale != "en_EN" && locale != "ru_RU" && locale != "de_DE"){
+            tran.selectLanguage("en_US");
+        }
+        else tran.selectLanguage(locale);
+    }
+    else{
+
+        int lang = appsett.getLanguage();
+
+        if(lang == 0) tran.selectLanguage("en_US");
+        if(lang == 1) tran.selectLanguage("ru_RU");
+        if(lang == 2) tran.selectLanguage("de_DE");
+    }
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
 

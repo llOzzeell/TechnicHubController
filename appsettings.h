@@ -1,6 +1,7 @@
 #ifndef APPSETTINGS_H
 #define APPSETTINGS_H
 
+#include <QDebug>
 #include <QObject>
 #include <QFile>
 #include <QDataStream>
@@ -10,7 +11,7 @@
 class AppSettings: public QObject{
     Q_OBJECT
 public:
-    AppSettings():darkMode(true), tapTick(true){loadFromFile();}
+    AppSettings():darkMode(true), tapTick(true), language(0), langOverride(false){ loadFromFile();}
 
 private:
 
@@ -18,6 +19,8 @@ private:
     const QString pathToFile = "/config.z";
     bool darkMode;
     bool tapTick;
+    int language;
+    bool langOverride;
 
 signals:
 
@@ -39,6 +42,8 @@ public slots:
 
             in >> darkMode;
             in >> tapTick;
+            in >> language;
+            in >> langOverride;
         }
         file.close();
     }
@@ -55,6 +60,8 @@ public slots:
 
         out << darkMode;
         out << tapTick;
+        out << language;
+        out << langOverride;
 
         file.close();
 
@@ -76,6 +83,23 @@ public slots:
     void setTapTick(bool value){
         tapTick = value;
         saveToFile();
+    }
+
+    int getLanguage(){
+
+        return language;
+    }
+
+    void setLanguage(int value){
+
+        language = value;
+        langOverride = true;
+        saveToFile();
+    }
+
+    bool isLanguageOverrided(){
+
+        return langOverride;
     }
 
 };

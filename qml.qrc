@@ -46,5 +46,7 @@
         <file>Gui_ComboBox_Custom.qml</file>
         <file>CursorDelegate.qml</file>
         <file>Gui_Profile_ControlParam.qml</file>
+        <file>lang/lang_de_DE.qm</file>
+        <file>lang/lang_ru_RU.qm</file>
     </qresource>
 </RCC>

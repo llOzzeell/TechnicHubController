@@ -62,17 +62,17 @@ ApplicationWindow {
     ListModel{
         id:controlModel
         ListElement{
-            name: "Рулевое управление";
+            name: qsTr("Steering");
             ico: "icons/steering.svg"
             element:"Profile_Control_Steering.qml"
         }
         ListElement{
-            name: "Управление передвижением";
+            name: qsTr("Moving");
             ico: "icons/moving.svg"
             element:"Profile_Control_Moving.qml"
         }
         ListElement{
-            name: "Линейная кнопка";
+            name: qsTr("Plain button");
             ico: "icons/linear.svg"
             element:"Profile_Control_HoldButtons.qml"
         }

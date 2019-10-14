@@ -9,16 +9,15 @@ Profile_Control_Parent{
     height: width
 
     function send(curr){
-        if(tap)androidFunc.vibrate(10);
         hubOperator.motor_SendServoAngle(port1, curr, servoangle)
     }
 
     Rectangle {
         id: backgroundRectangle
-        color: "#474646"
+        color: dark ? Style.dark_control_background : Style.light_control_background
         radius: height/2
         border.width: root.height/30
-        border.color: "#302f2f"
+        border.color: dark ? Style.dark_control_border : Style.light_control_border
         anchors.fill: parent
         layer.enabled: true
         layer.effect: DropShadow{
@@ -62,10 +61,10 @@ Profile_Control_Parent{
             x: steeringItem.center + steeringZone.shift
             width: root.height/2.2
             height: width
-            color: "#868686"
+            color: dark ? Style.dark_control_primary : Style.light_control_primary
             radius: height/2
             border.width: root.height/30
-            border.color: "#302f2f"
+            border.color: dark ? Style.dark_control_border : Style.light_control_border
             anchors.verticalCenterOffset: 0
             anchors.verticalCenter: parent.verticalCenter
             layer.enabled: false
@@ -83,7 +82,6 @@ Profile_Control_Parent{
             duration: 80
         }
 
-
         MultiPointTouchArea{
             id: steeringZone
             anchors.right: parent.right
@@ -98,6 +96,11 @@ Profile_Control_Parent{
             enabled: !editorMode
             touchPoints: [ TouchPoint { id: point1 } ]
 
+            property int currentDegrees:0
+            property bool press: false
+            property int lastDegrees:0
+            property int shift:0
+
             onTouchUpdated: {
                 var mouseXNormalized = point1.x - width/2;
                 if(mouseXNormalized > steeringItem.steeringLenght || mouseXNormalized < -steeringItem.steeringLenght){
@@ -106,34 +109,34 @@ Profile_Control_Parent{
                 else shift = mouseXNormalized
 
                 var angle = parseInt((servoangle/steeringItem.steeringLenght)*Math.abs(shift));
+
+                if(press)backgroundRectangle.color = desaturate(Material.accent, angle)
+
                 var _currentDegrees = 0;
                 if(!inverted)_currentDegrees = shift>0 ? angle : -angle;
                 else _currentDegrees = shift>0 ? -angle : angle;
+
                 if( _currentDegrees % 10 == 0 /*||  _currentDegrees % 10 == 5*/) {
                     currentDegrees = _currentDegrees;
                 }
-            }
 
+            }
             onPressed: {
                 press = true
-                backgroundRectangle.color = Qt.lighter("#474646", 1.4)
-                if(tap)androidFunc.vibrate(50);
+                backgroundRectangle.color = desaturate(Material.accent, 0)
+                if(tap && !editorMode)androidFunc.vibrate(50);
             }
             onReleased: {
                 press = false
                 toCenter.running = true;
-                backgroundRectangle.color = "#474646"
+                backgroundRectangle.color = dark ? Style.dark_control_background : Style.light_control_background
                 if(!editorMode)root.send(port1, 0, 0, servoangle);
             }
-            property int currentDegrees:0
             onCurrentDegreesChanged: {
-                if(!editorMode)root.send(steeringZone.currentDegrees)
+                if(!editorMode)root.send(currentDegrees)
+                if(tap && !editorMode)androidFunc.vibrate(20);
                 lastDegrees = currentDegrees;
             }
-
-            property bool press: false
-            property int lastDegrees:0
-            property int shift:0
         }
     }
 }

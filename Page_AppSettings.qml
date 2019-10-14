@@ -16,11 +16,8 @@ Item {
     }
 
     function updateModel(){
-
         var list = appSett.getNames();
-
         list.forEach(function(item){
-            console.log("LANG NAME: " + item);
             nameModel.append({"name":item});
         })
     }
@@ -198,7 +195,6 @@ Item {
                 }
             }
         }
-
     }
 
     Gui_TopBar {
@@ -219,9 +215,3 @@ Item {
         id:nameModel
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

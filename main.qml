@@ -29,6 +29,7 @@ ApplicationWindow {
         appSett.setDarkMode(param);
         return param? setDark():setLight();
     }
+
     function setDark(){
         Material.theme = Material.Dark
         Material.background = Style.dark_background;
@@ -37,6 +38,7 @@ ApplicationWindow {
         Material.foreground = Style.dark_foreground
         return 0;
     }
+
     function setLight(){
         Material.theme = Material.Light
         Material.background = Style.light_background;
@@ -44,11 +46,6 @@ ApplicationWindow {
         Material.accent = Style.light_accent;
         Material.foreground = Style.light_foreground
         return 0;
-    }
-
-    function setColorToStatusBar(color){
-        androidFunc.setStatusBarColor(color);
-        window.color = color;
     }
 
     Shortcut {
@@ -98,7 +95,6 @@ ApplicationWindow {
             onDeviceWasConnected: {
                 swipe.incrementCurrentIndex();
             }
-
         }
 
         StackView{
@@ -165,7 +161,7 @@ ApplicationWindow {
         anchors.fill: parent
         source: {"qrc:/Gui_AppLoader.qml"}
         Timer{
-            interval: 2200
+            interval: 2000
             repeat: false
             running: true
             onTriggered: pageLoader.source = "";

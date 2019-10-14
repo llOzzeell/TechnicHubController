@@ -10,7 +10,7 @@ Profile_Control_Parent {
 
     Rectangle {
         id: rectangle
-        color: "#302f2f"
+        color: dark ? Style.dark_control_border : Style.light_control_border
         radius: height/2
         anchors.fill: parent
         layer.enabled: true
@@ -23,14 +23,14 @@ Profile_Control_Parent {
         id: reverseButton
         width: root.height
         height: width
-        color: "#474646"
+        color: dark ? Style.dark_control_primary : Style.light_control_primary
         radius: height/2
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
         border.width: root.height/20
-        border.color: "#302f2f"
+        border.color: dark ? Style.dark_control_border : Style.light_control_border
 
         Behavior on border.width{
             NumberAnimation{
@@ -40,7 +40,7 @@ Profile_Control_Parent {
 
         Behavior on color{
             ColorAnimation{
-                duration: 500
+                duration: 200
             }
         }
 
@@ -52,17 +52,17 @@ Profile_Control_Parent {
             enabled: !editorMode && !forwardButton.isPressed
 
             onPressed: {
-                if(tap)androidFunc.vibrate(50);
+                if(tap && !editorMode)androidFunc.vibrate(50);
                 reverseButton.isPressed = true;
                 reverseButton.border.width = root.height/8
-                reverseButton.color = Qt.lighter("#474646", 1.2)
+                reverseButton.color = desaturate(Material.accent, 90)
                 var spd = inverted ? maxspeed : - maxspeed;
                 if(!editorMode)hubOperator.motor_RunPermanent(port1, spd)
             }
             onReleased: {
                 reverseButton.isPressed = false;
                 reverseButton.border.width = root.height/20
-                reverseButton.color = "#474646"
+                reverseButton.color = dark ? Style.dark_control_primary : Style.light_control_primary
                 if(!editorMode)hubOperator.motor_RunPermanent(port1, 0)
             }
         }
@@ -71,17 +71,17 @@ Profile_Control_Parent {
             id: image1
             width: 26
             height: width
-            opacity: 0.5
+            visible:false
             fillMode: Image.PreserveAspectFit
             source: "icons/anticlockwise.svg"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            ColorOverlay{
-                source: image1
-                color: Style.dark_foreground
-                opacity: 1
-                anchors.fill: parent
-            }
+        }
+
+        ColorOverlay{
+            source: image1
+            color: dark ? Style.dark_control_border : Style.light_control_border
+            anchors.fill: image1
         }
     }
 
@@ -89,13 +89,13 @@ Profile_Control_Parent {
         id: forwardButton
         width: root.height
         height: width
-        color: "#474646"
+        color: dark ? Style.dark_control_primary : Style.light_control_primary
         radius: height/2
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right
         anchors.rightMargin: 0
-        border.color: "#302f2f"
+        border.color: dark ? Style.dark_control_border : Style.light_control_border
         border.width: root.height/20
 
         Behavior on border.width{
@@ -106,7 +106,7 @@ Profile_Control_Parent {
 
         Behavior on color{
             ColorAnimation{
-                duration: 500
+                duration: 200
             }
         }
 
@@ -118,17 +118,17 @@ Profile_Control_Parent {
             enabled: !editorMode && !reverseButton.isPressed
 
             onPressed: {
-                if(tap)androidFunc.vibrate(50);
+                if(tap && !editorMode)androidFunc.vibrate(50);
                 forwardButton.isPressed = true;
                 forwardButton.border.width = root.height/8
-                forwardButton.color = Qt.lighter("#474646", 1.4)
+                forwardButton.color = desaturate(Material.accent, 90)
                 var spd = inverted ? -maxspeed : maxspeed;
                 if(!editorMode)hubOperator.motor_RunPermanent(port1, spd)
             }
             onReleased: {
                 forwardButton.isPressed = false;
                 forwardButton.border.width = root.height/20
-                forwardButton.color = "#474646";
+                forwardButton.color = dark ? Style.dark_control_primary : Style.light_control_primary
                 if(!editorMode)hubOperator.motor_RunPermanent(port1, 0)
             }
         }
@@ -137,20 +137,18 @@ Profile_Control_Parent {
             id: image
             width: 26
             height: width
-            opacity: 0.5
+            visible: false
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             fillMode: Image.PreserveAspectFit
             source: "icons/clockwise.svg"
-
-            ColorOverlay{
-                source: image
-                color: Style.dark_foreground
-                anchors.fill: parent
-            }
         }
 
-
+        ColorOverlay{
+            source: image
+            color: dark ? Style.dark_control_border : Style.light_control_border
+            anchors.fill: image
+        }
     }
 
 }

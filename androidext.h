@@ -36,7 +36,7 @@ private:
 
 public slots:
 
-    void setStatusBarColor(const QColor &color){
+    void setStatusBarColor(const QColor &color)const {
 
         if (QtAndroid::androidSdkVersion() < 21) return;
 
@@ -49,7 +49,7 @@ public slots:
         });
     }
 
-    void setTheme(const int theme){
+    void setTheme(const int theme) const{
 
         if (QtAndroid::androidSdkVersion() < 23) return;
 
@@ -66,7 +66,7 @@ public slots:
         });
     }
 
-    void setOrientation(QString orientation)
+    void setOrientation(QString orientation) const
     {
         int ori = 0;
         if(orientation == "portraite") ori = 1;
@@ -82,16 +82,12 @@ public slots:
         }
     }
 
-    void vibrate(int milliseconds) {
+    void vibrate(int milliseconds) const {
 
-        if (vibratorService.isValid()) {
-                jlong ms = milliseconds;
-                //jboolean hasvibro = vibratorService.callMethod<jboolean>("hasVibrator", "()Z");
-                vibratorService.callMethod<void>("vibrate", "(J)V", ms);
-        } else qDebug() << "No vibrator service available";
+        if (vibratorService.isValid())vibratorService.callMethod<void>("vibrate", "(J)V", static_cast<jlong>(milliseconds));
     }
 
-    bool requestAndroidPermissions(){
+    bool requestAndroidPermissions() const{
 
         const QVector<QString> permissions({"android.permission.ACCESS_COARSE_LOCATION",
                                             "android.permission.BLUETOOTH",

@@ -8,7 +8,7 @@ Item {
     Component.onCompleted: { setModeToAllControls(false); }
 
     property int ind_temp:-1
-    onInd_tempChanged:{ console.log("INDEX CHANGED: " + ind_temp); profileParam.setIndex(ind_temp) }
+    onInd_tempChanged:{ profileParam.setIndex(ind_temp) }
 
     QtObject{
         id:profileParam
@@ -21,7 +21,6 @@ Item {
         function getIndex(){ console.log("getIndex(): " + _index); return _index }
 
         function setMode(value){
-            console.log("editorMode: " + value)
             _mode = value;
             root.setModeToAllControls(value);
         }
@@ -33,7 +32,6 @@ Item {
     }
 
     function setModeToAllControls(value){
-        console.log("setModeToAllControls: " + value)
         dynamicControlsArray.forEach(function(item){
             if(item !== undefined)item.editorMode = value;
         })
@@ -100,7 +98,6 @@ Item {
     }
 
     function saveProfile(_index){
-        console.log("saveProfile: " + _index)
         if(objectCounter > 0 && _index >= 0){
             profilesController.clearControlInProfile(_index);
             dynamicControlsArray.forEach(function(control){
@@ -114,11 +111,9 @@ Item {
     }
 
     function loadProfile(_index){
-        console.log("loadProfile: " + _index)
         if(_index >= 0){
 
             var count = profilesController.getControlsCounts(_index);
-            console.log("loaded: " + count)
 
             if(count === 0)emptyprofile.visible = true;
 

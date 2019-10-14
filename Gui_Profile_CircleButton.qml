@@ -10,6 +10,7 @@ Item {
     implicitWidth: 48
     implicitHeight: implicitWidth
 
+    property alias iconColor: overlay.color
     property alias backgroundColor: rectangle.color
     property string iconSource: "icons/plus.svg"
 
@@ -34,6 +35,7 @@ Item {
     }
 
     ColorOverlay{
+        id:overlay
         source: image
         color: Material.foreground
         anchors.fill: image

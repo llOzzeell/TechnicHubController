@@ -76,10 +76,10 @@ Item {
     Item {
         id: propsItem
         width: 260
-        height: 300
+        height: 260
         z: 8
         rotation: 90
-        anchors.verticalCenterOffset: 36
+        anchors.verticalCenterOffset: 0
         anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter

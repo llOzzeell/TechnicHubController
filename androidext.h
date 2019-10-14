@@ -86,11 +86,32 @@ public slots:
 
         if (vibratorService.isValid()) {
                 jlong ms = milliseconds;
-                jboolean hasvibro = vibratorService.callMethod<jboolean>("hasVibrator", "()Z");
+                //jboolean hasvibro = vibratorService.callMethod<jboolean>("hasVibrator", "()Z");
                 vibratorService.callMethod<void>("vibrate", "(J)V", ms);
         } else qDebug() << "No vibrator service available";
     }
 
+    bool requestAndroidPermissions(){
+
+        const QVector<QString> permissions({"android.permission.ACCESS_COARSE_LOCATION",
+                                            "android.permission.BLUETOOTH",
+                                            "android.permission.BLUETOOTH_ADMIN",
+                                            "android.permission.VIBRATE",
+                                            "android.permission.WRITE_EXTERNAL_STORAGE",
+                                            "android.permission.READ_EXTERNAL_STORAGE"});
+
+        for(const QString &permission : permissions){
+            auto result = QtAndroid::checkPermission(permission);
+
+            if(result == QtAndroid::PermissionResult::Denied){
+                auto resultHash = QtAndroid::requestPermissionsSync(QStringList({permission}));
+                if(resultHash[permission] == QtAndroid::PermissionResult::Denied)
+                    return false;
+            }
+        }
+
+        return true;
+    }
 };
 
 #endif // ANDROIDFUNCTION_H

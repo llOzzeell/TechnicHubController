@@ -7,11 +7,32 @@
 #include <QDataStream>
 #include <QStandardPaths>
 #include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QString>
+
+#include "translator.h"
+
+struct langStruct{
+    QString locale;
+    QString langName;
+};
 
 class AppSettings: public QObject{
     Q_OBJECT
 public:
-    AppSettings():darkMode(true), tapTick(true), language(0), langOverride(false){ loadFromFile();}
+    AppSettings(QQmlApplicationEngine *_engine):darkMode(true), tapTick(true), language(0), langOverride(false){
+
+        locales.append(qMakePair(0,langStruct{QString("en_US"),QString("English")}));
+        locales.append(qMakePair(1,langStruct{QString("ru_RU"),QString("Русский")}));
+        locales.append(qMakePair(2,langStruct{QString("de_DE"),QString("Deutsch")}));
+
+        loadFromFile();
+
+        translator = new Translator(_engine);
+
+        loadLanguage();
+    }
+    ~AppSettings(){delete translator;}
 
 private:
 
@@ -19,8 +40,10 @@ private:
     const QString pathToFile = "/config.z";
     bool darkMode;
     bool tapTick;
+    Translator *translator;
     int language;
     bool langOverride;
+    QVector<QPair<int,langStruct>> locales;
 
 signals:
 
@@ -32,8 +55,6 @@ public slots:
 
         auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
         QFile file(path + pathToFile);
-
-//      QFile file(qApp->applicationDirPath() + pathToFile);
 
         if(file.exists())
         {
@@ -48,12 +69,10 @@ public slots:
         file.close();
     }
 
-    void saveToFile(){
+    void saveToFile() const{
 
         auto path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
         QFile file(path + pathToFile);
-
-//      QFile file(qApp->applicationDirPath() + pathToFile);
 
         file.open(QIODevice::WriteOnly);
         QDataStream out(&file);
@@ -67,7 +86,9 @@ public slots:
 
     }
 
-    bool getDarkMode(){
+    ///////////////////////////////////////////////////////
+
+    bool getDarkMode() const{
         return darkMode;
     }
 
@@ -76,7 +97,9 @@ public slots:
         saveToFile();
     }
 
-    bool getTapTick(){
+    ///////////////////////////////////////////////////////
+
+    bool getTapTick() const{
         return tapTick;
     }
 
@@ -85,19 +108,66 @@ public slots:
         saveToFile();
     }
 
-    int getLanguage(){
+    ///////////////////////////////////////////////////////
+
+    void loadLanguage(){
+
+        if(!langOverride){
+
+            QString locale = QLocale::system().name();
+
+            for(auto pair : locales){
+                if(pair.second.locale == locale){ setLanguage(pair.first); return; }
+            }
+        }
+        else{
+
+            for(auto pair : locales){
+                if(pair.first == language){ translator->selectLanguage(locales[language].second.locale); return; }
+            }
+        }
+    }
+
+    int getCurrentLanguageInt() const{
 
         return language;
+    }
+
+    QString getCurrentLanguageLocaleString() const{
+
+        return locales[language].second.locale;
+    }
+
+    QString getCurrentLanguageNameString() const{
+
+        return locales[language].second.langName;
+    }
+
+    QStringList getLocales() const{
+        QStringList list;
+        for(auto pair : locales){
+            list.append(pair.second.locale);
+        }
+        return list;
+    }
+
+    QStringList getNames() const{
+        QStringList list;
+        for(auto pair : locales){
+            list.append(pair.second.langName);
+        }
+        return list;
     }
 
     void setLanguage(int value){
 
         language = value;
         langOverride = true;
+        translator->selectLanguage(locales[language].second.locale);
         saveToFile();
     }
 
-    bool isLanguageOverrided(){
+    bool isLanguageOverrided() const{
 
         return langOverride;
     }

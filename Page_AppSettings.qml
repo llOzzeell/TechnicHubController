@@ -10,7 +10,19 @@ Item {
         darkModeSwitch.checked = appSett.getDarkMode();
         tapTickSwitch.checked = appSett.getTapTick()
         window.tapTick = tapTickSwitch.checked;
-        comboBox.currentIndex = appSett.getLanguage();
+        root.updateModel();
+        comboBox.currentIndex = appSett.getCurrentLanguageInt();
+        console.log(appSett.getCurrentLanguageInt())
+    }
+
+    function updateModel(){
+
+        var list = appSett.getNames();
+
+        list.forEach(function(item){
+            console.log("LANG NAME: " + item);
+            nameModel.append({"name":item});
+        })
     }
 
     property int changeColorDuration:200
@@ -175,15 +187,14 @@ Item {
                 id: comboBox
                 x: 440
                 y: 36
-                width: 160
+                width: 120
                 height: 36
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
-                model:langModel
+                model:nameModel
                 onActivated:{
-                    appSett.setLanguage(currentIndex)
-                    translator.selectLanguage(localeModel.get(currentIndex).locale);
+                    appSett.setLanguage(currentIndex);
                 }
             }
         }
@@ -205,31 +216,8 @@ Item {
     }
 
     ListModel{
-        id:langModel
-        ListElement{
-            name: "English"
-        }
-        ListElement{
-            name: "Русский"
-        }
-        ListElement{
-            name: "Deutsch"
-        }
+        id:nameModel
     }
-
-    ListModel{
-        id:localeModel
-        ListElement{
-            locale: "en_US"
-        }
-        ListElement{
-            locale: "ru_RU"
-        }
-        ListElement{
-            locale: "de_DE"
-        }
-    }
-
 }
 
 /*##^##

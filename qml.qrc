@@ -48,5 +48,6 @@
         <file>Gui_Profile_ControlParam.qml</file>
         <file>lang/lang_de_DE.qm</file>
         <file>lang/lang_ru_RU.qm</file>
+        <file>icons/find.svg</file>
     </qresource>
 </RCC>

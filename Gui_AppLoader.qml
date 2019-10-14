@@ -8,16 +8,18 @@ Item {
     width: Screen.width
     height: Screen.height
 
+    property bool dark: appSett.getDarkMode()
+
     Rectangle {
         id: background
-        color: Style.dark_background
+        color: dark ? Style.dark_background : Style.light_background
         anchors.fill: parent
     }
 
     Rectangle {
         id: line
         height: loader.height/30
-        color: Style.dark_accent
+        color: dark ? Style.dark_accent : Style.light_accent
         radius: height/2
         anchors.top: loader.bottom
         anchors.topMargin: 0
@@ -38,7 +40,7 @@ Item {
         y: line.y + 4
         width: line.width/4
         height: loader.height/30
-        color: Material.foreground
+        color: dark ? Style.dark_foreground : Style.light_foreground
         radius: height/2
         layer.effect: DropShadow {
             radius: 4
@@ -61,10 +63,10 @@ Item {
 
         Rectangle {
             id: backgroundRectangle
-            color: "#474646"
+            color: dark ? Style.dark_control_background : Style.light_control_background
             radius: height/2
             border.width: loader.height/30
-            border.color: "#302f2f"
+            border.color: dark ? Style.dark_control_border : Style.light_control_border
             anchors.fill: parent
             layer.effect: DropShadow {
                 radius: 4
@@ -94,10 +96,10 @@ Item {
             y: 38
             width: loader.height/2.2
             height: width
-            color: "#868686"
+            color: dark ? Style.dark_control_primary : Style.light_control_primary
             radius: height/2
             border.width: loader.height/30
-            border.color: "#302f2f"
+            border.color: dark ? Style.dark_control_border : Style.light_control_border
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             layer.enabled: false
@@ -190,7 +192,7 @@ Item {
 
         Text {
             id: text1
-            color: Style.dark_foreground
+            color: dark ? Style.dark_foreground : Style.light_foreground
             text: "Contro1z"
             verticalAlignment: Text.AlignTop
             font.family: Style.logoFont

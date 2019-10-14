@@ -14,12 +14,38 @@ Item {
         hubConnector.connectTo(index);
     }
 
+    Gui_TopBar {
+        id: gui_TopBar
+        labelText: qsTr("Finder")
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        right1ButtonVisible: true
+        right2ButtonVisible: true
+        right1ButtonIconSource: "icons/find.svg"
+        right2ButtonIconSource: "icons/profileEdit.svg"
+        backButtonVisible: false
+        onRight2ButtonClicked: stackView.push(appSettings)
+        onRight1ButtonClicked: {
+            if(!hubFinder.scanIsRunning()){
+                deviceModel.clear();
+                gui_Radar.start();
+                hubFinder.startScan();
+            }
+        }
+    }
+
     Gui_Radar {
         id: gui_Radar
-        width: 320
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
+        height: width
+        anchors.right: parent.right
+        anchors.rightMargin: -200
+        anchors.left: parent.left
+        anchors.leftMargin: -200
+        anchors.verticalCenter: parent.verticalCenter
 
         Connections{
                 target: hubFinder
@@ -44,6 +70,7 @@ Item {
         anchors.topMargin: 10
         Material.background: Material.accent
         Material.foreground: Style.dark_background
+        visible: false
         onClicked: {
             if(!hubFinder.scanIsRunning()){
                 gui_Radar.start();
@@ -55,8 +82,8 @@ Item {
     ListView {
         id: deviceView
         spacing: 4
-        anchors.top: scanButton.bottom
-        anchors.topMargin: 0
+        anchors.top: gui_TopBar.bottom
+        anchors.topMargin: 10
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 50
         anchors.right: scanButton.right
@@ -101,8 +128,18 @@ Item {
         anchors.fill: parent
         visible: false
         onNoConnected: page_Connect.visible = false;
-        onDeviceConnected: root.deviceWasConnected();
+        onDeviceConnected:{
+            //root.deviceWasConnected();
+            wasConnected()
+        }
     }
 
 
+
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

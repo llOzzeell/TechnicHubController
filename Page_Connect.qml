@@ -1,22 +1,31 @@
-import QtQuick 2.0
+import QtQuick 2.11
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 
 Item {
     id:root
+    Connections{
+        target:window
+        onBackPushed:{
+            console.log("CONNECTOR KEY BACK PUSHED")
+            root.noConnected();
+        }
+    }
+
+    readonly property string pageName: "connector";
 
     property int timeout: 10000
 
     signal deviceConnected
     onDeviceConnected: {
-        countDownAnimation.running = false;
+        countDownAnimation.stop();
     }
 
     signal noConnected
 
     function start(){
         countDownRectangle.width = root.width/1.2
-        countDownAnimation.running = true;
+        countDownAnimation.start();
     }
 
     Connections{
@@ -73,5 +82,7 @@ Item {
             duration: timeout
         }
     }
+
+
 
 }

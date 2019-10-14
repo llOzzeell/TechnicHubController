@@ -48,11 +48,13 @@ ApplicationWindow {
         return 0;
     }
 
+    signal backPushed
+
     Shortcut {
         sequence: "Back"
         onActivated:{
+            backPushed();
             if(stackView.depth  > 0) stackView.pop();
-            if(swipe.currentIndex <= 0)return 0;
         }
     }
 
@@ -81,64 +83,55 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    SwipeView{
-        id:swipe
+//    SwipeView{
+//        id:swipe
+//        anchors.fill: parent
+//        clip: true
+//        visible: true
+//        interactive: false
+//        currentIndex: 0
+
+//        Page_Finder{
+//            id:finder
+//            clip: true
+//            onDeviceWasConnected: {
+//                swipe.incrementCurrentIndex();
+//            }
+//        }
+
+//        StackView{
+//            id:stackView
+//            clip: true
+//            initialItem: finder
+//        }
+//    }
+
+    StackView{
+        id:stackView
         anchors.fill: parent
         clip: true
-        visible: true
-        interactive: false
-        currentIndex: 0
+        initialItem: finder
+    }
 
+    function wasConnected(){
+        stackView.clear()
+        stackView.push(userProfiles);
+    }
+
+    Component{
+        id:finder
         Page_Finder{
-            id:finder
-            clip: true
-            onDeviceWasConnected: {
-                swipe.incrementCurrentIndex();
-            }
-        }
-
-        StackView{
-            id:stackView
-            clip: true
-            initialItem: usrProfiles
-
-//            pushEnter: Transition {
-//                    PropertyAnimation {
-//                        property: "opacity"
-//                        from: 0
-//                        to:1
-//                        duration: 200
-//                    }
-//                }
-//            pushExit: Transition {
-//                    PropertyAnimation {
-//                        property: "opacity"
-//                        from: 1
-//                        to:0
-//                        duration: 200
-//                    }
-//                }
-//            popEnter: Transition {
-//                    PropertyAnimation {
-//                        property: "opacity"
-//                        from: 0
-//                        to:1
-//                        duration: 200
-//                    }
-//                }
-//            popExit: Transition {
-//                    PropertyAnimation {
-//                        property: "opacity"
-//                        from: 1
-//                        to:0
-//                        duration: 200
-//                    }
-//                }
         }
     }
 
     Component{
-        id:usrProfiles
+        id:connect
+        Page_Connect{
+        }
+    }
+
+    Component{
+        id:userProfiles
         Page_UsersProfile{
         }
     }
@@ -168,3 +161,9 @@ ApplicationWindow {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

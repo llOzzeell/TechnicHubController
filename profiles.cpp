@@ -2,13 +2,13 @@
 
 QDataStream& operator<<(QDataStream &out, Control &p)
 {
-    out << p.type << p.width << p.x << p.y << p.invert << p.port1 << p.port2 << p.servoAngle << p.maxSpeed;
+    out << p.type << p.width << p.height  << p.x << p.y << p.invert << p.port1 << p.port2 << p.servoAngle << p.maxSpeed << p.orientation;
     return out;
 }
 
 QDataStream& operator>>(QDataStream &in, Control &p)
 {
-    in >> p.type >> p.width >> p.x >> p.y >> p.invert >> p.port1 >> p.port2 >> p.servoAngle >> p.maxSpeed;
+    in >> p.type >> p.width >> p.height >> p.x >> p.y >> p.invert >> p.port1 >> p.port2 >> p.servoAngle >> p.maxSpeed >> p.orientation;
     return in;
 }
 
@@ -119,9 +119,9 @@ void Profiles::clearControlInProfile(int profileIndex)
     profiles[profileIndex].clearProfile();
 }
 
-void Profiles::addProfileControls(int profileIndex, int type, int width, int x, int y, bool inverted, int port1, int port2, int servo, int maxspeed)
+void Profiles::addProfileControls(int profileIndex, int type, int width, int height, int x, int y, bool inverted, int port1, int port2, int servo, int maxspeed, bool orientation)
 {
-    Control con{quint8(type), quint16(width), qint16(x), qint16(y), inverted, quint8(port1), quint8(port2), quint8(servo), quint8(maxspeed)};
+    Control con{quint8(type), quint16(width), quint16(height), qint16(x), qint16(y), inverted, quint8(port1), quint8(port2), quint8(servo), quint8(maxspeed), orientation};
     profiles[profileIndex].addControl(con);
 }
 
@@ -133,10 +133,12 @@ int Profiles::getControlsCounts(int profileIndex)
 QList<QString> Profiles::getProfileControls(int profileIndex, int controlIndex)
 {
     QList<QString> list;
+
     Control c = profiles[profileIndex].getControl(controlIndex);
 
     list.append(QString::number(c.type));
     list.append(QString::number(c.width));
+    list.append(QString::number(c.height));
     list.append(QString::number(c.x));
     list.append(QString::number(c.y));
     list.append(QString::number(c.invert));
@@ -144,6 +146,7 @@ QList<QString> Profiles::getProfileControls(int profileIndex, int controlIndex)
     list.append(QString::number(c.port2));
     list.append(QString::number(c.servoAngle));
     list.append(QString::number(c.maxSpeed));
+    list.append(QString::number(c.orientation));
 
     return list;
 }

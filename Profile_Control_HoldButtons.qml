@@ -5,8 +5,22 @@ import QtQuick.Controls.Material 2.2
 
 Profile_Control_Parent {
     id:root
-    width:120
+    width:140
     height: width/2
+
+    scalePlusButtonOpacity: root.width === maxControlWidth ? 0.3 : 1
+    scaleMinusButtonOpacity: root.width === minControlWidth ? 0.3 : 1
+
+    property int minControlWidth: 160
+    property int maxControlWidth: 200
+
+    onScaleMinus: {
+        if( width > minControlWidth) width -= 20;
+    }
+
+    onScalePlus: {
+        if( width < maxControlWidth) width += 20;
+    }
 
     Rectangle {
         id: rectangle

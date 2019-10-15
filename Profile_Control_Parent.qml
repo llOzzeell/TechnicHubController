@@ -6,15 +6,6 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
 
-    implicitWidth: 120
-    implicitHeight: 120
-    width: implicitWidth
-    height: implicitheight
-    rotation: 90
-
-    property int minControlWidth:120
-    property int maxControlWidth:220
-
     property int createIndex: -1
     property alias editorMode: editorItem.visible
 
@@ -27,22 +18,16 @@ Item {
     property bool inverted
     property int maxspeed
     property int servoangle
+    property bool orientation
 
-    function setScalePlus(){
-        if( width < maxControlWidth) width += 20;
-    }
+    property alias scalePlusButtonOpacity: scalePlus.opacity
+    property alias scaleMinusButtonOpacity: scaleMinus.opacity
 
-    function setScaleMinus(){
-        if( width > minControlWidth) width -= 20;
-    }
+    signal scaleMinus
+    signal scalePlus
 
     function highlight(trigger){
-        if(trigger){
-            frame.visible = true;
-        }
-        else{
-            frame.visible = false;
-        }
+        frame.visible = trigger;
     }
 
     function desaturate(color, value){
@@ -117,8 +102,8 @@ Item {
                 backgroundColor: Material.primary
                 iconSource: "icons/minus.svg"
                 visible: editorMode
-                onClicked: setScaleMinus();
-                opacity: root.width === minControlWidth ? 0.3 : 1
+                onClicked: root.scaleMinus()
+                //opacity: root.width === minControlWidth ? 0.3 : 1
             }
 
             Gui_Profile_CircleButton {
@@ -128,8 +113,8 @@ Item {
                 backgroundColor: Material.primary
                 iconSource: "icons/plus.svg"
                 visible: editorMode
-                onClicked: setScalePlus();
-                opacity: root.width === maxControlWidth ? 0.3 : 1
+                onClicked: root.scalePlus()
+                //opacity: root.width === maxControlWidth ? 0.3 : 1
             }
 
             Gui_Profile_CircleButton {

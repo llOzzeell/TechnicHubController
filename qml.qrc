@@ -49,5 +49,6 @@
         <file>lang/lang_de_DE.qm</file>
         <file>lang/lang_ru_RU.qm</file>
         <file>icons/find.svg</file>
+        <file>Profile_Control_Slider.qml</file>
     </qresource>
 </RCC>

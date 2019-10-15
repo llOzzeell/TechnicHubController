@@ -29,7 +29,7 @@ Item {
 
     ListView {
         id: profileView
-        height: profileView.count * profileView.currentItem.delegateHeight + profileView.spacing * (profileView.count-1)
+        height: profileView.contentHeight
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right
@@ -53,7 +53,9 @@ Item {
             MouseArea{
                 id:ma
                 anchors.fill: parent
-                onClicked: root.controlChoosed(index, controlModel.get(index).element);
+                onClicked:{
+                    root.controlChoosed(index, controlModel.get(index).element);
+                }
             }
         }
     }

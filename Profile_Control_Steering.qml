@@ -5,11 +5,53 @@ import QtQuick.Controls.Material 2.12
 Profile_Control_Parent{
     id:root
 
-    width:120
+    width:140
     height: width
+
+    property int minControlWidth: 160
+    property int maxControlWidth: 200
+
+    onScaleMinus: {
+        if( width > minControlWidth)width -= 20;
+        else scaleMinusButtonOpacity = 0.2
+    }
+
+    onScalePlus: {
+        if( width < maxControlWidth)width += 20;
+    }
+
+    scalePlusButtonOpacity: root.width === maxControlWidth ? 0.3 : 1
+    scaleMinusButtonOpacity: root.width === minControlWidth ? 0.3 : 1
 
     function send(curr){
         hubOperator.motor_SendServoAngle(port1, curr, servoangle)
+    }
+
+    Item {
+        id: angleIndicator
+        rotation: 0
+        anchors.fill: parent
+
+        Behavior on rotation{
+            NumberAnimation{
+                duration: 100
+            }
+        }
+
+        Rectangle {
+            id: arrowRectangle
+            width: root.height/6
+            height: width
+            color: backgroundRectangle.color
+            rotation: 45
+            anchors.topMargin: -height/2.5
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+            layer.enabled: true
+            layer.effect: DropShadow{
+                radius:4
+            }
+        }
     }
 
     Rectangle {
@@ -110,16 +152,19 @@ Profile_Control_Parent{
 
                 var angle = parseInt((servoangle/steeringItem.steeringLenght)*Math.abs(shift));
 
-                if(press)backgroundRectangle.color = desaturate(Material.accent, angle)
-
                 var _currentDegrees = 0;
                 if(!inverted)_currentDegrees = shift>0 ? angle : -angle;
                 else _currentDegrees = shift>0 ? -angle : angle;
 
+                if(press){
+
+                    backgroundRectangle.color = desaturate(Material.accent, angle);
+                    angleIndicator.rotation = _currentDegrees;
+                }
+
                 if( _currentDegrees % 10 == 0 /*||  _currentDegrees % 10 == 5*/) {
                     currentDegrees = _currentDegrees;
                 }
-
             }
             onPressed: {
                 press = true
@@ -131,6 +176,7 @@ Profile_Control_Parent{
                 toCenter.running = true;
                 backgroundRectangle.color = dark ? Style.dark_control_background : Style.light_control_background
                 if(!editorMode)root.send(port1, 0, 0, servoangle);
+                angleIndicator.rotation = 0;
             }
             onCurrentDegreesChanged: {
                 if(!editorMode)root.send(currentDegrees)
@@ -140,3 +186,9 @@ Profile_Control_Parent{
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:5;anchors_y:"-17"}D{i:4;anchors_y:"-17"}
+}
+##^##*/

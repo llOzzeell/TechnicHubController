@@ -16,6 +16,7 @@ struct Control
 {
     quint8 type;
     quint16 width;
+    quint16 height;
     qint16 x;
     qint16 y;
     bool invert;
@@ -23,6 +24,7 @@ struct Control
     quint8 port2;
     quint8 servoAngle;
     quint8 maxSpeed;
+    bool orientation;
 
     friend QDataStream& operator<<(QDataStream &out, Control &p);
     friend QDataStream& operator>>(QDataStream &in, Control &p);
@@ -76,7 +78,7 @@ public slots:
     QList<QString> getProfilesNames();
     void updateProfileName(int profileIndex, QString name);
     void clearControlInProfile(int profileIndex);
-    void addProfileControls(int profileIndex, int type, int width, int x, int y, bool inverted, int port1, int port2, int servo, int maxspeed);
+    void addProfileControls(int profileIndex, int type, int width, int height, int x, int y, bool inverted, int port1, int port2, int servo, int maxspeed, bool orientation);
     int getControlsCounts(int profileIndex);
     QList<QString> getProfileControls(int profileIndex, int controlIndex);
 

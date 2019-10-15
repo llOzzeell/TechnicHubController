@@ -19,75 +19,80 @@
 <context>
     <name>Gui_Profile_ControlParam</name>
     <message>
-        <location filename="Gui_Profile_ControlParam.qml" line="97"/>
+        <location filename="Gui_Profile_ControlParam.qml" line="99"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="Gui_Profile_ControlParam.qml" line="97"/>
+        <location filename="Gui_Profile_ControlParam.qml" line="99"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="Gui_Profile_ControlParam.qml" line="139"/>
+        <location filename="Gui_Profile_ControlParam.qml" line="141"/>
         <source>Port 1</source>
         <translation>Порт 1</translation>
     </message>
     <message>
-        <location filename="Gui_Profile_ControlParam.qml" line="170"/>
+        <location filename="Gui_Profile_ControlParam.qml" line="172"/>
         <source>Port 2</source>
         <translation>Порт 2</translation>
     </message>
     <message>
-        <location filename="Gui_Profile_ControlParam.qml" line="187"/>
+        <location filename="Gui_Profile_ControlParam.qml" line="189"/>
         <source>Inversion</source>
         <translation>Инверсия</translation>
     </message>
     <message>
-        <location filename="Gui_Profile_ControlParam.qml" line="213"/>
+        <location filename="Gui_Profile_ControlParam.qml" line="215"/>
         <source>Servo angle</source>
         <translation>Угол серво</translation>
     </message>
     <message>
-        <location filename="Gui_Profile_ControlParam.qml" line="244"/>
+        <location filename="Gui_Profile_ControlParam.qml" line="246"/>
         <source>Speed limit</source>
         <translation>Лимит скорости</translation>
+    </message>
+    <message>
+        <location filename="Gui_Profile_ControlParam.qml" line="275"/>
+        <source>Vertical</source>
+        <translation>Вертикальный</translation>
     </message>
 </context>
 <context>
     <name>Page_AppSettings</name>
     <message>
-        <location filename="Page_AppSettings.qml" line="49"/>
+        <location filename="Page_AppSettings.qml" line="58"/>
         <source>View</source>
         <translation>Внешний вид</translation>
     </message>
     <message>
-        <location filename="Page_AppSettings.qml" line="85"/>
+        <location filename="Page_AppSettings.qml" line="94"/>
         <source>Dark theme</source>
         <translation>Темная тема</translation>
     </message>
     <message>
-        <location filename="Page_AppSettings.qml" line="106"/>
+        <location filename="Page_AppSettings.qml" line="115"/>
         <source>Control</source>
         <translation>Управление</translation>
     </message>
     <message>
-        <location filename="Page_AppSettings.qml" line="135"/>
+        <location filename="Page_AppSettings.qml" line="144"/>
         <source>Tactile response</source>
         <translation>Тактильная отдача</translation>
     </message>
     <message>
-        <location filename="Page_AppSettings.qml" line="150"/>
+        <location filename="Page_AppSettings.qml" line="159"/>
         <source>Regional settings</source>
         <translation>Региональные настройки</translation>
     </message>
     <message>
-        <location filename="Page_AppSettings.qml" line="166"/>
+        <location filename="Page_AppSettings.qml" line="175"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="Page_AppSettings.qml" line="229"/>
+        <location filename="Page_AppSettings.qml" line="208"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
@@ -95,7 +100,7 @@
 <context>
     <name>Page_Connect</name>
     <message>
-        <location filename="Page_Connect.qml" line="43"/>
+        <location filename="Page_Connect.qml" line="52"/>
         <source>Connect to </source>
         <translation>Подключение к </translation>
     </message>
@@ -103,7 +108,12 @@
 <context>
     <name>Page_Finder</name>
     <message>
-        <location filename="Page_Finder.qml" line="35"/>
+        <location filename="Page_Finder.qml" line="19"/>
+        <source>Finder</source>
+        <translation>Поиск устройств</translation>
+    </message>
+    <message>
+        <location filename="Page_Finder.qml" line="61"/>
         <source>Device search</source>
         <translation>Поиск устройств</translation>
     </message>
@@ -111,14 +121,34 @@
 <context>
     <name>Page_Profile</name>
     <message>
-        <location filename="Page_Profile.qml" line="236"/>
+        <location filename="Page_Profile.qml" line="253"/>
         <source>Profile is empty. Add items in editor mode.</source>
         <translation>Пустой профиль.Добавьте элементы управления в режиме редактора.</translation>
     </message>
     <message>
-        <location filename="Page_Profile.qml" line="253"/>
+        <location filename="Page_Profile.qml" line="270"/>
         <source>Editor</source>
         <translation>Редактор</translation>
+    </message>
+    <message>
+        <location filename="Page_Profile.qml" line="309"/>
+        <source>Steering</source>
+        <translation>Рулевое управление</translation>
+    </message>
+    <message>
+        <location filename="Page_Profile.qml" line="314"/>
+        <source>Moving</source>
+        <translation>Управление движением</translation>
+    </message>
+    <message>
+        <location filename="Page_Profile.qml" line="319"/>
+        <source>Plain button</source>
+        <translation>Линейная кнопка</translation>
+    </message>
+    <message>
+        <location filename="Page_Profile.qml" line="324"/>
+        <source>Slider</source>
+        <translation>Слайдер</translation>
     </message>
 </context>
 <context>
@@ -137,19 +167,16 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="main.qml" line="65"/>
         <source>Steering</source>
-        <translation>Рулевое управление</translation>
+        <translation type="vanished">Рулевое управление</translation>
     </message>
     <message>
-        <location filename="main.qml" line="70"/>
         <source>Moving</source>
-        <translation>Управление движением</translation>
+        <translation type="vanished">Управление движением</translation>
     </message>
     <message>
-        <location filename="main.qml" line="75"/>
         <source>Plain button</source>
-        <translation>Линейная кнопка</translation>
+        <translation type="vanished">Линейная кнопка</translation>
     </message>
 </context>
 </TS>

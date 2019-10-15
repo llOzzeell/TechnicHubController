@@ -97,6 +97,7 @@ void TechnicHub::serviceDetailsDiscovered()
 
 void TechnicHub::getCharsValue(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue)
 {
+    Q_UNUSED(characteristic)
     debugOutHex(newValue, "get:");
 }
 

@@ -59,7 +59,7 @@ void HubOperator::motor_RunPermanent(int port, int speed)
         stream << quint8(0x64);
         stream << quint8(0x7f);
         stream << quint8(0);
-        data[0] = data.count();
+        data[0] = quint8(data.count());
         hub->writeNoResponce(data);
     }
 }
@@ -119,7 +119,7 @@ quint8 HubOperator::powerCalculate(int curr, int target)
     return quint8(59);
 }
 
-void HubOperator::motor_SendServoAngle(int port, int angle, int maxAngle)
+void HubOperator::motor_SendServoAngle(int port, int angle)
 {
     if(hub && _lastValueArray[port] != angle){
 
@@ -127,23 +127,21 @@ void HubOperator::motor_SendServoAngle(int port, int angle, int maxAngle)
         QDataStream stream(&data, QIODevice::ReadWrite);
         stream.setByteOrder(QDataStream::LittleEndian);
 
-        int servovalue = maxAngle * angle / 100;
+        stream << quint8(0);
+        stream << quint8(0);
+        stream << quint8(0x81);
+        stream << quint8(port);
+        stream << quint8(0x11);
+        stream << quint8(0x0d);
+        stream << qint32(angle);
 
-                stream << quint8(0);
-                stream << quint8(0);
-                stream << quint8(0x81);
-                stream << quint8(port);
-                stream << quint8(0x11);
-                stream << quint8(0x0d);
-                stream << qint32(angle);
+        stream << servoSpeedCalculate(_lastValueArray[port], angle);
+        stream << powerCalculate(_lastValueArray[port], angle);
 
-                stream << servoSpeedCalculate(_lastValueArray[port], angle);
-                stream << powerCalculate(_lastValueArray[port], angle);
+        stream << quint8(0x7e);
+        stream << quint8(0);
 
-                stream << quint8(0x7e);
-                stream << quint8(0);
-
-                qDebug() << "delta: " << qAbs(angle - _lastValueArray[port])  << " speed: " << servoSpeedCalculate(_lastValueArray[port], angle) << " power: " << powerCalculate(_lastValueArray[port], angle);
+        qDebug() << "delta: " << qAbs(angle - _lastValueArray[port])  << " speed: " << servoSpeedCalculate(_lastValueArray[port], angle) << " power: " << powerCalculate(_lastValueArray[port], angle);
 
         data[0] = quint8(data.count());
         hub->writeNoResponce(data);
@@ -170,7 +168,7 @@ void HubOperator::motor_TurnToDegrees(int port, int angle)
         stream << quint8(50);
         stream << quint8(0x7e);
         stream << quint8(0);
-        data[0] = data.count();
+        data[0] = quint8(data.count());
         hub->writeNoResponce(data);
     }
 }
@@ -196,7 +194,7 @@ void HubOperator::motor_RunForTime(int port, int speed, int time)
         stream << quint8(0x64);
         stream << quint8(0x7f);
         stream << quint8(0x03);
-        data[0] = data.count();
+        data[0] = quint8(data.count());
         hub->writeNoResponce(data);
     }
 }

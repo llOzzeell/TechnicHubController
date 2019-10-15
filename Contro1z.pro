@@ -1,4 +1,5 @@
-QT += quick svg bluetooth androidextras
+QT += quick svg bluetooth
+QT += androidextras
 
 CONFIG += c++11
 

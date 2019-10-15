@@ -10,6 +10,8 @@ Item {
     property int ind_temp:-1
     onInd_tempChanged:{ profileParam.setIndex(ind_temp) }
 
+    property int templateRotation:90
+
     QtObject{
         id:profileParam
 
@@ -37,7 +39,7 @@ Item {
         })
     }
 
-    property var typeArr:[controlModel.get(0).element,controlModel.get(1).element,controlModel.get(2).element]
+    property var typeArr:[controlModel.get(0).element,controlModel.get(1).element,controlModel.get(2).element,controlModel.get(3).element]
 
     property int loadedControls: 0
     property int objectCounter:0
@@ -50,48 +52,57 @@ Item {
         if(control === typeArr[0])_type = 0;
         if(control === typeArr[1])_type = 1;
         if(control === typeArr[2])_type = 2;
+        if(control === typeArr[3])_type = 3;
         var _x = width/2;
         var _y = height/2;
-        var _width = 140;
         var _port1 = 0;
         var _port2 = 0;
         var _servo = 90;
         var _maxspeed = 100;
+        var _orientation = false;
         var propObj = {
+            rotation:templateRotation,
             type:_type,
             editorMode: profileParam.getMode(),
             createIndex: objectCounter,
-            "width":_width,
             "x": _x,
             "y": _y,
             port1: _port1,
             port2: _port2,
             servoangle: _servo,
-            maxspeed:_maxspeed };
+            maxspeed:_maxspeed,
+            orientation: _orientation};
         var controlObject = component.createObject(root, propObj);
         dynamicControlsArray[objectCounter] = controlObject;
         objectCounter++;
     }
 
     function deleteControl(_index){
-        if(dynamicControlsArray[_index] !== undefined ){ dynamicControlsArray[_index].destroy(); dynamicControlsArray[_index] = undefined; }
+        if(dynamicControlsArray[_index] !== undefined ){
+
+            dynamicControlsArray[_index].destroy();
+            dynamicControlsArray[_index] = undefined;
+        }
     }
 
-    function createWhileLoadControl(type, width, x, y, inverted, port1, port2, servoangle, maxspeed){
+    function createWhileLoadControl(type, width, height, x, y, inverted, port1, port2, servoangle, maxspeed, orientation){
 
         var component = Qt.createComponent(typeArr[type])
         var propObj = {
+            rotation:templateRotation,
             type:type,
             editorMode: profileParam.getMode(),
             createIndex: objectCounter,
             "width":width,
+//            "height":height,
             "x": x,
             "y": y,
             port1: port1,
             port2: port2,
             inverted:inverted,
             servoangle: servoangle,
-            maxspeed:maxspeed };
+            maxspeed:maxspeed,
+            orientation: orientation};
         var controlObject = component.createObject(root, propObj);
         dynamicControlsArray[objectCounter] = controlObject;
         objectCounter++;
@@ -102,8 +113,7 @@ Item {
             profilesController.clearControlInProfile(_index);
             dynamicControlsArray.forEach(function(control){
                 if(control !== undefined){
-                    var inv = false; inv = (control.inverted > 0);
-                    profilesController.addProfileControls(_index, control.type, control.width, control.x, control.y, inv , control.port1, control.port2, control.servoangle, control.maxspeed);
+                    profilesController.addProfileControls(_index, control.type, control.width, control.height, control.x, control.y, (control.inverted > 0) , control.port1, control.port2, control.servoangle, control.maxspeed, (control.orientation > 0));
                 }
             })
             profilesController.saveToFile();
@@ -115,14 +125,19 @@ Item {
 
             var count = profilesController.getControlsCounts(_index);
 
-            if(count === 0)emptyprofile.visible = true;
+            if(count === 0){
+
+                emptyprofile.visible = true;
+                return;
+            }
 
             loadedControls = count;
-            for(var i = 0; i < count; i++){
-                var list = profilesController.getProfileControls(_index,i);
-                var inv = false; inv = (list[4] > 0);
 
-                createWhileLoadControl(list[0], list[1], list[2], list[3], inv, list[5], list[6], list[7], list[8]);
+            for(var i = 0; i < count; i++){
+
+                var list = profilesController.getProfileControls(_index,i);
+
+                createWhileLoadControl(list[0], list[1], list[2], list[3], list[4], (list[5] > 0), list[6], list[7], list[8], list[9], (list[10] > 0));
             }
         }
     }
@@ -189,30 +204,37 @@ Item {
 
     Gui_Profile_Editor_ControlsList {
         id: controlsList
-        x: root.width+5 - 91
         z: 2
         property bool isVisible: false
+        x: root.width + 5 - (width - height)/2
         anchors.verticalCenterOffset: 0
 
-        Behavior on x{
-            NumberAnimation{
-                duration: 100
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 200
+            }
+        }
+
+        Behavior on x {
+            NumberAnimation {
+                duration: 200
             }
         }
 
         function hide(){
-            controlsList.x = root.width+5 - 91;
+            controlsList.x = root.width + 5 - (width - height)/2
             isVisible = false;
+            opacity = 0;
         }
 
         function show(){
-            controlsList.x = root.width - width + 91  - 5;
+            controlsList.x = root.width - 5 - (width - height)/2 - height
             isVisible = true;
+            opacity = 1;
         }
 
         rotation: 90
         anchors.verticalCenter: parent.verticalCenter
-
         onControlChoosed: { createNewControl(element); hide(); }
     }
 
@@ -281,6 +303,29 @@ Item {
         onClicked: if(!controlParam.visible){ profileParam.setMode(true); }
     }
 
+    ListModel{
+        id:controlModel
+        ListElement{
+            name: qsTr("Steering");
+            ico: "icons/steering.svg"
+            element:"Profile_Control_Steering.qml"
+        }
+        ListElement{
+            name: qsTr("Moving");
+            ico: "icons/moving.svg"
+            element:"Profile_Control_Moving.qml"
+        }
+        ListElement{
+            name: qsTr("Plain button");
+            ico: "icons/linear.svg"
+            element:"Profile_Control_HoldButtons.qml"
+        }
+        ListElement{
+            name: qsTr("Slider");
+            ico: "icons/linear.svg"
+            element:"Profile_Control_Slider.qml"
+        }
+    }
 }
 
 

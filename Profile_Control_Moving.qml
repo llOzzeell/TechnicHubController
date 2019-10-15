@@ -5,8 +5,23 @@ import QtQuick.Controls.Material 2.2
 Profile_Control_Parent{
     id:root
 
-    width:120
+    width:140
     height: width
+
+    property int minControlWidth: 160
+    property int maxControlWidth: 200
+
+    scalePlusButtonOpacity: root.width === maxControlWidth ? 0.3 : 1
+    scaleMinusButtonOpacity: root.width === minControlWidth ? 0.3 : 1
+
+    onScaleMinus: {
+        if( width > minControlWidth) width -= 20;
+    }
+
+    onScalePlus: {
+        if( width < maxControlWidth) width += 20;
+    }
+
     onHeightChanged: toCenter.start();
 
     property int currentSpeed:0
@@ -18,7 +33,6 @@ Profile_Control_Parent{
         }
     }
 
-    
     Item{
         id:controlItem
         rotation: -90

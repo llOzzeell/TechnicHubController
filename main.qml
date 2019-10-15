@@ -9,6 +9,9 @@ ApplicationWindow {
     visible: true
     color: "#000000"
 
+//    width : 400
+//    height: width/9 * 18
+
     property bool tapTick: false
 
     Component.onCompleted:{
@@ -58,53 +61,11 @@ ApplicationWindow {
         }
     }
 
-    ListModel{
-        id:controlModel
-        ListElement{
-            name: qsTr("Steering");
-            ico: "icons/steering.svg"
-            element:"Profile_Control_Steering.qml"
-        }
-        ListElement{
-            name: qsTr("Moving");
-            ico: "icons/moving.svg"
-            element:"Profile_Control_Moving.qml"
-        }
-        ListElement{
-            name: qsTr("Plain button");
-            ico: "icons/linear.svg"
-            element:"Profile_Control_HoldButtons.qml"
-        }
-    }
-
     Rectangle {
         id: rectangle
         color: Material.background
         anchors.fill: parent
     }
-
-//    SwipeView{
-//        id:swipe
-//        anchors.fill: parent
-//        clip: true
-//        visible: true
-//        interactive: false
-//        currentIndex: 0
-
-//        Page_Finder{
-//            id:finder
-//            clip: true
-//            onDeviceWasConnected: {
-//                swipe.incrementCurrentIndex();
-//            }
-//        }
-
-//        StackView{
-//            id:stackView
-//            clip: true
-//            initialItem: finder
-//        }
-//    }
 
     StackView{
         id:stackView
@@ -162,8 +123,3 @@ ApplicationWindow {
     }
 }
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

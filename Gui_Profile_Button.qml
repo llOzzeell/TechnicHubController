@@ -46,8 +46,8 @@ Item {
     Label {
         id: label
         text: qsTr("")
-        font.weight: Font.Light
-        font.pointSize: 12
+        font.family: "Roboto"
+        font.pointSize: 18
         horizontalAlignment: Text.AlignHCenter
         anchors.right: parent.right
         anchors.rightMargin: 0

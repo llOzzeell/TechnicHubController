@@ -19,9 +19,16 @@ void HubFinder::setDebugOut(bool value)
 
 void HubFinder::startScan()
 {
+    if(isRunning){ agent->stop(); }
     isRunning = true;
     devicesList.clear();
     agent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+}
+
+void HubFinder::stopScan()
+{
+    isRunning = false;
+    agent->stop();
 }
 
 QList<QString> HubFinder::getDeviceInfoFromQML()
@@ -42,6 +49,9 @@ void HubFinder::getInfo(const QBluetoothDeviceInfo &device)
 {
     if(device.name() == "Technic Hub"){
         if(debugOut) qDebug() << "Found:" << device.name() << '(' << device.address().toString() << ')';
+        for(QBluetoothDeviceInfo d : devicesList){
+            if(device.address() == d.address())return;
+        }
         devicesList.append(device);
         emit devicesFound(devicesList);
     }

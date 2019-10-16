@@ -187,7 +187,6 @@ Item {
         text: name
         font.family: "Roboto"
         cursorVisible: false
-        font.weight: Font.Light
         font.pointSize: 18
         verticalAlignment: Text.AlignVCenter
         anchors.left: parent.left

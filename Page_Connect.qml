@@ -7,7 +7,6 @@ Item {
     Connections{
         target:window
         onBackPushed:{
-            console.log("CONNECTOR KEY BACK PUSHED")
             root.noConnected();
         }
     }
@@ -50,9 +49,9 @@ Item {
     Label {
         id: label
         text: qsTr("Connect to ") + deviceName
-        font.weight: Font.Light
+        font.family: "Roboto"
         font.bold: false
-        font.pointSize: 18
+        font.pointSize: 20
         anchors.bottom: countDownRectangle.top
         anchors.bottomMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter

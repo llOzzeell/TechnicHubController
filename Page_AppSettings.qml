@@ -56,11 +56,12 @@ Item {
             Label {
                 id: label1
                 text: qsTr("View")
+                font.weight: Font.Medium
+                font.family: "Roboto"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
-                font.weight: Font.Normal
                 anchors.leftMargin: 0
-                font.pointSize: 16
+                font.pointSize: 20
 
                 Behavior on color{
                     ColorAnimation {
@@ -92,8 +93,8 @@ Item {
             Label {
                 id: label
                 text: qsTr("Dark theme")
-                font.weight: Font.Light
-                font.pointSize: 16
+                font.pointSize: 18
+                font.family: "Roboto"
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -110,14 +111,16 @@ Item {
             id: element3
             width: parent.width
             height: 48
+
             Label {
                 id: label2
                 text: qsTr("Control")
+                font.family: "Roboto"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-                font.pointSize: 16
+                font.pointSize: 20
                 anchors.verticalCenter: parent.verticalCenter
-                font.weight: Font.Normal
+                font.weight: Font.Medium
             }
         }
 
@@ -125,6 +128,7 @@ Item {
             id: element1
             width: parent.width
             height: 36
+
             Switch {
                 id: tapTickSwitch
                 x: 560
@@ -142,11 +146,11 @@ Item {
             Label {
                 id: label3
                 text: qsTr("Tactile response")
+                font.family: "Roboto"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-                font.pointSize: 16
+                font.pointSize: 18
                 anchors.verticalCenter: parent.verticalCenter
-                font.weight: Font.Light
             }
         }
 
@@ -154,12 +158,14 @@ Item {
             id: element4
             width: parent.width
             height: 48
+
             Label {
                 id: label4
                 text: qsTr("Regional settings")
-                font.weight: Font.Normal
+                font.family: "Roboto"
+                font.weight: Font.Medium
                 anchors.leftMargin: 0
-                font.pointSize: 16
+                font.pointSize: 20
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
             }
@@ -173,19 +179,21 @@ Item {
             Label {
                 id: label5
                 text: qsTr("Language")
-                font.weight: Font.Light
+                font.family: "Roboto"
                 anchors.leftMargin: 0
-                font.pointSize: 16
+                font.pointSize: 18
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
             }
 
             ComboBox {
                 id: comboBox
-                x: 440
+                x: 449
                 y: 36
-                width: 120
-                height: 36
+                width: 150
+                height: 48
+                font.family: "Roboto"
+                font.pointSize: 18
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter

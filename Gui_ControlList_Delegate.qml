@@ -42,12 +42,12 @@ Item {
         id: label
         color: Material.foreground
         text: _name
-        font.weight: Font.Light
+        font.family: "Roboto"
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         anchors.right: parent.right
         anchors.rightMargin: 10
-        font.pointSize: 14
+        font.pointSize: 18
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: icon.right
         anchors.leftMargin: 10

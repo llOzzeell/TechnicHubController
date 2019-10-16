@@ -261,8 +261,7 @@ Item {
 
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.WordWrap
-            font.pointSize: 18
-            font.weight: Font.Light
+            font.pointSize: 20
         }
 
         Gui_Profile_Button {
@@ -300,7 +299,7 @@ Item {
         anchors.verticalCenter: saveButton.verticalCenter
         visible: !profileParam.getMode() && !emptyprofile.visible
         iconColor: Material.foreground
-        source: "icons/profileEdit.svg"
+        source: "icons/tune.svg"
         z: 2
         rotation: 90
         onClicked: if(!controlParam.visible){ profileParam.setMode(true); }

@@ -12,7 +12,7 @@ class HubFinder : public QObject
     Q_OBJECT
 public:
 
-    HubFinder(int timeoutMS = 10000);
+    HubFinder(int timeoutMS = 0);
     ~HubFinder();
 
 private:
@@ -33,6 +33,8 @@ public slots:
     void setDebugOut(bool value);
 
     void startScan();
+
+    void stopScan();
 
     QList<QString> getDeviceInfoFromQML();
 

@@ -138,8 +138,8 @@ Item {
                 Label {
                     id: label
                     text: qsTr("Port 1")
-                    font.weight: Font.Light
-                    font.pointSize: 16
+                    font.family: "Roboto"
+                    font.pointSize: 18
                     anchors.left: parent.left
                     anchors.leftMargin: 10
                     anchors.verticalCenter: parent.verticalCenter
@@ -169,11 +169,11 @@ Item {
                 Label {
                     id: label2
                     text: qsTr("Port 2")
+                    font.family: "Roboto"
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    font.weight: Font.Light
                     anchors.leftMargin: 10
-                    font.pointSize: 16
+                    font.pointSize: 18
                 }
             }
 
@@ -186,11 +186,11 @@ Item {
                 Label {
                     id: label1
                     text: qsTr("Inversion")
-                    font.weight: Font.Light
+                    font.family: "Roboto"
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: 10
                     anchors.left: parent.left
-                    font.pointSize: 16
+                    font.pointSize: 18
                 }
 
                 Switch {
@@ -212,10 +212,10 @@ Item {
                 Label {
                     id: label3
                     text: qsTr("Servo angle")
+                    font.family: "Roboto"
                     anchors.leftMargin: 10
-                    font.pointSize: 16
+                    font.pointSize: 18
                     anchors.left: parent.left
-                    font.weight: Font.Light
                     anchors.verticalCenter: parent.verticalCenter
                 }
 
@@ -243,10 +243,10 @@ Item {
                 Label {
                     id: label4
                     text: qsTr("Speed limit")
+                    font.family: "Roboto"
                     anchors.leftMargin: 10
-                    font.pointSize: 16
+                    font.pointSize: 18
                     anchors.left: parent.left
-                    font.weight: Font.Light
                     anchors.verticalCenter: parent.verticalCenter
                 }
 

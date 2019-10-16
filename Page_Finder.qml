@@ -4,92 +4,48 @@ import QtQuick.Controls.Material 2.2
 
 Item {
     id:root
+    Component.onCompleted: {
+        deviceModel.clear();
+        gui_Radar.start();
+        hubFinder.startScan();
+    }
 
     signal deviceWasConnected
     signal deviceClicked(int index)
     onDeviceClicked:{
-
         page_Connect.visible = true;
         page_Connect.start();
         hubConnector.connectTo(index);
     }
 
-    Gui_TopBar {
-        id: gui_TopBar
-        labelText: qsTr("Finder")
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        right1ButtonVisible: true
-        right2ButtonVisible: true
-        right1ButtonIconSource: "icons/find.svg"
-        right2ButtonIconSource: "icons/profileEdit.svg"
-        backButtonVisible: false
-        onRight2ButtonClicked: stackView.push(appSettings)
-        onRight1ButtonClicked: {
-            if(!hubFinder.scanIsRunning()){
-                deviceModel.clear();
-                gui_Radar.start();
-                hubFinder.startScan();
-            }
-        }
-    }
-
     Gui_Radar {
         id: gui_Radar
         height: width
-        anchors.right: parent.right
-        anchors.rightMargin: -200
-        anchors.left: parent.left
-        anchors.leftMargin: -200
         anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: -400
+        anchors.left: parent.left
+        anchors.leftMargin: -400
 
         Connections{
-                target: hubFinder
-                onScanFinished:{
-                    gui_Radar.stop();
-                }
-        }
-    }
-
-    Button {
-        id: scanButton
-        height: 58
-        text: qsTr("Device search")
-        font.weight: Font.Light
-        font.bold: false
-        font.pointSize: 18
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        anchors.top: gui_Radar.bottom
-        anchors.topMargin: 10
-        Material.background: Material.accent
-        Material.foreground: Style.dark_background
-        visible: false
-        onClicked: {
-            if(!hubFinder.scanIsRunning()){
-                gui_Radar.start();
-                hubFinder.startScan();
+            target: hubFinder
+            onScanFinished:{
+                gui_Radar.stop();
             }
         }
     }
 
     ListView {
         id: deviceView
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        anchors.left: parent.left
+        anchors.leftMargin: 10
         spacing: 4
         anchors.top: gui_TopBar.bottom
         anchors.topMargin: 10
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 50
-        anchors.right: scanButton.right
-        anchors.rightMargin: 0
-        anchors.left: scanButton.left
-        anchors.leftMargin: 0
         delegate: deviceDelegate
         model: deviceModel
 
@@ -111,17 +67,45 @@ Item {
         }
 
         Connections{
-                target: hubFinder
-                onDevicesFound:{
-                    deviceModel.clear();
-                    var list = hubFinder.getDeviceInfoFromQML();
-                    list.forEach(function(item,i,arr){
-                        var data = {'name': item};
-                        deviceModel.append(data);
-                    });
-                }
+            target: hubFinder
+            onDevicesFound:{
+                deviceModel.clear();
+                var list = hubFinder.getDeviceInfoFromQML();
+                list.forEach(function(item,i,arr){
+                    var data = {'name': item};
+                    deviceModel.append(data);
+                });
+            }
         }
     }
+
+
+    Gui_TopBar {
+        id: gui_TopBar
+        labelText: qsTr("Finder")
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        right1ButtonVisible: false
+        right2ButtonVisible: true
+        right1ButtonIconSource: "icons/find.svg"
+        right2ButtonIconSource: "icons/profileEdit.svg"
+        backButtonVisible: false
+        onRight2ButtonClicked: stackView.push(appSettings)
+        onRight1ButtonClicked: {
+            if(hubFinder.scanIsRunning()){hubFinder.stopScan();}
+                deviceModel.clear();
+                gui_Radar.start();
+                hubFinder.startScan();
+
+        }
+    }
+
+
+
 
     Page_Connect {
         id: page_Connect
@@ -129,7 +113,7 @@ Item {
         visible: false
         onNoConnected: page_Connect.visible = false;
         onDeviceConnected:{
-            //root.deviceWasConnected();
+            hubFinder.stopScan();
             wasConnected()
         }
     }
@@ -140,6 +124,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    D{i:0;autoSize:true;height:480;width:640}D{i:1;anchors_height:954.4724508459077}
 }
 ##^##*/

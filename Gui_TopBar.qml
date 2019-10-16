@@ -53,9 +53,9 @@ Item {
             Label {
                 id: label
                 text: ""
-                font.weight: Font.Light
+                font.family: "Roboto"
                 leftPadding: 10
-                font.pointSize: 16
+                font.pointSize: 20
                 elide: Label.ElideRight
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Qt.AlignVCenter

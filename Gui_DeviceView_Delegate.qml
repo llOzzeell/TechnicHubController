@@ -20,7 +20,7 @@ Item {
 
     Image {
         id: image
-        width: 26
+        width: 24
         height: width
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
@@ -41,9 +41,8 @@ Item {
         id: label
         color: Material.foreground
         text: _name
-        font.capitalization: Font.MixedCase
-        font.weight: Font.Light
-        font.pointSize: 16
+        font.family: "Roboto"
+        font.pointSize: 18
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         anchors.bottom: parent.bottom

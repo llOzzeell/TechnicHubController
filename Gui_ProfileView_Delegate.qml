@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.3
 import QtQuick.Controls.Material 2.2
+import QtGraphicalEffects 1.0
 
 Item {
     id:root
@@ -19,9 +20,9 @@ Item {
     }
 
     function editorClick(){
-//        stackView.push(profile);
-//        stackView.currentItem.editorMode = true;
-//        stackView.currentItem.index = index;
+        //        stackView.push(profile);
+        //        stackView.currentItem.editorMode = true;
+        //        stackView.currentItem.index = index;
     }
 
     function runProfileClick(){
@@ -163,21 +164,21 @@ Item {
             }
         }
 
-//        Gui_IconButton {
-//            id: propertyButton
-//            width: 28
-//            z: 1
-//            source: "icons/editor.svg"
-//            iconColor: Material.foreground
-//            anchors.rightMargin: (deleteItem.deleteFieldWidth - width)/2
-//            anchors.verticalCenter: parent.verticalCenter
-//            anchors.right: parent.right
-//            opacity: (100-(100/deleteItem.deleteFieldWidth * fieldItem.fieldRightShift))/100
-//            visible: opacity > 0
-//            onClicked: {
-//                if(opacity === 1 && !nameLabel.isEditing)root.editorClick()
-//            }
-//        }
+        //        Gui_IconButton {
+        //            id: propertyButton
+        //            width: 28
+        //            z: 1
+        //            source: "icons/editor.svg"
+        //            iconColor: Material.foreground
+        //            anchors.rightMargin: (deleteItem.deleteFieldWidth - width)/2
+        //            anchors.verticalCenter: parent.verticalCenter
+        //            anchors.right: parent.right
+        //            opacity: (100-(100/deleteItem.deleteFieldWidth * fieldItem.fieldRightShift))/100
+        //            visible: opacity > 0
+        //            onClicked: {
+        //                if(opacity === 1 && !nameLabel.isEditing)root.editorClick()
+        //            }
+        //        }
     }
 
     TextInput {
@@ -189,7 +190,7 @@ Item {
         cursorVisible: false
         font.pointSize: 18
         verticalAlignment: Text.AlignVCenter
-        anchors.left: parent.left
+        anchors.left: profIco.right
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
         maximumLength: 20
@@ -214,11 +215,29 @@ Item {
 
     }
 
+    Image {
+        id: profIco
+        width: 32
+        height: width
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        anchors.verticalCenter: parent.verticalCenter
+        source: "icons/editor.svg"
+        fillMode: Image.PreserveAspectFit
+    }
+
+    ColorOverlay{
+        source:profIco
+        color: Material.foreground
+        smooth: true
+        anchors.fill: profIco
+    }
+
 
 }
 
 /*##^##
 Designer {
-    D{i:10;anchors_width:100}
+    D{i:10;anchors_x:124}
 }
 ##^##*/

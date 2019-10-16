@@ -12,11 +12,8 @@ QtObject{
 
     // COLORS
 
-    //property color dark_background: Material.color(Material.Grey, Material.Shade900);
     property color dark_background: "#181818"
-    //property color dark_primary: Material.color(Material.Grey, Material.Shade600);
     property color dark_primary: "#292929"
-    //property color dark_accent: Material.color(Material.Teal, Material.Shade400);
     property color dark_accent: "#B5184B"
     property color dark_foreground: Material.color(Material.Grey, Material.Shade300);
 
@@ -25,17 +22,15 @@ QtObject{
     property color dark_control_primary: "#868686"
     property color dark_control_foreground: dark_foreground
 
-    property color light_background: Material.color(Material.Grey, Material.Shade200);
+    property color light_background: Material.color(Material.Grey, Material.Shade100);
     property color light_primary: Material.color(Material.Grey, Material.Shade300);
-    //property color light_accent: Material.color(Material.Teal, Material.Shade400);
-    property color light_accent: "#B5184B"
+    property color light_accent: dark_accent
     property color light_foreground: Material.color(Material.Grey, Material.Shade900);
 
     property color light_control_border: "#b3b2b2"
     property color light_control_background: "#dad8d8"
     property color light_control_primary: "#f2f2f2"
     property color light_control_foreground: "#b3b2b2"
-
 
     property color remove_Red: Material.color(Material.Red, Material.Shade500);
 

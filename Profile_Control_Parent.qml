@@ -92,8 +92,8 @@ Item {
                 width: 40
                 height: width
                 backgroundColor: Style.remove_Red
-                iconSource: "icons/remove.svg"
-                visible: editorMode
+                iconSource: "icons/delete.svg"
+
                 onClicked: root.parent.deleteControl(createIndex)
             }
 
@@ -102,7 +102,6 @@ Item {
                 width: 40
                 backgroundColor: Material.primary
                 iconSource: "icons/minus.svg"
-                visible: editorMode
                 onClicked: root.scaleMinus()
             }
 
@@ -112,7 +111,6 @@ Item {
                 height: width
                 backgroundColor: Material.primary
                 iconSource: "icons/plus.svg"
-                visible: editorMode
                 onClicked: root.scalePlus()
             }
 
@@ -121,7 +119,7 @@ Item {
                 width: 40
                 height: width
                 backgroundColor: Material.primary
-                visible: (editorMode && type === 3)
+                visible: (type === 3)
                 iconSource: "icons/orientation.svg"
                 onClicked:{ orientation = !orientation }
             }
@@ -130,11 +128,9 @@ Item {
                 id: propButton
                 width: 40
                 height: width
-                visible: editorMode
                 backgroundColor: Material.primary
                 iconSource: "icons/profileEdit.svg"
                 onClicked:{
-
                     root.highlight(true);
                     root.parent.openControlParam(root);
                 }
@@ -176,7 +172,6 @@ Item {
     }
 
 }
-
 
 /*##^##
 Designer {

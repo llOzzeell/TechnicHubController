@@ -44,7 +44,8 @@ Profile_Control_Parent {
         anchors.fill: parent
         layer.enabled: true
         layer.effect: DropShadow{
-            radius:8
+            radius:Style.controlDropShadowValue
+            color: Style.controlDropShadowColor
         }
     }
 

@@ -19,7 +19,7 @@ Item {
     property color sectionColor: Material.foreground
 
     function start(){
-        root.opacity = 0.3;
+        root.opacity = 0.1;
         radarSpinning.start()
     }
     function stop(){

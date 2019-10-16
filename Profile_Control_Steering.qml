@@ -64,7 +64,8 @@ Profile_Control_Parent{
             anchors.horizontalCenter: parent.horizontalCenter
             layer.enabled: true
             layer.effect: DropShadow{
-                radius:4
+                radius:Style.controlDropShadowValue
+                color: Style.controlDropShadowColor
             }
         }
     }
@@ -78,7 +79,8 @@ Profile_Control_Parent{
         anchors.fill: parent
         layer.enabled: true
         layer.effect: DropShadow{
-            radius:8
+            radius:Style.controlDropShadowValue
+            color: Style.controlDropShadowColor
         }
 
         Behavior on color{
@@ -201,9 +203,3 @@ Profile_Control_Parent{
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:5;anchors_y:"-17"}D{i:4;anchors_y:"-17"}
-}
-##^##*/

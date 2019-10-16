@@ -26,7 +26,7 @@ Item {
 
     Image {
         id: image
-        width: (root.height/1.8)
+        width: (root.height/1.5)
         height: width
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
@@ -39,7 +39,6 @@ Item {
         source: image
         color: Material.foreground
         anchors.fill: image
-        //smooth: true
     }
 
     MouseArea {

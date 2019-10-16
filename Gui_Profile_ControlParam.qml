@@ -41,7 +41,7 @@ Item {
         if(type === 0) paramsVisibility = [true,false,true,true,false];
         if(type === 1) paramsVisibility = [true,false,true,false,false];
         if(type === 2) paramsVisibility = [true,false,true,false,true];
-        if(type === 3) paramsVisibility = [true,false,true,false,true];
+        if(type === 3) paramsVisibility = [true,false,true,false,false];
     }
 
 

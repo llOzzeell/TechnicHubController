@@ -101,7 +101,8 @@ Profile_Control_Parent{
             enabled: false
             layer.enabled: true
             layer.effect: DropShadow{
-                radius:8
+                radius:Style.controlDropShadowValue
+                color: Style.controlDropShadowColor
             }
         }
 
@@ -115,7 +116,8 @@ Profile_Control_Parent{
             anchors.fill: parent
             layer.enabled: true
             layer.effect: DropShadow{
-                radius:8
+                radius:Style.controlDropShadowValue
+                color: Style.controlDropShadowColor
             }
         }
 
@@ -151,10 +153,6 @@ Profile_Control_Parent{
             border.color: dark ? Style.dark_control_border : Style.light_control_border
             anchors.verticalCenterOffset: 0
             anchors.verticalCenter: parent.verticalCenter
-            layer.enabled: false
-            layer.effect: DropShadow{
-                radius:8
-            }
         }
 
         Item {
@@ -207,8 +205,6 @@ Profile_Control_Parent{
                 }
             }
         }
-
-
     }
 }
 

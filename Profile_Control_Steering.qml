@@ -8,7 +8,7 @@ Profile_Control_Parent{
     width:140
     height: width
 
-    property int minControlWidth: 160
+    property int minControlWidth: 140
     property int maxControlWidth: 200
 
     onScaleMinus: {
@@ -25,6 +25,21 @@ Profile_Control_Parent{
 
     function send(curr){
         hubOperator.motor_SendServoAngle(port1, curr, servoangle)
+    }
+
+    function save(){
+        profilesController.addProfileControls(profileIndex,
+                                              type,
+                                              width,
+                                              0,
+                                              x,
+                                              y,
+                                              (inverted > 0),
+                                              port1,
+                                              port2,
+                                              servoangle,
+                                              0,
+                                              false);
     }
 
     Item {

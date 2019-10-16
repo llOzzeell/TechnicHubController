@@ -61,6 +61,7 @@ Item {
         var _maxspeed = 100;
         var _orientation = false;
         var propObj = {
+            profileIndex: profileParam.getIndex(),
             rotation:templateRotation,
             type:_type,
             editorMode: profileParam.getMode(),
@@ -89,6 +90,7 @@ Item {
 
         var component = Qt.createComponent(typeArr[type])
         var propObj = {
+            profileIndex: profileParam.getIndex(),
             rotation:templateRotation,
             type:type,
             editorMode: profileParam.getMode(),
@@ -110,10 +112,11 @@ Item {
 
     function saveProfile(_index){
         if(objectCounter > 0 && _index >= 0){
-            profilesController.clearControlInProfile(_index);
+            profilesController.clearControlInProfile(profileParam.getIndex());
             dynamicControlsArray.forEach(function(control){
                 if(control !== undefined){
-                    profilesController.addProfileControls(_index, control.type, control.width, control.height, control.x, control.y, (control.inverted > 0) , control.port1, control.port2, control.servoangle, control.maxspeed, (control.orientation > 0));
+                   // profilesController.addProfileControls(_index, control.type, control.width, control.height, control.x, control.y, (control.inverted > 0) , control.port1, control.port2, control.servoangle, control.maxspeed, (control.orientation > 0));
+                   control.save();
                 }
             })
             profilesController.saveToFile();
@@ -123,7 +126,7 @@ Item {
     function loadProfile(_index){
         if(_index >= 0){
 
-            var count = profilesController.getControlsCounts(_index);
+            var count = profilesController.getControlsCounts(profileParam.getIndex());
 
             if(count === 0){
 
@@ -135,7 +138,7 @@ Item {
 
             for(var i = 0; i < count; i++){
 
-                var list = profilesController.getProfileControls(_index,i);
+                var list = profilesController.getProfileControls(profileParam.getIndex(),i);
 
                 createWhileLoadControl(list[0], list[1], list[2], list[3], list[4], (list[5] > 0), list[6], list[7], list[8], list[9], (list[10] > 0));
             }

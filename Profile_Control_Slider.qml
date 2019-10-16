@@ -5,11 +5,11 @@ import QtQuick.Controls.Material 2.12
 Profile_Control_Parent{
     id:root
 
-    width: 180
+    width: 200
     height: width/3
 
     property int minControlWidth: 200
-    property int maxControlWidth: 280
+    property int maxControlWidth: 300
 
     scalePlusButtonOpacity: !orientation ? (root.width === maxControlWidth ? 0.3 : 1) : (root.height === maxControlWidth ? 0.3 : 1)
     scaleMinusButtonOpacity: !orientation ? (root.width === minControlWidth ? 0.3 : 1) : (root.height === minControlWidth ? 0.3 : 1)
@@ -20,37 +20,67 @@ Profile_Control_Parent{
 
     onScaleMinus: {
         if(!orientation){
-            if( width > minControlWidth) width -= 20;
+            if( width > minControlWidth){
+                width -= 20;
+                height = width/3;
+            }
         }
         else{
-            if( height > minControlWidth) height -= 20;
+            if( height > minControlWidth){
+                height -= 20;
+                width = height/3
+            }
         }
     }
 
     onScalePlus: {
         if(!orientation){
-            if( width < maxControlWidth) width += 20;
+            if( width < maxControlWidth){
+
+                width += 20;
+                height = width/3;
+            }
         }
         else{
-            if( height < maxControlWidth) height += 20;
+            if( height < maxControlWidth){
+
+                height += 20;
+                width = height/3
+            }
         }
     }
 
     onOrientationChanged:{
-        if(orientation){
-            slider.rotation = -90;
 
-            var t = root.height;
+        if(orientation){
+
             root.height = root.width;
-            root.width = t;
+            root.width = root.width/3;
+            slider.rotation = -90;
         }
         else{
-            slider.rotation = 0;
 
-            t = root.height;
-            root.height = root.width;
-            root.width = t;
+            root.width = root.height;
+            root.height = root.height/3;
+            slider.rotation = 0;
         }
+
+    }
+
+    function save(){
+
+        profilesController.addProfileControls(profileIndex,
+                                              type,
+                                              orientation ? height : width,
+                                              0,
+                                              x,
+                                              y,
+                                              (inverted > 0),
+                                              port1,
+                                              port2,
+                                              0,
+                                              0,
+                                              orientation);
     }
 
     Item {
@@ -59,12 +89,27 @@ Profile_Control_Parent{
         height: orientation ? parent.width/2 : parent.height/2
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        rotation: 0
+
+        Rectangle {
+            id: steeringPointShadow
+            x: steeringPoint.x
+            y: steeringPoint.y
+            width: steeringPoint.width
+            height: steeringPoint.height
+            color: dark ? Style.dark_control_border : Style.light_control_border
+            radius: height/2
+            enabled: false
+            layer.enabled: true
+            layer.effect: DropShadow{
+                radius:8
+            }
+        }
 
         Rectangle {
             id: backgroundRectangle
             color: dark ? Style.dark_control_background : Style.light_control_background
-            radius: height/2
+            radius: Math.min(root.width, root.height)/2
+            enabled: false
             border.width: orientation ? root.width/14 : root.height/14
             border.color: dark ? Style.dark_control_border : Style.light_control_border
             anchors.fill: parent
@@ -72,6 +117,18 @@ Profile_Control_Parent{
             layer.effect: DropShadow{
                 radius:8
             }
+        }
+
+
+        Rectangle {
+            id: powerRectangle
+            color: desaturate(Material.accent, Math.abs(steeringZone.currentSpeed))
+            radius: height/2
+            enabled: false
+            anchors.rightMargin: slider.width - steeringZone.shift - steeringPoint.width
+            anchors.fill: parent
+            border.color: dark ? Style.dark_control_border : Style.light_control_border
+            border.width: orientation ? root.width/18 : root.height/18
 
             Behavior on color{
                 ColorAnimation{
@@ -80,14 +137,24 @@ Profile_Control_Parent{
             }
         }
 
+
         Rectangle {
-            id: powerRectangle
-            color: desaturate(Material.accent, steeringZone.currentSpeed)
+            id: steeringPoint
+            x: powerRectangle.width - width
+            y: 0
+            width: steeringItem.height
+            height: width
+            color: dark ? Style.dark_control_primary : Style.light_control_primary
             radius: height/2
-            anchors.rightMargin: slider.width - steeringZone.shift - steeringPoint.width
-            anchors.fill: parent
+            enabled: false
+            border.width: backgroundRectangle.border.width
             border.color: dark ? Style.dark_control_border : Style.light_control_border
-            border.width: orientation ? root.width/14 : root.height/14
+            anchors.verticalCenterOffset: 0
+            anchors.verticalCenter: parent.verticalCenter
+            layer.enabled: false
+            layer.effect: DropShadow{
+                radius:8
+            }
         }
 
         Item {
@@ -98,23 +165,6 @@ Profile_Control_Parent{
             anchors.rightMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: 0
-
-            Rectangle {
-                id: steeringPoint
-                x: steeringZone.shift
-                width: steeringItem.height
-                height: width
-                color: dark ? Style.dark_control_primary : Style.light_control_primary
-                radius: height/2
-                border.width: backgroundRectangle.border.width
-                border.color: dark ? Style.dark_control_border : Style.light_control_border
-                anchors.verticalCenterOffset: 0
-                anchors.verticalCenter: parent.verticalCenter
-                layer.enabled: false
-                layer.effect: DropShadow{
-                    radius:8
-                }
-            }
 
             MultiPointTouchArea{
                 id: steeringZone
@@ -141,25 +191,29 @@ Profile_Control_Parent{
 
                     steeringZone.shift = mouseXNormalized;
 
-                    var speed = parseInt((100/(steeringItem.width - steeringPoint.width))*Math.abs(shift));
-                    if(speed % 10 == 0 || speed % 10 == 5)currentSpeed = inverted? -speed : speed;
+                    var speed = parseInt((100/(steeringItem.width - steeringPoint.width))*Math.abs(mouseXNormalized));
+                    var touchSpeed = inverted ? -speed : speed;
+
+                    if(!editorMode){root.send(touchSpeed); powerRectangle.color = desaturate(Material.accent, Math.abs(touchSpeed));}
+                    if(speed % 10 == 0 || speed % 10 == 5)currentSpeed = inverted ? -speed : speed;
+
                 }
                 onPressed: {
                     if(tap && !editorMode)androidFunc.vibrate(50);
                 }
                 onCurrentSpeedChanged: {
-                    if(tap && !editorMode){
-                        root.send(currentSpeed);
-                        androidFunc.vibrate(20);
-                    }
+                    if(tap && !editorMode)androidFunc.vibrate(20);
+                    if(!editorMode){ root.send(currentSpeed); powerRectangle.color = desaturate(Material.accent, Math.abs(currentSpeed));}
                 }
             }
         }
+
+
     }
 }
 
 /*##^##
 Designer {
-    D{i:4;anchors_height:0;anchors_width:0;anchors_x:0;anchors_y:0}
+    D{i:10;anchors_height:200;anchors_width:200}
 }
 ##^##*/

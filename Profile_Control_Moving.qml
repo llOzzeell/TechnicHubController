@@ -8,7 +8,7 @@ Profile_Control_Parent{
     width:140
     height: width
 
-    property int minControlWidth: 160
+    property int minControlWidth: 140
     property int maxControlWidth: 200
 
     scalePlusButtonOpacity: root.width === maxControlWidth ? 0.3 : 1
@@ -31,6 +31,21 @@ Profile_Control_Parent{
         if(!editorMode){
             hubOperator.motor_RunPermanent(port1, currentSpeed)
         }
+    }
+
+    function save(){
+        profilesController.addProfileControls(profileIndex,
+                                              type,
+                                              width,
+                                              0,
+                                              x,
+                                              y,
+                                              (inverted > 0),
+                                              port1,
+                                              port2,
+                                              0,
+                                              0,
+                                              false);
     }
 
     Item{

@@ -6,8 +6,9 @@ import QtGraphicalEffects 1.0
 Item {
     id:root
 
+    property int profileIndex:-1
     property int createIndex: -1
-    property alias editorMode: editorItem.visible
+    property bool editorMode: false
 
     property bool dark: appSett.getDarkMode()
     property bool tap : appSett.getTapTick()
@@ -73,7 +74,7 @@ Item {
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
         anchors.topMargin: 0
-        visible: true
+        visible: editorMode
         z: 2
         anchors.fill: parent
 
@@ -82,13 +83,13 @@ Item {
             height: 38
             enabled: true
             anchors.bottom: parent.top
-            anchors.bottomMargin: 6
+            anchors.bottomMargin: 10
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 10
+            spacing: 14
 
             Gui_Profile_CircleButton {
                 id: deleteButton
-                width: 36
+                width: 40
                 height: width
                 backgroundColor: Style.remove_Red
                 iconSource: "icons/remove.svg"
@@ -98,28 +99,36 @@ Item {
 
             Gui_Profile_CircleButton {
                 id: scaleMinus
-                width: 36
+                width: 40
                 backgroundColor: Material.primary
                 iconSource: "icons/minus.svg"
                 visible: editorMode
                 onClicked: root.scaleMinus()
-                //opacity: root.width === minControlWidth ? 0.3 : 1
             }
 
             Gui_Profile_CircleButton {
                 id: scalePlus
-                width: 36
+                width: 40
                 height: width
                 backgroundColor: Material.primary
                 iconSource: "icons/plus.svg"
                 visible: editorMode
                 onClicked: root.scalePlus()
-                //opacity: root.width === maxControlWidth ? 0.3 : 1
+            }
+
+            Gui_Profile_CircleButton {
+                id: orienationButton
+                width: 40
+                height: width
+                backgroundColor: Material.primary
+                visible: (editorMode && type === 3)
+                iconSource: "icons/orientation.svg"
+                onClicked:{ orientation = !orientation }
             }
 
             Gui_Profile_CircleButton {
                 id: propButton
-                width: 36
+                width: 40
                 height: width
                 visible: editorMode
                 backgroundColor: Material.primary
@@ -130,6 +139,7 @@ Item {
                     root.parent.openControlParam(root);
                 }
             }
+
         }
 
         Rectangle {
@@ -142,10 +152,10 @@ Item {
             anchors.leftMargin: -border.width/2
             anchors.bottomMargin: -border.width/2
             anchors.topMargin: -border.width/2
-            visible: false
             opacity: visible ? 1 : 0
             border.width: 4
             anchors.fill: parent
+            visible:false
 
             Behavior on opacity {
                 NumberAnimation{
@@ -167,3 +177,9 @@ Item {
 
 }
 
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

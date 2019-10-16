@@ -11,7 +11,7 @@ Profile_Control_Parent {
     scalePlusButtonOpacity: root.width === maxControlWidth ? 0.3 : 1
     scaleMinusButtonOpacity: root.width === minControlWidth ? 0.3 : 1
 
-    property int minControlWidth: 160
+    property int minControlWidth: 140
     property int maxControlWidth: 200
 
     onScaleMinus: {
@@ -20,6 +20,21 @@ Profile_Control_Parent {
 
     onScalePlus: {
         if( width < maxControlWidth) width += 20;
+    }
+
+    function save(){
+        profilesController.addProfileControls(profileIndex,
+                                              type,
+                                              width,
+                                              0,
+                                              x,
+                                              y,
+                                              (inverted > 0),
+                                              port1,
+                                              port2,
+                                              0,
+                                              maxspeed,
+                                              false);
     }
 
     Rectangle {

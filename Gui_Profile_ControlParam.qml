@@ -33,16 +33,15 @@ Item {
         switchD.checked = link.inverted;
         servoA.value = link.servoangle;
         maxSpeed.value = link.maxspeed;
-        switchO.checked = link.orientation
     }
 
     property var paramsVisibility:[false,false,false,false,false,false]
     function setParamsVisibility(type){
-                                         // p1    p2   inv  ser  maxsp  ori
-        if(type === 0) paramsVisibility = [true,false,true,true,false,false];
-        if(type === 1) paramsVisibility = [true,false,true,false,false,false];
-        if(type === 2) paramsVisibility = [true,false,true,false,true,false];
-        if(type === 3) paramsVisibility = [true,false,true,false,true,true];
+                                         // p1    p2   inv  ser  maxsp
+        if(type === 0) paramsVisibility = [true,false,true,true,false];
+        if(type === 1) paramsVisibility = [true,false,true,false,false];
+        if(type === 2) paramsVisibility = [true,false,true,false,true];
+        if(type === 3) paramsVisibility = [true,false,true,false,true];
     }
 
 
@@ -263,32 +262,6 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     onValueChanged: { link.maxspeed = value; root.someChanges = true; }
                 }
-            }
-
-            Item {
-                id: propItem_6
-                width: parent.width
-                height: 40
-                visible: root.paramsVisibility[5]
-                Label {
-                    id: label5
-                    text: qsTr("Vertical")
-                    font.pointSize: 16
-                    font.weight: Font.Light
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: 10
-                }
-
-                Switch {
-                    id: switchO
-                    height: parent.height
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.rightMargin: 10
-                    onCheckedChanged: { link.orientation = checked; root.someChanges = true; }
-                }
-
             }
 
         }

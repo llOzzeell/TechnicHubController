@@ -52,5 +52,6 @@
         <file>Profile_Control_Slider.qml</file>
         <file>icons/orientation.svg</file>
         <file>icons/tune.svg</file>
+        <file>icons/slider.svg</file>
     </qresource>
 </RCC>

@@ -11,7 +11,6 @@ QtObject{
     property FontLoader font: FontLoader { source: "fonts/Montserrat-Thin.ttf" }
 
     // COLORS
-
     property color dark_background: "#181818"
     property color dark_primary: "#292929"
     property color dark_accent: "#B5184B"
@@ -21,6 +20,8 @@ QtObject{
     property color dark_control_background: "#474646"
     property color dark_control_primary: "#868686"
     property color dark_control_foreground: dark_foreground
+
+    ///////////////////////////////////////////////////////////////////////////////////
 
     property color light_background: Material.color(Material.Grey, Material.Shade100);
     property color light_primary: Material.color(Material.Grey, Material.Shade300);
@@ -35,7 +36,6 @@ QtObject{
     property color remove_Red: Material.color(Material.Red, Material.Shade500);
 
     //SHADOW
-
     property int controlDropShadowValue:6
     property int joystickDropShadowValue:4
     property color controlDropShadowColor: "#aa000000"

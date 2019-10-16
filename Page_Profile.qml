@@ -5,7 +5,8 @@ import QtGraphicalEffects 1.0
 
 Item {
     id:root
-    Component.onCompleted: { setModeToAllControls(false); }
+    Component.onCompleted: { setModeToAllControls(false); /*appSett.setFullScreen(true);*/ /*androidFunc.setOrientation("landscape");*/ }
+    Component.onDestruction: {/*appSett.setFullScreen(false);*/ /*androidFunc.setOrientation("portraite");*/}
 
     property int ind_temp:-1
     onInd_tempChanged:{ profileParam.setIndex(ind_temp) }
@@ -324,7 +325,7 @@ Item {
         }
         ListElement{
             name: qsTr("Slider");
-            ico: "icons/linear.svg"
+            ico: "icons/slider.svg"
             element:"Profile_Control_Slider.qml"
         }
     }

@@ -47,15 +47,15 @@ int main(int argc, char *argv[])
     QQmlContext *context_huboperator = engine.rootContext();
     context_huboperator ->setContextProperty("hubOperator", &hubOperator);
 
+    AppSettings appsett(&engine);
+    QQmlContext *context_appsett = engine.rootContext();
+    context_appsett->setContextProperty("appSett", &appsett);
+
     QObject::connect(&hubconnector, &Hubconnector::hubLinkUpdate, &hubOperator, &HubOperator::setHubLink);
 
     Profiles prof;
     QQmlContext *context_prof = engine.rootContext();
     context_prof ->setContextProperty("profilesController", &prof);
-
-    AppSettings appsett(&engine);
-    QQmlContext *context_appsett = engine.rootContext();
-    context_appsett->setContextProperty("appSett", &appsett);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
 
@@ -65,8 +65,9 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
-//    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first());
-//    window->showFullScreen();
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first());
+
+    appsett.setLinkToWindow(window);
 
     return app.exec();
 }

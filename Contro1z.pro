@@ -65,6 +65,6 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
 }
 
 TRANSLATIONS += \
-        lang_ru_RU.ts \
-        lang_de_DE.ts
+        lang/lang_ru_RU.ts \
+        lang/lang_de_DE.ts
 

@@ -9,6 +9,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QString>
+#include <QQuickWindow>
 
 #include "translator.h"
 
@@ -32,15 +33,16 @@ public:
 
         loadLanguage();
     }
-    ~AppSettings(){delete translator;}
+    ~AppSettings(){delete translator; delete window;}
 
 private:
 
+    QQuickWindow *window = nullptr;
     QFile file;
     const QString pathToFile = "/config.z";
     bool darkMode;
     bool tapTick;
-    Translator *translator;
+    Translator *translator = nullptr;
     int language;
     bool langOverride;
     QVector<QPair<int,langStruct>> locales;
@@ -172,6 +174,19 @@ public slots:
         return langOverride;
     }
 
+    void setFullScreen(bool value){
+        if(window != nullptr){
+            qDebug() << "window good";
+            if(value) window->showFullScreen();
+            else window->showNormal();
+        }
+        else qDebug() << "window bad";
+        qDebug()<< "window: " << window;
+    }
+
+    void setLinkToWindow(QQuickWindow *_window){
+        window = _window;
+    }
 };
 
 #endif // APPSETTINGS_H

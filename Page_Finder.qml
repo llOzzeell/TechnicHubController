@@ -82,7 +82,7 @@ Item {
 
     Gui_TopBar {
         id: gui_TopBar
-        labelText: qsTr("Finder")
+        labelText: qsTr("Finder") + " (" + deviceView.count + ")"
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: parent.right

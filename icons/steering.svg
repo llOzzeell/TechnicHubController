@@ -11,11 +11,11 @@
    height="48"
    viewBox="0 0 48 48"
    version="1.1"
-   id="svg4"
+   id="svg3725"
    sodipodi:docname="steering.svg"
-   inkscape:version="0.92.1 r15371">
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <metadata
-     id="metadata10">
+     id="metadata3731">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -26,7 +26,7 @@
     </rdf:RDF>
   </metadata>
   <defs
-     id="defs8" />
+     id="defs3729" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -37,19 +37,18 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1007"
-     id="namedview6"
+     inkscape:window-height="1017"
+     id="namedview3727"
      showgrid="false"
-     inkscape:zoom="4.9166667"
-     inkscape:cx="24"
-     inkscape:cy="24"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:zoom="6.2461099"
+     inkscape:cx="26.925215"
+     inkscape:cy="16.555632"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg4" />
+     inkscape:current-layer="svg3725" />
   <path
-     d="M 43.999869,23.927537 C 43.959833,12.877609 34.977464,3.9600953 23.927537,4.0001313 12.877609,4.0401672 3.9600953,13.022536 4.0001313,24.072463 4.0401672,35.122391 13.022536,44.039905 24.072463,43.999869 35.122391,43.959833 44.039905,34.977464 43.999869,23.927537 Z m -14.039763,-10.949204 7.025316,6.974592 -6.974592,7.025316 -0.01812,-4.999967 -7.999947,0.02899 -0.01449,-3.999973 7.999948,-0.02899 z m -11.920212,22.043334 -7.025316,-6.974592 6.974592,-7.025316 0.01812,4.999967 7.999947,-0.02899 0.01449,3.999973 -7.999948,0.02899 z"
-     id="path2"
-     inkscape:connector-curvature="0"
-     style="fill:#ffffff" />
+     d="m 42,18 -7.98,-8 v 6 H 20 v 4 h 14.02 v 6 z M 13.98,32 H 28 V 28 H 13.98 V 22 L 6,30 l 7.98,8 z"
+     id="path3723"
+     inkscape:connector-curvature="0" />
 </svg>

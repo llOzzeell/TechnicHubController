@@ -40,6 +40,12 @@ Item {
         })
     }
 
+    function setStopAllToControls(){
+        dynamicControlsArray.forEach(function(item){
+            if(item !== undefined && item.type === 3)item.stop();
+        })
+    }
+
     property var typeArr:[controlModel.get(0).element,controlModel.get(1).element,controlModel.get(2).element,controlModel.get(3).element]
 
     property int loadedControls: 0
@@ -303,7 +309,7 @@ Item {
         source: "icons/tune.svg"
         z: 2
         rotation: 90
-        onClicked: if(!controlParam.visible){ profileParam.setMode(true); }
+        onClicked: if(!controlParam.visible){root.setStopAllToControls(); profileParam.setMode(true); }
     }
 
     ListModel{

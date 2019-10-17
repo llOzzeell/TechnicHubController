@@ -36,8 +36,8 @@ QtObject{
     property color remove_Red: Material.color(Material.Red, Material.Shade500);
 
     //SHADOW
-    property int controlDropShadowValue:6
-    property int joystickDropShadowValue:4
+    property int controlDropShadowValue:8
+    property int joystickDropShadowValue:8
     property color controlDropShadowColor: "#aa000000"
 }
 

@@ -48,7 +48,7 @@ Item {
     Rectangle {
         id: rectangle
         color: Material.primary
-        opacity: 0.5
+        opacity: 0.7
         anchors.fill: parent
     }
 

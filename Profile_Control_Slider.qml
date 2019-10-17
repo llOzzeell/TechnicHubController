@@ -18,6 +18,13 @@ Profile_Control_Parent{
         hubOperator.motor_RunPermanent(port1, speed)
     }
 
+    function stop(){
+
+        steeringZone.currentSpeed = 0;
+        steeringZone.shift = 0;
+        hubOperator.motor_RunPermanent(port1, 0)
+    }
+
     onScaleMinus: {
         if(!orientation){
             if( width > minControlWidth){
@@ -108,10 +115,10 @@ Profile_Control_Parent{
 
         Rectangle {
             id: backgroundRectangle
-            color: dark ? Style.dark_control_background : Style.light_control_background
+            color: desaturate(Material.accent, 0)
             radius: Math.min(root.width, root.height)/2
             enabled: false
-            border.width: orientation ? root.width/14 : root.height/14
+            border.width: orientation ? root.width/18 : root.height/18
             border.color: dark ? Style.dark_control_border : Style.light_control_border
             anchors.fill: parent
             layer.enabled: true
@@ -129,14 +136,14 @@ Profile_Control_Parent{
             enabled: false
             anchors.rightMargin: slider.width - steeringZone.shift - steeringPoint.width
             anchors.fill: parent
-            border.color: dark ? Style.dark_control_border : Style.light_control_border
-            border.width: orientation ? root.width/18 : root.height/18
+            border.color: backgroundRectangle.border.color
+            border.width: backgroundRectangle.border.width
 
-            Behavior on color{
-                ColorAnimation{
-                    duration: 200
-                }
-            }
+//            Behavior on color{
+//                ColorAnimation{
+//                    duration: 200
+//                }
+//            }
         }
 
 
@@ -149,7 +156,7 @@ Profile_Control_Parent{
             color: dark ? Style.dark_control_primary : Style.light_control_primary
             radius: height/2
             enabled: false
-            border.width: backgroundRectangle.border.width
+            border.width: orientation ? root.width/11 : root.height/11
             border.color: dark ? Style.dark_control_border : Style.light_control_border
             anchors.verticalCenterOffset: 0
             anchors.verticalCenter: parent.verticalCenter

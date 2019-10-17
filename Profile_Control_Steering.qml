@@ -8,6 +8,10 @@ Profile_Control_Parent{
     width:140
     height: width
 
+    onHeightChanged: {
+        allMovingToCenter.start();
+    }
+
     property int minControlWidth: 140
     property int maxControlWidth: 200
 
@@ -23,8 +27,9 @@ Profile_Control_Parent{
     scalePlusButtonOpacity: root.width === maxControlWidth ? 0.3 : 1
     scaleMinusButtonOpacity: root.width === minControlWidth ? 0.3 : 1
 
-    function send(curr){
-        hubOperator.motor_SendServoAngle(port1, curr, servoangle)
+    function send(angle){
+        hubOperator.motor_SendServoAngle(port1, angle, servoangle)
+        if(tap && !editorMode)androidFunc.vibrate(20);
     }
 
     function save(){
@@ -42,14 +47,22 @@ Profile_Control_Parent{
                                               false);
     }
 
+    //    function stopAll(){
+    //        steeringZone.shift = 0;
+    //        steeringZone.last = -1;
+    //        allMovingToCenter.start();
+    //        hubOperator.motor_SendServoAngle(port1, 0, servoangle)
+    //    }
+
     Item {
         id: angleIndicator
+        enabled: false
         rotation: 0
         anchors.fill: parent
 
         Behavior on rotation{
             NumberAnimation{
-                duration: 100
+                duration: 200
             }
         }
 
@@ -72,8 +85,9 @@ Profile_Control_Parent{
 
     Rectangle {
         id: backgroundRectangle
-        color: dark ? Style.dark_control_background : Style.light_control_background
+        color: desaturate(Material.accent, Math.abs(0));
         radius: height/2
+        enabled: false
         border.width: root.height/30
         border.color: dark ? Style.dark_control_border : Style.light_control_border
         anchors.fill: parent
@@ -81,6 +95,12 @@ Profile_Control_Parent{
         layer.effect: DropShadow{
             radius:Style.controlDropShadowValue
             color: Style.controlDropShadowColor
+        }
+
+        property color startColor: desaturate(Material.accent, 0);
+
+        function clearColor(){
+            color = startColor;
         }
 
         Behavior on color{
@@ -98,7 +118,6 @@ Profile_Control_Parent{
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
-        onHeightChanged: toCenter.start();
 
         property int center: steeringItem.width/2 - steeringPoint.width/2
         property int steeringLenght: steeringPoint.width/1.8
@@ -108,6 +127,7 @@ Profile_Control_Parent{
             id: rectangle
             height: backgroundRectangle.border.width
             color: backgroundRectangle.border.color
+            enabled: false
             anchors.rightMargin: backgroundRectangle.border.width/2
             anchors.leftMargin: backgroundRectangle.border.width/2
             anchors.right: parent.right
@@ -122,84 +142,89 @@ Profile_Control_Parent{
             height: width
             color: dark ? Style.dark_control_primary : Style.light_control_primary
             radius: height/2
-            border.width: root.height/30
+            enabled: false
+            border.width: root.height/20
             border.color: dark ? Style.dark_control_border : Style.light_control_border
             anchors.verticalCenterOffset: 0
             anchors.verticalCenter: parent.verticalCenter
-            layer.enabled: false
+            layer.enabled: true
             layer.effect: DropShadow{
-                radius:8
+                radius:Style.joystickDropShadowValue
+                color: Style.controlDropShadowColor
             }
-        }
-
-        PropertyAnimation{
-            id:toCenter
-            property: "x"
-            target: steeringPoint
-            from: steeringPoint.x
-            to: steeringItem.center
-            duration: 80
         }
 
         MultiPointTouchArea{
             id: steeringZone
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            anchors.bottom: parent.bottom
-            anchors.top: parent.top
-            anchors.bottomMargin: 0
-            anchors.topMargin: 0
             minimumTouchPoints: 1
             enabled: !editorMode
             touchPoints: [ TouchPoint { id: point1 } ]
 
-            property int currentDegrees:0
-            property bool press: false
-            property int lastDegrees:0
-            property int shift:0
+            property int shift:-1
+
+            property int last:-1
+            property bool firstSendValue: true
+            anchors.fill: parent
+            z: 3
 
             onTouchUpdated: {
                 var mouseXNormalized = point1.x - width/2;
+
                 if(mouseXNormalized > steeringItem.steeringLenght || mouseXNormalized < -steeringItem.steeringLenght){
                     shift = mouseXNormalized < 0 ? -steeringItem.steeringLenght : steeringItem.steeringLenght
                 }
                 else shift = mouseXNormalized
 
-                var angle = parseInt((servoangle/steeringItem.steeringLenght)*Math.abs(shift));
+                steeringPoint.x = steeringItem.center + steeringZone.shift
 
-                var _currentDegrees = 0;
-                if(!inverted)_currentDegrees = shift>0 ? angle : -angle;
-                else _currentDegrees = shift>0 ? -angle : angle;
+                var _angle = parseInt((servoangle/steeringItem.steeringLenght)*Math.abs(shift));
 
-                if(press){
+                backgroundRectangle.color = desaturate(Material.accent, _angle);
 
-                    backgroundRectangle.color = desaturate(Material.accent, angle);
-                    angleIndicator.rotation = _currentDegrees;
+                if(!inverted)_angle = shift>0 ? _angle : -_angle;
+                else _angle = shift>0 ? -_angle : _angle;
+
+                if(firstSendValue){root.send(_angle); firstSendValue = false; }
+
+                angleIndicator.rotation = _angle;
+
+                if(steeringZone.last !== _angle){
+                    if( _angle % 10 == 0 /*||  _angle % 10 == 5*/) {
+                        root.send(_angle)
+                    }
                 }
-
-                if( _currentDegrees % 10 == 0 /*||  _currentDegrees % 10 == 5*/) {
-                    currentDegrees = _currentDegrees;
-                }
+                steeringZone.last = _angle;
             }
             onPressed: {
-                press = true
-                backgroundRectangle.color = desaturate(Material.accent, 0)
                 if(tap && !editorMode)androidFunc.vibrate(50);
             }
             onReleased: {
-                press = false
-                toCenter.running = true;
-                backgroundRectangle.color = dark ? Style.dark_control_background : Style.light_control_background
-                if(!editorMode)root.send(port1, 0, 0, servoangle);
-                angleIndicator.rotation = 0;
-            }
-            onCurrentDegreesChanged: {
-                if(!editorMode)root.send(currentDegrees)
-                if(tap && !editorMode)androidFunc.vibrate(20);
-                lastDegrees = currentDegrees;
+                allMovingToCenter.start();
             }
         }
+
+        PropertyAnimation{
+            id:allMovingToCenter
+            property: "x"
+            target: steeringPoint
+            from: steeringPoint.x
+            to: steeringItem.center
+            duration: 100
+            onStopped: {
+                backgroundRectangle.clearColor();
+                root.send(0);
+                angleIndicator.rotation = 0;
+                steeringZone.firstSendValue = true;
+                steeringZone.shift = -1;
+                steeringZone.last = -1;
+            }
+        }
+
     }
 }
+
+/*##^##
+Designer {
+    D{i:11;anchors_width:70;anchors_y:70}
+}
+##^##*/

@@ -5,14 +5,14 @@ import QtQuick.Controls.Material 2.2
 
 Profile_Control_Parent {
     id:root
-    width:140
+    width:160
     height: width/2
 
     scalePlusButtonOpacity: root.width === maxControlWidth ? 0.3 : 1
     scaleMinusButtonOpacity: root.width === minControlWidth ? 0.3 : 1
 
-    property int minControlWidth: 140
-    property int maxControlWidth: 200
+    property int minControlWidth: 160
+    property int maxControlWidth: 240
 
     onScaleMinus: {
         if( width > minControlWidth) width -= 20;
@@ -59,7 +59,7 @@ Profile_Control_Parent {
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
-        border.width: root.height/20
+        border.width: root.height/14
         border.color: dark ? Style.dark_control_border : Style.light_control_border
 
         Behavior on border.width{
@@ -91,7 +91,7 @@ Profile_Control_Parent {
             }
             onReleased: {
                 reverseButton.isPressed = false;
-                reverseButton.border.width = root.height/20
+                reverseButton.border.width = root.height/14
                 reverseButton.color = dark ? Style.dark_control_primary : Style.light_control_primary
                 if(!editorMode)hubOperator.motor_RunPermanent(port1, 0)
             }
@@ -126,7 +126,7 @@ Profile_Control_Parent {
         anchors.right: parent.right
         anchors.rightMargin: 0
         border.color: dark ? Style.dark_control_border : Style.light_control_border
-        border.width: root.height/20
+        border.width: root.height/14
 
         Behavior on border.width{
             NumberAnimation{
@@ -157,7 +157,7 @@ Profile_Control_Parent {
             }
             onReleased: {
                 forwardButton.isPressed = false;
-                forwardButton.border.width = root.height/20
+                forwardButton.border.width = root.height/14
                 forwardButton.color = dark ? Style.dark_control_primary : Style.light_control_primary
                 if(!editorMode)hubOperator.motor_RunPermanent(port1, 0)
             }

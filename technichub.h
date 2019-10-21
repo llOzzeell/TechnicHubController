@@ -1,39 +1,67 @@
-#ifndef TECHNICHUB_H
-#define TECHNICHUB_H
+#ifndef Technichub_H
+#define Technichub_H
 
 #include <QObject>
-#include <QDebug>
-#include <QList>
+#include <QString>
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
+#include <QGuiApplication>
+#include <QDataStream>
+#include <QtMath>
 
-class TechnicHub : public QObject
+class Technichub : public QObject
 {
     Q_OBJECT
 public:
-    TechnicHub();
-    ~TechnicHub();
+    explicit Technichub();
+    ~Technichub();
 
 private:
 
-    bool debugOut;
     QLowEnergyController *controller = nullptr;
     QLowEnergyService *service1623 = nullptr;
     QLowEnergyCharacteristic chars1624;
 
+    const int hubType = 0x0; // hub type, using in qml for drawing right icon
+
+    QString name=""; // using in qml
+    QString address=""; // using in qml
+    qint8 rssiLevel = 0; // using in qml
+    quint8 batteryLevel=0; // using in qml
+
 signals:
 
-    void succConnected();
+    void lostConnection(QString address);
+
+    void successConnected();
+
+    void batteryLevelUpdated(int battery);
+
+    void rssiLevelUpdated(int rssi);
+
+    void paramsChanged(QString address, QStringList list);
 
 public slots:
 
-    void setDebugOut(bool value);
-    void tryConnect(const QBluetoothDeviceInfo device);
+    void disconnect();
+
+    void tryConnect(QBluetoothDeviceInfo device);
 
     void writeNoResponce(QByteArray &data);
+
     void writeResponce(QByteArray &data);
+
+    int getType();
+
+    void setName(QString _name);
+
+    QString getName();
+
+    QString getAddress();
+
+    QStringList getParamList();
 
 private slots:
 
@@ -45,9 +73,22 @@ private slots:
 
     void serviceDetailsDiscovered();
 
-    void getCharsValue(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue);
-
     void debugOutHex(const QByteArray &arr, QString description);
+
+    void characteristicUpdated(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue);
+
+    void parseCharsUpdates(const QByteArray &newValue);
+
+    void setNotification(bool value);
+
+    void setIndication(bool value);
+
+    void disableAll();
+
+    void setBatteryUpdates(bool value);
+
+    void setRSSIUpdates(bool value);
+
 };
 
-#endif // TECHNICHUB_H
+#endif // Technichub_H

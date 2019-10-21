@@ -1,52 +1,39 @@
 #include "technichub.h"
 
-TechnicHub::TechnicHub(): debugOut(false)
+Technichub::Technichub()
 {
 
 }
 
-TechnicHub::~TechnicHub()
+Technichub::~Technichub()
 {
-    controller->disconnectFromDevice();
+
     delete controller;
     delete service1623;
 }
 
-void TechnicHub::setDebugOut(bool value)
+void Technichub::disconnect()
 {
-    debugOut = value;
+    controller->disconnectFromDevice();
 }
 
-void TechnicHub::tryConnect(const QBluetoothDeviceInfo device)
+void Technichub::tryConnect(QBluetoothDeviceInfo device)
 {
 
     controller = new QLowEnergyController(device);
-    connect(controller, &QLowEnergyController::connected, this, &TechnicHub::deviceConnected);
-    connect(controller, &QLowEnergyController::serviceDiscovered, this, &TechnicHub::getNewService);
-    connect(controller, &QLowEnergyController::discoveryFinished, this, &TechnicHub::serviceScanDone);
+    connect(controller, &QLowEnergyController::connected, this, &Technichub::deviceConnected);
+    connect(controller, &QLowEnergyController::disconnected, [=](){emit lostConnection(address);});
+    connect(controller, &QLowEnergyController::serviceDiscovered, this, &Technichub::getNewService);
+    connect(controller, &QLowEnergyController::discoveryFinished, this, &Technichub::serviceScanDone);
 
+    name = device.name();
+    address = device.address().toString();
     controller->connectToDevice();
 }
 
-void TechnicHub::writeNoResponce(QByteArray &data)
+void Technichub::getNewService(const QBluetoothUuid &s)
 {
-    debugOutHex(data, "set:");
-
-    if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithoutResponse);
-    else if(debugOut)qDebug() << "service1623 == nullptr: "<< service1623;
-}
-
-void TechnicHub::writeResponce(QByteArray &data)
-{
-    debugOutHex(data, "set:");
-
-    if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithResponse);
-    else if(debugOut)qDebug() << "service1623 == nullptr: "<< service1623;
-}
-
-void TechnicHub::getNewService(const QBluetoothUuid &s)
-{
-    if(debugOut)qDebug() << s.toString();
+    qDebug() << s.toString();
 
     if (service1623) {
         delete service1623;
@@ -55,57 +42,208 @@ void TechnicHub::getNewService(const QBluetoothUuid &s)
 
     if(s.toString().contains("1623")) service1623 = controller->createServiceObject(s);
     if (!service1623) {
-        if(debugOut)qDebug() << "Cannot create service for uuid";
+        qDebug() << "Cannot create service for uuid";
         return;
     }
-    else if(debugOut)qDebug() << "Service created.";
+    else qDebug() << "Service created.";
 }
 
-void TechnicHub::deviceConnected()
+void Technichub::deviceConnected()
 {
-    emit succConnected();
-    if(debugOut)qDebug() << "Device connected.";
-    if(debugOut)qDebug() << "Start discover services.";
+    if(QGuiApplication::platformName() != "windows"){ qDebug() << "NON WINDOWS EMITTING"; emit successConnected(); }
+    qDebug() << "Device connected.";
+    qDebug() << "Start discover services.";
     controller->discoverServices();
 }
 
-void TechnicHub::serviceScanDone()
+void Technichub::serviceScanDone()
 {
-    if(debugOut)qDebug() << "Service scan done.";
+    qDebug() << "Service scan done.";
     if (service1623->state() == QLowEnergyService::DiscoveryRequired) {
-        if(debugOut)qDebug() << "Service state: QLowEnergyService::DiscoveryRequired";
-        connect(service1623, &QLowEnergyService::stateChanged, this, &TechnicHub::serviceDetailsDiscovered);
-        connect(service1623, &QLowEnergyService::characteristicRead, this, &TechnicHub::getCharsValue);
+        qDebug() << "Service state: QLowEnergyService::DiscoveryRequired";
+        connect(service1623, &QLowEnergyService::stateChanged, this, &Technichub::serviceDetailsDiscovered);
+        //connect(service1623, &QLowEnergyService::characteristicRead, this, &Technichub::getCharsValue);
         service1623->discoverDetails();
         return;
     }
 }
 
-void TechnicHub::serviceDetailsDiscovered()
+void Technichub::serviceDetailsDiscovered()
 {
-    if(debugOut)qDebug() << service1623->state();
+    if(QGuiApplication::platformName() == "windows"){qDebug() << "WINDOWS EMITTING"; emit successConnected(); }
+    qDebug() << service1623->state();
     const QList<QLowEnergyCharacteristic> chars = service1623->characteristics();
-    if(debugOut)qDebug() << "Chars count: " << chars.count();
+    qDebug() << "Chars count: " << chars.count();
     foreach (const QLowEnergyCharacteristic &ch, chars) {
 
         if(ch.uuid().toString().contains("1624")) {
             chars1624 = ch;
-            if(debugOut)qDebug() << "Chars 1624 found.";
+            qDebug() << "Chars 1624 found.";
+            setNotification(true);
+            connect(service1623, &QLowEnergyService::characteristicChanged, this, &Technichub::characteristicUpdated);
+            setRSSIUpdates(true);
+            setBatteryUpdates(true);
         }
     }
 }
 
-void TechnicHub::getCharsValue(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue)
-{
-    Q_UNUSED(characteristic)
-    debugOutHex(newValue, "get:");
-}
-
-void TechnicHub::debugOutHex(const QByteArray &arr, QString description)
+void Technichub::debugOutHex(const QByteArray &arr, QString description)
 {
     QString str = description + " ";
     for(int i = 0; i < arr.count(); i++) str += "|" + QString::number(arr[i], 16);
     str += " len=";
     str += QString::number(arr.count());
     qDebug() << str;
+}
+
+void Technichub::characteristicUpdated(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue)
+{
+    Q_UNUSED(characteristic)
+    //debugOutHex(newValue, "CHARS CHANGED get:");
+    parseCharsUpdates(newValue);
+}
+
+void Technichub::parseCharsUpdates(const QByteArray &newValue)
+{
+    static int oldBattery = 0;
+    static int oldRSSI = 0;
+
+    if(newValue[2] == 1){ // hub property
+
+        if(newValue[3] == 5 && newValue[4] == 6)rssiLevel = static_cast<qint8>(newValue[5]); // rssi db value updated
+        if(newValue[3] == 6 && newValue[4] == 6)batteryLevel = newValue[5]; // battery % value updated
+    }
+
+//    if(oldBattery != batteryLevel) emit batteryLevelUpdated(batteryLevel);
+//    if(oldRSSI != rssiLevel) emit rssiLevelUpdated(rssiLevel);
+
+    if(oldBattery != batteryLevel || oldRSSI != rssiLevel){
+
+        emit paramsChanged(address, getParamList());
+    }
+
+    oldBattery = batteryLevel;
+    oldRSSI = rssiLevel;
+}
+
+/////////////////////////////////////////////////
+
+void Technichub::writeNoResponce(QByteArray &data)
+{
+    debugOutHex(data, "set:");
+
+    if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithoutResponse);
+    else qDebug() << "service1623 == nullptr: "<< service1623;
+}
+
+void Technichub::writeResponce(QByteArray &data)
+{
+    debugOutHex(data, "set:");
+
+    if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithResponse);
+    else qDebug() << "service1623 == nullptr: "<< service1623;
+}
+
+/////////////////////////////////////////////////////
+
+void Technichub::setNotification(bool value)
+{
+    QLowEnergyDescriptor d = chars1624.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+    if(!chars1624.isValid()){
+        return;
+    }
+    if(chars1624.properties() & QLowEnergyCharacteristic::Notify){ // enable notification
+        service1623->writeDescriptor(d, value ? QByteArray::fromHex("0100") : QByteArray::fromHex("0000"));
+    }
+
+}
+
+void Technichub::setIndication(bool value)
+{
+    QLowEnergyDescriptor d = chars1624.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+    if(!chars1624.isValid()){
+        return;
+    }
+    if(chars1624.properties() & QLowEnergyCharacteristic::Indicate){ // enable indication
+        service1623->writeDescriptor(d, value ? QByteArray::fromHex("0200") : QByteArray::fromHex("0000"));
+    }
+}
+
+void Technichub::disableAll()
+{
+    QLowEnergyDescriptor d = chars1624.descriptor(QBluetoothUuid::ClientCharacteristicConfiguration);
+    if(!chars1624.isValid()){
+        return;
+    }
+    if(chars1624.properties() & QLowEnergyCharacteristic::Indicate){ // enable indication
+        service1623->writeDescriptor(d, QByteArray::fromHex("0000"));
+    }
+}
+
+////////////////////////////////////////////////////
+
+void Technichub::setBatteryUpdates(bool value)
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::ReadWrite);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    stream << quint8(0); // common header \ message length
+    stream << quint8(0);
+    stream << quint8(1);
+    stream << quint8(6);
+
+    quint8 trigger = value ? 2 : 3;
+
+    stream << trigger;
+    data[0] = quint8(data.count());
+    writeNoResponce(data);
+}
+
+void Technichub::setRSSIUpdates(bool value)
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::ReadWrite);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    stream << quint8(0); // common header \ message length
+    stream << quint8(0);
+    stream << quint8(1);
+    stream << quint8(5);
+
+    quint8 trigger = value ? 2 : 3;
+
+    stream << trigger;
+    data[0] = quint8(data.count());
+    writeNoResponce(data);
+}
+
+///////////////////////////////////
+
+int Technichub::getType()
+{
+    return hubType;
+}
+
+void Technichub::setName(QString _name)
+{
+    name = _name;
+}
+
+QString Technichub::getName()
+{
+    return name;
+}
+
+QString Technichub::getAddress()
+{
+    return address;
+}
+
+QStringList Technichub::getParamList()
+{
+    QStringList list;
+    list.append(QString::number(batteryLevel));
+    list.append(QString::number(rssiLevel));
+    return list;
 }

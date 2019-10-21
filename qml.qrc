@@ -2,56 +2,52 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>Page_Finder.qml</file>
-        <file>Gui_Radar.qml</file>
-        <file>Style.qml</file>
-        <file>Page_Connect.qml</file>
+        <file>ConstList_Color.qml</file>
+        <file>ConstList_Font.qml</file>
         <file>qmldir</file>
-        <file>Gui_DeviceView_Delegate.qml</file>
-        <file>icons/hub.svg</file>
-        <file>icons/more.svg</file>
-        <file>Page_UsersProfile.qml</file>
-        <file>Gui_TopBar.qml</file>
-        <file>Page_AppSettings.qml</file>
-        <file>icons/profile.svg</file>
-        <file>Page_Profile.qml</file>
-        <file>icons/editor.svg</file>
-        <file>icons/save.svg</file>
-        <file>Gui_Profile_Button.qml</file>
-        <file>Gui_Profile_Editor_ControlsList.qml</file>
-        <file>icons/linear.svg</file>
-        <file>icons/moving.svg</file>
-        <file>icons/steering.svg</file>
-        <file>icons/anticlockwise.svg</file>
-        <file>icons/clockwise.svg</file>
-        <file>Gui_Profile_CircleButton.qml</file>
-        <file>icons/minus.svg</file>
-        <file>icons/plus.svg</file>
-        <file>icons/delete.svg</file>
-        <file>Profile_Control_Parent.qml</file>
-        <file>Profile_Control_Moving.qml</file>
-        <file>Profile_Control_Steering.qml</file>
-        <file>Profile_Control_HoldButtons.qml</file>
-        <file>icons/remove.svg</file>
-        <file>icons/arrow_back.svg</file>
-        <file>Gui_ControlList_Delegate.qml</file>
-        <file>icons/profileEdit.svg</file>
-        <file>icons/remove48.svg</file>
-        <file>icons/accepted.svg</file>
-        <file>Gui_ProfileView_Delegate.qml</file>
-        <file>Gui_IconButton.qml</file>
-        <file>Gui_AppLoader.qml</file>
-        <file>Gui_PortSelect.qml</file>
+        <file>ConstList_Text.qml</file>
+        <file>Units.qml</file>
+    </qresource>
+    <qresource prefix="/Pages">
+        <file>ConnectedDevices.qml</file>
+        <file>Finder.qml</file>
+        <file>Profiles.qml</file>
+        <file>SidePanel.qml</file>
+        <file>MainScreen.qml</file>
+        <file>Settings.qml</file>
+        <file>About.qml</file>
+        <file>Connector.qml</file>
+    </qresource>
+    <qresource prefix="/assets">
+        <file>icons/toolbar_menu.svg</file>
+        <file>icons/toolbar_back.svg</file>
         <file>fonts/Montserrat-Thin.ttf</file>
-        <file>Gui_ComboBox_Custom.qml</file>
-        <file>CursorDelegate.qml</file>
-        <file>Gui_Profile_ControlParam.qml</file>
-        <file>lang/lang_de_DE.qm</file>
-        <file>lang/lang_ru_RU.qm</file>
-        <file>icons/find.svg</file>
-        <file>Profile_Control_Slider.qml</file>
-        <file>icons/orientation.svg</file>
-        <file>icons/tune.svg</file>
-        <file>icons/slider.svg</file>
+        <file>icons/settings.svg</file>
+        <file>icons/connectedDevice.svg</file>
+        <file>icons/profile.svg</file>
+        <file>icons/about.svg</file>
+        <file>icons/add.svg</file>
+        <file>icons/foundedDevice.svg</file>
+        <file>icons/disconnect.svg</file>
+        <file>icons/battery.svg</file>
+        <file>icons/sidePanelIco.png</file>
+        <file>icons/rssi_0.svg</file>
+        <file>icons/rssi_1.svg</file>
+        <file>icons/rssi_2.svg</file>
+        <file>icons/rssi_3.svg</file>
+        <file>icons/rssi_4.svg</file>
+        <file>icons/favoriteNO.svg</file>
+        <file>icons/favoriteYES.svg</file>
+    </qresource>
+    <qresource prefix="/Controls">
+        <file>Sidepanel_Delegate.qml</file>
+        <file>Settings_Delegate.qml</file>
+        <file>Radar.qml</file>
+        <file>Finder_Delegate.qml</file>
+        <file>ConnectedDevices_Delegate.qml</file>
+        <file>TechnicHub.qml</file>
+        <file>SignalStrengh.qml</file>
+        <file>CustomSwitch.qml</file>
+        <file>CustomDrawer.qml</file>
     </qresource>
 </RCC>

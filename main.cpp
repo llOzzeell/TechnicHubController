@@ -1,73 +1,47 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include <QObject>
-#include <QQuickWindow>
 
-#include "hubfinder.h"
-#include "hubconnector.h"
-#include "huboperator.h"
-#include "profiles.h"
-#include "appsettings.h"
-#include "translator.h"
-
-#if defined (Q_OS_ANDROID)
-#include <QtAndroid>
-#include "androidext.h"
-#endif
+#include "finder.h"
+#include "connector.h"
+#include "favoritedevices.h"
+#include "android.h"
 
 int main(int argc, char *argv[])
 {
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
 
-#ifdef Q_OS_ANDROID
-    AndroidExt afunc;
-    QQmlContext *context_afunc = engine.rootContext();
-    context_afunc ->setContextProperty("androidFunc", &afunc);
-    if(!afunc.requestAndroidPermissions())return -1;
-#endif
+    Android andr;
+    if(!andr.requestAndroidPermissions())return -1;
+    QQmlContext *context0;
+    context0 = engine.rootContext();
+    context0->setContextProperty("cpp_Android", &andr);
 
-    HubFinder hubFinder;
-    hubFinder.setDebugOut(false);
-    QQmlContext *context_hubFinder = engine.rootContext();
-    context_hubFinder ->setContextProperty("hubFinder", &hubFinder);
+    FavoriteDevices fav;
+    QQmlContext *context3;
+    context3 = engine.rootContext();
+    context3->setContextProperty("cpp_Favorite", &fav);
 
-    Hubconnector hubconnector(&hubFinder);
-    hubconnector.setDebugOut(false);
-    QQmlContext *context_hubconnector = engine.rootContext();
-    context_hubconnector ->setContextProperty("hubConnector", &hubconnector);
+    Connector connector(&fav);
+    QQmlContext *context2;
+    context2 = engine.rootContext();
+    context2->setContextProperty("cpp_Connector", &connector);
 
-    HubOperator hubOperator;
-    hubOperator.setDebugOut(false);
-    QQmlContext *context_huboperator = engine.rootContext();
-    context_huboperator ->setContextProperty("hubOperator", &hubOperator);
+    Finder finder(&connector, &fav);
+    QQmlContext *context;
+    context = engine.rootContext();
+    context->setContextProperty("cpp_Finder", &finder);
 
-    AppSettings appsett(&engine);
-    QQmlContext *context_appsett = engine.rootContext();
-    context_appsett->setContextProperty("appSett", &appsett);
+    QObject::connect(&finder, &Finder::devicesListUpdated, &connector, &Connector::setFoundList);
 
-    QObject::connect(&hubconnector, &Hubconnector::hubLinkUpdate, &hubOperator, &HubOperator::setHubLink);
-
-    Profiles prof;
-    QQmlContext *context_prof = engine.rootContext();
-    context_prof ->setContextProperty("profilesController", &prof);
-
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
-    engine.load(url);
-
-    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first());
-
-    appsett.setLinkToWindow(window);
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    if (engine.rootObjects().isEmpty())
+        return -1;
 
     return app.exec();
 }

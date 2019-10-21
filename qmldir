@@ -1,1 +1,4 @@
-singleton Style 1.0 Style.qml
+singleton Constlist_font 1.0 ConstList_Font.qml
+singleton Constlist_color 1.0 ConstList_Color.qml
+singleton Constlist_text 1.0 ConstList_Text.qml
+singleton Units 1.0 Units.qml

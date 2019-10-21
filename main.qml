@@ -1,4 +1,5 @@
 import QtQuick 2.9
+import QtQuick.Window 2.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
 import QtQuick.Layouts 1.0
@@ -9,12 +10,21 @@ import "."
 
 ApplicationWindow {
     id: window
+    width: Screen.width
+    height:Screen.height
     visible: true
     color: Material.background
 
-    Component.onCompleted: darkTheme(true);
+    Component.onCompleted: {
+        darkTheme(cpp_Settings.getDarkMode())
+    }
 
-    ///////////////////////////////////////////////
+    Connections{
+        target:cpp_Settings
+        onThemeChanged:{
+            window.darkTheme(value);
+        }
+    }
 
     function darkTheme(value){
         Material.theme = value ? Material.Dark : Material.Light
@@ -121,7 +131,14 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 icon.source: setAddButtonIcon(stackView.currentItem.title)
                 visible: addButtonVisibleParse(stackView.currentItem.isAddButtonVisible)
-                onClicked: stackView.push(component_Finder)
+                onClicked:{
+                    switch(stackView.currentItem.title){
+                        case ConstList_Text.page_connectedDevices: stackView.push(component_Finder); break;
+                            case ConstList_Text.page_profiles: cpp_Profiles.addNew(ConstList_Text.profile_new_name); break;
+                        default : break;
+                    }
+                }
+
                 function addButtonVisibleParse(value){
                     if(value !== undefined) return value;
                     else return false;
@@ -181,35 +198,17 @@ ApplicationWindow {
         }
     }
 
-    Component{
-        id:component_Profiles
-        Profiles{}
-    }
+    Component{id:component_Profiles;Profiles{}}
 
     ConnectedDevices{id:component_ConnectedDevices}
 
-    Component{
-        id:component_Finder
-        Finder{}
-    }
+    Component{id:component_Finder; Finder{}}
 
-    Component{
-        id:component_Connector
-        Connector{}
-    }
+    Component{id:component_Connector;Connector{}}
 
-    Component{
-        id:component_MainScreen
-        MainScreen{}
-    }
+    Component{id:component_MainScreen;MainScreen{}}
 
-    Component{
-        id:component_Settings
-        Settings{}
-    }
+    Component{id:component_Settings;Settings{}}
 
-    Component{
-        id:component_About
-        About{}
-    }
+    Component{id:component_About;About{}}
 }

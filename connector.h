@@ -44,7 +44,7 @@ public slots:
 
     void setFoundList(QList<QBluetoothDeviceInfo> &list);
 
-    void connectDevice(int index);
+    void connectDevice(QString address);
 
     void connectDeviceDirect(QBluetoothDeviceInfo device);
 

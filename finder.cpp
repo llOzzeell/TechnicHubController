@@ -19,38 +19,63 @@ Finder::~Finder(){
 void Finder::gotNewDevice(const QBluetoothDeviceInfo &device)
 {
     if(device.name() != "Technic Hub") return;
-    if(!scanForFavorite){
-        for(QBluetoothDeviceInfo d : devicesList){
-            if(device.address() == d.address())return;
-        }
 
-        devicesList.append(device);
-
-        QList<QString> textDeviceList;
-
-        foreach (auto item, devicesList) {
-
-            QString name = "";
-            if(favDev->isFavorite(device.address().toString())){
-                name = favDev->getName(device.address().toString());
-            }
-            else name = item.name();
-
-            textDeviceList.append(name + " (" + item.address().toString() + ")");
-        }
-
-        emit deviceFound(textDeviceList);
-        emit devicesListUpdated(devicesList);
+    for(QBluetoothDeviceInfo d : devicesList){
+    if(device.address() == d.address())return;
     }
-    else{
 
+    devicesList.append(device);
+
+    QList<QString> textDeviceList;
+
+    foreach (auto item, devicesList) {
+
+        QString name = "";
         if(favDev->isFavorite(device.address().toString())){
-            connector->connectDeviceDirect(device);
-            favoriteDevicesCount--;
+            name = favDev->getName(device.address().toString());
         }
+        else name = item.name();
 
-        if(favoriteDevicesCount <= 0){ stop(); scanForFavorite = false;}
+        textDeviceList.append(name + " (" + item.address().toString() + ")");
     }
+
+    emit deviceFound(textDeviceList);
+    emit devicesListUpdated(devicesList);
+
+//    if(favoriteDevicesCount <= 0){ stop(); scanForFavorite = false;}
+
+//    if(!scanForFavorite){
+//        for(QBluetoothDeviceInfo d : devicesList){
+//            if(device.address() == d.address())return;
+//        }
+
+//        devicesList.append(device);
+
+//        QList<QString> textDeviceList;
+
+//        foreach (auto item, devicesList) {
+
+//            QString name = "";
+//            if(favDev->isFavorite(device.address().toString())){
+//                name = favDev->getName(device.address().toString());
+//            }
+//            else name = item.name();
+
+//            textDeviceList.append(name + " (" + item.address().toString() + ")");
+//        }
+
+//        emit deviceFound(textDeviceList);
+//        emit devicesListUpdated(devicesList);
+//    }
+//    else{
+
+//        if(favDev->isFavorite(device.address().toString())){
+//            connector->connectDeviceDirect(device);
+//            favoriteDevicesCount--;
+//        }
+
+//        if(favoriteDevicesCount <= 0){ stop(); scanForFavorite = false;}
+//    }
 }
 
 void Finder::startScanFavorite()

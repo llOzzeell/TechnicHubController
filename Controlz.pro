@@ -18,6 +18,7 @@ SOURCES += \
         favoritedevices.cpp \
         finder.cpp \
         main.cpp \
+        profiles.cpp \
         technichub.cpp
 
 RESOURCES += qml.qrc
@@ -46,12 +47,20 @@ DISTFILES += \
 
 HEADERS += \
     android.h \
+    appsettings.h \
     connector.h \
     favoritedevices.h \
     finder.h \
-    technichub.h
+    profiles.h \
+    technichub.h \
+    translator.h
 
 contains(ANDROID_TARGET_ARCH,arm64-v8a) {
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/android
+}
+
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
 }

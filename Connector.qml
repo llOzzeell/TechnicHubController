@@ -21,11 +21,10 @@ Item {
         }
     }
 
-    function tryConnect(index, name){
+    function tryConnect(name){
         countDownAnimation.start();
         root.opacity = 1
         label.deviceName = name.slice(0, name.indexOf("(")-1);
-        cpp_Connector.connectDevice(index);
     }
 
     Rectangle {

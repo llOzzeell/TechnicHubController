@@ -10,36 +10,26 @@ Item {
 
     signal clicked(string page)
 
-    Image {
-        id: appIco
-        width: Units.dp(56)
-        height: width
-        anchors.left: parent.left
-        anchors.leftMargin: Units.dp(20)
-        anchors.top: parent.top
-        anchors.topMargin: Units.dp(20)
-        source: "qrc:/assets/icons/sidePanelIco.png"
-    }
-
     Label {
         id: appName
         text: Constlist_text.appName
+        anchors.topMargin: Units.dp(20)
+        anchors.leftMargin: Units.dp(20)
+        anchors.top: parent.top
         fontSizeMode: Text.HorizontalFit
-        font.pixelSize: Qt.application.font.pixelSize * 2.5
+        font.pixelSize: Qt.application.font.pixelSize * 3
         font.family: Constlist_font.appName
         verticalAlignment: Text.AlignVCenter
         anchors.right: parent.right
         anchors.rightMargin: Units.dp(20)
-        anchors.left: appIco.right
-        anchors.leftMargin: Units.dp(5)
-        anchors.verticalCenter: appIco.verticalCenter
+        anchors.left: parent.left
     }
 
     Column {
         id: column
-        spacing: Units.dp(10)
-        anchors.top: appIco.bottom
         anchors.topMargin: Units.dp(60)
+        spacing: Units.dp(10)
+        anchors.top: appName.bottom
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.right: parent.right
@@ -119,3 +109,9 @@ Item {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

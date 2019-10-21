@@ -19,13 +19,19 @@ void Connector::setFoundList(QList<QBluetoothDeviceInfo> &list)
     foundList = list;
 }
 
-void Connector::connectDevice(int index)
+void Connector::connectDevice(QString address)
 {
-    connectedDevicesList.push_back(new Technichub());
-    connectedDevicesList[connectedDevicesList.count()-1]->tryConnect(foundList[index]);
-    connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::successConnected, [=](){getConnectedParam(); });
-    connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::lostConnection);
-    connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::paramsChanged, this, &Connector::deviceParamsChanged);
+    int counter = 0;
+    for(QBluetoothDeviceInfo d : foundList){
+        if(d.address().toString() == address){
+            connectedDevicesList.push_back(new Technichub());
+            connectedDevicesList[connectedDevicesList.count()-1]->tryConnect(d);
+            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::successConnected, [=](){ getConnectedParam(); });
+            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::lostConnection);
+            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::paramsChanged, this, &Connector::deviceParamsChanged);
+        }
+        counter++;
+    }
 }
 
 void Connector::connectDeviceDirect(QBluetoothDeviceInfo device)

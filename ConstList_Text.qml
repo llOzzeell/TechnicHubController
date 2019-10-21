@@ -31,4 +31,6 @@ QtObject{
     readonly property string settings_prop_tactile: qsTr("Tactile responce")
     readonly property string settings_prop_lang: qsTr("Language")
 
+    readonly property string profile_new_name: qsTr("New profile")
+
 }

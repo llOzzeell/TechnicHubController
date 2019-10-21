@@ -6,8 +6,8 @@ import ".."
 Item {
     id:root
     readonly property string title:ConstList_Text.page_finder
-    Component.onCompleted: { radar.start(); cpp_Finder.start(); }
-    Component.onDestruction: if(cpp_Finder != null && cpp_Finder != undefined)cpp_Finder.stop();
+    Component.onCompleted: { cpp_Finder.start(); radar.start(); }
+    Component.onDestruction: cpp_Finder.stop();
 
     Radar{
         id: radar
@@ -40,8 +40,14 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked:{
+
+
+
+                        var address = foundedDevicesModel.get(index).name;
+                        address = address.slice(address.indexOf("(")+1, address.indexOf(")"));
+                        cpp_Connector.connectDevice(address);
                         stackView.push(component_Connector)
-                        stackView.currentItem.tryConnect(index, foundedDevicesModel.get(index).name);
+                        stackView.currentItem.tryConnect(foundedDevicesModel.get(index).name);
                     }
                 }
             }

@@ -11,7 +11,7 @@ QtObject{
     property color darkForeground : "#e9eaee"
     //property color darkTitleForeground : "#e9eaee"
 
-    property color lightBackground : "#ffffff"
+    property color lightBackground : "#E0E0E0"
     property color lightPrimary : "#dbdce0"
     property color lightAccent : "#00875f"
     property color lightForeground : "#202123"
@@ -19,5 +19,7 @@ QtObject{
 
 
     //property color titleForeground: "#e9eaee"
+
+    property color delete_Color: "#ef5350"
 
 }

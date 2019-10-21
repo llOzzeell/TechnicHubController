@@ -106,8 +106,8 @@ Item {
         id:disconnectButton
         width: Units.dp(48)
         height: Units.dp(48)
-        icon.width: Units.dp(24)
-        icon.height: Units.dp(24)
+        icon.width: Units.dp(32)
+        icon.height: Units.dp(32)
         anchors.verticalCenter: nameLabel.verticalCenter
         anchors.right: favoriteButton.left
         anchors.rightMargin: 0
@@ -126,8 +126,8 @@ Item {
 
     SignalStrengh {
         id: signalStrengh
-        width: Units.dp(20)
-        height: width
+        width: Units.dp(32)
+        height: Units.dp(32)
         color: Material.foreground
         visible: batteryLevelProgressBar.visible
         anchors.left: nameLabel.right
@@ -153,8 +153,8 @@ Item {
         id: favoriteButton
         width: Units.dp(48)
         height: Units.dp(48)
-        icon.width: Units.dp(24)
-        icon.height: Units.dp(24)
+        icon.width: Units.dp(32)
+        icon.height: Units.dp(32)
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.verticalCenter: nameLabel.verticalCenter

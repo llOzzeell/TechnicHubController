@@ -8,6 +8,11 @@ Item {
     id:root
     readonly property string title: ConstList_Text.page_settings
 
+    Component.onCompleted: {
+        darkmode.checked = cpp_Settings.getDarkMode();
+        taptick.checked = cpp_Settings.getTapTick();
+    }
+
     Column {
         id: column
         spacing: Units.dp(5)
@@ -32,14 +37,14 @@ Item {
             isGroupTitle: false
 
             CustomSwitch {
-                id: switch1
+                id: darkmode
                 width: Units.dp(38)
                 height: Units.dp(48)
-                checked: true
+                checked: false
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
-                onCheckedChanged: darkTheme(checked)
+                onCheckedChanged: cpp_Settings.setDarkMode(checked)
             }
         }
 
@@ -59,13 +64,13 @@ Item {
             isGroupTitle: false
 
             CustomSwitch {
-                id: switch2
+                id: taptick
                 width: Units.dp(38)
                 height: Units.dp(48)
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                onCheckedChanged: console.log(checked)
+                onCheckedChanged: cpp_Settings.setTapTick(checked)
             }
         }
 
@@ -86,9 +91,9 @@ Item {
 
             ComboBox {
                 id: comboBox
-                x: 66
-                width: 534
-                height: 314
+                x: 414
+                width: 186
+                height: 54
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter

@@ -6,6 +6,9 @@
 #include "connector.h"
 #include "favoritedevices.h"
 #include "android.h"
+#include "appsettings.h"
+#include "translator.h"
+#include "profiles.h"
 
 int main(int argc, char *argv[])
 {
@@ -39,9 +42,19 @@ int main(int argc, char *argv[])
 
     QObject::connect(&finder, &Finder::devicesListUpdated, &connector, &Connector::setFoundList);
 
+    AppSettings appsett;
+    QQmlContext *context_appsett = engine.rootContext();
+    context_appsett->setContextProperty("cpp_Settings", &appsett);
+
+    Profiles prof;
+    QQmlContext *context_prof = engine.rootContext();
+    context_prof ->setContextProperty("cpp_Profiles", &prof);
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
+
+    //QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first());
 
     return app.exec();
 }

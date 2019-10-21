@@ -20,8 +20,8 @@ Item {
 
     Image {
         id: image
-        width: Units.dp(20)
-        height: Units.dp(20)
+        width: Units.dp(32)
+        height: Units.dp(32)
         anchors.left: parent.left
         anchors.leftMargin: Units.dp(10)
         anchors.verticalCenter: parent.verticalCenter
@@ -41,7 +41,7 @@ Item {
         id: label
         text: name
         font.weight: Font.Medium
-        font.pixelSize: Qt.application.font.pixelSize;
+        font.pixelSize: Qt.application.font.pixelSize * 1.3;
         anchors.left: image.right
         anchors.leftMargin: Units.dp(10)
         anchors.verticalCenter: parent.verticalCenter

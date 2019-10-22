@@ -112,3 +112,8 @@ void Profiles::changeName(int index, QString _new)
     saveFile();
     emit profilesUpdated();
 }
+
+int Profiles::p_getControlsCount(int index)
+{
+    return profiles[index].getCount();
+}

@@ -23,9 +23,7 @@ Item {
         }
     }
 
-    function clickOn(){
-        stackView.push(component_ProfilePlayer);
-    }
+    signal clicked(int index)
 
     CustomPane{
         anchors.fill: parent
@@ -129,7 +127,7 @@ Item {
 
             onReleased: {
                 if(shift <= minimumFingerSHift){
-                    if(!fieldItem.middleState)root.clickOn()
+                    if(!fieldItem.middleState)root.clicked(index)
                     else collapseAnimation.start();
                     return;
                 }

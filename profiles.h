@@ -4,11 +4,15 @@
 #include <QObject>
 #include <QDataStream>
 #include <QFile>
+#include <QHash>
 #include <QStandardPaths>
 
 struct Control{
     quint8 type = 0xff;
-    quint16 width = 0; quint16 x = 0; quint16 y = 0;
+    quint16 width = 0;
+    quint16 height = 0;
+    quint16 x = 0;
+    quint16 y = 0;
     bool inverted = false;
     quint8 servoAngle = 0;
     quint8 speedLimit = 0;
@@ -23,20 +27,27 @@ struct Control{
 };
 
 class Profile{
+
 public:
     Profile(QString _name = ""): name(_name){}
 
     QString getName(){return name;}
     void setName(QString _name){name = _name;}
 
-    void clearProfile(){controls.clear();}
-    void addControl(Control &con){controls.push_back(con);}
-    Control& getControl(int index){ return controls[index]; }
+    //void clearProfile(){controls.clear();}
     int getCount(){return controls.count(); }
+
+    void addControl(QString cid, Control &con){controls.insert(cid, con);}
+    void deleteControl(QString cid){controls.remove(cid);}
+    Control getControl(int index){
+        auto it = controls.cbegin();
+        std::advance(it, index);
+        return controls[it.key()];
+    }
 
 private:
     QString name;
-    QVector<Control> controls;
+    QHash<QString,Control> controls;
 
     friend QDataStream& operator<<(QDataStream &out, Profile &p);
     friend QDataStream& operator>>(QDataStream &in, Profile &p);
@@ -71,6 +82,16 @@ public slots:
     void deleteOne(int index);
 
     void changeName(int index, QString _new);
+
+    ////////////////////////////////////////////////////
+
+    int p_getControlsCount(int index);
+
+    void p_addControl(QString cid, QVariantMap control);
+
+    void p_deleteControl(QString cid);
+
+
 };
 
 #endif // PROFILES_H

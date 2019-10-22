@@ -16,7 +16,7 @@ ApplicationWindow {
     color: Material.background
 
     Component.onCompleted: {
-        cpp_Android.setOrientationPortrait();
+        //cpp_Android.setOrientationPortrait();
         darkTheme(cpp_Settings.getDarkMode())
     }
 
@@ -34,16 +34,17 @@ ApplicationWindow {
         Material.primary = value ? ConstList_Color.darkPrimary : ConstList_Color.lightPrimary
         Material.accent = value ? ConstList_Color.darkAccent : ConstList_Color.lightAccent
         Material.foreground = value ? ConstList_Color.darkForeground : ConstList_Color.lightForeground
+        ConstList_Color.controls_border_color = value ? ConstList_Color.dark_controls_border_color : ConstList_Color.light_controls_border_color
         //ConstList_Color.titleForeground = value ? ConstList_Color.darkTitleForeground : ConstList_Color.lightTitleForeground
-        cpp_Android.setStatusBarColor(Material.accent)
-        cpp_Android.setNavigationBarColor(Material.background)
+        //cpp_Android.setStatusBarColor(Material.accent)
+        //cpp_Android.setNavigationBarColor(Material.background)
     }
 
     Material.onAccentChanged: {
-        cpp_Android.setStatusBarColor(Material.accent)
+        //cpp_Android.setStatusBarColor(Material.accent)
     }
     Material.onBackgroundColorChanged: {
-        cpp_Android.setNavigationBarColor(Material.background)
+        //cpp_Android.setNavigationBarColor(Material.background)
     }
 
     ///////////////////////////////////////////////

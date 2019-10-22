@@ -27,6 +27,11 @@ Item {
         }
     }
 
+    function profileClicked(index){
+        stackView.push(component_ProfilePlayer);
+        stackView.currentItem.loadProfile(index);
+    }
+
     ListView{
         id:profilesView
         anchors.fill: parent
@@ -35,7 +40,12 @@ Item {
         model:profilesModel
         onCountChanged: currentIndex = -1
         delegate: Component{
-            Profiles_Delegate{isCurrent: ListView.isCurrentItem}
+            Profiles_Delegate{
+                isCurrent: ListView.isCurrentItem
+                Component.onCompleted: {
+                    clicked.connect(root.profileClicked)
+                }
+            }
         }
     }
 

@@ -21,7 +21,6 @@ Item {
         id:background
         anchors.fill: parent
         Material.background: Material.primary
-        Material.elevation:Units.dp(2)
     }
 
     TextInput {

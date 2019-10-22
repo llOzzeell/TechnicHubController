@@ -58,8 +58,13 @@
         <file>CustomComboBox.qml</file>
         <file>CustomPane.qml</file>
         <file>ControlsPalette.qml</file>
+        <file>CustomCircle.qml</file>
     </qresource>
-    <qresource prefix="/Controls/ModelsControls">
-        <file>ModelsParent.qml</file>
+    <qresource prefix="/ModelsControls">
+        <file>Parent.qml</file>
+        <file>JoySteering.qml</file>
+        <file>JoyMoving.qml</file>
+        <file>Buttons.qml</file>
+        <file>SliderH.qml</file>
     </qresource>
 </RCC>

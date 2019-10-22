@@ -4,12 +4,20 @@ import QtQuick.Controls.Material 2.3
 import ".."
 import "qrc:/assets"
 import "qrc:/Controls"
+import "qrc:/Controls/ModelsControls"
 
 Item {
     id: root
     readonly property string title:""
     Component.onCompleted: { cpp_Android.setOrientationSensorLandscape(); toolBar.visible = false; cpp_Settings.setImmersiveMode(true); }
     Component.onDestruction: { cpp_Android.setOrientationPortrait(); toolBar.visible = true; cpp_Settings.setImmersiveMode(false); }
+
+    property bool editorMode: false
+
+    ControlsPalette {
+        id: controlsPalette
+        anchors.fill: parent
+    }
 
     RoundButton {
         id: addControlButton
@@ -25,6 +33,9 @@ Item {
         anchors.leftMargin: Units.dp(10)
         Material.elevation: Units.dp(4)
         visible: !editButton.visible
+        onClicked: {
+            controlsPalette.show();
+        }
     }
 
     RoundButton {
@@ -40,7 +51,10 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: Units.dp(10)
         Material.elevation: Units.dp(4)
-        visible:!addControlButton.visible
+        visible: !root.editorMode
+        onClicked: {
+            root.editorMode = true;
+        }
     }
 
     RoundButton {
@@ -48,7 +62,7 @@ Item {
         width: Units.dp(48)
         height: Units.dp(48)
         Material.background: Material.accent
-        icon.source: "qrc:/assets/icons/tune.svg"
+        icon.source: "qrc:/assets/icons/save.svg"
         anchors.top: parent.top
         anchors.topMargin: Units.dp(10)
         anchors.rightMargin: Units.dp(10)
@@ -56,13 +70,26 @@ Item {
         anchors.right: parent.right
         icon.height: Units.dp(24)
         visible: !editButton.visible
+        onClicked: {
+            root.editorMode = false;
+            if(controlsPalette.isVisible)controlsPalette.hide();
+        }
     }
 
-//    ControlsPalette {
-//        id: controlsPalette
-//        width: 350
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.verticalCenter: parent.verticalCenter
-//    }
+    ModelsParent {
+        id: modelsParent
+        width:Units.dp(160)
+        height:Units.dp(160)
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+    }
+
 
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:2;anchors_x:87;anchors_y:141}D{i:3;anchors_x:87;anchors_y:141}
+D{i:4;anchors_x:87;anchors_y:141}
+}
+##^##*/

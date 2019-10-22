@@ -51,5 +51,6 @@
         <file>Profiles_Delegate.qml</file>
         <file>CustomDrawer.qml</file>
         <file>CustomComboBox.qml</file>
+        <file>CustomPane.qml</file>
     </qresource>
 </RCC>

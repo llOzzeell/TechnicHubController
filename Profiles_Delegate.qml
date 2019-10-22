@@ -26,7 +26,7 @@ Item {
 
     }
 
-    Pane{
+    CustomPane{
         anchors.fill: parent
         opacity: 1
         visible: true
@@ -49,9 +49,9 @@ Item {
 
         Rectangle {
             id: redCard
-            width: fieldItem.fieldRightShift+2
+            width: fieldItem.fieldRightShift+Units.dp(8)
             color: ConstList_Color.delete_Color
-            radius: Units.dp(1)
+            radius: Units.dp(4)
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.top: parent.top
@@ -102,7 +102,7 @@ Item {
         Rectangle {
             id: background_field
             color: Material.primary
-            radius: Units.dp(1)
+            radius: Units.dp(4)
             visible: true
             anchors.fill: parent
         }

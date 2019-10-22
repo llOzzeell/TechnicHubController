@@ -17,11 +17,11 @@ Item {
     property int _type:-1
     property bool _isFavorite: false
 
-    Pane{
+    CustomPane{
         id:background
         anchors.fill: parent
         Material.background: Material.primary
-        Material.elevation:Units.dp(4)
+        Material.elevation:Units.dp(2)
     }
 
     TextInput {

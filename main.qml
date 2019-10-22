@@ -16,6 +16,7 @@ ApplicationWindow {
     color: Material.background
 
     Component.onCompleted: {
+        cpp_Android.setOrientationPortrait();
         darkTheme(cpp_Settings.getDarkMode())
     }
 
@@ -27,12 +28,22 @@ ApplicationWindow {
     }
 
     function darkTheme(value){
+
         Material.theme = value ? Material.Dark : Material.Light
         Material.background = value ? ConstList_Color.darkBackground : ConstList_Color.lightBackground
         Material.primary = value ? ConstList_Color.darkPrimary : ConstList_Color.lightPrimary
         Material.accent = value ? ConstList_Color.darkAccent : ConstList_Color.lightAccent
         Material.foreground = value ? ConstList_Color.darkForeground : ConstList_Color.lightForeground
         //ConstList_Color.titleForeground = value ? ConstList_Color.darkTitleForeground : ConstList_Color.lightTitleForeground
+        cpp_Android.setStatusBarColor(Material.accent)
+        cpp_Android.setNavigationBarColor(Material.background)
+    }
+
+    Material.onAccentChanged: {
+        cpp_Android.setStatusBarColor(Material.accent)
+    }
+    Material.onBackgroundColorChanged: {
+        cpp_Android.setNavigationBarColor(Material.background)
     }
 
     ///////////////////////////////////////////////
@@ -211,4 +222,6 @@ ApplicationWindow {
     Component{id:component_Settings;Settings{}}
 
     Component{id:component_About;About{}}
+
+    Component{id:component_ProfilePlayer;ProfilePlayer{}}
 }

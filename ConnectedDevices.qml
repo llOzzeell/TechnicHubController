@@ -80,7 +80,6 @@ Item {
             }
         }
         onLostConnection:{
-            console.log("QML DISCONNECTED")
             connectedModel.setProperty(getIndexByAddress(address), "isConnected", false);
         }
     }

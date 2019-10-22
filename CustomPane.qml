@@ -14,9 +14,12 @@ T.Pane {
 
     padding: Units.dp(12)
 
+    property alias radius: back.radius
+
     background: Rectangle {
+        id:back
         color: control.Material.backgroundColor
-        radius: control.Material.elevation > 0 ? Units.dp(4) : 0
+        radius: control.Material.elevation > 0 ? Units.dp(radius) : 0
 
         layer.enabled: control.enabled && control.Material.elevation > 0
         layer.effect: ElevationEffect {

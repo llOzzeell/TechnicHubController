@@ -33,4 +33,9 @@ QtObject{
 
     readonly property string profile_new_name: qsTr("New profile")
 
+    readonly property string control_name_steering: qsTr("Steering")
+    readonly property string control_name_moving: qsTr("Moving")
+    readonly property string control_name_linear: qsTr("Linear button")
+    readonly property string control_name_slider: qsTr("Slider")
+
 }

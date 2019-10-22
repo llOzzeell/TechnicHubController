@@ -171,7 +171,7 @@ Item {
                     connectedModel.remove(getIndexByAddress(deviceAddressLabel.text));
                     if(cpp_Favorite.isEmpty() && cpp_Finder.isFavoriteScanning()){
                         cpp_Finder.stop();
-                        console.log("NO MORE FAVORITE, STOP SCANNING");
+
                     }
                 }
             }

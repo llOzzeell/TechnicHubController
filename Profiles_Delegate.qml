@@ -3,6 +3,7 @@ import QtQuick.Controls 2.3
 import QtQuick.Controls.Material 2.2
 import QtGraphicalEffects 1.0
 import ".."
+import "."
 import "qrc:/assets"
 
 Item {
@@ -23,7 +24,7 @@ Item {
     }
 
     function clickOn(){
-
+        stackView.push(component_ProfilePlayer);
     }
 
     CustomPane{

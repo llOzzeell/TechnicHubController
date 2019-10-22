@@ -19,7 +19,7 @@ public:
     AppSettings():darkMode(true), tapTick(true){
         loadFile();
     }
-    ~AppSettings(){}
+    ~AppSettings(){delete window;}
 
 private:
 
@@ -27,6 +27,7 @@ private:
     const QString pathToFile = "/config.cz";
     bool darkMode;
     bool tapTick;
+    QQuickWindow *window = nullptr;
 
 signals:
 
@@ -35,6 +36,10 @@ signals:
 
 
 public slots:
+
+    void setWindow(QQuickWindow *_window){
+        window = _window;
+    }
 
     void loadFile(){
 
@@ -89,6 +94,12 @@ public slots:
         emit taptickChanged(tapTick);
     }
 
+    void setImmersiveMode(bool value){
+        if(window != nullptr){
+            if(value) window->showFullScreen();
+            else window->showNormal();
+        }
+    }
 };
 
 #endif // APPSETTINGS_H

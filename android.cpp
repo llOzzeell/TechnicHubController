@@ -26,3 +26,29 @@ bool Android::requestAndroidPermissions() const
 
     return true;
 }
+
+void Android::setStatusBarColor(const QColor &color) const
+{
+    if (QtAndroid::androidSdkVersion() < 21) return;
+
+    QtAndroid::runOnAndroidThread([=]()
+    {
+        QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;");
+        window.callMethod<void>("addFlags", "(I)V", FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
+        window.callMethod<void>("setStatusBarColor", "(I)V", color.rgba());
+    });
+}
+
+void Android::setNavigationBarColor(const QColor &color) const
+{
+    if (QtAndroid::androidSdkVersion() < 21) return;
+
+    QtAndroid::runOnAndroidThread([=]()
+    {
+        QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;");
+        window.callMethod<void>("addFlags", "(I)V", FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
+        window.callMethod<void>("setNavigationBarColor", "(I)V", color.rgba());
+    });
+}

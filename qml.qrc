@@ -49,5 +49,7 @@
         <file>SignalStrengh.qml</file>
         <file>CustomSwitch.qml</file>
         <file>Profiles_Delegate.qml</file>
+        <file>CustomDrawer.qml</file>
+        <file>CustomComboBox.qml</file>
     </qresource>
 </RCC>

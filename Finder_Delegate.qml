@@ -7,8 +7,8 @@ import ".."
 
 Item {
     id:root
-    implicitHeight: Units.dp(40)
-    height: Units.dp(40)
+    implicitHeight: Units.dp(60)
+    height: Units.dp(60)
     width: parent.width
 
     Pane{

@@ -89,11 +89,10 @@ Item {
             text: ConstList_Text.settings_prop_lang
             isGroupTitle: false
 
-            ComboBox {
+            CustomComboBox {
                 id: comboBox
-                x: 414
-                width: 186
-                height: 54
+                width: Units.dp(120)
+                height: Units.dp(40)
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter

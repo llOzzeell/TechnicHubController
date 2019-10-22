@@ -154,7 +154,7 @@ ApplicationWindow {
         }
     }
 
-    Drawer {
+    CustomDrawer {
         id: drawer
         width: window.width * 0.66
         height: window.height

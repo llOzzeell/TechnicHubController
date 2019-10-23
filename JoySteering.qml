@@ -7,13 +7,13 @@ import "qrc:/Controls"
 Parent{
     id:root
     type: 0
-    property int minWidth: Units.dp(140)
+    property int minWidth: Units.dp(160)
     property int maxWidth: Units.dp(200)
 
     onSizeMinusClicked: {
         if(width > minWidth) {
 
-            width -= Units.dp(20);
+            width -= Units.dp(10);
             height = width;
         }
     }
@@ -21,7 +21,7 @@ Parent{
     onSizePlusClicked: {
         if(width < maxWidth) {
 
-            width += Units.dp(20);
+            width += Units.dp(10);
             height = width;
         }
     }

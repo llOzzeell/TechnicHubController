@@ -8,13 +8,13 @@ Parent{
     id:root
     type: 2
     height: width/2
-    property int minWidth: Units.dp(80)
+    property int minWidth: Units.dp(90)
     property int maxWidth: Units.dp(140)
 
     onSizeMinusClicked: {
         if(height > minWidth) {
 
-            height -= Units.dp(20);
+            height -= Units.dp(10);
             width = height*2;
         }
     }
@@ -22,7 +22,7 @@ Parent{
     onSizePlusClicked: {
         if(height < maxWidth) {
 
-            height += Units.dp(20);
+            height += Units.dp(10);
             width = height*2;
         }
     }

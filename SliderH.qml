@@ -8,7 +8,7 @@ Parent{
     id:root
     type: 3
     height: width/4
-    property int minWidth: Units.dp(40)
+    property int minWidth: Units.dp(60)
     property int maxWidth: Units.dp(80)
 
     onSizeMinusClicked: {

@@ -41,7 +41,7 @@ Item {
         id: label
         text: name
         font.weight: Font.Medium
-        font.pixelSize: Qt.application.font.pixelSize * 1.3;
+        font.pixelSize: Qt.application.font.pixelSize;
         anchors.left: image.right
         anchors.leftMargin: Units.dp(10)
         anchors.verticalCenter: parent.verticalCenter

@@ -24,6 +24,7 @@ Item {
     }
 
     signal clicked(int index)
+    signal deleteClicked(int index)
 
     CustomPane{
         anchors.fill: parent
@@ -70,7 +71,7 @@ Item {
             anchors.rightMargin: (deleteItem.deleteFieldWidth - width)/2
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: cpp_Profiles.deleteOne(index)
+            onClicked: root.deleteClicked(index)
         }
     }
 

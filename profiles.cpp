@@ -1,35 +1,29 @@
 #include "profiles.h"
 
-QDataStream& operator<<(QDataStream &out, Control &p)
+QDataStream& operator << (QDataStream &out, const Control &p)
 {
 
-    out << p.type << p.width << p.x << p.y << p.inverted << p.servoAngle << p.speedLimit << p.orientationVertical << p.port1 << p.port2 << p.port3 << p.port4;
+    out << p.cid << p.type << p.width << p.height << p.x << p.y << p.inverted << p.servoAngle << p.speedLimit << p.port1 << p.port2 << p.port3 << p.port4;
     return out;
 }
 
-QDataStream& operator>>(QDataStream &in, Control &p)
+QDataStream& operator >> (QDataStream &in, Control &p)
 {
-    in >> p.type >> p.width >> p.x >> p.y >> p.inverted >> p.servoAngle >> p.speedLimit >> p.orientationVertical >> p.port1 >> p.port2 >> p.port3 >> p.port4;
+    in >> p.cid >> p.type >> p.width >> p.height >> p.x >> p.y >> p.inverted >> p.servoAngle >> p.speedLimit >> p.port1 >> p.port2 >> p.port3 >> p.port4;
     return in;
 }
 
-QDataStream& operator<<(QDataStream &out, Profile &p)
+QDataStream& operator << (QDataStream &out, const Profile &p)
 {
-    out << p.name << p.controls.count();
-    for(auto con : p.controls){
-        out << con;
-    }
+    out << p.name;
+    out << p.controls;
     return out;
 }
 
-QDataStream& operator>>(QDataStream &in, Profile &p)
+QDataStream& operator >> (QDataStream &in, Profile &p)
 {
     in >> p.name;
-    int controlsCount; in >> controlsCount;
-    for(int i = 0; i < controlsCount; i++){
-        Control con; in >> con;
-        p.controls.push_back(con);
-    }
+    in >> p.controls;
     return in;
 }
 
@@ -45,7 +39,8 @@ void Profiles::loadFile()
 
         if(file.exists())
         {
-            file.open(QIODevice::ReadOnly);
+            qDebug() << "FILE EXIST";
+            qDebug() << "FILE OPEN RESULT: " << file.open(QIODevice::ReadOnly);
             QDataStream in(&file);
 
             int count; in >> count;
@@ -57,7 +52,7 @@ void Profiles::loadFile()
             }
         }
         file.close();
-
+        qDebug() << "PROFILES COUNT: " << profiles.count();
 }
 
 void Profiles::saveFile()
@@ -86,7 +81,7 @@ QList<QString> Profiles::getProfilesList()
     return std::move(list);
 }
 
-void Profiles::addNew(QString name)
+void Profiles::addProfile(QString name)
 {
     Profile p;
     p.setName(name);
@@ -95,7 +90,7 @@ void Profiles::addNew(QString name)
     emit profilesUpdated();
 }
 
-void Profiles::deleteOne(int index)
+void Profiles::deleteProfile(int index)
 {
     if(index < 0 && index > profiles.count()) return;
 
@@ -107,13 +102,64 @@ void Profiles::deleteOne(int index)
 void Profiles::changeName(int index, QString _new)
 {
     if(index < 0 && index > profiles.count()) return;
-
     profiles[index].setName(_new);
     saveFile();
     emit profilesUpdated();
 }
 
-int Profiles::p_getControlsCount(int index)
+int Profiles::p_getControlsCount(int index)const
 {
+    if(index < 0 && index > profiles.count()) return -1;
     return profiles[index].getCount();
+}
+
+QVariantMap Profiles::p_getControl(int profileIndex, int controlIndex)
+{
+    if(profileIndex < 0 && profileIndex > profiles.count()) return QVariantMap();
+    return profiles[profileIndex].getControlJs(controlIndex);
+}
+
+void Profiles::p_addOrUpdateControl(int index, QString cid, QVariantMap jscontrol)
+{
+    if(index < 0 && index >= profiles.count()) return;
+
+    Control con;
+    con.cid = qvariant_cast<QString>(jscontrol.value("cid"));
+    con.type = qvariant_cast<quint8>(jscontrol.value("type"));
+    con.width = qvariant_cast<quint16>(jscontrol.value("width"));
+    con.height = qvariant_cast<quint16>(jscontrol.value("height"));
+    con.x = qvariant_cast<quint16>(jscontrol.value("x"));
+    con.y = qvariant_cast<quint16>(jscontrol.value("y"));
+    con.inverted = qvariant_cast<bool>(jscontrol.value("inverted"));
+    con.servoAngle = qvariant_cast<quint8>(jscontrol.value("servoangle"));
+    con.speedLimit = qvariant_cast<quint8>(jscontrol.value("speedlimit"));
+    con.port1 = qvariant_cast<quint8>(jscontrol.value("port1"));
+    con.port2 = qvariant_cast<quint8>(jscontrol.value("port2"));
+    con.port3 = qvariant_cast<quint8>(jscontrol.value("port3"));
+    con.port4 = qvariant_cast<quint8>(jscontrol.value("port4"));
+    profiles[index].addOrUpdateControl(cid, con);
+//    qDebug() << "GET FROM QML";
+//    qDebug()<< "|cid: " << con.cid
+//            << "|type: " << con.type
+//            << "|width: " << con.width
+//            << "|height: " << con.height
+//            << "|x: " << con.x
+//            << "|y: " << con.y
+//            << "|inverted: " << con.inverted
+//            << "|servoangle: " << con.servoAngle
+//            << "|speedlimit: " << con.speedLimit
+//            << "|p1: " << con.port1
+//            << "|p2: " << con.port2
+//            << "|p3: " << con.port3
+//            << "|p4: " << con.port4;
+
+    saveFile();
+}
+
+void Profiles::p_deleteControl(int index, QString cid)
+{
+    if(index < 0 && index > profiles.count()) return;
+
+    profiles[index].deleteControl(cid);
+    saveFile();
 }

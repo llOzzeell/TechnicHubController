@@ -35,7 +35,7 @@ QtObject{
 
     readonly property string control_name_steering: qsTr("Steering")
     readonly property string control_name_moving: qsTr("Moving")
-    readonly property string control_name_linear: qsTr("Linear button")
-    readonly property string control_name_slider: qsTr("Slider")
+    readonly property string control_name_buttons: qsTr("Buttons")
+    readonly property string control_name_hslider: qsTr("Slider")
 
 }

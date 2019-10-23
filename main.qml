@@ -36,15 +36,15 @@ ApplicationWindow {
         Material.foreground = value ? ConstList_Color.darkForeground : ConstList_Color.lightForeground
         ConstList_Color.controls_border_color = value ? ConstList_Color.dark_controls_border_color : ConstList_Color.light_controls_border_color
         //ConstList_Color.titleForeground = value ? ConstList_Color.darkTitleForeground : ConstList_Color.lightTitleForeground
-        //cpp_Android.setStatusBarColor(Material.accent)
-        //cpp_Android.setNavigationBarColor(Material.background)
+//        cpp_Android.setStatusBarColor(Material.accent)
+//        cpp_Android.setNavigationBarColor(Material.background)
     }
 
     Material.onAccentChanged: {
-        //cpp_Android.setStatusBarColor(Material.accent)
+        cpp_Android.setStatusBarColor(Material.accent)
     }
     Material.onBackgroundColorChanged: {
-        //cpp_Android.setNavigationBarColor(Material.background)
+        cpp_Android.setNavigationBarColor(Material.background)
     }
 
     ///////////////////////////////////////////////
@@ -146,7 +146,7 @@ ApplicationWindow {
                 onClicked:{
                     switch(stackView.currentItem.title){
                         case ConstList_Text.page_connectedDevices: stackView.push(component_Finder); break;
-                            case ConstList_Text.page_profiles: cpp_Profiles.addNew(ConstList_Text.profile_new_name); break;
+                            case ConstList_Text.page_profiles: cpp_Profiles.addProfile(ConstList_Text.profile_new_name); break;
                         default : break;
                     }
                 }

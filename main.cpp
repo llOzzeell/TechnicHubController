@@ -9,7 +9,7 @@
 #include "translator.h"
 #include "profiles.h"
 
-//#include "android.h"
+#include "android.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,9 +20,9 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-//    Android andr;
-//    if(!andr.requestAndroidPermissions())return -1;
-//    engine.rootContext()->setContextProperty("cpp_Android", &andr);
+    Android andr;
+    if(!andr.requestAndroidPermissions())return -1;
+    engine.rootContext()->setContextProperty("cpp_Android", &andr);
 
     FavoriteDevices fav;
     engine.rootContext()->setContextProperty("cpp_Favorite", &fav);

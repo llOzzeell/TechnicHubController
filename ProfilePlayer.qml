@@ -9,25 +9,65 @@ import "qrc:/ModelsControls"
 Item {
     id: root
     readonly property string title:""
-    Component.onCompleted: { /*cpp_Android.setOrientationSensorLandscape();*/ toolBar.visible = false; cpp_Settings.setImmersiveMode(true); }
-    Component.onDestruction: { /*cpp_Android.setOrientationPortrait();*/ toolBar.visible = true; cpp_Settings.setImmersiveMode(false); }
+    Component.onCompleted: {
+        cpp_Settings.setImmersiveMode(true);
+        cpp_Android.setOrientationSensorLandscape();
+        toolBar.visible = false;
+    }
+    Component.onDestruction: {
+        cpp_Settings.setImmersiveMode(false);
+        cpp_Android.setOrientationUser();
+        toolBar.visible = true;
+    }
 
+    property int currentProfileIndex:-1
     property bool editorMode: false
 
     function generateCID(){
-        return (+new Date).toString(16);
+        var cid = (+new Date).toString(16);
+        return cid;
     }
 
     function loadProfile(index){
+        root.currentProfileIndex = index;
+        var count = cpp_Profiles.p_getControlsCount(index);
 
+        for(var i = 0; i < count; i++){
+            var control = cpp_Profiles.p_getControl(index, i);
+
+            var component = Qt.createComponent(controlsPalette.getPathByType(control.type))
+            var propObj = {
+                currentProfileIndex: index,
+                cid: control.cid,
+                type:control.type,
+                "x": control.x,
+                "y": control.y,
+                "width": control.width,
+                "height": control.height,
+                inverted:control.inverted,
+                servoangle:control.servoangle,
+                speedlimit:control.speedlimit,
+                ports:[control.port1,control.port2,control.port3,control.port4]
+            };
+            component.createObject(root, propObj);
+        }
     }
 
     function createNewControl(type, path, width, height){
-
         var component = Qt.createComponent(path)
-
-        var propObj = {cid: root.generateCID(), type:type, "x": root.width/2-width/2, "y": root.height/2-height/2, width: width, height: height, inverted:false, servoangle:90, speedlimit:100, vertical:false};
-
+        var propObj = {
+            currentProfileIndex: root.currentProfileIndex,
+            cid: root.generateCID(),
+            type:type,
+            "x": root.width/2-width/2,
+            "y": root.height/2-height/2,
+            "width": width,
+            "height": height,
+            inverted:false,
+            servoangle:90,
+            speedlimit:100,
+            vertical:false
+        };
         component.createObject(root, propObj);
     }
 

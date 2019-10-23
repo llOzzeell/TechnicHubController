@@ -1,14 +1,17 @@
 #ifndef PROFILES_H
 #define PROFILES_H
 
+#include <QDebug>
 #include <QObject>
 #include <QDataStream>
 #include <QFile>
 #include <QHash>
+#include <QVariantMap>
 #include <QStandardPaths>
 
 struct Control{
-    quint8 type = 0xff;
+
+    quint8 type = 0;
     quint16 width = 0;
     quint16 height = 0;
     quint16 x = 0;
@@ -16,15 +19,17 @@ struct Control{
     bool inverted = false;
     quint8 servoAngle = 0;
     quint8 speedLimit = 0;
-    bool orientationVertical = false;
     quint8 port1;
     quint8 port2;
     quint8 port3;
     quint8 port4;
+    QString cid = "";
 
-    friend QDataStream& operator <<(QDataStream &out, Control &p);
+    friend QDataStream& operator <<(QDataStream &out, const Control &p);
     friend QDataStream& operator >>(QDataStream &in, Control &p);
 };
+
+////////////////////////////////////////////////////////////////
 
 class Profile{
 
@@ -32,26 +37,62 @@ public:
     Profile(QString _name = ""): name(_name){}
 
     QString getName(){return name;}
+
     void setName(QString _name){name = _name;}
 
-    //void clearProfile(){controls.clear();}
-    int getCount(){return controls.count(); }
+    void clearProfile(){controls.clear();}
 
-    void addControl(QString cid, Control &con){controls.insert(cid, con);}
-    void deleteControl(QString cid){controls.remove(cid);}
-    Control getControl(int index){
-        auto it = controls.cbegin();
-        std::advance(it, index);
-        return controls[it.key()];
+    //////////////////////////////////////////////
+
+    int getCount()const{
+        return controls.count();
+    }
+
+    void addOrUpdateControl(QString cid, Control &con){
+        if(controls.contains(cid)){
+            deleteControl(cid);
+        }
+        controls.insert(cid, con);
+    }
+
+    void deleteControl(QString cid){
+        controls.remove(cid);
+    }
+
+    QVariantMap getControlJs(int index){
+        Control con = getControl(index);
+        QVariantMap var;
+        var.insert("cid", con.cid);
+        var.insert("type", con.type);
+        var.insert("width", con.width);
+        var.insert("height", con.height);
+        var.insert("x", con.x);
+        var.insert("y", con.y);
+        var.insert("inverted", con.inverted);
+        var.insert("servoangle", con.servoAngle);
+        var.insert("speedlimit", con.speedLimit);
+        var.insert("port1", con.port1);
+        var.insert("port2", con.port2);
+        var.insert("port3", con.port3);
+        var.insert("port4", con.port4);
+        return var;
     }
 
 private:
     QString name;
     QHash<QString,Control> controls;
 
-    friend QDataStream& operator<<(QDataStream &out, Profile &p);
+    Control getControl(int index){
+        auto it = controls.cbegin();
+        std::advance(it, index);
+        return controls[it.key()];
+    }
+
+    friend QDataStream& operator<<(QDataStream &out, const Profile &p);
     friend QDataStream& operator>>(QDataStream &in, Profile &p);
 };
+
+///////////////////////////////////////////////////////////////
 
 class Profiles : public QObject
 {
@@ -77,20 +118,21 @@ public slots:
 
     QList<QString> getProfilesList();
 
-    void addNew(QString name);
+    void addProfile(QString name);
 
-    void deleteOne(int index);
+    void deleteProfile(int index);
 
     void changeName(int index, QString _new);
 
     ////////////////////////////////////////////////////
 
-    int p_getControlsCount(int index);
+    int p_getControlsCount(int index) const;
 
-    void p_addControl(QString cid, QVariantMap control);
+    QVariantMap p_getControl(int profileIndex, int controlIndex);
 
-    void p_deleteControl(QString cid);
+    void p_addOrUpdateControl(int index, QString cid, QVariantMap jscontrol);
 
+    void p_deleteControl(int index, QString cid);
 
 };
 

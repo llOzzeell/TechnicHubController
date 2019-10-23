@@ -32,6 +32,10 @@ Item {
         stackView.currentItem.loadProfile(index);
     }
 
+    function deleteProfile(index){
+        cpp_Profiles.deleteProfile(index)
+    }
+
     ListView{
         id:profilesView
         anchors.fill: parent
@@ -44,6 +48,7 @@ Item {
                 isCurrent: ListView.isCurrentItem
                 Component.onCompleted: {
                     clicked.connect(root.profileClicked)
+                    deleteClicked.connect(root.deleteProfile)
                 }
             }
         }

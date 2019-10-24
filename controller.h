@@ -2,6 +2,8 @@
 #define CONTROLLER_H
 
 #include <QObject>
+#include <QVariantMap>
+#include <QList>
 
 #include "technichub.h"
 
@@ -17,9 +19,15 @@ private:
 
 signals:
 
+    void deviceChangedQML();
+
 public slots:
 
     void devicesChanged(QVector<Technichub*> newlist);
+
+    int getDevicesCount();
+
+    QVariantMap getDevicesListQML();
 };
 
 #endif // CONTROLLER_H

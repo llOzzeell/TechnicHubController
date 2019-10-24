@@ -41,7 +41,8 @@ QtObject{
     readonly property string control_name_hslider: qsTr("Slider")
 
     //Controls property page prop names
-    readonly property string control_propertypage_ports: qsTr("Control ports ")
+    readonly property string control_propertypage_ports: qsTr("Hub ports")
+    readonly property string control_propertypage_hubs: qsTr("Connected hubs")
     readonly property string control_propertypage_inversion: qsTr("Inversion")
     readonly property string control_propertypage_servoangle: qsTr("Servo angle")
     readonly property string control_propertypage_speedlimit: qsTr("Motor speed")

@@ -16,17 +16,19 @@ Item {
     property string cid:""
     property int type:-1
     property bool inverted:false
-    property var ports:[0,1,2,3]
+    property var ports:[0,0,0,0]
     property int servoangle:0
     property int speedlimit:0
     property string chName: ""
+    onChNameChanged: console.log("FROM PARENT name: " + chName)
     property string chAddress: ""
+    onChAddressChanged: console.log("FROM PARENT address: " + chAddress)
 
     signal sizePlusClicked()
     signal sizeMinusClicked()
     signal propClicked(var link)
 
-    property var requiredParameters:{"ports":false,"inversion":false,"servoangle":false, "speedlimit":false}
+    property var requiredParameters:{"ports":false,"inversion":false,"servoangle":false, "speedlimit":false, "multichoose":false}
 
     property bool editorMode:root.parent.editorMode
     onEditorModeChanged: {
@@ -44,7 +46,9 @@ Item {
                 port1:root.ports[0],
                 port2:root.ports[1],
                 port3:root.ports[2],
-                port4:root.ports[3]};
+                port4:root.ports[3],
+                chName:root.chName,
+                chAddress:root.chAddress};
             cpp_Profiles.p_addOrUpdateControl(root.currentProfileIndex, root.cid, propObj);
         }
     }

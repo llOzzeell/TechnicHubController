@@ -60,7 +60,8 @@
         <file>CustomCircle.qml</file>
         <file>ControlsPropertyPage.qml</file>
         <file>CustomSlider.qml</file>
-        <file>PortsPull.qml</file>
+        <file>AvailableDevices.qml</file>
+        <file>AvailablePorts.qml</file>
     </qresource>
     <qresource prefix="/ModelsControls">
         <file>Parent.qml</file>

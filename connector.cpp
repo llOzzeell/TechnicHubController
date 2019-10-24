@@ -57,6 +57,20 @@ bool Connector::disconnectDevice(QString address)
     return false;
 }
 
+void Connector::updateConnectedDeviceName(QString address, QString name)
+{
+    qDebug() << "C++ UPDATED NAME!";
+    int counter = 0;
+    for(Technichub *t : connectedDevicesList){
+        if(t->getAddress() == address){
+            connectedDevicesList[counter]->setName(name);
+            qDebug() << "C++ NEW NAME: " << name;
+            emit devicesChanged(connectedDevicesList);
+        }
+        counter++;
+    }
+}
+
 void Connector::getConnectedParam()
 {
     QStringList list;

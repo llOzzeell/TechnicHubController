@@ -38,6 +38,7 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: Units.dp(10)
             maximumLength: 20
+            enabled: _isFavorite
 
             property string previousName: ""
 
@@ -50,6 +51,7 @@ Item {
             onAccepted: {
                 if(text != ""){
                     cpp_Favorite.updateName(nameLabel.text,  deviceAddressLabel.text );
+                    cpp_Connector.updateConnectedDeviceName(deviceAddressLabel.text, nameLabel.text)
                 }
                 else {
                     text = previousName;

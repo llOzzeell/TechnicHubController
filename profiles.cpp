@@ -165,8 +165,8 @@ void Profiles::p_addOrUpdateControl(int index, QString cid, QVariantMap jscontro
     con.port2 = qvariant_cast<quint8>(jscontrol.value("port2"));
     con.port3 = qvariant_cast<quint8>(jscontrol.value("port3"));
     con.port4 = qvariant_cast<quint8>(jscontrol.value("port4"));
-    con.controlledHubName = qvariant_cast<quint8>(jscontrol.value("chName"));
-    con.controlledHubAddress = qvariant_cast<quint8>(jscontrol.value("chAddress"));
+    con.controlledHubName = qvariant_cast<QString>(jscontrol.value("chName"));
+    con.controlledHubAddress = qvariant_cast<QString>(jscontrol.value("chAddress"));
     profiles[index].addOrUpdateControl(cid, con);
 //    qDebug() << "GET FROM QML";
 //    qDebug()<< "|cid: " << con.cid

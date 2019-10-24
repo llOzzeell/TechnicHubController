@@ -16,7 +16,7 @@ Parent{
         requiredParameters.ports = true;
         requiredParameters.inversion = true;
         requiredParameters.speedlimit = true;
-
+        requiredParameters.multichoose = true;
     }
 
     onSizeMinusClicked: {

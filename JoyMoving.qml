@@ -11,6 +11,7 @@ Parent{
     Component.onCompleted:{
         requiredParameters.ports = true;
         requiredParameters.inversion = true;
+        requiredParameters.multichoose = true;
     }
 
     property int minWidth: Units.dp(160)

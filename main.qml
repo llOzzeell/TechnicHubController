@@ -226,9 +226,4 @@ ApplicationWindow {
     Component{id:component_About;About{}}
 
     Component{id:component_ProfilePlayer;ProfilePlayer{}}
-
-    PortsPull {
-        id: portsPull
-        anchors.fill: parent
-    }
 }

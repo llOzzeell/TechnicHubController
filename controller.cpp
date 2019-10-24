@@ -7,9 +7,24 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 void Controller::devicesChanged(QVector<Technichub *> newlist)
 {
+    qDebug() << "C++ DEVICE WAS CHANGED, NAME!";
     availableDevicesList.clear();
     availableDevicesList = newlist;
+    emit deviceChangedQML();
+}
 
-    qDebug() << "------------------------------------------------------------------------------------------------------";
-    qDebug() << "COUNT: " << availableDevicesList.count();
+int Controller::getDevicesCount()
+{
+    return availableDevicesList.count();
+}
+
+QVariantMap Controller::getDevicesListQML()
+{
+
+    QVariantMap map;
+    for(Technichub *t: availableDevicesList){
+        map.insert("name", t->getName());
+        map.insert("address", t->getAddress());
+    }
+    return map;
 }

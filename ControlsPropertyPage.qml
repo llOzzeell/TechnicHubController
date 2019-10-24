@@ -12,9 +12,11 @@ Item {
     onLinkToControlChanged: {
         if(linkToControl !== undefined){
             linkToControl.glow = true;
-            inverted.checked = linkToControl.inverted
-            servo.value = linkToControl.servoangle
-            speedlimit.value = linkToControl.speedlimit
+            inverted.checked = linkToControl.inverted;
+            servo.value = linkToControl.servoangle;
+            speedlimit.value = linkToControl.speedlimit;
+            availablePorts.linkToPortsArrayOfControl = linkToControl.ports;
+            availableDevices.loadDeviceList();
         }
     }
 
@@ -55,10 +57,11 @@ Item {
 
             Label {
                 text: ConstList_Text.control_propertypage_inversion
+                verticalAlignment: Text.AlignVCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize
+                font.pixelSize: Qt.application.font.pixelSize * 1.1
             }
             CustomSwitch {
                 id:inverted
@@ -83,10 +86,11 @@ Item {
 
             Label {
                 text: ConstList_Text.control_propertypage_servoangle  + " " + servo.value + "°"
+                verticalAlignment: Text.AlignVCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize
+                font.pixelSize: Qt.application.font.pixelSize * 1.1
             }
             CustomSlider {
                 id:servo
@@ -115,10 +119,12 @@ Item {
 
             Label {
                 text: ConstList_Text.control_propertypage_speedlimit + " " + speedlimit.value + "%"
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignLeft
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize
+                font.pixelSize: Qt.application.font.pixelSize * 1.1
             }
 
             CustomSlider{
@@ -138,20 +144,67 @@ Item {
             }
         }
 
+        Item {
+            id: portsItem
+            height: Units.dp(40)
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+
+            Label {
+                id: portsLabel
+                text: ConstList_Text.control_propertypage_ports
+                anchors.verticalCenter: parent.verticalCenter
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignLeft
+                anchors.left: parent.left
+                font.pixelSize: Qt.application.font.pixelSize * 1.1
+                anchors.leftMargin: 0
+            }
+
+            AvailablePorts {
+                id: availablePorts
+                height: Units.dp(44)
+                width:componentwidth
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.verticalCenter: parent.verticalCenter
+                multipleChoose: linkToControl !== undefined ? linkToControl.requiredParameters.multichoose : false
+                _enabled: availableDevices.isNotEmpty
+            }
+        }
+
         Item{
-            id:portsItem
-            height:Units.dp(40)
+            id:devicesItem
             width:parent.width
+            height: Units.dp(130)
             visible: linkToControl !== undefined ? linkToControl.requiredParameters.ports : false
 
             Label {
-                text: ConstList_Text.control_propertypage_ports
+                id:devicesLabel
+                height: Units.dp(40)
+                text: ConstList_Text.control_propertypage_hubs
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+                anchors.top: parent.top
+                anchors.topMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize
+                font.pixelSize: Qt.application.font.pixelSize * 1.1
+            }
+
+            AvailableDevices {
+                id: availableDevices
+                anchors.bottomMargin: 0
+                anchors.top: devicesLabel.bottom
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.topMargin: 0
             }
         }
+
     }
 
     RoundButton {
@@ -186,10 +239,9 @@ Item {
     }
 }
 
-
 /*##^##
 Designer {
-    D{i:1;anchors_height:400;anchors_width:200;anchors_x:220;anchors_y:46}D{i:9;anchors_width:200}
-D{i:12;anchors_width:200}
+    D{i:12;anchors_width:200}D{i:16;anchors_x:86;anchors_y:456}D{i:17;anchors_x:86;anchors_y:456}
+D{i:19;anchors_x:86;anchors_y:456}
 }
 ##^##*/

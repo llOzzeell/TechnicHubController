@@ -45,7 +45,9 @@ Item {
                 inverted:control.inverted,
                 servoangle:control.servoangle,
                 speedlimit:control.speedlimit,
-                ports:[control.port1,control.port2,control.port3,control.port4]
+                ports:[control.port1,control.port2,control.port3,control.port4],
+                chName:control.chName,
+                chAddress:control.chAddress
             };
             var obj = component.createObject(root, propObj);
         }
@@ -64,7 +66,9 @@ Item {
             inverted:false,
             servoangle:90,
             speedlimit:100,
-            vertical:false
+            ports:[0,0,0,0],
+            chName:"",
+            chAddress:""
         };
         component.createObject(root, propObj);
     }

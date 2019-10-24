@@ -53,6 +53,8 @@ public slots:
     void connectDeviceDirect(QBluetoothDeviceInfo device);
 
     bool disconnectDevice(QString address);
+
+    void updateConnectedDeviceName(QString address, QString name);
 };
 
 #endif // CONNECTOR_H

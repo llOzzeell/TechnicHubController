@@ -15,6 +15,7 @@ Parent{
     Component.onCompleted:{
         requiredParameters.ports = true;
         requiredParameters.inversion = true;
+        requiredParameters.multichoose = true;
     }
 
     onSizeMinusClicked: {

@@ -33,6 +33,7 @@ Item {
         id: image
         source: "qrc:/assets/icons/rssi_0.svg"
         anchors.fill: parent
+        anchors.margins: Units.dp(4)
         fillMode: Image.PreserveAspectFit
         visible: false
     }

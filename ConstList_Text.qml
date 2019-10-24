@@ -5,16 +5,17 @@ import "."
 QtObject{
 
     readonly property string appName: "Controlz"
+    readonly property string appMotto: "Easy way to play!"
 
     //Sidepanel items names
     readonly property string sidepanel_item1: qsTr("Profiles")
-    readonly property string sidepanel_item2: qsTr("Connected devices")
+    readonly property string sidepanel_item2: qsTr("Connected hubs")
     readonly property string sidepanel_item3: qsTr("Settings")
     readonly property string sidepanel_item4: qsTr("About")
 
     // Pages title
     readonly property string page_mainScreen: qsTr("Main screen")
-    readonly property string page_connectedDevices: qsTr("Connected devices")
+    readonly property string page_connectedDevices: qsTr("Connected hubs")
     readonly property string page_finder: qsTr("Finder")
     readonly property string page_connector: qsTr("Connector")
     readonly property string page_profiles: qsTr("Profiles")

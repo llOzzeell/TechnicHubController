@@ -24,12 +24,23 @@ Item {
         anchors.leftMargin: Units.dp(20)
         anchors.top: parent.top
         fontSizeMode: Text.HorizontalFit
-        font.pixelSize: Qt.application.font.pixelSize * 3
+        font.pixelSize: Qt.application.font.pixelSize * 3.2
         font.family: Constlist_font.appName
-        verticalAlignment: Text.AlignVCenter
-        anchors.right: parent.right
-        anchors.rightMargin: Units.dp(20)
+        verticalAlignment: Text.AlignBottom
         anchors.left: parent.left
+    }
+
+    Label {
+        id: appMotto
+        text: Constlist_text.appMotto
+        anchors.right: appName.right
+        anchors.rightMargin: 0
+        anchors.topMargin: 0
+        anchors.top: appName.bottom
+        verticalAlignment: Text.AlignTop
+        font.pixelSize: Qt.application.font.pixelSize * 1.1
+        font.family: Constlist_font.appName
+        fontSizeMode: Text.HorizontalFit
     }
 
     Column {

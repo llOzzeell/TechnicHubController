@@ -33,24 +33,28 @@ Item {
     property bool editorMode:root.parent.editorMode
     onEditorModeChanged: {
         if(!editorMode){
-            var propObj = {
-                cid:root.cid,
-                type:type,
-                "x": root.x,
-                "y": root.y,
-                width: root.width,
-                height: root.height,
-                inverted:root.inverted,
-                servoangle:root.servoangle,
-                speedlimit:root.speedlimit,
-                port1:root.ports[0],
-                port2:root.ports[1],
-                port3:root.ports[2],
-                port4:root.ports[3],
-                chName:root.chName,
-                chAddress:root.chAddress};
-            cpp_Profiles.p_addOrUpdateControl(root.currentProfileIndex, root.cid, propObj);
+            save();
         }
+    }
+
+    function save(){
+        var propObj = {
+            cid:root.cid,
+            type:type,
+            "x": root.x,
+            "y": root.y,
+            width: root.width,
+            height: root.height,
+            inverted:root.inverted,
+            servoangle:root.servoangle,
+            speedlimit:root.speedlimit,
+            port1:root.ports[0],
+            port2:root.ports[1],
+            port3:root.ports[2],
+            port4:root.ports[3],
+            chName:root.chName,
+            chAddress:root.chAddress};
+        cpp_Profiles.p_addOrUpdateControl(root.currentProfileIndex, root.cid, propObj);
     }
 
     ToolButton {

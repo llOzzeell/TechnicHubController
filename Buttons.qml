@@ -40,5 +40,6 @@ Parent{
         anchors.fill: parent
         borderWidth: Units.dp(6)
         borderColor: ConstList_Color.controls_border_color
+        color: borderColor
     }
 }

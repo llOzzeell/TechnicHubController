@@ -22,7 +22,8 @@ Item {
 
     signal hide()
     onHide:{
-        root.linkToControl.glow = false;
+        linkToControl.glow = false;
+        linkToControl.save();
     }
 
     function deleteControl(){

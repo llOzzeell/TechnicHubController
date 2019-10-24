@@ -79,7 +79,7 @@ Item {
                 createNew(parseInt(strlist[0]), strlist[1], strlist[2], strlist[3], true, false)
             }
         }
-        onLostConnection:{
+        onQmlDisconnected:{
             connectedModel.setProperty(getIndexByAddress(address), "isConnected", false);
         }
     }

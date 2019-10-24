@@ -15,6 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         android.cpp \
         connector.cpp \
+        controller.cpp \
         favoritedevices.cpp \
         finder.cpp \
         main.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     android.h \
     appsettings.h \
     connector.h \
+    controller.h \
     favoritedevices.h \
     finder.h \
     profiles.h \

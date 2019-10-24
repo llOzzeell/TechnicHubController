@@ -24,6 +24,8 @@ struct Control{
     quint8 port3;
     quint8 port4;
     QString cid = "";
+    QString controlledHubName = "";
+    QString controlledHubAddress = "";
 
     friend QDataStream& operator <<(QDataStream &out, const Control &p);
     friend QDataStream& operator >>(QDataStream &in, Control &p);
@@ -75,6 +77,8 @@ public:
         var.insert("port2", con.port2);
         var.insert("port3", con.port3);
         var.insert("port4", con.port4);
+        var.insert("chName", con.controlledHubName);
+        var.insert("chAddress", con.controlledHubAddress);
         return var;
     }
 

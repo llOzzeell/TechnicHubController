@@ -32,19 +32,17 @@ signals:
 
     void newDeviceAdded(QStringList list);
 
-    void lostConnection(QString address, QString name, int hubType);
+    void qmlDisconnected(QString address);
 
     void deviceParamsChanged(QString address, QStringList list);
 
-    void addDevicePortsPull(QString name, int portsCount);
-
-    void deleteDevicePortsPull(QString name, int portsCount);
+    void devicesChanged(QVector<Technichub*> newList);
 
 private slots:
 
     void getConnectedParam();
 
-    void portPullLostDeviceInforming(QString address, QString name, int portsCount);
+    void deviceDisconnected(QString address);
 
 public slots:
 

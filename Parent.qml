@@ -19,6 +19,8 @@ Item {
     property var ports:[0,1,2,3]
     property int servoangle:0
     property int speedlimit:0
+    property string chName: ""
+    property string chAddress: ""
 
     signal sizePlusClicked()
     signal sizeMinusClicked()
@@ -152,9 +154,3 @@ Item {
         visible: root.glow
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:6;anchors_height:200;anchors_width:200}
-}
-##^##*/

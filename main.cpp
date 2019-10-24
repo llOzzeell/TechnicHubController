@@ -8,6 +8,7 @@
 #include "appsettings.h"
 #include "translator.h"
 #include "profiles.h"
+#include "controller.h"
 
 #include "android.h"
 
@@ -40,6 +41,11 @@ int main(int argc, char *argv[])
 
     Profiles prof;
     engine.rootContext()->setContextProperty("cpp_Profiles", &prof);
+
+    Controller controller;
+    engine.rootContext()->setContextProperty("cpp_Controller", &controller);
+
+    QObject::connect(&connector, &Connector::devicesChanged, &controller, &Controller::devicesChanged);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

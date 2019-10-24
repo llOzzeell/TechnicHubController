@@ -3,13 +3,43 @@
 QDataStream& operator << (QDataStream &out, const Control &p)
 {
 
-    out << p.cid << p.type << p.width << p.height << p.x << p.y << p.inverted << p.servoAngle << p.speedLimit << p.port1 << p.port2 << p.port3 << p.port4;
+    out << p.cid
+        << p.type
+        << p.width
+        << p.height
+        << p.x
+        << p.y
+        << p.inverted
+        << p.servoAngle
+        << p.speedLimit
+        << p.port1
+        << p.port2
+        << p.port3
+        << p.port4
+        << p.controlledHubName
+        << p.controlledHubAddress;
+
     return out;
 }
 
 QDataStream& operator >> (QDataStream &in, Control &p)
 {
-    in >> p.cid >> p.type >> p.width >> p.height >> p.x >> p.y >> p.inverted >> p.servoAngle >> p.speedLimit >> p.port1 >> p.port2 >> p.port3 >> p.port4;
+    in >> p.cid
+       >> p.type
+       >> p.width
+       >> p.height
+       >> p.x
+       >> p.y
+       >> p.inverted
+       >> p.servoAngle
+       >> p.speedLimit
+       >> p.port1
+       >> p.port2
+       >> p.port3
+       >> p.port4
+       >> p.controlledHubName
+       >> p.controlledHubAddress;
+
     return in;
 }
 
@@ -135,6 +165,8 @@ void Profiles::p_addOrUpdateControl(int index, QString cid, QVariantMap jscontro
     con.port2 = qvariant_cast<quint8>(jscontrol.value("port2"));
     con.port3 = qvariant_cast<quint8>(jscontrol.value("port3"));
     con.port4 = qvariant_cast<quint8>(jscontrol.value("port4"));
+    con.controlledHubName = qvariant_cast<quint8>(jscontrol.value("chName"));
+    con.controlledHubAddress = qvariant_cast<quint8>(jscontrol.value("chAddress"));
     profiles[index].addOrUpdateControl(cid, con);
 //    qDebug() << "GET FROM QML";
 //    qDebug()<< "|cid: " << con.cid

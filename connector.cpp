@@ -27,8 +27,8 @@ void Connector::connectDevice(QString address)
             connectedDevicesList.push_back(new Technichub());
             connectedDevicesList[connectedDevicesList.count()-1]->tryConnect(d);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::successConnected, [=](){ getConnectedParam(); });
-            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::lostConnection);
-            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::portPullLostDeviceInforming);
+            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::qmlDisconnected);
+            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::deviceDisconnected);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::paramsChanged, this, &Connector::deviceParamsChanged);
         }
         counter++;
@@ -40,7 +40,8 @@ void Connector::connectDeviceDirect(QBluetoothDeviceInfo device)
     connectedDevicesList.push_back(new Technichub());
     connectedDevicesList[connectedDevicesList.count()-1]->tryConnect(device);
     connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::successConnected, [=](){getConnectedParam(); });
-    connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::lostConnection);
+    connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::qmlDisconnected);
+    connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::deviceDisconnected);
     connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::paramsChanged, this, &Connector::deviceParamsChanged);
 }
 
@@ -50,12 +51,6 @@ bool Connector::disconnectDevice(QString address)
     for(Technichub *t : connectedDevicesList){
         if(t->getAddress() == address){
             connectedDevicesList[counter]->disconnect();
-            connect(connectedDevicesList[counter], &Technichub::lostConnection, [=](){
-                //emit deleteDevicePortsPull(connectedDevicesList[counter]->getName(), connectedDevicesList[counter]->getPortsCount());
-                delete connectedDevicesList[counter];
-                connectedDevicesList.remove(counter);
-                return true;
-            });
         }
         counter++;
     }
@@ -78,11 +73,18 @@ void Connector::getConnectedParam()
 
     emit connected();
     emit newDeviceAdded(list);
-    emit addDevicePortsPull(connectedDevicesList[connectedDevicesList.count()-1]->getName(), connectedDevicesList[connectedDevicesList.count()-1]->getPortsCount());
+    emit devicesChanged(connectedDevicesList);
 }
 
-void Connector::portPullLostDeviceInforming(QString address, QString name, int portsCount)
+void Connector::deviceDisconnected(QString address)
 {
-    Q_UNUSED(name)
-    emit deleteDevicePortsPull(address, portsCount);
+    int counter = 0;
+    for(Technichub *t : connectedDevicesList){
+        if(t->getAddress() == address){
+            delete connectedDevicesList[counter];
+            connectedDevicesList.remove(counter);
+            emit devicesChanged(connectedDevicesList);
+        }
+        counter++;
+    }
 }

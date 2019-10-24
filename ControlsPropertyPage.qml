@@ -41,13 +41,14 @@ Item {
 
     Column {
         id: column
-        spacing: Units.dp(20)
+        spacing: Units.dp(10)
         anchors.bottom: saveButton.top
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottomMargin: Units.dp(10)
-        anchors.margins: Units.dp(20)
+        anchors.topMargin: Units.dp(10)
+        anchors.margins: Units.dp(10)
 
 
         Item{
@@ -62,7 +63,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize * 1.1
+                font.pixelSize: Qt.application.font.pixelSize
             }
             CustomSwitch {
                 id:inverted
@@ -91,7 +92,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize * 1.1
+                font.pixelSize: Qt.application.font.pixelSize
             }
             CustomSlider {
                 id:servo
@@ -125,7 +126,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize * 1.1
+                font.pixelSize: Qt.application.font.pixelSize
             }
 
             CustomSlider{
@@ -145,37 +146,6 @@ Item {
             }
         }
 
-        Item {
-            id: portsItem
-            height: Units.dp(40)
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-
-            Label {
-                id: portsLabel
-                text: ConstList_Text.control_propertypage_ports
-                anchors.verticalCenter: parent.verticalCenter
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
-                anchors.left: parent.left
-                font.pixelSize: Qt.application.font.pixelSize * 1.1
-                anchors.leftMargin: 0
-            }
-
-            AvailablePorts {
-                id: availablePorts
-                height: Units.dp(44)
-                width:componentwidth
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-                multipleChoose: linkToControl !== undefined ? linkToControl.requiredParameters.multichoose : false
-                _enabled: availableDevices.isNotEmpty
-            }
-        }
-
         Item{
             id:devicesItem
             width:parent.width
@@ -192,7 +162,7 @@ Item {
                 anchors.topMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-                font.pixelSize: Qt.application.font.pixelSize * 1.1
+                font.pixelSize: Qt.application.font.pixelSize
             }
 
             AvailableDevices {
@@ -206,6 +176,37 @@ Item {
             }
         }
 
+        Item {
+            id: portsItem
+            height: Units.dp(40) + portsLabel.height
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+
+            Label {
+                id: portsLabel
+                text: ConstList_Text.control_propertypage_ports
+                anchors.top: parent.top
+                anchors.topMargin: 0
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignLeft
+                font.pixelSize: Qt.application.font.pixelSize
+            }
+
+            AvailablePorts {
+                id: availablePorts
+                height: Units.dp(40)
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                width:componentwidth
+                multipleChoose: linkToControl !== undefined ? linkToControl.requiredParameters.multichoose : false
+                _enabled: (availableDevices.isNotEmpty && availableDevices.hubChoosed)
+            }
+        }
+
+
     }
 
     RoundButton {
@@ -216,7 +217,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: Qt.application.font.pixelSize
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Units.dp(20)
+        anchors.bottomMargin: Units.dp(10)
         Material.background: Material.accent
         onClicked: root.hide();
     }
@@ -225,12 +226,11 @@ Item {
         id: deleteButton
         width: Units.dp(44)
         height: Units.dp(44)
+        anchors.rightMargin: Units.dp(10)
+        anchors.verticalCenter: saveButton.verticalCenter
         icon.width: Units.dp(24)
         icon.height: Units.dp(24)
         anchors.right: parent.right
-        anchors.rightMargin: Units.dp(20)
-        anchors.bottomMargin: Units.dp(20)
-        anchors.bottom: parent.bottom
         icon.source: "qrc:/assets/icons/delete.svg"
         Material.background: ConstList_Color.delete_Color
         onClicked: {

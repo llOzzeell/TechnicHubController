@@ -188,8 +188,9 @@ void Profiles::p_addOrUpdateControl(int index, QString cid, QVariantMap jscontro
 
 void Profiles::p_deleteControl(int index, QString cid)
 {
-    if(index < 0 && index > profiles.count()) return;
-
+    //if(index < 0 && index > profiles.count()) return;
+    //qDebug() << "DELETE CONTROL count: " << profiles[index].getCount();
     profiles[index].deleteControl(cid);
     saveFile();
+    //qDebug() << "after DELETE CONTROL count: " << profiles[index].getCount();
 }

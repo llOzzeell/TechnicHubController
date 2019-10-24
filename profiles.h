@@ -58,7 +58,9 @@ public:
     }
 
     void deleteControl(QString cid){
+        qDebug() << "DELETE CONTROL count: " << controls.count() << " cid: " << cid;
         controls.remove(cid);
+        qDebug() << "after DELETE CONTROL count: " << controls.count();
     }
 
     QVariantMap getControlJs(int index){

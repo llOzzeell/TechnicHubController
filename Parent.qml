@@ -20,9 +20,7 @@ Item {
     property int servoangle:0
     property int speedlimit:0
     property string chName: ""
-    onChNameChanged: console.log("FROM PARENT name: " + chName)
     property string chAddress: ""
-    onChAddressChanged: console.log("FROM PARENT address: " + chAddress)
 
     signal sizePlusClicked()
     signal sizeMinusClicked()

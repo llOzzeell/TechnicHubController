@@ -7,19 +7,16 @@ Item {
     id:root
 
     property bool isNotEmpty: (deviceModel.count > 0);
+    property bool hubChoosed: (listView.currentIndex >= 0)
 
     function highlightIfPossible(){
-
-        console.log("TRY HIGHLIGHT: " + linkToControl.chAddress)
         for(var i = 0; i < deviceModel.count; i++){
             if(deviceModel.get(i).address === linkToControl.chAddress){
-                console.log(deviceModel.get(i).address + "  =  " + linkToControl.chAddress)
                 listView.currentIndex = i;
                 return;
             }
         }
         listView.currentIndex = -1;
-        console.log(" NOT FOUND ADDRESS: set -1")
     }
 
     function loadDeviceList(){
@@ -29,10 +26,10 @@ Item {
         for(var i = 0; i < count; i++){
             var list = cpp_Controller.getDevicesListQML();
             deviceModel.append(list);
-            var t1 = {"name": "t1", "address": "a1"}
-            deviceModel.append(t1);
-            var t2 = {"name": "t2", "address": "a2"}
-            deviceModel.append(t2);
+//            var t1 = {"name": "t1", "address": "a1"}
+//            deviceModel.append(t1);
+//            var t2 = {"name": "t2", "address": "a2"}
+//            deviceModel.append(t2);
         }
 
         highlightIfPossible();
@@ -51,9 +48,9 @@ Item {
     Label {
         id: label
         text: qsTr("No connected hubs")
+        anchors.fill: parent
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        anchors.fill: parent
         font.pixelSize: Qt.application.font.pixelSize
         visible: !isNotEmpty
     }
@@ -67,13 +64,14 @@ Item {
         spacing: Units.dp(10)
         delegate:     Item {
             height: Units.dp(24)
-            width: listView.width
+            width: listView.width/1.1
+            anchors.horizontalCenter: parent.horizontalCenter
             property bool isCur : ListView.isCurrentItem
             CustomPane{
                 id: customPane
                 anchors.fill: parent
                 Material.background: isCur ? Material.accent : Material.primary
-                Material.elevation:Units.dp(2)
+                Material.elevation:Units.dp(1)
                 radius: height/2
             }
 

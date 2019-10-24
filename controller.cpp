@@ -7,7 +7,6 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 void Controller::devicesChanged(QVector<Technichub *> newlist)
 {
-    qDebug() << "C++ DEVICE WAS CHANGED, NAME!";
     availableDevicesList.clear();
     availableDevicesList = newlist;
     emit deviceChangedQML();

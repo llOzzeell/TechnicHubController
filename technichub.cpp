@@ -22,7 +22,7 @@ void Technichub::tryConnect(QBluetoothDeviceInfo device)
 
     controller = new QLowEnergyController(device);
     connect(controller, &QLowEnergyController::connected, this, &Technichub::deviceConnected);
-    connect(controller, &QLowEnergyController::disconnected, [=](){emit lostConnection(address);});
+    connect(controller, &QLowEnergyController::disconnected, [=](){emit lostConnection(address, name, portsCount);});
     connect(controller, &QLowEnergyController::serviceDiscovered, this, &Technichub::getNewService);
     connect(controller, &QLowEnergyController::discoveryFinished, this, &Technichub::serviceScanDone);
 
@@ -50,7 +50,7 @@ void Technichub::getNewService(const QBluetoothUuid &s)
 
 void Technichub::deviceConnected()
 {
-    if(QGuiApplication::platformName() != "windows"){ qDebug() << "NON WINDOWS EMITTING"; emit successConnected(); }
+    if(QGuiApplication::platformName() != "windows"){ qDebug() << "NON WINDOWS EMITTING"; emit successConnected(address, hubType); }
     qDebug() << "Device connected.";
     qDebug() << "Start discover services.";
     controller->discoverServices();
@@ -70,7 +70,7 @@ void Technichub::serviceScanDone()
 
 void Technichub::serviceDetailsDiscovered()
 {
-    if(QGuiApplication::platformName() == "windows"){qDebug() << "WINDOWS EMITTING"; emit successConnected(); }
+    if(QGuiApplication::platformName() == "windows"){qDebug() << "WINDOWS EMITTING"; emit successConnected(address, hubType); }
     qDebug() << service1623->state();
     const QList<QLowEnergyCharacteristic> chars = service1623->characteristics();
     qDebug() << "Chars count: " << chars.count();
@@ -223,6 +223,11 @@ void Technichub::setRSSIUpdates(bool value)
 int Technichub::getType()
 {
     return hubType;
+}
+
+int Technichub::getPortsCount()
+{
+    return portsCount;
 }
 
 void Technichub::setName(QString _name)

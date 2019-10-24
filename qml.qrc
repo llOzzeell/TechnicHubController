@@ -50,7 +50,6 @@
         <file>Radar.qml</file>
         <file>Finder_Delegate.qml</file>
         <file>ConnectedDevices_Delegate.qml</file>
-        <file>TechnicHub.qml</file>
         <file>SignalStrengh.qml</file>
         <file>CustomSwitch.qml</file>
         <file>Profiles_Delegate.qml</file>
@@ -59,6 +58,9 @@
         <file>CustomPane.qml</file>
         <file>ControlsPalette.qml</file>
         <file>CustomCircle.qml</file>
+        <file>ControlsPropertyPage.qml</file>
+        <file>CustomSlider.qml</file>
+        <file>PortsPull.qml</file>
     </qresource>
     <qresource prefix="/ModelsControls">
         <file>Parent.qml</file>

@@ -10,6 +10,13 @@ Item {
 
     signal clicked(string page)
 
+    CustomPane{
+        id:background
+        anchors.fill: parent
+        Material.elevation:Units.dp(8)
+        radius: 0
+    }
+
     Label {
         id: appName
         text: Constlist_text.appName

@@ -32,13 +32,19 @@ signals:
 
     void newDeviceAdded(QStringList list);
 
-    void lostConnection(QString address);
+    void lostConnection(QString address, QString name, int hubType);
 
     void deviceParamsChanged(QString address, QStringList list);
+
+    void addDevicePortsPull(QString name, int portsCount);
+
+    void deleteDevicePortsPull(QString name, int portsCount);
 
 private slots:
 
     void getConnectedParam();
+
+    void portPullLostDeviceInforming(QString address, QString name, int portsCount);
 
 public slots:
 

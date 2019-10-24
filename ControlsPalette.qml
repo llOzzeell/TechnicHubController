@@ -140,9 +140,9 @@ Item {
 
     Rectangle {
         id: background
-        color: ConstList_Color.darkBackground
+        color: Material.background
         anchors.fill: parent
-        opacity: 0.8
+        opacity: 0.9
     }
 
     MouseArea {
@@ -168,7 +168,10 @@ Item {
             id: column
             width: root.previewSizeSteering.width + root.previewSizeMoving.width + root.previewSizeButtons.width + root.previewSizeSliderH.width + spacing * 3
             height: Units.dp(160)
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: parent.top
+            anchors.topMargin: 0
             spacing: Units.dp(60)
 
             Loader{
@@ -195,3 +198,9 @@ Item {
     }
 
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:20;anchors_height:160}
+}
+##^##*/

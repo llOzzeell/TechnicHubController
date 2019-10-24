@@ -10,14 +10,12 @@ Item {
     id: root
     readonly property string title:""
     Component.onCompleted: {
-        cpp_Settings.setImmersiveMode(true);
         cpp_Android.setOrientationSensorLandscape();
-        toolBar.visible = false;
+        cpp_Settings.setImmersiveMode(true);
     }
     Component.onDestruction: {
         cpp_Settings.setImmersiveMode(false);
         cpp_Android.setOrientationUser();
-        toolBar.visible = true;
     }
 
     property int currentProfileIndex:-1
@@ -49,7 +47,7 @@ Item {
                 speedlimit:control.speedlimit,
                 ports:[control.port1,control.port2,control.port3,control.port4]
             };
-            component.createObject(root, propObj);
+            var obj = component.createObject(root, propObj);
         }
     }
 
@@ -71,8 +69,14 @@ Item {
         component.createObject(root, propObj);
     }
 
+    function showPropertyPage(link){
+        controlPropertyList.show(link);
+    }
+
     ControlsPalette {
         id: controlsPalette
+        width: root.width
+        height: root.height
         z: 1
         anchors.fill: parent
         enabled: isVisible
@@ -139,4 +143,37 @@ Item {
             if(controlsPalette.isVisible)controlsPalette.hide();
         }
     }
+
+    CustomDrawer {
+        id: controlPropertyList
+        width: root.width * 0.42
+        height: root.height
+        interactive: false
+        Material.elevation: Units.dp(8)
+        edge: Qt.RightEdge
+
+        Behavior on position {
+            NumberAnimation{ duration: 200 }
+        }
+
+        function show(link){
+            visible = true;
+            position = 1;
+            propPage.linkToControl = link;
+        }
+
+        function collapse(){
+            position = 0;
+            visible = false;
+            propPage.linkToControl = undefined;
+        }
+
+        ControlsPropertyPage{
+            id:propPage
+            anchors.fill: parent
+            onHide: controlPropertyList.collapse();
+        }
+    }
+
 }
+

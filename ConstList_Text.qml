@@ -31,11 +31,19 @@ QtObject{
     readonly property string settings_prop_tactile: qsTr("Tactile responce")
     readonly property string settings_prop_lang: qsTr("Language")
 
+    //When new profile created, it named:
     readonly property string profile_new_name: qsTr("New profile")
 
+    // Names of controls
     readonly property string control_name_steering: qsTr("Steering")
     readonly property string control_name_moving: qsTr("Moving")
     readonly property string control_name_buttons: qsTr("Buttons")
     readonly property string control_name_hslider: qsTr("Slider")
+
+    //Controls property page prop names
+    readonly property string control_propertypage_ports: qsTr("Control ports ")
+    readonly property string control_propertypage_inversion: qsTr("Inversion")
+    readonly property string control_propertypage_servoangle: qsTr("Servo angle")
+    readonly property string control_propertypage_speedlimit: qsTr("Motor speed")
 
 }

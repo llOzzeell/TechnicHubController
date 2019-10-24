@@ -59,25 +59,25 @@ T.Drawer {
 
     Material.elevation: !interactive && !dim ? 0 : 16
 
-    background: Rectangle {
-        color: control.Material.dialogColor
+//    background: Rectangle {
+//        color: control.Material.dialogColor
 
-        Rectangle {
-            readonly property bool horizontal: control.edge === Qt.LeftEdge || control.edge === Qt.RightEdge
-            width: horizontal ? 1 : parent.width
-            height: horizontal ? parent.height : 1
-            color: control.Material.dividerColor
-            x: control.edge === Qt.LeftEdge ? parent.width - 1 : 0
-            y: control.edge === Qt.TopEdge ? parent.height - 1 : 0
-            visible: !control.dim && control.Material.elevation === 0
-        }
+//        Rectangle {
+//            readonly property bool horizontal: control.edge === Qt.LeftEdge || control.edge === Qt.RightEdge
+//            width: horizontal ? 1 : parent.width
+//            height: horizontal ? parent.height : 1
+//            color: control.Material.dividerColor
+//            x: control.edge === Qt.LeftEdge ? parent.width - 1 : 0
+//            y: control.edge === Qt.TopEdge ? parent.height - 1 : 0
+//            visible: !control.dim && control.Material.elevation === 0
+//        }
 
-        layer.enabled: control.position > 0
-        layer.effect: ElevationEffect {
-            elevation: control.Material.elevation
-            fullHeight: true
-        }
-    }
+//        layer.enabled: control.position > 0
+//        layer.effect: ElevationEffect {
+//            elevation: control.Material.elevation
+//            fullHeight: true
+//        }
+//    }
 
     T.Overlay.modal: Rectangle {
         color: "#66000000"

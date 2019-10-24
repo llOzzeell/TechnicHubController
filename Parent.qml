@@ -6,8 +6,10 @@ import ".."
 
 Item {
     id:root
+
     readonly property int buttonUnitHeight: Units.dp(48)
     property bool paletteMode: false
+    property bool glow:false
 
     property int currentProfileIndex:-1
 
@@ -18,9 +20,11 @@ Item {
     property int servoangle:0
     property int speedlimit:0
 
-    signal sizePlusClicked
-    signal sizeMinusClicked
-    signal propClicked
+    signal sizePlusClicked()
+    signal sizeMinusClicked()
+    signal propClicked(var link)
+
+    property var requiredParameters:{"ports":false,"inversion":false,"servoangle":false, "speedlimit":false}
 
     property bool editorMode:root.parent.editorMode
     onEditorModeChanged: {
@@ -40,7 +44,6 @@ Item {
                 port3:root.ports[2],
                 port4:root.ports[3]};
             cpp_Profiles.p_addOrUpdateControl(root.currentProfileIndex, root.cid, propObj);
-            console.log("CONTROL SAVE FUNC WIDTH: " + root.width + " HEIGHT: " + root.height)
         }
     }
 
@@ -82,7 +85,7 @@ Item {
         icon.height: Units.dp(24)
         icon.source: "qrc:/assets/icons/settings.svg"
         anchors.verticalCenter: sizeP.verticalCenter
-        onClicked: if(root.editorMode)root.propClicked()
+        onClicked: if(root.editorMode)root.parent.showPropertyPage(root);
         visible: editorMode
     }
 
@@ -134,4 +137,24 @@ Item {
             }
         }
     }
+
+    Rectangle {
+        id: glowRectangle
+        color: "#00000000"
+        anchors.topMargin: -Units.dp(5)-sizeP.height
+        anchors.rightMargin: -Units.dp(5)
+        anchors.leftMargin: -Units.dp(5)
+        anchors.bottomMargin: -Units.dp(5)
+        anchors.fill: parent
+        border.width: Units.dp(2)
+        border.color: Material.accent
+        radius: Units.dp(4)
+        visible: root.glow
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:6;anchors_height:200;anchors_width:200}
+}
+##^##*/

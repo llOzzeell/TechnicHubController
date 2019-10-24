@@ -17,8 +17,6 @@ FavoriteDevices::FavoriteDevices(QObject *parent) : QObject(parent)
 
 void FavoriteDevices::loadFile()
 {
-    qDebug() << "CPP LOAD FILE";
-
     QFile file(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/favoriteList.dat");
     if(!file.exists()) return;
     file.open(QIODevice::ReadOnly);
@@ -39,8 +37,6 @@ void FavoriteDevices::loadFile()
 
 void FavoriteDevices::saveFile()
 {
-    qDebug() << "CPP SAVE FILE";
-
     QFile file(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/favoriteList.dat");
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);

@@ -7,6 +7,12 @@ import "qrc:/Controls"
 Parent{
     id:root
     type: 1
+
+    Component.onCompleted:{
+        requiredParameters.ports = true;
+        requiredParameters.inversion = true;
+    }
+
     property int minWidth: Units.dp(160)
     property int maxWidth: Units.dp(200)
 

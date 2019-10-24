@@ -34,15 +34,14 @@ Item {
 
     Image {
         id: image
-        width: Units.dp(20)
-        height: Units.dp(20)
+        width: Units.dp(24)
+        height: Units.dp(24)
         anchors.left: parent.left
         anchors.leftMargin: 0
         anchors.verticalCenter: parent.verticalCenter
         visible: false
         source: ""
     }
-
 
     ColorOverlay{
         source:image

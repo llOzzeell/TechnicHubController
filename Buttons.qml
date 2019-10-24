@@ -6,10 +6,18 @@ import "qrc:/Controls"
 
 Parent{
     id:root
-    type: 2
     height: width/2
+
+    type: 2
     property int minWidth: Units.dp(90)
     property int maxWidth: Units.dp(140)
+
+    Component.onCompleted:{
+        requiredParameters.ports = true;
+        requiredParameters.inversion = true;
+        requiredParameters.speedlimit = true;
+
+    }
 
     onSizeMinusClicked: {
         if(height > minWidth) {

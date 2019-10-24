@@ -39,8 +39,7 @@ void Profiles::loadFile()
 
         if(file.exists())
         {
-            qDebug() << "FILE EXIST";
-            qDebug() << "FILE OPEN RESULT: " << file.open(QIODevice::ReadOnly);
+            file.open(QIODevice::ReadOnly);
             QDataStream in(&file);
 
             int count; in >> count;
@@ -52,7 +51,6 @@ void Profiles::loadFile()
             }
         }
         file.close();
-        qDebug() << "PROFILES COUNT: " << profiles.count();
 }
 
 void Profiles::saveFile()

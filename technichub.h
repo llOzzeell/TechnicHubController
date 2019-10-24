@@ -25,6 +25,7 @@ private:
     QLowEnergyCharacteristic chars1624;
 
     const int hubType = 0x0; // hub type, using in qml for drawing right icon
+    const int portsCount = 4;
 
     QString name=""; // using in qml
     QString address=""; // using in qml
@@ -33,9 +34,9 @@ private:
 
 signals:
 
-    void lostConnection(QString address);
+    void lostConnection(QString address, QString name,  int portsCount);
 
-    void successConnected();
+    void successConnected(QString address, int type);
 
     void batteryLevelUpdated(int battery);
 
@@ -54,6 +55,8 @@ public slots:
     void writeResponce(QByteArray &data);
 
     int getType();
+
+    int getPortsCount();
 
     void setName(QString _name);
 

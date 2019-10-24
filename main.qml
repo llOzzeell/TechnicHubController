@@ -16,7 +16,6 @@ ApplicationWindow {
     color: Material.background
 
     Component.onCompleted: {
-        //cpp_Android.setOrientationPortrait();
         darkTheme(cpp_Settings.getDarkMode())
     }
 
@@ -36,8 +35,8 @@ ApplicationWindow {
         Material.foreground = value ? ConstList_Color.darkForeground : ConstList_Color.lightForeground
         ConstList_Color.controls_border_color = value ? ConstList_Color.dark_controls_border_color : ConstList_Color.light_controls_border_color
         //ConstList_Color.titleForeground = value ? ConstList_Color.darkTitleForeground : ConstList_Color.lightTitleForeground
-//        cpp_Android.setStatusBarColor(Material.accent)
-//        cpp_Android.setNavigationBarColor(Material.background)
+        cpp_Android.setStatusBarColor(Material.accent)
+        cpp_Android.setNavigationBarColor(Material.background)
     }
 
     Material.onAccentChanged: {
@@ -58,6 +57,7 @@ ApplicationWindow {
         id: toolBar
         height: Units.dp(48)
         Material.background: Material.accent
+        visible: stackView.currentItem.title !== "" ? true : false
 
         RowLayout {
             spacing: Units.dp(10)
@@ -170,7 +170,7 @@ ApplicationWindow {
         id: drawer
         width: window.width * 0.66
         height: window.height
-        dragMargin:Units.dp(20)
+        dragMargin:Units.dp(Qt.styleHints.startDragDistance)
         Material.elevation: Units.dp(8)
 
         Behavior on position {
@@ -178,8 +178,8 @@ ApplicationWindow {
         }
 
         function collapse(){
-            drawer.position = 0;
-            drawer.visible = false;
+            position = 0;
+            visible = false;
         }
 
         SidePanel{
@@ -199,6 +199,7 @@ ApplicationWindow {
     StackView {
         id: stackView
         initialItem: component_MainScreen
+        //initialItem: component_ProfilePlayer
         anchors.fill: parent
 
         function backPushed(){
@@ -225,4 +226,9 @@ ApplicationWindow {
     Component{id:component_About;About{}}
 
     Component{id:component_ProfilePlayer;ProfilePlayer{}}
+
+    PortsPull {
+        id: portsPull
+        anchors.fill: parent
+    }
 }

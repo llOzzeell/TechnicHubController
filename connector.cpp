@@ -28,6 +28,7 @@ void Connector::connectDevice(QString address)
             connectedDevicesList[connectedDevicesList.count()-1]->tryConnect(d);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::successConnected, [=](){ getConnectedParam(); });
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::lostConnection);
+            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::portPullLostDeviceInforming);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::paramsChanged, this, &Connector::deviceParamsChanged);
         }
         counter++;
@@ -50,6 +51,7 @@ bool Connector::disconnectDevice(QString address)
         if(t->getAddress() == address){
             connectedDevicesList[counter]->disconnect();
             connect(connectedDevicesList[counter], &Technichub::lostConnection, [=](){
+                //emit deleteDevicePortsPull(connectedDevicesList[counter]->getName(), connectedDevicesList[counter]->getPortsCount());
                 delete connectedDevicesList[counter];
                 connectedDevicesList.remove(counter);
                 return true;
@@ -76,4 +78,11 @@ void Connector::getConnectedParam()
 
     emit connected();
     emit newDeviceAdded(list);
+    emit addDevicePortsPull(connectedDevicesList[connectedDevicesList.count()-1]->getName(), connectedDevicesList[connectedDevicesList.count()-1]->getPortsCount());
+}
+
+void Connector::portPullLostDeviceInforming(QString address, QString name, int portsCount)
+{
+    Q_UNUSED(name)
+    emit deleteDevicePortsPull(address, portsCount);
 }

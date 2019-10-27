@@ -8,7 +8,7 @@ import "qrc:/ModelsControls"
 
 Item {
     id: root
-    readonly property string title:""
+    readonly property string title:"*"
     Component.onCompleted: {
         cpp_Android.setOrientationSensorLandscape();
         cpp_Settings.setImmersiveMode(true);
@@ -18,8 +18,17 @@ Item {
         cpp_Android.setOrientationUser();
     }
 
+    property bool taptic: cpp_Settings.getTapTick();
+    Connections{
+        target:cpp_Settings
+        onTaptickChanged:{
+            root.taptic = value;
+        }
+    }
+
     property int currentProfileIndex:-1
     property bool editorMode: false
+    property bool emptyLoaded:false
 
     function generateCID(){
         var cid = (+new Date).toString(16);
@@ -29,10 +38,9 @@ Item {
     function loadProfile(index){
         root.currentProfileIndex = index;
         var count = cpp_Profiles.p_getControlsCount(index);
-
+        if(count <= 0) root.emptyLoaded = true;
         for(var i = 0; i < count; i++){
             var control = cpp_Profiles.p_getControl(index, i);
-
             var component = Qt.createComponent(controlsPalette.getPathByType(control.type))
             var propObj = {
                 currentProfileIndex: index,
@@ -70,22 +78,45 @@ Item {
             chName:"",
             chAddress:""
         };
-        component.createObject(root, propObj);
+        var obj = component.createObject(root, propObj);
+        obj.save();
+        root.emptyLoaded = false;
     }
 
     function showPropertyPage(link){
         controlPropertyList.show(link);
     }
 
-    ControlsPalette {
-        id: controlsPalette
-        width: root.width
-        height: root.height
-        z: 1
-        anchors.fill: parent
-        enabled: isVisible
-        onComponentChoosed: createNewControl(type, path, width, height);
+    Label {
+        id: noConnectedOnlyEditorLabel
+        text: qsTr("No hub is connected, only editor mode is available.")
+        anchors.verticalCenter: saveButton.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: Qt.application.font.pixelSize
+        visible: !cpp_Controller.isNotEmpty();
+        opacity: 0.6
+        z: 10
     }
+
+    Connections{
+        target:cpp_Connector
+        onQmlDisconnected:{
+            lostConnectionLabel.visible = true;
+        }
+    }
+
+    Label {
+        id: lostConnectionLabel
+        text: qsTr("Lost connection with one of the hubs. Reconnect to continue.")
+        anchors.verticalCenter: saveButton.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: Qt.application.font.pixelSize
+        visible: false
+        opacity: 0.6
+        z: 10
+    }
+
+
 
     RoundButton {
         id: addControlButton
@@ -107,6 +138,8 @@ Item {
         }
     }
 
+
+
     RoundButton {
         id: editButton
         width: Units.dp(48)
@@ -127,6 +160,8 @@ Item {
         }
     }
 
+
+
     RoundButton {
         id: saveButton
         width: Units.dp(48)
@@ -143,9 +178,32 @@ Item {
         Material.elevation: Units.dp(1)
         visible: !editButton.visible
         onClicked: {
-            root.editorMode = false;
-            if(controlsPalette.isVisible)controlsPalette.hide();
+            if(cpp_Controller.isNotEmpty()){
+                root.editorMode = false;
+                if(controlsPalette.isVisible)controlsPalette.hide();
+            }
+            else{
+                stackView.pop();
+            }
         }
+    }
+
+
+    ControlsPalette {
+        id: controlsPalette
+        width: root.width
+        height: root.height
+        z: 11
+        anchors.fill: parent
+        enabled: isVisible
+        onComponentChoosed: createNewControl(type, path, width, height);
+    }
+
+    EmptyProfile {
+        id: emptyProfile
+        anchors.fill: parent
+        visible: (!root.editorMode && root.emptyLoaded)
+        onGoEditClicked: root.editorMode = true;
     }
 
     CustomDrawer {
@@ -181,3 +239,9 @@ Item {
 
 }
 
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

@@ -16,8 +16,11 @@
 class AppSettings: public QObject{
     Q_OBJECT
 public:
-    AppSettings():darkMode(true), tapTick(true){
+    AppSettings(QQmlApplicationEngine *engine):darkMode(true), tapTick(true), currentLanguage(0){
+
         loadFile();
+        translator.setEngine(engine);
+        setLanguage(currentLanguage);
     }
     ~AppSettings(){delete window;}
 
@@ -28,6 +31,8 @@ private:
     bool darkMode;
     bool tapTick;
     QQuickWindow *window = nullptr;
+    Translator translator;
+    int currentLanguage;
 
 signals:
 
@@ -53,6 +58,7 @@ public slots:
 
             in >> darkMode;
             in >> tapTick;
+            in >> currentLanguage;
         }
         file.close();
         emit themeChanged(darkMode);
@@ -69,6 +75,7 @@ public slots:
 
         out << darkMode;
         out << tapTick;
+        out << currentLanguage;
 
         file.close();
 
@@ -99,6 +106,25 @@ public slots:
             if(value) window->showFullScreen();
             else window->showNormal();
         }
+    }
+
+    void setLanguage(int lang){
+        currentLanguage = lang;
+        saveFile();
+
+        if(lang == 0){
+            translator.selectLanguage("en_US");
+        }
+        else{
+            translator.selectLanguage("ru_RU");
+        }
+
+        qDebug() << "CURRENT LANG set: " << currentLanguage;
+    }
+
+    int getLanguage(){
+        qDebug() << "CURRENT LANG get: " << currentLanguage;
+        return currentLanguage;
     }
 };
 

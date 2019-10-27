@@ -9,36 +9,35 @@ class Translator: public QObject{
     Q_OBJECT
 
     public:
-     Translator(QQmlApplicationEngine *_engine) {
-        engine = _engine;
-        translator = new QTranslator(this);
-     }
-     ~Translator(){ delete translator;  delete engine;}
+     Translator() {}
+     ~Translator(){ delete engine;}
 
 private:
-     QTranslator *translator = nullptr;
+     QTranslator translator;
      QQmlApplicationEngine *engine;
 
-
 public slots:
+
+     void setEngine(QQmlApplicationEngine *_engine){
+         engine = _engine;
+     }
 
      void selectLanguage(QString language) {
 
          if(language == "ru_RU"){
 
-             if (!translator->isEmpty()) qApp->removeTranslator(translator);
+             if (!translator.isEmpty()) qApp->removeTranslator(&translator);
 
-             translator->load(":/lang/lang_ru_RU");
-             qApp->installTranslator(translator);
+             translator.load(":/lang/lang_ru_RU");
+             qApp->installTranslator(&translator);
          }
 
          if(language == "en_US"){
 
-            if (!translator->isEmpty())qApp->removeTranslator(translator);
+            if (!translator.isEmpty())qApp->removeTranslator(&translator);
          }
 
          engine->retranslate();
-
     }
 };
 

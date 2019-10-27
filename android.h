@@ -16,6 +16,9 @@
 #include <QAndroidJniEnvironment>
 #include <QtAndroid>
 #include <QColor>
+#include <QDebug>
+#include <QDesktopServices>
+#include <QUrl>
 
 class Android : public QObject
 {
@@ -24,6 +27,8 @@ public:
     explicit Android();
 
 private:
+
+    QAndroidJniObject vibratorService;
 
 signals:
 
@@ -35,19 +40,28 @@ public slots:
 
     void setNavigationBarColor(const QColor &color)const;
 
-    void setOrientationPortrait(){
-        QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
-        if ( activity.isValid()) activity.callMethod<void>("setRequestedOrientation", "(I)V", SCREEN_ORIENTATION_PORTRAIT);
+    void setOrientationPortrait();
+
+    void setOrientationSensorLandscape();
+
+    void setOrientationUser();
+
+    void vibrate(int milliseconds) const;
+
+    void vibrateWeak() const;
+
+    void vibrateMiddle() const;
+
+    void vibrateStrong() const;
+
+    void rateApp(){
+        QString link = "market://details?id=pro.controlz";
+        QDesktopServices::openUrl(QUrl(link));
     }
 
-    void setOrientationSensorLandscape(){
-        QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
-        if ( activity.isValid()) activity.callMethod<void>("setRequestedOrientation", "(I)V", SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-    }
-
-    void setOrientationUser(){
-        QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
-        if ( activity.isValid()) activity.callMethod<void>("setRequestedOrientation", "(I)V", SCREEN_ORIENTATION_USER);
+    void forumLink(){
+        QString link = "https://www.eurobricks.com/forum/index.php?/forums/topic/173892-controlz-my-app-for-control-electric/";
+        QDesktopServices::openUrl(QUrl(link));
     }
 };
 

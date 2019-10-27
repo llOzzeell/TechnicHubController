@@ -30,18 +30,18 @@ ApplicationWindow {
 
         Material.theme = value ? Material.Dark : Material.Light
         Material.background = value ? ConstList_Color.darkBackground : ConstList_Color.lightBackground
-        Material.primary = value ? ConstList_Color.darkPrimary : ConstList_Color.lightPrimary
-        Material.accent = value ? ConstList_Color.darkAccent : ConstList_Color.lightAccent
-        Material.foreground = value ? ConstList_Color.darkForeground : ConstList_Color.lightForeground
-        ConstList_Color.controls_border_color = value ? ConstList_Color.dark_controls_border_color : ConstList_Color.light_controls_border_color
-        //ConstList_Color.titleForeground = value ? ConstList_Color.darkTitleForeground : ConstList_Color.lightTitleForeground
+        //Material.accent = "#03a9f4"
         cpp_Android.setStatusBarColor(Material.accent)
         cpp_Android.setNavigationBarColor(Material.background)
+        Material.primary = value ? ConstList_Color.darkPrimary : ConstList_Color.lightPrimary
+        Material.foreground = value ? ConstList_Color.darkForeground : ConstList_Color.lightForeground
+        ConstList_Color.controls_border_color = value ? ConstList_Color.dark_controls_border_color : ConstList_Color.light_controls_border_color
     }
 
     Material.onAccentChanged: {
         cpp_Android.setStatusBarColor(Material.accent)
     }
+
     Material.onBackgroundColorChanged: {
         cpp_Android.setNavigationBarColor(Material.background)
     }
@@ -57,7 +57,7 @@ ApplicationWindow {
         id: toolBar
         height: Units.dp(48)
         Material.background: Material.accent
-        visible: stackView.currentItem.title !== "" ? true : false
+        visible: stackView.currentItem.title !== "*" ? true : false
 
         RowLayout {
             spacing: Units.dp(10)
@@ -77,7 +77,6 @@ ApplicationWindow {
                 onClicked: {
 
                     if (stackView.depth > 1) {
-
                         a_back_click.start()
                         stackView.pop()
                     }
@@ -159,7 +158,7 @@ ApplicationWindow {
                     switch(title){
                         case ConstList_Text.page_connectedDevices: return "qrc:/assets/icons/connectedDevice.svg";
                             case ConstList_Text.page_profiles: return "qrc:/assets/icons/add.svg";
-                        default : return "";
+                                default : return "";
                     }
                 }
             }
@@ -185,11 +184,12 @@ ApplicationWindow {
         SidePanel{
             anchors.fill: parent
             onClicked: {
-                switch(page){
-                case "connectedDevices": stackView.push(component_ConnectedDevices); break;
-                case "profiles": stackView.push(component_Profiles); break;
-                case "settings": stackView.push(component_Settings); break;
-                case "about": stackView.push(component_About); break;
+                switch(page){               
+                case "connectedDevices":stackView.replace(component_ConnectedDevices);break;
+                    case "profiles":stackView.replace(component_Profiles);break;
+                        case "settings":stackView.push(component_Settings);break;
+                            case "about":stackView.push(component_About);break;
+
                 }
                 drawer.collapse();
             }
@@ -198,15 +198,23 @@ ApplicationWindow {
 
     StackView {
         id: stackView
-        initialItem: component_MainScreen
-        //initialItem: component_ProfilePlayer
+        initialItem: component_ConnectedDevices
         anchors.fill: parent
+        onCurrentItemChanged: {
+            if(currentItem.title === ConstList_Text.sidepanel_item1) window.Material.accent = ConstList_Color.accentGreen
+                if(currentItem.title === ConstList_Text.sidepanel_item2) window.Material.accent = ConstList_Color.accentBlue
+                    if(currentItem.title === ConstList_Text.sidepanel_item3) window.Material.accent = ConstList_Color.accentRed
+                        if(currentItem.title === ConstList_Text.sidepanel_item4) window.Material.accent = ConstList_Color.accentYellow
+                            if(currentItem.title === "*") window.Material.accent = ConstList_Color.accentGreen
+        }
 
         function backPushed(){
             if (stackView.depth > 1) {
-
                 a_back_click.start()
                 stackView.pop()
+            }
+            else{
+
             }
         }
     }
@@ -218,8 +226,6 @@ ApplicationWindow {
     Component{id:component_Finder; Finder{}}
 
     Component{id:component_Connector;Connector{}}
-
-    Component{id:component_MainScreen;MainScreen{}}
 
     Component{id:component_Settings;Settings{}}
 

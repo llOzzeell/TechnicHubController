@@ -2,7 +2,10 @@
 
 Android::Android()
 {
-
+    QAndroidJniObject vibroString = QAndroidJniObject::fromString("vibrator");
+    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
+    QAndroidJniObject appctx = activity.callObjectMethod("getApplicationContext","()Landroid/content/Context;");
+    vibratorService = appctx.callObjectMethod("getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;", vibroString.object<jstring>());
 }
 
 bool Android::requestAndroidPermissions() const
@@ -51,4 +54,42 @@ void Android::setNavigationBarColor(const QColor &color) const
         window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
         window.callMethod<void>("setNavigationBarColor", "(I)V", color.rgba());
     });
+}
+
+void Android::setOrientationPortrait()
+{
+    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
+    if ( activity.isValid()) activity.callMethod<void>("setRequestedOrientation", "(I)V", SCREEN_ORIENTATION_PORTRAIT);
+}
+
+void Android::setOrientationSensorLandscape()
+{
+    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
+    if ( activity.isValid()) activity.callMethod<void>("setRequestedOrientation", "(I)V", SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+}
+
+void Android::setOrientationUser()
+{
+    QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
+    if ( activity.isValid()) activity.callMethod<void>("setRequestedOrientation", "(I)V", SCREEN_ORIENTATION_USER);
+}
+
+void Android::vibrate(int milliseconds) const
+{
+    if (vibratorService.isValid())vibratorService.callMethod<void>("vibrate", "(J)V", static_cast<jlong>(milliseconds));
+}
+
+void Android::vibrateWeak() const
+{
+    vibrate(15);
+}
+
+void Android::vibrateMiddle() const
+{
+    vibrate(30);
+}
+
+void Android::vibrateStrong() const
+{
+    vibrate(50);
 }

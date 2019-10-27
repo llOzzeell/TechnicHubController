@@ -5,13 +5,13 @@ import "."
 QtObject{
 
     readonly property string appName: "Controlz"
-    readonly property string appMotto: "Easy way to play!"
+    readonly property string appMotto: qsTr("Easy way to play!")
 
     //Sidepanel items names
-    readonly property string sidepanel_item1: qsTr("Profiles")
-    readonly property string sidepanel_item2: qsTr("Connected hubs")
-    readonly property string sidepanel_item3: qsTr("Settings")
-    readonly property string sidepanel_item4: qsTr("About")
+    readonly property string sidepanel_item1: page_profiles
+    readonly property string sidepanel_item2: page_connectedDevices
+    readonly property string sidepanel_item3: page_settings
+    readonly property string sidepanel_item4: page_about
 
     // Pages title
     readonly property string page_mainScreen: qsTr("Main screen")
@@ -39,7 +39,9 @@ QtObject{
     readonly property string control_name_steering: qsTr("Steering")
     readonly property string control_name_moving: qsTr("Moving")
     readonly property string control_name_buttons: qsTr("Buttons")
+    readonly property string control_name_buttonsV: qsTr("Buttons vert.")
     readonly property string control_name_hslider: qsTr("Slider")
+    readonly property string control_name_vslider: qsTr("Slider vert.")
 
     //Controls property page prop names
     readonly property string control_propertypage_ports: qsTr("Hub ports")
@@ -48,4 +50,6 @@ QtObject{
     readonly property string control_propertypage_servoangle: qsTr("Servo angle")
     readonly property string control_propertypage_speedlimit: qsTr("Motor speed")
 
+    //EmptyProfile text
+    readonly property string empty_profile_text: qsTr("Profile is empty. Add items in editor mode.")
 }

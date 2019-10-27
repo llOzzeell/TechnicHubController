@@ -7,7 +7,7 @@ import "qrc:/Controls"
 
 Parent{
     id:root
-    height: width/4
+    height: width*4
     //type: 4
     property int minWidth: Units.dp(60)
     property int maxWidth: Units.dp(80)
@@ -19,6 +19,9 @@ Parent{
     property int speedValue: 0
 
     Component.onCompleted:{
+
+        root.rotatePropItem = 90;
+
         requiredParameters.ports = true;
         requiredParameters.inversion = true;
         requiredParameters.multichoose = true;
@@ -28,39 +31,57 @@ Parent{
     }
 
     onSizeMinusClicked: {
-        if(height > minWidth) {
+        if(width > minWidth) {
 
-            height -= Units.dp(10);
-            width = height*5;
+            width -= Units.dp(10);
+            height = width*5;
         }
+        touchPoint.y = root.height - touchPoint.height
     }
 
     onSizePlusClicked: {
-        if(height < maxWidth) {
+        if(width < maxWidth) {
 
-            height += Units.dp(10);
-            width = height*5;
+            width += Units.dp(10);
+            height = width*5;
         }
+        touchPoint.y = root.height - touchPoint.height
     }
 
-    function calcSpeed(x){
-        if(x < touchPoint.startPoint) x = touchPoint.startPoint;
-        if(x > touchPoint.endPoint) x = touchPoint.endPoint;
-        touchPoint.x = x-touchPoint.startPoint;
+    function calcSpeed(y){
 
-        var sp = 100 / ((touchPoint.endPoint - touchPoint.startPoint) / (x - touchPoint.startPoint) )
+        if(y > touchPoint.startPoint) y = touchPoint.startPoint;
+        if(y < touchPoint.endPoint) y = touchPoint.endPoint;
+        touchPoint.y = y - touchPoint.height/2;
+
+        var sp = 100 / ((touchPoint.endPoint - touchPoint.startPoint) / (y - touchPoint.startPoint) )
         speedValue = sp;
         return parseInt(sp);
     }
 
-    function speedReady(speed){   
+    function speedReady(speed){
         cpp_Controller.runMotor(inverted? -speed: speed, chAddress, ports[0], ports[1], ports[2], ports[3])
     }
 
     function stop(){
-        touchPoint.x = 0;
+        touchPoint.y = root.height-touchPoint.height;
         speedValue = 0;
         speedReady(0);
+    }
+
+    onTouchPressed: {
+        vibrate("middle");
+        speedReady(calcSpeed(y));
+    }
+
+    onTouchUpdated: {
+        var sp = calcSpeed(y);
+        if(sp % 2 == 0){
+            speedReady(sp);
+        }
+        if(sp % 10 == 0 && sp > 0 && sp < 100){
+            vibrate("weak");
+        }
     }
 
     function vibrate(force){
@@ -70,22 +91,6 @@ Parent{
                 cpp_Android.vibrateMiddle();
             }
             else cpp_Android.vibrateWeak();
-
-        }
-    }
-
-    onTouchPressed: {
-        vibrate("middle");
-        speedReady(calcSpeed(x));
-    }
-
-    onTouchUpdated: {
-        var sp = calcSpeed(x);
-        if(sp % 2 == 0){
-            speedReady(sp);
-        }
-        if(sp % 10 == 0 && sp > 0 && sp < 100){
-            vibrate("weak");
         }
     }
 
@@ -100,33 +105,37 @@ Parent{
         id: rectangle
         color: Material.accent
         radius: height/2
+        anchors.rightMargin: touchPoint.borderWidth
+        anchors.top: touchPoint.top
+        anchors.topMargin: 0
         anchors.right: touchPoint.right
-        anchors.rightMargin: 0
         anchors.leftMargin: touchPoint.borderWidth
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.bottomMargin: touchPoint.borderWidth
-        anchors.top: parent.top
-        anchors.topMargin: touchPoint.borderWidth
         opacity: root.speedValue/100
     }
 
     CustomCircle{
         id:touchPoint
-        width: root.height
-        height: root.height
-        anchors.verticalCenter: parent.verticalCenter
+        y:root.height - touchPoint.height
+        height: root.width
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
         borderWidth: Units.dp(6)
         borderColor: ConstList_Color.controls_border_color
         color: Qt.darker(Material.primary, 1.05)
 
-        property int startPoint: touchPoint.width/2
-        property int endPoint: root.width - startPoint;
+        property int startPoint: root.height - touchPoint.height/2
+        property int endPoint: touchPoint.height/2;
 
         Item {
             id: gripItem
             width: parent.height/3
             height: width
+            rotation: 90
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
 
@@ -186,6 +195,7 @@ Parent{
                 }
             }
         }
+
     }
 
 }

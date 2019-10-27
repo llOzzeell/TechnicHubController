@@ -7,7 +7,6 @@ Technichub::Technichub()
 
 Technichub::~Technichub()
 {
-
     delete controller;
     delete service1623;
 }
@@ -22,7 +21,7 @@ void Technichub::tryConnect(QBluetoothDeviceInfo device)
 
     controller = new QLowEnergyController(device);
     connect(controller, &QLowEnergyController::connected, this, &Technichub::deviceConnected);
-    connect(controller, &QLowEnergyController::disconnected, [=](){emit lostConnection(address, name, portsCount);});
+    connect(controller, &QLowEnergyController::disconnected, [=](){emit lostConnection(address, name);});
     connect(controller, &QLowEnergyController::serviceDiscovered, this, &Technichub::getNewService);
     connect(controller, &QLowEnergyController::discoveryFinished, this, &Technichub::serviceScanDone);
 
@@ -251,4 +250,10 @@ QStringList Technichub::getParamList()
     list.append(QString::number(batteryLevel));
     list.append(QString::number(rssiLevel));
     return list;
+}
+
+bool Technichub::isConnected()
+{
+    if(controller->state() != QLowEnergyController::ConnectedState) return false;
+    else return true;
 }

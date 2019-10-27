@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Window 2.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material 2.2
+import QtGraphicalEffects 1.0
 import ".."
 
 Item {
@@ -10,6 +11,7 @@ Item {
     readonly property int buttonUnitHeight: Units.dp(48)
     property bool paletteMode: false
     property bool glow:false
+    property int rotatePropItem:0
 
     property int currentProfileIndex:-1
 
@@ -26,10 +28,15 @@ Item {
     signal sizeMinusClicked()
     signal propClicked(var link)
 
+    signal touchPressed(int x, int y);
+    signal touchReleased(int x, int y);
+    signal touchUpdated(int x, int y)
+
     property var requiredParameters:{"ports":false,"inversion":false,"servoangle":false, "speedlimit":false, "multichoose":false}
 
     property bool editorMode:root.parent.editorMode
     onEditorModeChanged: {
+        checkReady();
         if(!editorMode){
             save();
         }
@@ -55,46 +62,24 @@ Item {
         cpp_Profiles.p_addOrUpdateControl(root.currentProfileIndex, root.cid, propObj);
     }
 
-    ToolButton {
-        id: sizeP
-        width: Units.dp(48)
-        height: Units.dp(48)
-        anchors.bottom: parent.top
-        anchors.bottomMargin: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        icon.width: Units.dp(24)
-        icon.height: Units.dp(24)
-        icon.source: "qrc:/assets/icons/plus.svg"
-        onClicked: if(root.editorMode)root.sizePlusClicked()
-        visible: editorMode
+    function remove(){
+        cpp_Profiles.p_deleteControl(root.currentProfileIndex, root.cid);
+        root.destroy();
     }
 
-    ToolButton {
-        id: sizeM
-        width: Units.dp(48)
-        height: Units.dp(48)
-        anchors.right: sizeP.left
-        anchors.rightMargin: Units.dp(10)
-        icon.width: Units.dp(24)
-        icon.height: Units.dp(24)
-        icon.source: "qrc:/assets/icons/minus.svg"
-        anchors.verticalCenter: sizeP.verticalCenter
-        onClicked: if(root.editorMode)root.sizeMinusClicked()
-        visible: editorMode
+    function checkReady(){
+        notReadyItem.checkVisible()
     }
 
-    ToolButton {
-        id: prop
-        width: Units.dp(48)
-        height: Units.dp(48)
-        anchors.left: sizeP.right
-        anchors.leftMargin: Units.dp(10)
-        icon.width: Units.dp(24)
-        icon.height: Units.dp(24)
-        icon.source: "qrc:/assets/icons/settings.svg"
-        anchors.verticalCenter: sizeP.verticalCenter
-        onClicked: if(root.editorMode)root.parent.showPropertyPage(root);
-        visible: editorMode
+    Rectangle {
+        id: glowRectangle
+        color: "#00000000"
+        anchors.fill: parent
+        anchors.margins: -Units.dp(2)
+        border.width: Units.dp(2)
+        border.color: Material.accent
+        radius: Math.min(rectangle.width, rectangle.height)/2
+        visible: root.glow
     }
 
     MultiPointTouchArea {
@@ -102,17 +87,23 @@ Item {
         anchors.fill: parent
         maximumTouchPoints: 1
         touchPoints: [TouchPoint{id:tpoint}]
-        z:3
+        z:1
         enabled: !root.paletteMode
 
         property var startPoint:{"x":0, "y":0}
 
         onPressed: {
             if(!paletteMode)moving(true, false, editorMode);
+            if(!editorMode && !paletteMode)root.touchPressed(tpoint.x, tpoint.y);
+        }
+
+        onReleased: {
+            if(!editorMode && !paletteMode)root.touchReleased(tpoint.x, tpoint.y);
         }
 
         onTouchUpdated: {
             if(!paletteMode)moving(false, true, editorMode);
+            if(!editorMode && !paletteMode)root.touchUpdated(tpoint.x, tpoint.y);
         }
 
         function moving(_pressed, _touchUpdated, _editorMode){
@@ -122,6 +113,7 @@ Item {
                     touchArea.startPoint.y = tpoint.y;
                 }
                 if(_touchUpdated){
+
                     var delta = Qt.point(tpoint.x-startPoint.x, tpoint.y-startPoint.y)
 
                     var newX = root.x + delta.x
@@ -130,33 +122,130 @@ Item {
                     if(newX > Screen.width - root.width) newX = Screen.width - root.width;
 
                     if(newX > 0 && newX < Screen.width - root.width){
-                       root.x += delta.x;
+                        root.x += delta.x;
                     }
 
                     var newY = (root.y + delta.y)
 
-                    if(newY < root.buttonUnitHeight) newY = root.buttonUnitHeight;
+                    if(newY < 0) newY = 0;
                     if(newY > Screen.height - root.height) newY = Screen.height - root.height;
 
-                    if(newY > root.buttonUnitHeight && newY < Screen.height - root.height){
-                       root.y += delta.y;
+                    if(newY > 0 && newY < Screen.height - root.height){
+                        root.y += delta.y;
                     }
                 }
             }
         }
     }
 
-    Rectangle {
-        id: glowRectangle
-        color: "#00000000"
-        anchors.topMargin: -Units.dp(5)-sizeP.height
-        anchors.rightMargin: -Units.dp(5)
-        anchors.leftMargin: -Units.dp(5)
-        anchors.bottomMargin: -Units.dp(5)
+    Item {
+        id: propButtonsItem
         anchors.fill: parent
-        border.width: Units.dp(2)
-        border.color: Material.accent
-        radius: Units.dp(4)
-        visible: root.glow
+        z: 2
+        visible: editorMode
+
+        Rectangle {
+            id: rectangle
+            color: Material.background
+            radius: Math.min(width, height)/2
+            opacity: 0.8
+            anchors.fill: parent
+        }
+
+        Item {
+            id: btnItem
+            width: sizeP.width*3 + sizeM.anchors.rightMargin * 2
+            height: sizeP.height
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            rotation:root.rotatePropItem
+
+            ToolButton {
+                id: sizeP
+                width: Units.dp(26)
+                height: Units.dp(26)
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                icon.width: Units.dp(24)
+                icon.height: Units.dp(24)
+                icon.source: "qrc:/assets/icons/plus.svg"
+                onClicked: if(root.editorMode)root.sizePlusClicked()
+            }
+
+            ToolButton {
+                id: sizeM
+                width: Units.dp(26)
+                height: Units.dp(26)
+                anchors.right: sizeP.left
+                anchors.rightMargin: Units.dp(30)
+                icon.width: Units.dp(24)
+                icon.height: Units.dp(24)
+                icon.source: "qrc:/assets/icons/minus.svg"
+                anchors.verticalCenter: sizeP.verticalCenter
+                onClicked: if(root.editorMode)root.sizeMinusClicked()
+            }
+
+            ToolButton {
+                id: prop
+                width: Units.dp(26)
+                height: Units.dp(26)
+                anchors.left: sizeP.right
+                anchors.leftMargin: Units.dp(30)
+                icon.width: Units.dp(24)
+                icon.height: Units.dp(24)
+                icon.source: "qrc:/assets/icons/settings.svg"
+                anchors.verticalCenter: sizeP.verticalCenter
+                onClicked: if(root.editorMode)root.parent.showPropertyPage(root);
+            }
+        }
+    }
+
+    Item {
+        id: notReadyItem
+        anchors.fill: parent
+        z: 2
+        visible: false
+
+        Component.onCompleted: checkVisible();
+
+        function checkVisible(){
+            if(!paletteMode){
+
+                   if(!root.editorMode && root.chName === "" && root.chAddress === "" ||
+                      !root.editorMode && ports[0] === 0 && ports[1] === 0 && ports[2] === 0 && ports[3] === 0 ) notReadyItem.visible = true;
+                   else notReadyItem.visible = false;
+            }
+            else notReadyItem.visible = false;
+        }
+
+        Rectangle {
+            color: Material.background
+            radius: Math.min(width, height)/2
+            opacity: 0.8
+            anchors.fill: parent
+        }
+
+        MouseArea {
+            id: mouseArea
+            z: 2
+            anchors.fill: parent
+            onClicked: root.parent.showPropertyPage(root);
+        }
+
+        Image {
+            id: image
+            width: Units.dp(32)
+            height: Units.dp(32)
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            source: "qrc:/assets/icons/notReady.svg"
+            fillMode: Image.PreserveAspectFit
+
+            ColorOverlay{
+                source:image
+                anchors.fill:image
+                color:ConstList_Color.delete_Color
+            }
+        }
     }
 }

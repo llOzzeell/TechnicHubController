@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&finder, &Finder::devicesListUpdated, &connector, &Connector::setFoundList);
 
-    AppSettings appsett;
+    AppSettings appsett(&engine);
     engine.rootContext()->setContextProperty("cpp_Settings", &appsett);
 
     Profiles prof;

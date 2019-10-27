@@ -10,13 +10,15 @@ import "qrc:/Controls"
 
 Parent{
     id:root
-    height: width/2
-
-    //type: 2
+   height: width*2
+    //type: 3
     property int minWidth: Units.dp(90)
     property int maxWidth: Units.dp(140)
 
     Component.onCompleted:{
+
+        root.rotatePropItem = 90;
+
         requiredParameters.ports = true;
         requiredParameters.inversion = true;
         requiredParameters.speedlimit = true;
@@ -24,24 +26,22 @@ Parent{
     }
 
     onSizeMinusClicked: {
-        if(height > minWidth) {
-
-            height -= Units.dp(10);
-            width = height*2;
+        if(width > minWidth) {
+            width -= Units.dp(10);
+            height = width*2;
         }
     }
 
     onSizePlusClicked: {
-        if(height < maxWidth) {
-
-            height += Units.dp(10);
-            width = height*2;
+        if(width < maxWidth) {
+            width += Units.dp(10);
+            height = width*2;
         }
     }
 
     onTouchPressed:{
         if(root.parent.taptic)cpp_Android.vibrateMiddle();
-        if(x > root.width/2){
+        if(y < root.height/2){
             forward.press();
         }
         else{
@@ -63,11 +63,11 @@ Parent{
     }
 
     Item {
-        anchors.right: parent.horizontalCenter
+        anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
-        anchors.top: parent.top
+        anchors.top: parent.verticalCenter
         anchors.topMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
@@ -93,7 +93,6 @@ Parent{
                 reverse.anchors.margins = Units.dp(8);
                 reverse.color = Qt.lighter(Material.accent, 1.2);
                 reverse.isPressed = true;
-
                 cpp_Controller.runMotor(inverted? speedlimit: -speedlimit, chAddress, ports[0], ports[1], ports[2], ports[3])
             }
 
@@ -101,13 +100,13 @@ Parent{
                 reverse.anchors.margins = Units.dp(6);
                 reverse.color = Material.primary;
                 reverse.isPressed = false;
-
                 cpp_Controller.runMotor(0, chAddress, ports[0], ports[1], ports[2], ports[3])
             }
 
             ToolButton{
                 width: Units.dp(44)
                 height: Units.dp(44)
+                rotation: -90
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 icon.width: Units.dp(44)
@@ -121,9 +120,9 @@ Parent{
     }
 
     Item {
-        anchors.left: parent.horizontalCenter
+        anchors.left: parent.left
         anchors.leftMargin: 0
-        anchors.bottom: parent.bottom
+        anchors.bottom: parent.verticalCenter
         anchors.bottomMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
@@ -151,7 +150,6 @@ Parent{
                 forward.anchors.margins = Units.dp(8);
                 forward.color = Qt.lighter(Material.accent, 1.2);
                 forward.isPressed = true;
-
                 cpp_Controller.runMotor(inverted? -speedlimit: speedlimit, chAddress, ports[0], ports[1], ports[2], ports[3])
             }
 
@@ -159,13 +157,13 @@ Parent{
                 forward.anchors.margins = Units.dp(6);
                 forward.color = Material.primary;
                 forward.isPressed = false;
-
                 cpp_Controller.runMotor(0, chAddress, ports[0], ports[1], ports[2], ports[3])
             }
 
             ToolButton{
                 width: Units.dp(44)
                 height: Units.dp(44)
+                rotation: -90
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 icon.width: Units.dp(44)

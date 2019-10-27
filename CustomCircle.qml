@@ -17,15 +17,12 @@ T.Pane {
     property alias borderWidth: rectangle.borderWidth
     property alias borderColor: rectangle.borderColor
     property alias color: rectangle.color
+    property bool elevationEnabled:true
+    property int elevationValue: 6
 
     background: Rectangle {
         color: control.Material.backgroundColor
         radius: control.height/2
-
-        layer.enabled: control.enabled && control.Material.elevation > 0
-        layer.effect: ElevationEffect {
-            elevation: control.Material.elevation
-        }
     }
 
     Rectangle {
@@ -37,10 +34,10 @@ T.Pane {
         anchors.fill: parent
         property int borderWidth : 0
         property color borderColor: "Black"
-        layer.enabled: true
+        layer.enabled: elevationEnabled
         layer.effect: DropShadow{
-            radius: 14
-            samples: 18
+            radius: Units.dp(elevationValue)
+            samples: Units.dp(elevationValue * 1.2)
             color: "#7F000000"
         }
     }

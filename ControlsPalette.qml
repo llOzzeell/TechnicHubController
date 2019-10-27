@@ -33,20 +33,28 @@ Item {
 
     property var previewSizeSteering:{"width": Units.dp(160), "height":Units.dp(160)}
     property var previewSizeMoving:{"width": Units.dp(160), "height":Units.dp(160)}
-    property var previewSizeButtons:{"width": Units.dp(200), "height":Units.dp(100)}
-    property var previewSizeSliderH:{"width": Units.dp(400), "height":Units.dp(80)}
+    property var previewSizeButtons:{"width": Units.dp(180), "height":Units.dp(90)}
+    property var previewSizeButtonsV:{"width": Units.dp(90), "height":Units.dp(180)}
+    property var previewSizeSliderH:{"width": Units.dp(200), "height":Units.dp(50)}
+    property var previewSizeSliderV:{"width": Units.dp(50), "height":Units.dp(200)}
 
     property var createNewSizeSteering:{"width": Units.dp(160), "height":Units.dp(160)}
     property var createNewSizeMoving:{"width": Units.dp(160), "height":Units.dp(160)}
     property var createNewSizeButtons:{"width": Units.dp(160), "height":Units.dp(80)}
+    property var createNewSizeButtonsV:{"width": Units.dp(80), "height":Units.dp(160)}
     property var createNewSizeSliderH:{"width": Units.dp(250), "height":Units.dp(50)}
+    property var createNewSizeSliderV:{"width": Units.dp(50), "height":Units.dp(250)}
 
 
     property var pathArray:[
     "qrc:/ModelsControls/JoySteering.qml",
         "qrc:/ModelsControls/JoyMoving.qml",
             "qrc:/ModelsControls/Buttons.qml",
-                "qrc:/ModelsControls/SliderH.qml"]
+                "qrc:/ModelsControls/ButtonsV.qml",
+                    "qrc:/ModelsControls/SliderH.qml",
+                        "qrc:/ModelsControls/SliderV.qml"]
+    z: 11
+
 
     Component{
         id: joySteering
@@ -61,18 +69,23 @@ Item {
             }
             Label{
                 text: ConstList_Text.control_name_steering
-                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                anchors.topMargin: Units.dp(5)
+                anchors.top: parent.bottom
+                font.pixelSize: Qt.application.font.pixelSize * 1.2
                 font.weight: Font.Medium
-                anchors.bottomMargin: height
-                anchors.bottom: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
+                Behavior on opacity{
+                    NumberAnimation{
+                        duration: 1
+                    }
+                }
             }
         }
     }
 
     Component{
         id: joyMoving
-        JoySteering {
+        JoyMoving {
             width: root.previewSizeMoving.width
             height: root.previewSizeMoving.height
             editorMode: false
@@ -83,11 +96,16 @@ Item {
             }
             Label{
                 text: ConstList_Text.control_name_moving
-                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                anchors.topMargin: Units.dp(5)
+                anchors.top: parent.bottom
+                font.pixelSize: Qt.application.font.pixelSize * 1.2
                 font.weight: Font.Medium
-                anchors.bottomMargin: height
-                anchors.bottom: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
+                Behavior on opacity{
+                    NumberAnimation{
+                        duration: 1
+                    }
+                }
             }
         }
     }
@@ -105,11 +123,43 @@ Item {
             }
             Label{
                 text: ConstList_Text.control_name_buttons
-                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                anchors.topMargin: Units.dp(5)
+                anchors.top: parent.bottom
+                font.pixelSize: Qt.application.font.pixelSize * 1.2
                 font.weight: Font.Medium
-                anchors.bottomMargin: height
-                anchors.bottom: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
+                Behavior on opacity{
+                    NumberAnimation{
+                        duration: 1
+                    }
+                }
+            }
+        }
+    }
+
+    Component{
+        id: buttonsV
+        ButtonsV {
+            width: root.previewSizeButtonsV.width
+            height: root.previewSizeButtonsV.height
+            editorMode: false
+            paletteMode: true
+            MouseArea{
+                anchors.fill: parent
+                onClicked: root.componentChoosed(3,root.pathArray[3], root.createNewSizeButtonsV.width,root.createNewSizeButtonsV.height)
+            }
+            Label{
+                text: ConstList_Text.control_name_buttonsV
+                anchors.topMargin: Units.dp(5)
+                anchors.top: parent.bottom
+                font.pixelSize: Qt.application.font.pixelSize * 1.2
+                font.weight: Font.Medium
+                anchors.horizontalCenter: parent.horizontalCenter
+                Behavior on opacity{
+                    NumberAnimation{
+                        duration: 1
+                    }
+                }
             }
         }
     }
@@ -123,15 +173,47 @@ Item {
             paletteMode: true
             MouseArea{
                 anchors.fill: parent
-                onClicked: root.componentChoosed(3,root.pathArray[3], root.createNewSizeSliderH.width,root.createNewSizeSliderH.height)
+                onClicked: root.componentChoosed(4,root.pathArray[4], root.createNewSizeSliderH.width,root.createNewSizeSliderH.height)
             }
             Label{
                 text: ConstList_Text.control_name_hslider
-                font.pixelSize: Qt.application.font.pixelSize * 1.5
+                anchors.topMargin: Units.dp(5)
+                anchors.top: parent.bottom
+                font.pixelSize: Qt.application.font.pixelSize * 1.2
                 font.weight: Font.Medium
-                anchors.bottomMargin: height
-                anchors.bottom: parent.top
                 anchors.horizontalCenter: parent.horizontalCenter
+                Behavior on opacity{
+                    NumberAnimation{
+                        duration: 1
+                    }
+                }
+            }
+        }
+    }
+
+    Component{
+        id:vslider
+        SliderV{
+            width: root.previewSizeSliderV.width
+            height: root.previewSizeSliderV.height
+            editorMode: false
+            paletteMode: true
+            MouseArea{
+                anchors.fill: parent
+                onClicked: root.componentChoosed(5,root.pathArray[5], root.createNewSizeSliderV.width,root.createNewSizeSliderV.height)
+            }
+            Label{
+                text: ConstList_Text.control_name_vslider
+                anchors.topMargin: Units.dp(5)
+                anchors.top: parent.bottom
+                font.pixelSize: Qt.application.font.pixelSize * 1.2
+                font.weight: Font.Medium
+                anchors.horizontalCenter: parent.horizontalCenter
+                Behavior on opacity{
+                    NumberAnimation{
+                        duration: 1
+                    }
+                }
             }
         }
     }
@@ -142,7 +224,7 @@ Item {
         id: background
         color: Material.background
         anchors.fill: parent
-        opacity: 0.9
+        opacity: 0.95
     }
 
     MouseArea {
@@ -166,7 +248,14 @@ Item {
 
         Row {
             id: column
-            width: root.previewSizeSteering.width + root.previewSizeMoving.width + root.previewSizeButtons.width + root.previewSizeSliderH.width + spacing * 3
+            width: root.previewSizeSteering.width +
+                   root.previewSizeMoving.width +
+                   root.previewSizeButtons.width +
+                   root.previewSizeButtonsV.width +
+                   root.previewSizeSliderH.width +
+                   root.previewSizeSliderV.width +
+                   spacing * 5
+
             height: Units.dp(160)
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
@@ -191,16 +280,19 @@ Item {
 
             Loader{
                 anchors.verticalCenter: parent.verticalCenter
+                sourceComponent: buttonsV
+            }
+
+            Loader{
+                anchors.verticalCenter: parent.verticalCenter
                 sourceComponent: hslider
             }
+
+            Loader{
+                anchors.verticalCenter: parent.verticalCenter
+                sourceComponent: vslider
+            }
         }
-
     }
-
 }
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:20;anchors_height:160}
-}
-##^##*/

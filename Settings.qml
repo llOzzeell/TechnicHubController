@@ -11,6 +11,7 @@ Item {
     Component.onCompleted: {
         darkmode.checked = cpp_Settings.getDarkMode();
         taptick.checked = cpp_Settings.getTapTick();
+        comboBox.currentIndex = cpp_Settings.getLanguage();
     }
 
     Column {
@@ -70,7 +71,7 @@ Item {
                 anchors.rightMargin: 0
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
-                onCheckedChanged: cpp_Settings.setTapTick(checked)
+                onCheckedChanged:{ cpp_Settings.setTapTick(checked)}
             }
         }
 
@@ -104,14 +105,10 @@ Item {
                         name: "Русский"
                     }
                 }
+                onActivated: {
+                   cpp_Settings.setLanguage(currentIndex);
+                }
             }
         }
     }
 }
-
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

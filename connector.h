@@ -55,6 +55,8 @@ public slots:
     bool disconnectDevice(QString address);
 
     void updateConnectedDeviceName(QString address, QString name);
+
+    void deleteFromList(QString address);
 };
 
 #endif // CONNECTOR_H

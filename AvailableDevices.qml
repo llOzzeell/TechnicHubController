@@ -8,6 +8,7 @@ Item {
 
     property bool isNotEmpty: (deviceModel.count > 0);
     property bool hubChoosed: (listView.currentIndex >= 0)
+    clip: true
 
     function highlightIfPossible(){
         for(var i = 0; i < deviceModel.count; i++){
@@ -26,10 +27,6 @@ Item {
         for(var i = 0; i < count; i++){
             var list = cpp_Controller.getDevicesListQML();
             deviceModel.append(list);
-//            var t1 = {"name": "t1", "address": "a1"}
-//            deviceModel.append(t1);
-//            var t2 = {"name": "t2", "address": "a2"}
-//            deviceModel.append(t2);
         }
 
         highlightIfPossible();
@@ -57,9 +54,12 @@ Item {
 
     ListView {
         id: listView
-        clip: true
+        anchors.rightMargin: 0
+        anchors.leftMargin: 0
+        anchors.bottomMargin: Units.dp(10)
+        anchors.topMargin: Units.dp(10)
+        clip: false
         anchors.fill: parent
-        anchors.margins: Units.dp(5)
         model:deviceModel
         spacing: Units.dp(10)
         delegate:     Item {
@@ -76,7 +76,7 @@ Item {
             }
 
             Label{
-                text:name
+                text:qsTr("Hub ")+ (index+1)+ " - " + name
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 anchors.fill: parent
@@ -123,6 +123,5 @@ Item {
         anchors.rightMargin: 0
         anchors.left: parent.left
     }
-
-
 }
+

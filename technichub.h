@@ -34,7 +34,7 @@ private:
 
 signals:
 
-    void lostConnection(QString address, QString name,  int portsCount);
+    void lostConnection(QString address, QString name);
 
     void successConnected(QString address, int type);
 
@@ -65,6 +65,8 @@ public slots:
     QString getAddress();
 
     QStringList getParamList();
+
+    bool isConnected();
 
 private slots:
 

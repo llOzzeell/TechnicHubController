@@ -12,10 +12,12 @@ Item {
     width: parent.width
     opacity: _isConnected ? 1 : 0.5
 
-    property int _index:-1
     property bool _isConnected:false
-    property int _type:-1
     property bool _isFavorite: false
+
+    signal disconnectClicked(int index)
+    signal favoriteClicked(int index, bool state)
+    signal nameChanged(int index, string name)
 
     CustomPane{
         id:background
@@ -50,8 +52,7 @@ Item {
             }
             onAccepted: {
                 if(text != ""){
-                    cpp_Favorite.updateName(nameLabel.text,  deviceAddressLabel.text );
-                    cpp_Connector.updateConnectedDeviceName(deviceAddressLabel.text, nameLabel.text)
+                    root.nameChanged(root.index, nameLabel.text);
                 }
                 else {
                     text = previousName;
@@ -71,23 +72,20 @@ Item {
         font.pixelSize: Qt.application.font.pixelSize
     }
 
-    ProgressBar {
+    CustomProgressBar {
         id: batteryLevelProgressBar
         visible: root._isConnected
         height: Units.dp(4)
         from:0
         to: 100
+        value:0
+        color: Material.primary
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Units.dp(10)
         anchors.right: parent.right
         anchors.rightMargin: Units.dp(10)
         anchors.left: parent.left
         anchors.leftMargin: Units.dp(10)
-        value: /*_isConnected ? 100 : 0*/ 0
-
-        contentItem.implicitHeight:  height
-        background.height: height
-
     }
 
     Label {
@@ -115,15 +113,7 @@ Item {
         anchors.rightMargin: 0
         icon.source: "qrc:/assets/icons/disconnect.svg"
         visible: root._isConnected
-        onClicked: {
-            if(_isFavorite){
-                cpp_Connector.disconnectDevice(deviceAddressLabel.text);
-            }
-            else{
-                cpp_Connector.disconnectDevice(deviceAddressLabel.text);
-                connectedModel.remove(getIndexByAddress(deviceAddressLabel.text));
-            }
-        }
+        onClicked: root.disconnectClicked(root.index);
     }
 
     SignalStrengh {
@@ -163,20 +153,7 @@ Item {
         icon.source: root._isFavorite ? "qrc:/assets/icons/favoriteYES.svg" : "qrc:/assets/icons/favoriteNO.svg"
         onClicked: {
             root._isFavorite = !root._isFavorite;
-
-            if(root._isFavorite){
-                cpp_Favorite.pushNew(nameLabel.text, root._type, deviceAddressLabel.text );
-            }
-            else{
-                cpp_Favorite.deleteFavorite(deviceAddressLabel.text);
-                if(!root._isConnected){
-                    connectedModel.remove(getIndexByAddress(deviceAddressLabel.text));
-                    if(cpp_Favorite.isEmpty() && cpp_Finder.isFavoriteScanning()){
-                        cpp_Finder.stop();
-
-                    }
-                }
-            }
+            root.favoriteClicked(root.index, _isFavorite);
         }
     }
 
@@ -184,7 +161,13 @@ Item {
         target: cpp_Connector
         onDeviceParamsChanged:{
             if(address == deviceAddressLabel.text){
-                batteryLevelProgressBar.value = list[0];
+                var value = list[0];
+                batteryLevelProgressBar.value = value;
+                if(value){
+                    if(value >= 50)batteryLevelProgressBar.color = ConstList_Color.accentGreen;
+                    if(value >= 25 && value <50)batteryLevelProgressBar.color = ConstList_Color.accentYellow;
+                    if(value < 25)batteryLevelProgressBar.color = ConstList_Color.accentRed;
+                }
                 signalStrengh.rssi = list[1];
             }
         }

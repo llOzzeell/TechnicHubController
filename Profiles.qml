@@ -1,4 +1,6 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Material 2.2
 import ".."
 import "qrc:/Controls"
 
@@ -29,6 +31,7 @@ Item {
 
     function profileClicked(index){
         stackView.push(component_ProfilePlayer);
+        if(!cpp_Controller.isNotEmpty())stackView.currentItem.editorMode = true;
         stackView.currentItem.loadProfile(index);
     }
 
@@ -54,8 +57,24 @@ Item {
         }
     }
 
+    Label {
+        id: label
+        text: qsTr("No profiles.")
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        font.pixelSize: Qt.application.font.pixelSize * 1.5
+        visible: profilesModel.count == 0
+        opacity: 0.5
+    }
+
     ListModel{
         id:profilesModel
     }
 
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

@@ -19,7 +19,6 @@ Item {
                 connectedModel.append(listElement);
                 addrlist[i] = list[2];
             }
-            //cpp_Finder.startScanFavorite(addrlist);
         }
     }
 
@@ -29,14 +28,55 @@ Item {
         anchors.margins: Units.dp(10)
         anchors.fill: parent
         model: connectedModel
-        delegate: Component{
-           ConnectedDevices_Delegate{
-                _index: index
-                _isConnected: isConnected
-                _isFavorite: isFavorite
-                _type:type
-           }
+        delegate: ConnectedDevices_Delegate{
+            _isConnected: isConnected
+            _isFavorite: isFavorite
+            Component.onCompleted: {
+             disconnectClicked.connect(root.disconnectDelegateClicked);
+                favoriteClicked.connect(root.favoriteDelegateClicked);
+                    nameChanged.connect(root.nameDelegateChanged);
+          }
+       }
+    }
+
+    function disconnectDelegateClicked(index){
+        if(connectedModel.get(index).isFavorite){
+            cpp_Connector.disconnectDevice(connectedModel.get(index).address);
         }
+        else{
+            cpp_Connector.disconnectDevice(connectedModel.get(index).address);
+            connectedModel.remove(index);
+        }
+    }
+
+    function favoriteDelegateClicked(index, state){
+        connectedModel.setProperty(index, "isFavorite", state);
+
+        if(state){
+            cpp_Favorite.pushNew(connectedModel.get(index).name, connectedModel.get(index).type, connectedModel.get(index).address);
+        }
+        else{
+            cpp_Favorite.deleteFavorite(connectedModel.get(index).address);
+            if(!connectedModel.get(index).isConnected){
+                connectedModel.remove(index);
+            }
+        }
+    }
+
+    function nameDelegateChanged(index, name){
+        connectedModel.setProperty(index, "name",name);
+        cpp_Favorite.updateName(name,  connectedModel.get(index).address );
+        cpp_Connector.updateConnectedDeviceName(connectedModel.get(index).address, name)
+    }
+
+    Label {
+        id: label
+        text: qsTr("No connected hubs.")
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        font.pixelSize: Qt.application.font.pixelSize * 1.5
+        visible: connectedModel.count == 0
+        opacity: 0.5
     }
 
     ListModel{
@@ -71,16 +111,17 @@ Item {
         onNewDeviceAdded:{
             var strlist = list;
 
-            if(isExists(strlist[3])){
-                connectedModel.remove(getIndexByAddress(strlist[3]));
-                createNew(parseInt(strlist[0]), strlist[1], strlist[2], strlist[3], true, true)
+            if(isExists(strlist[3])){              
+                var index = getIndexByAddress(strlist[3]);
+                connectedModel.setProperty(index, "isConnected", true);
             }
             else{
                 createNew(parseInt(strlist[0]), strlist[1], strlist[2], strlist[3], true, false)
             }
         }
         onQmlDisconnected:{
-            connectedModel.setProperty(getIndexByAddress(address), "isConnected", false);
+            if(isExists(address))connectedModel.setProperty(getIndexByAddress(address), "isConnected", false);
         }
     }
+
 }

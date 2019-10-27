@@ -23,12 +23,6 @@ Item {
     signal hide()
     onHide:{
         linkToControl.glow = false;
-        linkToControl.save();
-    }
-
-    function deleteControl(){
-        cpp_Profiles.p_deleteControl(linkToControl.currentProfileIndex, linkToControl.cid);
-        linkToControl.destroy();
     }
 
     CustomPane{
@@ -49,7 +43,6 @@ Item {
         anchors.bottomMargin: Units.dp(10)
         anchors.topMargin: Units.dp(10)
         anchors.margins: Units.dp(10)
-
 
         Item{
             id:inversionsItem
@@ -79,7 +72,6 @@ Item {
             }
         }
 
-
         Item{
             id:servoItem
             height:Units.dp(40)
@@ -105,13 +97,12 @@ Item {
                 from: 10
                 to: 130
                 value: 90
-                stepSize: 1
+                stepSize: 10
                 onValueChanged:{
                     linkToControl.servoangle = parseInt(value)
                 }
             }
         }
-
 
         Item{
             id:speedlimitItem
@@ -136,10 +127,10 @@ Item {
                 anchors.leftMargin: 0
                 anchors.right: parent.right
                 anchors.rightMargin: 0
-                from: 1
+                from: 10
                 to: 100
                 value: 100
-                stepSize: 1
+                stepSize: 10
                 onValueChanged:{
                     linkToControl.speedlimit = parseInt(value)
                 }
@@ -206,7 +197,6 @@ Item {
             }
         }
 
-
     }
 
     RoundButton {
@@ -219,7 +209,11 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Units.dp(10)
         Material.background: Material.accent
-        onClicked: root.hide();
+        onClicked: {
+            linkToControl.save();
+            linkToControl.checkReady();
+            root.hide();
+        }
     }
 
     RoundButton {
@@ -234,15 +228,8 @@ Item {
         icon.source: "qrc:/assets/icons/delete.svg"
         Material.background: ConstList_Color.delete_Color
         onClicked: {
-            deleteControl();
+            linkToControl.remove();
             root.hide();
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:12;anchors_width:200}D{i:16;anchors_x:86;anchors_y:456}D{i:17;anchors_x:86;anchors_y:456}
-D{i:19;anchors_x:86;anchors_y:456}
-}
-##^##*/

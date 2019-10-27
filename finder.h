@@ -19,13 +19,12 @@ public:
     ~Finder();
 
 private:
+
     QBluetoothDeviceInfo zero;
     QBluetoothDeviceDiscoveryAgent * agent;
     QList<QBluetoothDeviceInfo> devicesList;
-    bool scanForFavorite;
     Connector *connector;
     FavoriteDevices *favDev;
-    int favoriteDevicesCount;
 
 signals:
 
@@ -35,15 +34,13 @@ signals:
 
 private slots:
 
-    void gotNewDevice(const QBluetoothDeviceInfo &device);
+    void foundDevice(const QBluetoothDeviceInfo &device);
 
 public slots:
 
-    void startScanFavorite();
     void start();
     void stop();
     bool isScanning();
-    bool isFavoriteScanning();
 
 };
 

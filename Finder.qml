@@ -40,9 +40,6 @@ Item {
                 MouseArea{
                     anchors.fill: parent
                     onClicked:{
-
-
-
                         var address = foundedDevicesModel.get(index).name;
                         address = address.slice(address.indexOf("(")+1, address.indexOf(")"));
                         cpp_Connector.connectDevice(address);

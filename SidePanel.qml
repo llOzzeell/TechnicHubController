@@ -24,7 +24,7 @@ Item {
         anchors.leftMargin: Units.dp(20)
         anchors.top: parent.top
         fontSizeMode: Text.HorizontalFit
-        font.pixelSize: Qt.application.font.pixelSize * 3.2
+        font.pixelSize: Qt.application.font.pixelSize * 2.8
         font.family: Constlist_font.appName
         verticalAlignment: Text.AlignBottom
         anchors.left: parent.left
@@ -38,7 +38,7 @@ Item {
         anchors.topMargin: 0
         anchors.top: appName.bottom
         verticalAlignment: Text.AlignTop
-        font.pixelSize: Qt.application.font.pixelSize * 1.1
+        font.pixelSize: Qt.application.font.pixelSize
         font.family: Constlist_font.appName
         fontSizeMode: Text.HorizontalFit
     }

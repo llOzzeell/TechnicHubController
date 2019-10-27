@@ -35,6 +35,7 @@ T.ComboBox {
         Material.foreground: control.currentIndex === index ? parent.Material.accent : parent.Material.foreground
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
+        font.pixelSize: Qt.application.font.pixelSize * 1.5
     }
 
     indicator: ColorImage {

@@ -7,6 +7,7 @@
         <file>qmldir</file>
         <file>ConstList_Text.qml</file>
         <file>Units.qml</file>
+        <file>lang/lang_ru_RU.qm</file>
     </qresource>
     <qresource prefix="/Pages">
         <file>ConnectedDevices.qml</file>
@@ -43,6 +44,9 @@
         <file>icons/save.svg</file>
         <file>icons/minus.svg</file>
         <file>icons/plus.svg</file>
+        <file>icons/forwardArrow.svg</file>
+        <file>icons/reverseArrow.svg</file>
+        <file>icons/notReady.svg</file>
     </qresource>
     <qresource prefix="/Controls">
         <file>Sidepanel_Delegate.qml</file>
@@ -62,6 +66,8 @@
         <file>CustomSlider.qml</file>
         <file>AvailableDevices.qml</file>
         <file>AvailablePorts.qml</file>
+        <file>EmptyProfile.qml</file>
+        <file>CustomProgressBar.qml</file>
     </qresource>
     <qresource prefix="/ModelsControls">
         <file>Parent.qml</file>
@@ -69,5 +75,8 @@
         <file>JoyMoving.qml</file>
         <file>Buttons.qml</file>
         <file>SliderH.qml</file>
+        <file>ButtonsV.qml</file>
+        <file>SliderV.qml</file>
     </qresource>
+    <qresource prefix="/lang"/>
 </RCC>

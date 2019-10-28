@@ -20,6 +20,8 @@ Item {
     Label {
         id: appName
         text: Constlist_text.appName
+        anchors.rightMargin: Units.dp(20)
+        anchors.right: parent.right
         anchors.topMargin: Units.dp(20)
         anchors.leftMargin: Units.dp(20)
         anchors.top: parent.top
@@ -33,8 +35,9 @@ Item {
     Label {
         id: appMotto
         text: Constlist_text.appMotto
-        anchors.right: appName.right
-        anchors.rightMargin: 0
+        leftPadding: Units.dp(5)
+        anchors.left: appName.left
+        anchors.leftMargin: 0
         anchors.topMargin: 0
         anchors.top: appName.bottom
         verticalAlignment: Text.AlignTop

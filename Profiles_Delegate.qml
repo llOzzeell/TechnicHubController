@@ -158,7 +158,10 @@ Item {
             id: nameLabel
             color: Material.foreground
             text: name
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: parent.top
+            anchors.topMargin: 0
             anchors.leftMargin: Units.dp(10)
             font.weight: Font.Medium
             font.family: "Roboto"
@@ -167,6 +170,11 @@ Item {
             verticalAlignment: Text.AlignVCenter
             anchors.left: profIco.right
             maximumLength: 20
+            width: contentWidth > 48 ? contentWidth : Units.dp(48)
+
+            onContentWidthChanged: {
+                console.log("CONTENT WIDTH CHANGED: " + width)
+            }
 
             property string previousName: ""
             readonly property string empty: qsTr("No name")

@@ -35,7 +35,7 @@ T.ComboBox {
         Material.foreground: control.currentIndex === index ? parent.Material.accent : parent.Material.foreground
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
-        font.pixelSize: Qt.application.font.pixelSize * 1.5
+        font.pixelSize: Qt.application.font.pixelSize * 0.9
     }
 
     indicator: ColorImage {
@@ -53,6 +53,7 @@ T.ComboBox {
         rightPadding: control.editable ? Units.dp(2) : control.mirrored ? Units.dp(12) : 0
 
         text: control.editable ? control.editText : control.displayText
+        font.pixelSize: Qt.application.font.pixelSize * 0.9
 
         enabled: control.editable
         autoScroll: control.editable
@@ -60,7 +61,7 @@ T.ComboBox {
         inputMethodHints: control.inputMethodHints
         validator: control.validator
 
-        font: control.font
+        //font: control.font
         color: control.enabled ? control.Material.foreground : control.Material.hintTextColor
         selectionColor: control.Material.accentColor
         selectedTextColor: control.Material.primaryHighlightedTextColor

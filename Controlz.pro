@@ -1,4 +1,4 @@
-QT += quick svg gui bluetooth androidextras
+QT += quick svg bluetooth gui androidextras
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use

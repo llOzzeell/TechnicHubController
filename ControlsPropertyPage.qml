@@ -25,6 +25,7 @@ Item {
         linkToControl.glow = false;
     }
 
+
     CustomPane{
         id:background
         anchors.fill: parent
@@ -33,170 +34,203 @@ Item {
         opacity: 0.8
     }
 
-    Column {
-        id: column
-        spacing: Units.dp(10)
-        anchors.bottom: saveButton.top
+    Flickable {
+        id: flickable
         anchors.right: parent.right
+        anchors.rightMargin: Units.dp(20)
         anchors.left: parent.left
-        anchors.top: parent.top
+        anchors.leftMargin: Units.dp(20)
         anchors.bottomMargin: Units.dp(10)
-        anchors.topMargin: Units.dp(10)
-        anchors.margins: Units.dp(10)
+        anchors.topMargin: Units.dp(20)
+        contentHeight: column.height
+        flickableDirection: Flickable.VerticalFlick
+        anchors.bottom: saveButton.top
+        anchors.top: parent.top
 
-        Item{
-            id:inversionsItem
-            height:Units.dp(40)
-            width:parent.width
-            visible: linkToControl !== undefined ? linkToControl.requiredParameters.inversion : false
+        Column {
+            id: column
+            width: parent.width
+            height: inversionsItem.height + servoItem.height + speedlimitItem.height + portsItem.height + devicesItem.height + 6 * spacing
+            spacing: Units.dp(10)
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.margins: Units.dp(20)
 
-            Label {
-                text: ConstList_Text.control_propertypage_inversion
-                verticalAlignment: Text.AlignVCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize
-            }
-            CustomSwitch {
-                id:inverted
-                width: Units.dp(38)
-                height: Units.dp(48)
-                checked: false
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-                onCheckedChanged:{
-                    linkToControl.inverted = checked;
+            Item{
+                id:inversionsItem
+                height:Units.dp(40)
+                width:parent.width
+                visible: linkToControl !== undefined ? linkToControl.requiredParameters.inversion : false
+
+                Label {
+                    height: Units.dp(26)
+                    text: ConstList_Text.control_propertypage_inversion
+                    fontSizeMode: Text.VerticalFit
+                    anchors.right: inverted.left
+                    anchors.rightMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: Qt.application.font.pixelSize
+                }
+                CustomSwitch {
+                    id:inverted
+                    width: Units.dp(38)
+                    height: Units.dp(48)
+                    checked: false
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    onCheckedChanged:{
+                        linkToControl.inverted = checked;
+                    }
                 }
             }
-        }
 
-        Item{
-            id:servoItem
-            height:Units.dp(40)
-            width:parent.width
-            visible: linkToControl !== undefined ? linkToControl.requiredParameters.servoangle : false
+            Item{
+                id:servoItem
+                height:Units.dp(40)
+                width:parent.width
+                visible: linkToControl !== undefined ? linkToControl.requiredParameters.servoangle : false
 
-            Label {
-                text: ConstList_Text.control_propertypage_servoangle  + " " + servo.value + "°"
-                verticalAlignment: Text.AlignVCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize
-            }
-            CustomSlider {
-                id:servo
-                height: Units.dp(48)
-                anchors.left: parent.horizontalCenter
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-                from: 10
-                to: 130
-                value: 90
-                stepSize: 10
-                onValueChanged:{
-                    linkToControl.servoangle = parseInt(value)
+                Label {
+                    height: Units.dp(26)
+                    text: ConstList_Text.control_propertypage_servoangle  + " " + servo.value + "°"
+                    fontSizeMode: Text.VerticalFit
+                    anchors.right: servo.left
+                    anchors.rightMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: Qt.application.font.pixelSize
+                }
+                CustomSlider {
+                    id:servo
+                    height: Units.dp(48)
+                    anchors.left: parent.horizontalCenter
+                    anchors.leftMargin: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    from: 10
+                    to: 130
+                    value: 90
+                    stepSize: 10
+                    onValueChanged:{
+                        linkToControl.servoangle = parseInt(value)
+                    }
                 }
             }
-        }
 
-        Item{
-            id:speedlimitItem
-            height:Units.dp(40)
-            width:parent.width
-            visible: linkToControl !== undefined ? linkToControl.requiredParameters.speedlimit : false
+            Item{
+                id:speedlimitItem
+                height:Units.dp(40)
+                width:parent.width
+                visible: linkToControl !== undefined ? linkToControl.requiredParameters.speedlimit : false
 
-            Label {
-                text: ConstList_Text.control_propertypage_speedlimit + " " + speedlimit.value + "%"
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Qt.application.font.pixelSize
-            }
+                Label {
+                    height: Units.dp(26)
+                    text: ConstList_Text.control_propertypage_speedlimit + " " + speedlimit.value + "%"
+                    fontSizeMode: Text.VerticalFit
+                    anchors.right: speedlimit.left
+                    anchors.rightMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: Qt.application.font.pixelSize
+                }
 
-            CustomSlider{
-                id:speedlimit
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.horizontalCenter
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                from: 10
-                to: 100
-                value: 100
-                stepSize: 10
-                onValueChanged:{
-                    linkToControl.speedlimit = parseInt(value)
+                CustomSlider{
+                    id:speedlimit
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.horizontalCenter
+                    anchors.leftMargin: 0
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    from: 10
+                    to: 100
+                    value: 100
+                    stepSize: 10
+                    onValueChanged:{
+                        linkToControl.speedlimit = parseInt(value)
+                    }
                 }
             }
-        }
 
-        Item{
-            id:devicesItem
-            width:parent.width
-            height: Units.dp(130)
-            visible: linkToControl !== undefined ? linkToControl.requiredParameters.ports : false
-
-            Label {
-                id:devicesLabel
-                height: Units.dp(40)
-                text: ConstList_Text.control_propertypage_hubs
-                horizontalAlignment: Text.AlignLeft
-                verticalAlignment: Text.AlignVCenter
-                anchors.top: parent.top
-                anchors.topMargin: 0
+            Item {
+                id: portsItem
+                height: Units.dp(48) + portsLabel.height
+                anchors.right: parent.right
+                anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-                font.pixelSize: Qt.application.font.pixelSize
+
+                Label {
+                    id: portsLabel
+                    height: Units.dp(26)
+                    text: ConstList_Text.control_propertypage_ports
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    fontSizeMode: Text.VerticalFit
+                    anchors.top: parent.top
+                    anchors.topMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignLeft
+                    font.pixelSize: Qt.application.font.pixelSize
+                }
+
+                AvailablePorts {
+                    id: availablePorts
+                    height: Units.dp(44)
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 0
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width:componentwidth
+                    multipleChoose: linkToControl !== undefined ? linkToControl.requiredParameters.multichoose : false
+                    _enabled: (availableDevices.isNotEmpty && availableDevices.hubChoosed)
+                }
             }
 
-            AvailableDevices {
-                id: availableDevices
-                anchors.bottomMargin: 0
-                anchors.top: devicesLabel.bottom
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.topMargin: 0
+            Item{
+                id:devicesItem
+                width:parent.width
+                height: Units.dp(140)
+                visible: linkToControl !== undefined ? linkToControl.requiredParameters.ports : false
+
+                Label {
+                    id:devicesLabel
+                    height: Units.dp(26)
+                    text: ConstList_Text.control_propertypage_hubs
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    fontSizeMode: Text.VerticalFit
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.top: parent.top
+                    anchors.topMargin: 0
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    font.pixelSize: Qt.application.font.pixelSize
+                }
+
+                AvailableDevices {
+                    id: availableDevices
+                    anchors.topMargin: Units.dp(8)
+                    anchors.bottomMargin: 0
+                    anchors.top: devicesLabel.bottom
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                }
             }
+
+
         }
-
-        Item {
-            id: portsItem
-            height: Units.dp(40) + portsLabel.height
-            anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-
-            Label {
-                id: portsLabel
-                text: ConstList_Text.control_propertypage_ports
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
-                font.pixelSize: Qt.application.font.pixelSize
-            }
-
-            AvailablePorts {
-                id: availablePorts
-                height: Units.dp(40)
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.horizontalCenter: parent.horizontalCenter
-                width:componentwidth
-                multipleChoose: linkToControl !== undefined ? linkToControl.requiredParameters.multichoose : false
-                _enabled: (availableDevices.isNotEmpty && availableDevices.hubChoosed)
-            }
-        }
-
     }
 
     RoundButton {
@@ -232,4 +266,11 @@ Item {
             root.hide();
         }
     }
+
 }
+
+/*##^##
+Designer {
+    D{i:2;anchors_height:300;anchors_width:300;anchors_x:0;anchors_y:57}D{i:19;anchors_width:200}
+}
+##^##*/

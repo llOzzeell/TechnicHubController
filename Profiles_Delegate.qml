@@ -155,46 +155,41 @@ Item {
     }
 
     TextInput {
-            id: nameLabel
-            color: Material.foreground
-            text: name
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 0
-            anchors.top: parent.top
-            anchors.topMargin: 0
-            anchors.leftMargin: Units.dp(10)
-            font.weight: Font.Medium
-            font.family: "Roboto"
-            cursorVisible: false
-            font.pixelSize: Qt.application.font.pixelSize  * 1.3
-            verticalAlignment: Text.AlignVCenter
-            anchors.left: profIco.right
-            maximumLength: 20
-            width: contentWidth > 48 ? contentWidth : Units.dp(48)
+        id: nameLabel
+        color: Material.foreground
+        text: name
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.leftMargin: Units.dp(10)
+        font.weight: Font.Medium
+        font.family: "Roboto"
+        cursorVisible: false
+        font.pixelSize: Qt.application.font.pixelSize  * 1.3
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: profIco.right
+        maximumLength: 20
+        width: contentWidth > 48 ? contentWidth : Units.dp(48)
+        property string previousName: ""
+        readonly property string empty: qsTr("No name")
 
-            onContentWidthChanged: {
-                console.log("CONTENT WIDTH CHANGED: " + width)
-            }
-
-            property string previousName: ""
-            readonly property string empty: qsTr("No name")
-
-            onFocusChanged: {
-                if(focus) previousName = text;
-                if(!focus && text == ""){
-                    if(previousName !== "") { text = previousName; }
-                }
-            }
-            onAccepted: {
-                if(text != ""){
-                    cpp_Profiles.changeName(index, text)
-                }
-                else {
-                    if(previousName !== "")text = previousName;
-                }
-                nameLabel.focus = false;
+        onFocusChanged: {
+            if(focus) previousName = text;
+            if(!focus && text == ""){
+                if(previousName !== "") { text = previousName; }
             }
         }
+        onAccepted: {
+            if(text != ""){
+                cpp_Profiles.changeName(index, text)
+            }
+            else {
+                if(previousName !== "")text = previousName;
+            }
+            nameLabel.focus = false;
+        }
+    }
 
     Image {
         id: profIco

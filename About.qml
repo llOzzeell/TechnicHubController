@@ -9,34 +9,37 @@ Item {
 
     Label {
         id: appName
+        height: Units.dp(64)
         text: Constlist_text.appName
+        horizontalAlignment: Text.AlignHCenter
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: Units.dp(20)
         anchors.top: parent.top
-        fontSizeMode: Text.HorizontalFit
-        font.pixelSize: Qt.application.font.pixelSize * 4
+        fontSizeMode: Text.VerticalFit
+        font.pixelSize: Qt.application.font.pixelSize * 2.8
         font.family: Constlist_font.appName
-        verticalAlignment: Text.AlignBottom
+        verticalAlignment: Text.AlignVCenter
     }
 
     Label {
-        id: appMotto
-        text: qsTr("Version: 1.2")
-        anchors.right: appName.right
-        anchors.rightMargin: 0
-        anchors.topMargin: 0
+        id: appVersion
+        height: Units.dp(26)
+        text: qsTr("Version: 1.2.1")
         anchors.top: appName.bottom
-        verticalAlignment: Text.AlignTop
-        font.pixelSize: Qt.application.font.pixelSize * 1.2
+        anchors.topMargin: 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: Qt.application.font.pixelSize
         font.family: Constlist_font.appName
-        fontSizeMode: Text.HorizontalFit
+        fontSizeMode: Text.VerticalFit
     }
 
     RoundButton {
         id: rateButton
         width: root.width/1.5
         height: Units.dp(44)
-        text: qsTr("Rate the app for support")
+        text: qsTr("Rate the app")
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: Qt.application.font.pixelSize
@@ -50,7 +53,7 @@ Item {
         id: linkToForum
         width: root.width/2.2
         height: Units.dp(44)
-        text: qsTr("Link to the forum")
+        text: qsTr("Forum")
         anchors.topMargin: Units.dp(10)
         anchors.top: rateButton.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -62,3 +65,9 @@ Item {
     }
 
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

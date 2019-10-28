@@ -44,8 +44,14 @@ Item {
 
     Label {
         id: label
+        height: Units.dp(26)
         text: qsTr("No connected hubs")
-        anchors.fill: parent
+        anchors.right: parent.right
+        anchors.rightMargin: Units.dp(200)
+        anchors.left: parent.left
+        anchors.leftMargin: Units.dp(200)
+        fontSizeMode: Text.VerticalFit
+        anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: Qt.application.font.pixelSize
@@ -95,7 +101,6 @@ Item {
     }
     
     Rectangle {
-        id: rectangle1
         height: Units.dp(2)
         radius: height/2
         color: Material.primary
@@ -112,7 +117,6 @@ Item {
     }
 
     Rectangle {
-        id: rectangle2
         height: Units.dp(2)
         radius: height/2
         color: Material.primary

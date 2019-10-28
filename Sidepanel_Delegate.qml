@@ -20,8 +20,8 @@ Item {
     Rectangle{
         id:background
         color: Material.primary
-        anchors.rightMargin: -root.height/Units.dp(4)
-        anchors.leftMargin: -root.height/Units.dp(4)
+        anchors.rightMargin: 0
+        anchors.leftMargin: 0
         anchors.fill: parent
         opacity: 0
 
@@ -37,7 +37,7 @@ Item {
         width: Units.dp(24)
         height: Units.dp(24)
         anchors.left: parent.left
-        anchors.leftMargin: 0
+        anchors.leftMargin: Units.dp(20)
         anchors.verticalCenter: parent.verticalCenter
         visible: false
         source: ""
@@ -53,7 +53,11 @@ Item {
 
     Label {
         id: label
+        height: Units.dp(26)
         text: ""
+        fontSizeMode: Text.VerticalFit
+        anchors.rightMargin: Units.dp(20)
+        anchors.right: parent.right
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: Qt.application.font.pixelSize
         anchors.left: image.right

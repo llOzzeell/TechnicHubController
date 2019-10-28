@@ -89,9 +89,16 @@ Item {
 
     Label {
         id: noConnectedOnlyEditorLabel
+        height: Units.dp(26)
         text: qsTr("No hub is connected, only editor mode is available.")
-        anchors.verticalCenter: saveButton.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: Units.dp(150)
+        anchors.left: parent.left
+        anchors.leftMargin: Units.dp(150)
+        anchors.verticalCenter: lostConnectionLabel.verticalCenter
+        fontSizeMode: Text.VerticalFit
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         font.pixelSize: Qt.application.font.pixelSize
         visible: !cpp_Controller.isNotEmpty();
         opacity: 0.6
@@ -107,9 +114,14 @@ Item {
 
     Label {
         id: lostConnectionLabel
+        height: Units.dp(26)
         text: qsTr("Lost connection with one of the hubs. Reconnect to continue.")
+        anchors.right: parent.right
+        anchors.rightMargin: Units.dp(150)
+        anchors.left: parent.left
+        anchors.leftMargin: Units.dp(150)
+        fontSizeMode: Text.VerticalFit
         anchors.verticalCenter: saveButton.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: Qt.application.font.pixelSize
         visible: false
         opacity: 0.6

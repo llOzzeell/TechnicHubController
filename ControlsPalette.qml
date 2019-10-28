@@ -6,25 +6,29 @@ import "qrc:/ModelsControls"
 
 Item {
     id:root
-    opacity: 0
+    //opacity: 0
+    visible: false
+    z: 11
 
-    Behavior on opacity{
-        NumberAnimation{
-            duration: 200
-        }
-    }
+//    Behavior on opacity{
+//        NumberAnimation{
+//            duration: 200
+//        }
+//    }
 
     signal componentChoosed(int type, string path, int width, int height)
     onComponentChoosed: hide()
 
-    readonly property bool isVisible: root.opacity == 1 ? true : false
+    readonly property bool isVisible: root.visible
 
     function show(){
-        opacity = 1;
+        //opacity = 1;
+        root.visible = true
     }
 
     function hide(){
-        opacity = 0;
+        //opacity = 0;
+        root.visible = false
     }
 
     function getPathByType(type){
@@ -53,7 +57,7 @@ Item {
                 "qrc:/ModelsControls/ButtonsV.qml",
                     "qrc:/ModelsControls/SliderH.qml",
                         "qrc:/ModelsControls/SliderV.qml"]
-    z: 11
+
 
 
     Component{
@@ -238,6 +242,7 @@ Item {
     Flickable {
         id: flickable
         height: column.height
+        flickableDirection: Flickable.HorizontalFlick
         anchors.right: parent.right
         anchors.rightMargin: column.spacing
         anchors.left: parent.left
@@ -254,7 +259,7 @@ Item {
                    root.previewSizeButtonsV.width +
                    root.previewSizeSliderH.width +
                    root.previewSizeSliderV.width +
-                   spacing * 5
+                   spacing * 6
 
             height: Units.dp(160)
             anchors.bottom: parent.bottom

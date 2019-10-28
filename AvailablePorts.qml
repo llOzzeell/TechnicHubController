@@ -45,7 +45,7 @@ Item {
             font.weight: Font.Medium
             width:Units.dp(44)
             height:Units.dp(44)
-            font.pixelSize: Qt.application.font.pixelSize * 1.2
+            font.pixelSize: Qt.application.font.pixelSize * 0.9
             Material.background: Material.primary
             enabled: _enabled
             onClicked:{
@@ -69,7 +69,7 @@ Item {
             font.weight: Font.Medium
             width:Units.dp(44)
             height:Units.dp(44)
-            font.pixelSize: Qt.application.font.pixelSize * 1.2
+            font.pixelSize: Qt.application.font.pixelSize * 0.9
             Material.background: Material.primary
             enabled: _enabled
             onClicked:{
@@ -93,7 +93,7 @@ Item {
             font.weight: Font.Medium
             width:Units.dp(44)
             height:Units.dp(44)
-            font.pixelSize: Qt.application.font.pixelSize * 1.2
+            font.pixelSize: Qt.application.font.pixelSize * 0.9
             Material.background: Material.primary
             enabled: _enabled
             onClicked:{
@@ -117,7 +117,7 @@ Item {
             font.weight: Font.Medium
             width:Units.dp(44)
             height:Units.dp(44)
-            font.pixelSize: Qt.application.font.pixelSize * 1.2
+            font.pixelSize: Qt.application.font.pixelSize * 0.9
             Material.background: Material.primary
             enabled: _enabled
             onClicked:{

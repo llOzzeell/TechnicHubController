@@ -7,26 +7,13 @@ Controller::Controller(QObject *parent) : QObject(parent), lastServoValue(0)
 
 void Controller::devicesChanged(QVector<Technichub *> newlist)
 {
-    qDebug() << "GET TH LIST FROM CONNECTED. list count: " << newlist.count();
-
     availableDevicesList.clear();
 
     for(Technichub *t : newlist){
-        qDebug() << "---------------------------------------------------------------------------------------------" << t->getAddress();
-        qDebug() << "---------------------------------------------------------------------------------------------" << t->getName();
-        qDebug() << "---------------------------------------------------------------------------------------------" << t->getType();
         availableDevicesList.insert(t->getAddress(), t);
     }
 
     emit deviceChangedQML();
-
-     qDebug() << "IN CONTROLLER CLASS count: " << availableDevicesList.count() ;
-
-    for(auto it : availableDevicesList){
-        qDebug() << "---------------------------------------------------------------------------------------------" << it->getAddress();
-        qDebug() << "---------------------------------------------------------------------------------------------" << it->getName();
-        qDebug() << "---------------------------------------------------------------------------------------------" << it->getType();
-    }
 }
 
 int Controller::getDevicesCount()

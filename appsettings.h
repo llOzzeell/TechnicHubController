@@ -22,7 +22,7 @@ public:
         translator.setEngine(engine);
         setLanguage(currentLanguage);
     }
-    ~AppSettings(){delete window;}
+    ~AppSettings(){window = nullptr;}
 
 private:
 

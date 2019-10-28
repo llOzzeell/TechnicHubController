@@ -17,17 +17,19 @@ Item {
 
     Label {
         id: label
+        height: Units.dp(26)
         text: ConstList_Text.empty_profile_text
+        fontSizeMode: Text.VerticalFit
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: Qt.application.font.pixelSize * 1.2
+        font.pixelSize: Qt.application.font.pixelSize
     }
 
     RoundButton {
         id: roundButton
-        width: Units.dp(100)
+        width: Units.dp(140)
         height: Units.dp(44)
         font.pixelSize: Qt.application.font.pixelSize
         text: qsTr("Editor")

@@ -7,9 +7,8 @@ Finder::Finder(Connector *c, FavoriteDevices *f)
 }
 
 Finder::~Finder(){
-    if(agent->isActive()) agent->stop();
-    delete agent;
-    delete connector;
+    favDev = nullptr;
+    connector = nullptr;
 }
 
 void Finder::foundDevice(const QBluetoothDeviceInfo &device)

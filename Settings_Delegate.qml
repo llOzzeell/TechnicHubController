@@ -15,10 +15,14 @@ Item {
 
     Label {
         id: label
+        height: Units.dp(26)
         text: ""
+        fontSizeMode: Text.VerticalFit
+        anchors.right: parent.right
+        anchors.rightMargin: 0
         font.weight: isGroupTitle ? Font.DemiBold : Font.Normal
         verticalAlignment: Text.AlignVCenter
-        font.pixelSize: isGroupTitle ? Qt.application.font.pixelSize * 1.1 : Qt.application.font.pixelSize
+        font.pixelSize: isGroupTitle ? Qt.application.font.pixelSize * 1.2 : Qt.application.font.pixelSize
         anchors.left: parent.left
         anchors.leftMargin: 0
 

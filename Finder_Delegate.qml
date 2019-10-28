@@ -40,11 +40,16 @@ Item {
     Label {
         id: label
         text: name
+        anchors.right: parent.right
+        anchors.rightMargin: Units.dp(10)
+        height: Units.dp(26)
+        anchors.verticalCenter: parent.verticalCenter
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignLeft
         font.weight: Font.Medium
         font.pixelSize: Qt.application.font.pixelSize;
         anchors.left: image.right
         anchors.leftMargin: Units.dp(10)
-        anchors.verticalCenter: parent.verticalCenter
     }
 
 }

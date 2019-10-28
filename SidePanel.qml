@@ -19,13 +19,14 @@ Item {
 
     Label {
         id: appName
+        height: Units.dp(64)
         text: Constlist_text.appName
         anchors.rightMargin: Units.dp(20)
         anchors.right: parent.right
         anchors.topMargin: Units.dp(20)
         anchors.leftMargin: Units.dp(20)
         anchors.top: parent.top
-        fontSizeMode: Text.HorizontalFit
+        fontSizeMode: Text.VerticalFit
         font.pixelSize: Qt.application.font.pixelSize * 2.8
         font.family: Constlist_font.appName
         verticalAlignment: Text.AlignBottom
@@ -34,6 +35,7 @@ Item {
 
     Label {
         id: appMotto
+        height: Units.dp(26)
         text: Constlist_text.appMotto
         leftPadding: Units.dp(5)
         anchors.left: appName.left
@@ -43,20 +45,20 @@ Item {
         verticalAlignment: Text.AlignTop
         font.pixelSize: Qt.application.font.pixelSize
         font.family: Constlist_font.appName
-        fontSizeMode: Text.HorizontalFit
+        fontSizeMode: Text.VerticalFit
     }
 
     Column {
         id: column
+        anchors.rightMargin: 0
+        anchors.leftMargin: 0
         anchors.topMargin: Units.dp(60)
         spacing: Units.dp(10)
         anchors.top: appName.bottom
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.right: parent.right
-        anchors.rightMargin: Units.dp(20)
         anchors.left: parent.left
-        anchors.leftMargin: Units.dp(20)
 
         Sidepanel_Delegate {
             id: sidepanel_Delegate1

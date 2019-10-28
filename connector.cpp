@@ -7,7 +7,7 @@ Connector::Connector(FavoriteDevices *f)
 
 Connector::~Connector()
 {
-     delete favDev;
+     favDev = nullptr;
      for(int i = 0; i < connectedDevicesList.count(); i++){
          delete connectedDevicesList[i];
      }
@@ -21,10 +21,6 @@ void Connector::setFoundList(QList<QBluetoothDeviceInfo> &list)
 
 void Connector::connectDevice(QString address)
 {
-    for(Technichub *t : connectedDevicesList){
-        qDebug() << "------------------------------------------------------------------------------------------- CONNECTED LIST: " << t->isConnected();
-    }
-
     int counter = 0;
     for(QBluetoothDeviceInfo d : foundList){
         if(d.address().toString() == address){           
@@ -34,7 +30,6 @@ void Connector::connectDevice(QString address)
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::qmlDisconnected);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::deviceDisconnected);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::paramsChanged, this, &Connector::deviceParamsChanged);
-
 
         }
         counter++;

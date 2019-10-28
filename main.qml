@@ -214,7 +214,8 @@ ApplicationWindow {
                 stackView.pop()
             }
             else{
-
+                console.log("TRY CLOSE")
+                Qt.quit(0);
             }
         }
     }

@@ -10,7 +10,7 @@ class Translator: public QObject{
 
     public:
      Translator() {}
-     ~Translator(){ delete engine;}
+     ~Translator(){engine = nullptr;}
 
 private:
      QTranslator translator;

@@ -14,8 +14,8 @@ bool Android::requestAndroidPermissions() const
                                                 "android.permission.BLUETOOTH",
                                                 "android.permission.BLUETOOTH_ADMIN",
                                                 "android.permission.VIBRATE",
-                                                "android.permission.WRITE_EXTERNAL_STORAGE",
-                                                "android.permission.READ_EXTERNAL_STORAGE"});
+                                                /*"android.permission.WRITE_EXTERNAL_STORAGE",
+                                                "android.permission.READ_EXTERNAL_STORAGE"*/});
 
     for(const QString &permission : permissions){
         auto result = QtAndroid::checkPermission(permission);

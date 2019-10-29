@@ -16,7 +16,7 @@
 class AppSettings: public QObject{
     Q_OBJECT
 public:
-    AppSettings(QQmlApplicationEngine *engine):darkMode(true), tapTick(true), currentLanguage(0){
+    AppSettings(QQmlApplicationEngine *engine):darkMode(true), tapTick(true), hubInfo(true), currentLanguage(0){
 
         loadFile();
         translator.setEngine(engine);
@@ -30,6 +30,7 @@ private:
     const QString pathToFile = "/config.cz";
     bool darkMode;
     bool tapTick;
+    bool hubInfo;
     QQuickWindow *window = nullptr;
     Translator translator;
     int currentLanguage;
@@ -38,7 +39,7 @@ signals:
 
     void themeChanged(bool value);
     void taptickChanged(bool value);
-
+    void hubInfoChanged(bool value);
 
 public slots:
 
@@ -59,6 +60,7 @@ public slots:
             in >> darkMode;
             in >> tapTick;
             in >> currentLanguage;
+            in >> hubInfo;
         }
         file.close();
         emit themeChanged(darkMode);
@@ -76,6 +78,7 @@ public slots:
         out << darkMode;
         out << tapTick;
         out << currentLanguage;
+        out << hubInfo;
 
         file.close();
 
@@ -99,6 +102,16 @@ public slots:
         tapTick = value;
         saveFile();
         emit taptickChanged(tapTick);
+    }
+
+    bool getHubInfo() const{
+        return hubInfo;
+    }
+
+    void setHubInfo(bool value){
+        hubInfo = value;
+        saveFile();
+        emit hubInfoChanged(hubInfo);
     }
 
     void setImmersiveMode(bool value){

@@ -6,12 +6,14 @@ import "qrc:/Controls"
 
 Item {
     id:root
+
     readonly property string title: ConstList_Text.page_settings
 
     Component.onCompleted: {
         darkmode.checked = cpp_Settings.getDarkMode();
         taptick.checked = cpp_Settings.getTapTick();
         comboBox.currentIndex = cpp_Settings.getLanguage();
+        hubInfoVisible.checked = cpp_Settings.getHubInfo();
     }
 
     Column {
@@ -50,12 +52,32 @@ Item {
         }
 
         Settings_Delegate {
+            id: prop_hubInfo
+            width: parent.width
+            height: Units.dp(40)
+            text: ConstList_Text.settings_prop_battery
+            isGroupTitle: false
+
+            CustomSwitch {
+                id: hubInfoVisible
+                width: Units.dp(38)
+                height: Units.dp(48)
+                anchors.verticalCenter: parent.verticalCenter
+                checked: false
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                onCheckedChanged: cpp_Settings.setHubInfo(checked)
+            }
+        }
+
+        Settings_Delegate {
             id: group_control
             width: parent.width
             height: Units.dp(40)
             text: ConstList_Text.settings_group_control
             isGroupTitle: true
         }
+
 
         Settings_Delegate {
             id: prop_tactile
@@ -75,6 +97,7 @@ Item {
             }
         }
 
+
         Settings_Delegate {
             id: group_regional
             width: parent.width
@@ -82,6 +105,7 @@ Item {
             text: ConstList_Text.settings_group_regional
             isGroupTitle: true
         }
+
 
         Settings_Delegate {
             id: prop_lang
@@ -106,9 +130,10 @@ Item {
                     }
                 }
                 onActivated: {
-                   cpp_Settings.setLanguage(currentIndex);
+                    cpp_Settings.setLanguage(currentIndex);
                 }
             }
         }
+
     }
 }

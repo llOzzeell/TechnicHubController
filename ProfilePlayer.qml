@@ -22,6 +22,7 @@ Item {
     }
 
     property bool taptic: cpp_Settings.getTapTick();
+
     Connections{
         target:cpp_Settings
         onTaptickChanged:{
@@ -122,6 +123,8 @@ Item {
         id: lostConnectionLabel
         height: Units.dp(26)
         text: qsTr("Lost connection with one of the hubs. Reconnect to continue.")
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         anchors.right: parent.right
         anchors.rightMargin: Units.dp(150)
         anchors.left: parent.left
@@ -154,20 +157,18 @@ Item {
         }
     }
 
-    RoundButton {
+    ToolButton {
         id: editButton
         width: Units.dp(48)
         height: Units.dp(48)
-        z: 2
-        Material.background: Material.accent
-        icon.source: "qrc:/assets/icons/tune.svg"
-        icon.width: Units.dp(24)
-        icon.height: Units.dp(24)
         anchors.top: parent.top
         anchors.topMargin: Units.dp(10)
         anchors.right: parent.right
         anchors.rightMargin: Units.dp(10)
-        Material.elevation: Units.dp(1)
+        icon.width: Units.dp(24)
+        icon.height: Units.dp(24)
+        icon.source: "qrc:/assets/icons/tune.svg"
+        z: 2
         visible: !root.editorMode
         onClicked: {
             root.editorMode = true;
@@ -247,6 +248,18 @@ Item {
             anchors.fill: parent
             onHide: controlPropertyList.collapse();
         }
+    }
+
+    BatteryWidget {
+        id: batteryWidget
+        height: Units.dp(40)
+        anchors.rightMargin: Units.dp(20)
+        anchors.verticalCenter: editButton.verticalCenter
+        anchors.right: editButton.left
+        anchors.left: parent.left
+        anchors.leftMargin: Units.dp(20)
+        opacity: 0.6
+        z:1
     }
 }
 

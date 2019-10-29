@@ -34,7 +34,7 @@ signals:
 
     void qmlDisconnected(QString address);
 
-    void deviceParamsChanged(QString address, QStringList list);
+    void deviceParamsChanged(QString address, QString name, QStringList list);
 
     void devicesChanged(QVector<Technichub*> newList);
 

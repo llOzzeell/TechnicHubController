@@ -77,6 +77,7 @@
         <file>SliderH.qml</file>
         <file>ButtonsV.qml</file>
         <file>SliderV.qml</file>
+        <file>BatteryWidget.qml</file>
     </qresource>
     <qresource prefix="/lang"/>
 </RCC>

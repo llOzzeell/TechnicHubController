@@ -118,7 +118,7 @@ void Technichub::parseCharsUpdates(const QByteArray &newValue)
 
     if(oldBattery != batteryLevel || oldRSSI != rssiLevel){
 
-        emit paramsChanged(address, getParamList());
+        emit paramsChanged(address, name, getParamList());
     }
 
     oldBattery = batteryLevel;

@@ -43,7 +43,7 @@ signals:
 
     void rssiLevelUpdated(int rssi);
 
-    void paramsChanged(QString address, QStringList list);
+    void paramsChanged(QString address, QString name, QStringList list);
 
 public slots:
 

@@ -31,9 +31,11 @@ Item {
 
     Image {
         id: image
+        width:Units.dp(26)
+        height:Units.dp(26)
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
         source: "qrc:/assets/icons/rssi_0.svg"
-        anchors.fill: parent
-        anchors.margins: Units.dp(4)
         fillMode: Image.PreserveAspectFit
         visible: false
     }

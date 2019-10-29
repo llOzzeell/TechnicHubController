@@ -5,6 +5,7 @@ import ".."
 
 Item {
     id:root
+    z: 10
 
     Rectangle {
         id: rectangle
@@ -13,7 +14,6 @@ Item {
     }
 
     signal goEditClicked()
-    z: 10
 
     Label {
         id: label
@@ -29,14 +29,15 @@ Item {
 
     RoundButton {
         id: roundButton
-        width: Units.dp(140)
         height: Units.dp(44)
         font.pixelSize: Qt.application.font.pixelSize
         text: qsTr("Editor")
+        rightPadding: Units.dp(24)
+        leftPadding: Units.dp(24)
         Material.background: Material.accent
         anchors.horizontalCenter: label.horizontalCenter
         anchors.top: label.bottom
-        anchors.topMargin: 0
+        anchors.topMargin: Units.dp(5)
         onClicked: root.goEditClicked()
     }
 }

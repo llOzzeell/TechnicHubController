@@ -15,7 +15,13 @@ Item {
             var addrlist = [];
             for(var i = 0; i < count; i++){
                 var list = cpp_Favorite.getFavoriteDevice(i);
-                var listElement = {"index": -1, "name": list[0], "type": list[1], "address": list[2], "isConnected":false, "isFavorite":true};
+
+                var listElement = { "index": -1,
+                                    "name": list[0],
+                                    "type": list[1],
+                                    "address": list[2],
+                                    "isConnected":false,
+                                    "isFavorite":true};
                 connectedModel.append(listElement);
                 addrlist[i] = list[2];
             }
@@ -31,6 +37,7 @@ Item {
         delegate: ConnectedDevices_Delegate{
             _isConnected: isConnected
             _isFavorite: isFavorite
+            //_factoryName: factoryName
             Component.onCompleted: {
              disconnectClicked.connect(root.disconnectDelegateClicked);
                 favoriteClicked.connect(root.favoriteDelegateClicked);
@@ -102,7 +109,12 @@ Item {
     }
 
     function createNew(index, type, name, address, isConnected, isFavorite){
-        var listElement = {"index": index, "type": type, "name": name, "address": address, "isConnected":isConnected, "isFavorite":isFavorite};
+        var listElement = { "index": index,
+                            "type": type,
+                            "name": name,
+                            "address": address,
+                            "isConnected":isConnected,
+                            "isFavorite":isFavorite};
         connectedModel.append(listElement);
     }
 

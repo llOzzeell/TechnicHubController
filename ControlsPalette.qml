@@ -42,10 +42,10 @@ Item {
     property var previewSizeSliderH:{"width": Units.dp(200), "height":Units.dp(50)}
     property var previewSizeSliderV:{"width": Units.dp(50), "height":Units.dp(200)}
 
-    property var createNewSizeSteering:{"width": Units.dp(160), "height":Units.dp(160)}
-    property var createNewSizeMoving:{"width": Units.dp(160), "height":Units.dp(160)}
-    property var createNewSizeButtons:{"width": Units.dp(160), "height":Units.dp(80)}
-    property var createNewSizeButtonsV:{"width": Units.dp(80), "height":Units.dp(160)}
+    property var createNewSizeSteering:{"width": Units.dp(150), "height":Units.dp(150)}
+    property var createNewSizeMoving:{"width": Units.dp(150), "height":Units.dp(150)}
+    property var createNewSizeButtons:{"width": Units.dp(140), "height":Units.dp(70)}
+    property var createNewSizeButtonsV:{"width": Units.dp(70), "height":Units.dp(140)}
     property var createNewSizeSliderH:{"width": Units.dp(250), "height":Units.dp(50)}
     property var createNewSizeSliderV:{"width": Units.dp(50), "height":Units.dp(250)}
 

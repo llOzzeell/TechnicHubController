@@ -13,8 +13,8 @@ Parent{
     height: width/2
 
     //type: 2
-    property int minWidth: Units.dp(90)
-    property int maxWidth: Units.dp(140)
+    property int minWidth: Units.dp(70)
+    property int maxWidth: Units.dp(120)
 
     Component.onCompleted:{
         requiredParameters.ports = true;

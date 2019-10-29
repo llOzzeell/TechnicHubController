@@ -16,12 +16,19 @@ Item {
     property int currentProfileIndex:-1
 
     property string cid:""
+
     property int type:-1
+
     property bool inverted:false
+
     property var ports:[0,0,0,0]
+
     property int servoangle:0
+
     property int speedlimit:0
+
     property string chName: ""
+
     property string chAddress: ""
 
     signal sizePlusClicked()
@@ -44,26 +51,26 @@ Item {
 
     function save(){
         var propObj = {
-            cid:root.cid,
-            type:type,
-            "x": root.x,
-            "y": root.y,
-            width: root.width,
-            height: root.height,
-            inverted:root.inverted,
-            servoangle:root.servoangle,
-            speedlimit:root.speedlimit,
-            port1:root.ports[0],
-            port2:root.ports[1],
-            port3:root.ports[2],
-            port4:root.ports[3],
-            chName:root.chName,
-            chAddress:root.chAddress};
-        cpp_Profiles.p_addOrUpdateControl(root.currentProfileIndex, root.cid, propObj);
+            cid: cid,
+            type: type,
+            "x": x,
+            "y": y,
+            width: width,
+            height: height,
+            inverted: inverted,
+            servoangle: servoangle,
+            speedlimit: speedlimit,
+            port1: ports[0],
+            port2: ports[1],
+            port3: ports[2],
+            port4: ports[3],
+            chName: chName,
+            chAddress: chAddress};
+        cpp_Profiles.p_addOrUpdateControl(currentProfileIndex, cid, propObj);
     }
 
     function remove(){
-        cpp_Profiles.p_deleteControl(root.currentProfileIndex, root.cid);
+        cpp_Profiles.p_deleteControl(currentProfileIndex, cid);
         root.destroy();
     }
 
@@ -162,8 +169,8 @@ Item {
 
             ToolButton {
                 id: sizeP
-                width: Units.dp(26)
-                height: Units.dp(26)
+                width: Units.dp(32)
+                height: Units.dp(32)
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 icon.width: Units.dp(24)
@@ -174,10 +181,10 @@ Item {
 
             ToolButton {
                 id: sizeM
-                width: Units.dp(26)
-                height: Units.dp(26)
+                width: Units.dp(32)
+                height: Units.dp(32)
                 anchors.right: sizeP.left
-                anchors.rightMargin: Units.dp(30)
+                anchors.rightMargin: Units.dp(20)
                 icon.width: Units.dp(24)
                 icon.height: Units.dp(24)
                 icon.source: "qrc:/assets/icons/minus.svg"
@@ -187,10 +194,10 @@ Item {
 
             ToolButton {
                 id: prop
-                width: Units.dp(26)
-                height: Units.dp(26)
+                width: Units.dp(32)
+                height: Units.dp(32)
                 anchors.left: sizeP.right
-                anchors.leftMargin: Units.dp(30)
+                anchors.leftMargin: Units.dp(20)
                 icon.width: Units.dp(24)
                 icon.height: Units.dp(24)
                 icon.source: "qrc:/assets/icons/settings.svg"
@@ -248,4 +255,5 @@ Item {
             }
         }
     }
+
 }

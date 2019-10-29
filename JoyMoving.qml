@@ -16,8 +16,8 @@ Parent{
         requiredParameters.multichoose = true;
     }
 
-    property int minWidth: Units.dp(160)
-    property int maxWidth: Units.dp(200)
+    property int minWidth: Units.dp(150)
+    property int maxWidth: Units.dp(190)
 
     onSizeMinusClicked: {
         if(width > minWidth) {

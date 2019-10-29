@@ -11,14 +11,17 @@ Item {
         id: appName
         height: Units.dp(64)
         text: Constlist_text.appName
+        anchors.rightMargin: Units.dp(20)
+        anchors.leftMargin: Units.dp(20)
+        anchors.right: parent.right
+        anchors.left: parent.left
         horizontalAlignment: Text.AlignHCenter
-        anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: Units.dp(20)
         anchors.top: parent.top
         fontSizeMode: Text.VerticalFit
-        font.pixelSize: Qt.application.font.pixelSize * 2.8
+        font.pixelSize: Qt.application.font.pixelSize * 3.2
         font.family: Constlist_font.appName
-        verticalAlignment: Text.AlignVCenter
+        verticalAlignment: Text.AlignBottom
     }
 
     Label {
@@ -29,17 +32,18 @@ Item {
         anchors.topMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter
         horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        font.pixelSize: Qt.application.font.pixelSize
+        verticalAlignment: Text.AlignTop
+        font.pixelSize: Qt.application.font.pixelSize * 1.1
         font.family: Constlist_font.appName
         fontSizeMode: Text.VerticalFit
     }
 
     RoundButton {
         id: rateButton
-        width: root.width/1.5
         height: Units.dp(44)
         text: qsTr("Rate the app")
+        rightPadding: Units.dp(24)
+        leftPadding: Units.dp(24)
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: Qt.application.font.pixelSize
@@ -51,9 +55,10 @@ Item {
 
     RoundButton {
         id: linkToForum
-        width: root.width/2.2
         height: Units.dp(44)
         text: qsTr("Forum")
+        rightPadding: Units.dp(24)
+        leftPadding: Units.dp(24)
         anchors.topMargin: Units.dp(10)
         anchors.top: rateButton.bottom
         anchors.horizontalCenter: parent.horizontalCenter

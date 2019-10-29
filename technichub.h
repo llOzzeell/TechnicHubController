@@ -27,6 +27,7 @@ private:
     const int hubType = 0x0; // hub type, using in qml for drawing right icon
     const int portsCount = 4;
 
+    QString nameFactory="";
     QString name=""; // using in qml
     QString address=""; // using in qml
     qint8 rssiLevel = 0; // using in qml
@@ -57,6 +58,10 @@ public slots:
     int getType();
 
     int getPortsCount();
+
+    QString getFactoryName();
+
+    void setFactoryName(QString factname);
 
     void setName(QString _name);
 

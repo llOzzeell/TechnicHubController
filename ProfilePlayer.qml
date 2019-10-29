@@ -9,11 +9,14 @@ import "qrc:/ModelsControls"
 Item {
     id: root
     readonly property string title:"*"
+
     Component.onCompleted: {
         cpp_Android.setOrientationSensorLandscape();
         cpp_Settings.setImmersiveMode(true);
     }
+
     Component.onDestruction: {
+        root.saveState();
         cpp_Settings.setImmersiveMode(false);
         cpp_Android.setOrientationUser();
     }
@@ -29,6 +32,8 @@ Item {
     property int currentProfileIndex:-1
     property bool editorMode: false
     property bool emptyLoaded:false
+
+    signal saveState()
 
     function generateCID(){
         var cid = (+new Date).toString(16);
@@ -58,6 +63,7 @@ Item {
                 chAddress:control.chAddress
             };
             var obj = component.createObject(root, propObj);
+            saveState.connect(obj.save);
         }
     }
 
@@ -79,7 +85,7 @@ Item {
             chAddress:""
         };
         var obj = component.createObject(root, propObj);
-        obj.save();
+        saveState.connect(obj.save);
         root.emptyLoaded = false;
     }
 
@@ -128,8 +134,6 @@ Item {
         z: 10
     }
 
-
-
     RoundButton {
         id: addControlButton
         width: Units.dp(48)
@@ -149,8 +153,6 @@ Item {
             controlsPalette.show();
         }
     }
-
-
 
     RoundButton {
         id: editButton
@@ -172,8 +174,6 @@ Item {
         }
     }
 
-
-
     RoundButton {
         id: saveButton
         width: Units.dp(48)
@@ -190,6 +190,7 @@ Item {
         Material.elevation: Units.dp(1)
         visible: !editButton.visible
         onClicked: {
+            root.saveState();
             if(cpp_Controller.isNotEmpty()){
                 root.editorMode = false;
                 if(controlsPalette.isVisible)controlsPalette.hide();
@@ -199,7 +200,6 @@ Item {
             }
         }
     }
-
 
     ControlsPalette {
         id: controlsPalette
@@ -248,12 +248,5 @@ Item {
             onHide: controlPropertyList.collapse();
         }
     }
-
 }
 
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

@@ -13,9 +13,9 @@ ProgressBar {
     background: Rectangle {
         implicitWidth: 200
         height: Units.dp(4)
-        color: Qt.lighter(progress.color,1.5)
+        color: Qt.lighter(progress.color,1.8)
         radius: height/2
-        opacity: 0.3
+        opacity: 0.2
     }
 
     contentItem: Item {

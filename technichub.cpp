@@ -229,6 +229,16 @@ int Technichub::getPortsCount()
     return portsCount;
 }
 
+QString Technichub::getFactoryName()
+{
+    return nameFactory;
+}
+
+void Technichub::setFactoryName(QString factname)
+{
+    nameFactory = factname;
+}
+
 void Technichub::setName(QString _name)
 {
     name = _name;

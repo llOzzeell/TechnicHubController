@@ -23,6 +23,7 @@ Item {
     signal hide()
     onHide:{
         linkToControl.glow = false;
+        flickable.contentY = 0;
     }
 
 
@@ -235,9 +236,10 @@ Item {
 
     RoundButton {
         id: saveButton
-        width: root.width/2
         height: Units.dp(44)
         text: qsTr("Close")
+        rightPadding: Units.dp(24)
+        leftPadding: Units.dp(24)
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: Qt.application.font.pixelSize
         anchors.bottom: parent.bottom

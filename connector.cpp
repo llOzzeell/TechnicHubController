@@ -25,12 +25,12 @@ void Connector::connectDevice(QString address)
     for(QBluetoothDeviceInfo d : foundList){
         if(d.address().toString() == address){           
             connectedDevicesList.push_back(new Technichub());
+            connectedDevicesList[connectedDevicesList.count()-1]->setFactoryName(d.name());
             connectedDevicesList[connectedDevicesList.count()-1]->tryConnect(d);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::successConnected, [=](){ getConnectedParam(); });
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::qmlDisconnected);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::deviceDisconnected);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::paramsChanged, this, &Connector::deviceParamsChanged);
-
         }
         counter++;
     }
@@ -72,11 +72,9 @@ void Connector::updateConnectedDeviceName(QString address, QString name)
 
 void Connector::deleteFromList(QString address)
 {
-        //qDebug() << "DELETE NO CONNECTED DEVICE ADRESS: " + address;
     int counter = 0;
     for(Technichub *t : connectedDevicesList){
         if(t->getAddress() == address && !t->isConnected()){
-                //qDebug() << "DEVICE FOUND IN LIST";
             delete connectedDevicesList[counter];
             connectedDevicesList.remove(counter);
         }
@@ -97,6 +95,7 @@ void Connector::getConnectedParam()
 
     list.append(connectedDevicesList[connectedDevicesList.count()-1]->getName());
     list.append(connectedDevicesList[connectedDevicesList.count()-1]->getAddress());
+    list.append(connectedDevicesList[connectedDevicesList.count()-1]->getFactoryName());
 
     emit connected();
     emit newDeviceAdded(list);

@@ -176,16 +176,16 @@ Item {
 
         onFocusChanged: {
             if(focus) previousName = text;
-            if(!focus && text == ""){
-                if(previousName !== "") { text = previousName; }
+            if(!focus && text.length > 0){
+                if(previousName.length > 0) { text = previousName; }
             }
         }
         onAccepted: {
-            if(text != ""){
+            if(text.length > 0){
                 cpp_Profiles.changeName(index, text)
             }
             else {
-                if(previousName !== "")text = previousName;
+                if(previousName.length > 0)text = previousName;
             }
             nameLabel.focus = false;
         }

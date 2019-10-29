@@ -9,8 +9,8 @@ Parent{
     id:root
     height: width/4
     //type: 4
-    property int minWidth: Units.dp(60)
-    property int maxWidth: Units.dp(80)
+    property int minWidth: Units.dp(40)
+    property int maxWidth: Units.dp(70)
 
     onEditorModeChanged: {
         if(editorMode && root.speedValue > 0) stop();

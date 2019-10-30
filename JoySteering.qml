@@ -151,7 +151,6 @@ Parent{
         anchors.verticalCenter: parent.verticalCenter
     }
 
-
     CustomCircle{
         id:touchPoint
         x: root.width/2 - width/2
@@ -172,12 +171,12 @@ Parent{
                 to: root.width/2 - touchPoint.width/2
                 duration: 100
             }
-            PropertyAnimation{
-                target:angleArrowItem
-                property:"rotation"
-                to: 0
-                duration: 100
-            }
+//            PropertyAnimation{
+//                target:angleArrowItem
+//                property:"rotation"
+//                to: 0
+//                duration: 100
+//            }
             onStopped: {
                 root.angleReady(0);
                 root.angle = 0;
@@ -247,15 +246,6 @@ Parent{
                 }
             }
         }
-
     }
-
-
 }
 
-/*##^##
-Designer {
-    D{i:4;anchors_height:96;anchors_width:96;anchors_x:-59;anchors_y:-57}D{i:3;anchors_y:46}
-D{i:5;anchors_y:46}
-}
-##^##*/

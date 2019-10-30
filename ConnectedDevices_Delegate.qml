@@ -163,19 +163,6 @@ Item {
             anchors.topMargin: 0
             font.pixelSize: Qt.application.font.pixelSize
         }
-
-        SignalStrengh {
-            id: signalStrengh
-            x: 158
-            y: -78
-            width: Units.dp(44)
-            height: Units.dp(44)
-            color: Material.foreground
-            anchors.right: disconnectButton.left
-            anchors.rightMargin: 0
-            anchors.verticalCenter: parent.verticalCenter
-            visible: batteryLevelProgressBar.visible
-        }
     }
 
     Connections{
@@ -189,7 +176,6 @@ Item {
                     if(value >= 25 && value <50)batteryLevelProgressBar.color = ConstList_Color.accentYellow;
                     if(value < 25)batteryLevelProgressBar.color = ConstList_Color.accentRed;
                 }
-                signalStrengh.rssi = list[1];
             }
         }
     }

@@ -32,11 +32,6 @@
         <file>icons/foundedDevice.svg</file>
         <file>icons/disconnect.svg</file>
         <file>icons/battery.svg</file>
-        <file>icons/rssi_0.svg</file>
-        <file>icons/rssi_1.svg</file>
-        <file>icons/rssi_2.svg</file>
-        <file>icons/rssi_3.svg</file>
-        <file>icons/rssi_4.svg</file>
         <file>icons/favoriteNO.svg</file>
         <file>icons/favoriteYES.svg</file>
         <file>icons/delete.svg</file>

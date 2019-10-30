@@ -80,7 +80,7 @@ void Technichub::serviceDetailsDiscovered()
             qDebug() << "Chars 1624 found.";
             setNotification(true);
             connect(service1623, &QLowEnergyService::characteristicChanged, this, &Technichub::characteristicUpdated);
-            setRSSIUpdates(true);
+            //setRSSIUpdates(true);
             setBatteryUpdates(true);
         }
     }
@@ -105,24 +105,17 @@ void Technichub::characteristicUpdated(const QLowEnergyCharacteristic &character
 void Technichub::parseCharsUpdates(const QByteArray &newValue)
 {
     static int oldBattery = 0;
-    static int oldRSSI = 0;
 
     if(newValue[2] == 1){ // hub property
-
-        if(newValue[3] == 5 && newValue[4] == 6)rssiLevel = static_cast<qint8>(newValue[5]); // rssi db value updated
         if(newValue[3] == 6 && newValue[4] == 6)batteryLevel = newValue[5]; // battery % value updated
     }
 
-//    if(oldBattery != batteryLevel) emit batteryLevelUpdated(batteryLevel);
-//    if(oldRSSI != rssiLevel) emit rssiLevelUpdated(rssiLevel);
-
-    if(oldBattery != batteryLevel || oldRSSI != rssiLevel){
+    if(oldBattery != batteryLevel){
 
         emit paramsChanged(address, name, getParamList());
     }
 
     oldBattery = batteryLevel;
-    oldRSSI = rssiLevel;
 }
 
 /////////////////////////////////////////////////
@@ -258,7 +251,6 @@ QStringList Technichub::getParamList()
 {
     QStringList list;
     list.append(QString::number(batteryLevel));
-    list.append(QString::number(rssiLevel));
     return list;
 }
 

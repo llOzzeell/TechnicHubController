@@ -30,7 +30,6 @@ private:
     QString nameFactory="";
     QString name=""; // using in qml
     QString address=""; // using in qml
-    qint8 rssiLevel = 0; // using in qml
     quint8 batteryLevel=0; // using in qml
 
 signals:

@@ -30,6 +30,8 @@ Item {
     property string chName: ""
 
     property string chAddress: ""
+    
+    property string name: ""
 
     signal sizePlusClicked()
     signal sizeMinusClicked()
@@ -65,7 +67,8 @@ Item {
             port3: ports[2],
             port4: ports[3],
             chName: chName,
-            chAddress: chAddress};
+            chAddress: chAddress,
+            name: name};
         cpp_Profiles.p_addOrUpdateControl(currentProfileIndex, cid, propObj);
     }
 
@@ -134,10 +137,10 @@ Item {
 
                     var newY = (root.y + delta.y)
 
-                    if(newY < 0) newY = 0;
+                    if(newY < controlName.topMarginValue) newY = controlName.topMarginValue;
                     if(newY > Screen.height - root.height) newY = Screen.height - root.height;
 
-                    if(newY > 0 && newY < Screen.height - root.height){
+                    if(newY > controlName.topMarginValue && newY < Screen.height - root.height){
                         root.y += delta.y;
                     }
                 }
@@ -256,4 +259,67 @@ Item {
         }
     }
 
+    RoundButton {
+        id: controlName
+        height: Units.dp(Qt.application.font.pixelSize/2)
+        opacity: 0.5
+        enabled: true
+        font.pixelSize: Qt.application.font.pixelSize
+        visible: !paletteMode && valueFromSetting
+        anchors.topMargin: -topMarginValue
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: nameLabel.width + Units.dp(24)
+
+        property int topMarginValue: visible ? (controlName.height + Units.dp(5)) : 0
+
+        property bool valueFromSetting: cpp_Settings.getControlsLabelsVisible();
+
+        TextInput {
+            id: nameLabel
+            text: root.name;
+            color: Material.foreground
+            z: 1
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.top: parent.top
+            font.weight: Font.Normal
+            font.family: "Roboto"
+            font.pixelSize: Qt.application.font.pixelSize
+            verticalAlignment: Text.AlignVCenter
+            maximumLength: 26
+            enabled: editorMode
+            property string previousName: ""
+            readonly property string empty: qsTr("No name")
+
+            onFocusChanged: {
+                if(focus) previousName = text;
+                if(!focus && text.length <= 0){
+                    if(previousName.length > 0) { text = previousName; }
+                }
+            }
+            onAccepted: {
+                if(text.length > 0){
+                    root.name = text;
+                }
+                else {
+                    if(previousName.length > 0)text = previousName;
+                }
+                nameLabel.focus = false;
+            }
+        }
+
+        Connections{
+            target:cpp_Settings
+            onControlsLabelVisibleChanged:{
+                controlName.valueFromSetting = value;
+            }
+        }
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}D{i:16;anchors_width:48}
+}
+##^##*/

@@ -61,7 +61,8 @@ Item {
                 speedlimit:control.speedlimit,
                 ports:[control.port1,control.port2,control.port3,control.port4],
                 chName:control.chName,
-                chAddress:control.chAddress
+                chAddress:control.chAddress,
+                name:control.name
             };
             var obj = component.createObject(root, propObj);
             saveState.connect(obj.save);

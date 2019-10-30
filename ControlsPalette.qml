@@ -22,12 +22,10 @@ Item {
     readonly property bool isVisible: root.visible
 
     function show(){
-        //opacity = 1;
         root.visible = true
     }
 
     function hide(){
-        //opacity = 0;
         root.visible = false
     }
 
@@ -67,6 +65,7 @@ Item {
             height: root.previewSizeSteering.height
             editorMode: false
             paletteMode: true
+            name:ConstList_Text.control_name_steering
             MouseArea{
                 anchors.fill: parent
                 onClicked: root.componentChoosed(0,root.pathArray[0], root.createNewSizeSteering.width,root.createNewSizeSteering.height)
@@ -94,6 +93,7 @@ Item {
             height: root.previewSizeMoving.height
             editorMode: false
             paletteMode: true
+            name:ConstList_Text.control_name_moving
             MouseArea{
                 anchors.fill: parent
                 onClicked: root.componentChoosed(1,root.pathArray[1], root.createNewSizeMoving.width,root.createNewSizeMoving.height)
@@ -121,6 +121,7 @@ Item {
             height: root.previewSizeButtons.height
             editorMode: false
             paletteMode: true
+            name:ConstList_Text.control_name_buttons
             MouseArea{
                 anchors.fill: parent
                 onClicked: root.componentChoosed(2,root.pathArray[2], root.createNewSizeButtons.width,root.createNewSizeButtons.height)
@@ -148,6 +149,7 @@ Item {
             height: root.previewSizeButtonsV.height
             editorMode: false
             paletteMode: true
+            name:ConstList_Text.control_name_buttonsV
             MouseArea{
                 anchors.fill: parent
                 onClicked: root.componentChoosed(3,root.pathArray[3], root.createNewSizeButtonsV.width,root.createNewSizeButtonsV.height)
@@ -175,6 +177,7 @@ Item {
             height: root.previewSizeSliderH.height
             editorMode: false
             paletteMode: true
+            name:ConstList_Text.control_name_hslider
             MouseArea{
                 anchors.fill: parent
                 onClicked: root.componentChoosed(4,root.pathArray[4], root.createNewSizeSliderH.width,root.createNewSizeSliderH.height)
@@ -202,6 +205,7 @@ Item {
             height: root.previewSizeSliderV.height
             editorMode: false
             paletteMode: true
+            name:ConstList_Text.control_name_vslider
             MouseArea{
                 anchors.fill: parent
                 onClicked: root.componentChoosed(5,root.pathArray[5], root.createNewSizeSliderV.width,root.createNewSizeSliderV.height)

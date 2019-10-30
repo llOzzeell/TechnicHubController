@@ -30,6 +30,7 @@ QtObject{
     //Settings prop title
     readonly property string settings_prop_dark: qsTr("Dark theme")
     readonly property string settings_prop_battery: qsTr("Battery % on main screen")
+    readonly property string settings_prop_labelVisible: qsTr("Name labels on controls")
     readonly property string settings_prop_tactile: qsTr("Tactile responce")
     readonly property string settings_prop_lang: qsTr("Language")
 

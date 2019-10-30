@@ -10,6 +10,8 @@ Parent{
 
     height:width
 
+    name: ConstList_Text.control_name_moving
+
     Component.onCompleted:{
         requiredParameters.ports = true;
         requiredParameters.inversion = true;

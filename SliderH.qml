@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.0
 
 import ".."
 import "qrc:/Controls"
+import Qt.labs.calendar 1.0
 
 Parent{
     id:root
@@ -11,6 +12,8 @@ Parent{
     //type: 4
     property int minWidth: Units.dp(40)
     property int maxWidth: Units.dp(70)
+
+    name: ConstList_Text.control_name_hslider
 
     onEditorModeChanged: {
         if(editorMode && root.speedValue > 0) stop();

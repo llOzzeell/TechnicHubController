@@ -4,11 +4,14 @@ import QtGraphicalEffects 1.0
 
 import ".."
 import "qrc:/Controls"
+import "qrc:/assets"
 
 Parent{
     id:root
 
     height:width
+
+    name: ConstList_Text.control_name_steering
 
     Component.onCompleted:{
         requiredParameters.ports = true;
@@ -38,6 +41,7 @@ Parent{
     }
 
     property int angle:0
+    width: 180
 
     onTouchPressed: {
         vibrate("middle");
@@ -78,31 +82,6 @@ Parent{
                 cpp_Android.vibrateMiddle();
             }
             else cpp_Android.vibrateWeak();
-
-        }
-    }
-
-    Item {
-        id: angleArrowItem
-        width: root.width
-        height: width
-        rotation: root.angle
-
-        Rectangle {
-            id: angleArrow
-            width: parent.width/8
-            height: width
-            color: Material.accent
-            anchors.topMargin: -height/2.5
-            rotation: 45
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-        }
-
-        Behavior on rotation {
-            NumberAnimation{
-                duration: 100
-            }
         }
     }
 
@@ -111,6 +90,38 @@ Parent{
         anchors.fill: parent
         borderWidth: Units.dp(6)
         borderColor: ConstList_Color.controls_border_color
+
+//        Item {
+//            id: angleArrowItem
+//            width: root.width
+//            height: width
+//            rotation: root.angle
+
+//            Behavior on rotation {
+//                NumberAnimation{
+//                    duration: 100
+//                }
+//            }
+
+//            Image {
+//                id: image
+//                width: Units.dp(32)
+//                height: Units.dp(32)
+//                anchors.horizontalCenterOffset: 0
+//                anchors.topMargin: background.borderWidth * 1.2
+//                anchors.top: parent.top
+//                anchors.horizontalCenter: parent.horizontalCenter
+//                source: "qrc:/assets/icons/angleArrow.svg"
+//                visible: false
+//            }
+
+//            ColorOverlay{
+//                source:image
+//                anchors.fill: image
+//                color:Material.accent
+//                rotation:-90
+//            }
+//        }
     }
 
     Rectangle {
@@ -241,3 +252,10 @@ Parent{
 
 
 }
+
+/*##^##
+Designer {
+    D{i:4;anchors_height:96;anchors_width:96;anchors_x:-59;anchors_y:-57}D{i:3;anchors_y:46}
+D{i:5;anchors_y:46}
+}
+##^##*/

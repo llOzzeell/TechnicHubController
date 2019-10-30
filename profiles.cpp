@@ -17,8 +17,8 @@ QDataStream& operator << (QDataStream &out, const Control &p)
         << p.port3
         << p.port4
         << p.controlledHubName
-        << p.controlledHubAddress;
-
+        << p.controlledHubAddress
+        << p.name;
     return out;
 }
 
@@ -38,8 +38,8 @@ QDataStream& operator >> (QDataStream &in, Control &p)
        >> p.port3
        >> p.port4
        >> p.controlledHubName
-       >> p.controlledHubAddress;
-
+       >> p.controlledHubAddress
+       >> p.name;
     return in;
 }
 
@@ -167,30 +167,14 @@ void Profiles::p_addOrUpdateControl(int index, QString cid, QVariantMap jscontro
     con.port4 = qvariant_cast<quint8>(jscontrol.value("port4"));
     con.controlledHubName = qvariant_cast<QString>(jscontrol.value("chName"));
     con.controlledHubAddress = qvariant_cast<QString>(jscontrol.value("chAddress"));
+    con.name = qvariant_cast<QString>(jscontrol.value("name"));
     profiles[index].addOrUpdateControl(cid, con);
-//    qDebug() << "GET FROM QML";
-//    qDebug()<< "|cid: " << con.cid
-//            << "|type: " << con.type
-//            << "|width: " << con.width
-//            << "|height: " << con.height
-//            << "|x: " << con.x
-//            << "|y: " << con.y
-//            << "|inverted: " << con.inverted
-//            << "|servoangle: " << con.servoAngle
-//            << "|speedlimit: " << con.speedLimit
-//            << "|p1: " << con.port1
-//            << "|p2: " << con.port2
-//            << "|p3: " << con.port3
-//            << "|p4: " << con.port4;
 
     saveFile();
 }
 
 void Profiles::p_deleteControl(int index, QString cid)
 {
-    //if(index < 0 && index > profiles.count()) return;
-    //qDebug() << "DELETE CONTROL count: " << profiles[index].getCount();
     profiles[index].deleteControl(cid);
     saveFile();
-    //qDebug() << "after DELETE CONTROL count: " << profiles[index].getCount();
 }

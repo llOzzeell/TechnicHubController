@@ -47,6 +47,7 @@
         <file>icons/forwardArrow.svg</file>
         <file>icons/reverseArrow.svg</file>
         <file>icons/notReady.svg</file>
+        <file>icons/angleArrow.svg</file>
     </qresource>
     <qresource prefix="/Controls">
         <file>Sidepanel_Delegate.qml</file>

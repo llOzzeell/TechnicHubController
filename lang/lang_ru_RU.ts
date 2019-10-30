@@ -4,19 +4,16 @@
 <context>
     <name>About</name>
     <message>
-        <location filename="../About.qml" line="24"/>
         <source>Version: 1.2</source>
-        <translation>Версия: 1.2</translation>
+        <translation type="vanished">Версия: 1.2</translation>
     </message>
     <message>
-        <location filename="../About.qml" line="39"/>
         <source>Rate the app for support</source>
-        <translation>Оцените приложение</translation>
+        <translation type="vanished">Оцените приложение</translation>
     </message>
     <message>
-        <location filename="../About.qml" line="53"/>
         <source>Link to the forum</source>
-        <translation>Ссылка на форум</translation>
+        <translation type="vanished">Ссылка на форум</translation>
     </message>
     <message>
         <source>Rate the app for support.</source>
@@ -26,16 +23,31 @@
         <source>Link to the forum.</source>
         <translation type="vanished">Ссылка на форум</translation>
     </message>
+    <message>
+        <location filename="../About.qml" line="30"/>
+        <source>Version: 1.2.1</source>
+        <translation>Версия: 1.2.2</translation>
+    </message>
+    <message>
+        <location filename="../About.qml" line="44"/>
+        <source>Rate the app</source>
+        <translation>Оценить приложение</translation>
+    </message>
+    <message>
+        <location filename="../About.qml" line="59"/>
+        <source>Forum</source>
+        <translation>Форум</translation>
+    </message>
 </context>
 <context>
     <name>AvailableDevices</name>
     <message>
-        <location filename="../AvailableDevices.qml" line="47"/>
+        <location filename="../AvailableDevices.qml" line="48"/>
         <source>No connected hubs</source>
         <translation>Нет подключенных хабов</translation>
     </message>
     <message>
-        <location filename="../AvailableDevices.qml" line="79"/>
+        <location filename="../AvailableDevices.qml" line="85"/>
         <source>Hub </source>
         <translation>Хаб</translation>
     </message>
@@ -43,7 +55,7 @@
 <context>
     <name>ConnectedDevices</name>
     <message>
-        <location filename="../ConnectedDevices.qml" line="74"/>
+        <location filename="../ConnectedDevices.qml" line="81"/>
         <source>No connected hubs.</source>
         <translation>Нет подключенных хабов.</translation>
     </message>
@@ -51,7 +63,7 @@
 <context>
     <name>ConnectedDevices_Delegate</name>
     <message>
-        <location filename="../ConnectedDevices_Delegate.qml" line="132"/>
+        <location filename="../ConnectedDevices_Delegate.qml" line="64"/>
         <source>Battery</source>
         <translation>Батарея</translation>
     </message>
@@ -78,7 +90,7 @@
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="18"/>
-        <location filename="../ConstList_Text.qml" line="48"/>
+        <location filename="../ConstList_Text.qml" line="50"/>
         <source>Connected hubs</source>
         <translation>Подключенные хабы</translation>
     </message>
@@ -129,71 +141,81 @@
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="32"/>
+        <source>Battery % on main screen</source>
+        <translation>Заряд Батареи на гл. экране</translation>
+    </message>
+    <message>
+        <location filename="../ConstList_Text.qml" line="33"/>
+        <source>Name labels on controls</source>
+        <translation>Ярлыки имен на эл. управления</translation>
+    </message>
+    <message>
+        <location filename="../ConstList_Text.qml" line="34"/>
         <source>Tactile responce</source>
         <translation>Тактильная отдача</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="33"/>
+        <location filename="../ConstList_Text.qml" line="35"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="36"/>
+        <location filename="../ConstList_Text.qml" line="38"/>
         <source>New profile</source>
         <translation>Новый профиль</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="39"/>
+        <location filename="../ConstList_Text.qml" line="41"/>
         <source>Steering</source>
         <translation>Рулевое управление</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="40"/>
+        <location filename="../ConstList_Text.qml" line="42"/>
         <source>Moving</source>
         <translation>Передвижение</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="41"/>
+        <location filename="../ConstList_Text.qml" line="43"/>
         <source>Buttons</source>
         <translation>Кнопки</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="42"/>
+        <location filename="../ConstList_Text.qml" line="44"/>
         <source>Buttons vert.</source>
         <translation>Кнопки верт.</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="43"/>
+        <location filename="../ConstList_Text.qml" line="45"/>
         <source>Slider</source>
         <translation>Слайдер</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="44"/>
+        <location filename="../ConstList_Text.qml" line="46"/>
         <source>Slider vert.</source>
         <translation>Слайдер верт.</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="47"/>
+        <location filename="../ConstList_Text.qml" line="49"/>
         <source>Hub ports</source>
         <translation>Порты хаба</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="49"/>
+        <location filename="../ConstList_Text.qml" line="51"/>
         <source>Inversion</source>
         <translation>Инверсия</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="50"/>
+        <location filename="../ConstList_Text.qml" line="52"/>
         <source>Servo angle</source>
         <translation>Угол серво</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="51"/>
+        <location filename="../ConstList_Text.qml" line="53"/>
         <source>Motor speed</source>
         <translation>Скорость мотора</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="54"/>
+        <location filename="../ConstList_Text.qml" line="56"/>
         <source>Profile is empty. Add items in editor mode.</source>
         <translation>Профиль пуст. Добавьте элементы в режиме редактора.</translation>
     </message>
@@ -201,7 +223,7 @@
 <context>
     <name>ControlsPropertyPage</name>
     <message>
-        <location filename="../ControlsPropertyPage.qml" line="206"/>
+        <location filename="../ControlsPropertyPage.qml" line="240"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -209,20 +231,28 @@
 <context>
     <name>EmptyProfile</name>
     <message>
-        <location filename="../EmptyProfile.qml" line="33"/>
+        <location filename="../EmptyProfile.qml" line="34"/>
         <source>Editor</source>
         <translation>Редактор</translation>
     </message>
 </context>
 <context>
+    <name>Parent</name>
+    <message>
+        <location filename="../Parent.qml" line="291"/>
+        <source>No name</source>
+        <translation>Без имени</translation>
+    </message>
+</context>
+<context>
     <name>ProfilePlayer</name>
     <message>
-        <location filename="../ProfilePlayer.qml" line="92"/>
+        <location filename="../ProfilePlayer.qml" line="101"/>
         <source>No hub is connected, only editor mode is available.</source>
         <translation>Нет подключенных хабов, доступен только режим редактора.</translation>
     </message>
     <message>
-        <location filename="../ProfilePlayer.qml" line="110"/>
+        <location filename="../ProfilePlayer.qml" line="126"/>
         <source>Lost connection with one of the hubs. Reconnect to continue.</source>
         <translation>Потеряно соединение с одним из хабов. Переподключите для продолжения.</translation>
     </message>
@@ -238,7 +268,7 @@
 <context>
     <name>Profiles_Delegate</name>
     <message>
-        <location filename="../Profiles_Delegate.qml" line="172"/>
+        <location filename="../Profiles_Delegate.qml" line="175"/>
         <source>No name</source>
         <translation>Без имени</translation>
     </message>

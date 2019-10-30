@@ -238,8 +238,8 @@ Item {
         id: saveButton
         height: Units.dp(44)
         text: qsTr("Close")
-        rightPadding: Units.dp(24)
-        leftPadding: Units.dp(24)
+        rightPadding: Units.dp(12)
+        leftPadding: Units.dp(12)
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: Qt.application.font.pixelSize
         anchors.bottom: parent.bottom

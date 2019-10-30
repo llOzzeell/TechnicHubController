@@ -14,6 +14,7 @@ Item {
         taptick.checked = cpp_Settings.getTapTick();
         comboBox.currentIndex = cpp_Settings.getLanguage();
         hubInfoVisible.checked = cpp_Settings.getHubInfo();
+        controlsLabelVisible.checked = cpp_Settings.getControlsLabelsVisible();
     }
 
     Column {
@@ -71,12 +72,33 @@ Item {
         }
 
         Settings_Delegate {
+            id: prop_controlsLabels
+            width: parent.width
+            height: Units.dp(40)
+            text: ConstList_Text.settings_prop_labelVisible
+            isGroupTitle: false
+
+            CustomSwitch {
+                id: controlsLabelVisible
+                width: Units.dp(38)
+                height: Units.dp(48)
+                anchors.verticalCenter: parent.verticalCenter
+                checked: false
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                onCheckedChanged: cpp_Settings.setControlsLabelsVisible(checked)
+            }
+
+        }
+
+        Settings_Delegate {
             id: group_control
             width: parent.width
             height: Units.dp(40)
             text: ConstList_Text.settings_group_control
             isGroupTitle: true
         }
+
 
 
         Settings_Delegate {
@@ -98,6 +120,7 @@ Item {
         }
 
 
+
         Settings_Delegate {
             id: group_regional
             width: parent.width
@@ -105,6 +128,7 @@ Item {
             text: ConstList_Text.settings_group_regional
             isGroupTitle: true
         }
+
 
 
         Settings_Delegate {
@@ -134,6 +158,7 @@ Item {
                 }
             }
         }
+
 
     }
 }

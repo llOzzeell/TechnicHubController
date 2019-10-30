@@ -26,6 +26,7 @@ struct Control{
     QString cid = "";
     QString controlledHubName = "";
     QString controlledHubAddress = "";
+    QString name = "";
 
     friend QDataStream& operator <<(QDataStream &out, const Control &p);
     friend QDataStream& operator >>(QDataStream &in, Control &p);
@@ -58,9 +59,7 @@ public:
     }
 
     void deleteControl(QString cid){
-        qDebug() << "DELETE CONTROL count: " << controls.count() << " cid: " << cid;
         controls.remove(cid);
-        qDebug() << "after DELETE CONTROL count: " << controls.count();
     }
 
     QVariantMap getControlJs(int index){
@@ -81,6 +80,7 @@ public:
         var.insert("port4", con.port4);
         var.insert("chName", con.controlledHubName);
         var.insert("chAddress", con.controlledHubAddress);
+        var.insert("name", con.name);
         return var;
     }
 

@@ -12,6 +12,8 @@ Parent{
     property int minWidth: Units.dp(40)
     property int maxWidth: Units.dp(70)
 
+    name: ConstList_Text.control_name_vslider
+
     onEditorModeChanged: {
         if(editorMode && root.speedValue > 0) stop();
     }

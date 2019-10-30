@@ -15,6 +15,8 @@ Parent{
     property int minWidth: Units.dp(70)
     property int maxWidth: Units.dp(120)
 
+    name: ConstList_Text.control_name_buttonsV
+
     Component.onCompleted:{
 
         root.rotatePropItem = 90;

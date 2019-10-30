@@ -16,7 +16,7 @@
 class AppSettings: public QObject{
     Q_OBJECT
 public:
-    AppSettings(QQmlApplicationEngine *engine):darkMode(true), tapTick(true), hubInfo(true), currentLanguage(0){
+    AppSettings(QQmlApplicationEngine *engine):darkMode(true), tapTick(true), hubInfo(true), controlsLabelVisible(true), currentLanguage(0){
 
         loadFile();
         translator.setEngine(engine);
@@ -34,12 +34,14 @@ private:
     QQuickWindow *window = nullptr;
     Translator translator;
     int currentLanguage;
+    bool controlsLabelVisible;
 
 signals:
 
     void themeChanged(bool value);
     void taptickChanged(bool value);
     void hubInfoChanged(bool value);
+    void controlsLabelVisibleChanged(bool value);
 
 public slots:
 
@@ -61,6 +63,7 @@ public slots:
             in >> tapTick;
             in >> currentLanguage;
             in >> hubInfo;
+            in >> controlsLabelVisible;
         }
         file.close();
         emit themeChanged(darkMode);
@@ -79,6 +82,7 @@ public slots:
         out << tapTick;
         out << currentLanguage;
         out << hubInfo;
+        out << controlsLabelVisible;
 
         file.close();
 
@@ -114,6 +118,16 @@ public slots:
         emit hubInfoChanged(hubInfo);
     }
 
+    bool getControlsLabelsVisible() const{
+        return controlsLabelVisible;
+    }
+
+    void setControlsLabelsVisible(bool value){
+        controlsLabelVisible = value;
+        saveFile();
+        emit controlsLabelVisibleChanged(controlsLabelVisible);
+    }
+
     void setImmersiveMode(bool value){
         if(window != nullptr){
             if(value) window->showFullScreen();
@@ -131,12 +145,9 @@ public slots:
         else{
             translator.selectLanguage("ru_RU");
         }
-
-        qDebug() << "CURRENT LANG set: " << currentLanguage;
     }
 
     int getLanguage(){
-        qDebug() << "CURRENT LANG get: " << currentLanguage;
         return currentLanguage;
     }
 };

@@ -18,13 +18,13 @@ Parent{
         requiredParameters.multichoose = true;
     }
 
-    property int minWidth: Units.dp(150)
-    property int maxWidth: Units.dp(190)
+    property int minWidth: Units.dp(160)
+    property int maxWidth: Units.dp(200)
 
     onSizeMinusClicked: {
         if(width > minWidth) {
 
-            width -= Units.dp(10);
+            width -= Units.dp(20);
             height = width;
         }
         touchPoint.y = root.height/2 - touchPoint.height/2
@@ -33,7 +33,7 @@ Parent{
     onSizePlusClicked: {
         if(width < maxWidth) {
 
-            width += Units.dp(10);
+            width += Units.dp(20);
             height = width;
         }
         touchPoint.y = root.height/2 - touchPoint.height/2

@@ -14,7 +14,6 @@
         <file>Finder.qml</file>
         <file>Profiles.qml</file>
         <file>SidePanel.qml</file>
-        <file>MainScreen.qml</file>
         <file>Settings.qml</file>
         <file>About.qml</file>
         <file>Connector.qml</file>

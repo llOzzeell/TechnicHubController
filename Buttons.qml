@@ -13,8 +13,8 @@ Parent{
     height: width/2
 
     //type: 2
-    property int minWidth: Units.dp(70)
-    property int maxWidth: Units.dp(120)
+    property int minWidth: Units.dp(100)
+    property int maxWidth: Units.dp(140)
 
     name: ConstList_Text.control_name_buttons
 
@@ -28,7 +28,7 @@ Parent{
     onSizeMinusClicked: {
         if(height > minWidth) {
 
-            height -= Units.dp(10);
+            height -= Units.dp(20);
             width = height*2;
         }
     }
@@ -36,7 +36,7 @@ Parent{
     onSizePlusClicked: {
         if(height < maxWidth) {
 
-            height += Units.dp(10);
+            height += Units.dp(20);
             width = height*2;
         }
     }

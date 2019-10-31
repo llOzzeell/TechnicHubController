@@ -10,12 +10,6 @@ Item {
     visible: false
     z: 11
 
-//    Behavior on opacity{
-//        NumberAnimation{
-//            duration: 200
-//        }
-//    }
-
     signal componentChoosed(int type, string path, int width, int height)
     onComponentChoosed: hide()
 
@@ -37,15 +31,15 @@ Item {
     property var previewSizeMoving:{"width": Units.dp(160), "height":Units.dp(160)}
     property var previewSizeButtons:{"width": Units.dp(180), "height":Units.dp(90)}
     property var previewSizeButtonsV:{"width": Units.dp(90), "height":Units.dp(180)}
-    property var previewSizeSliderH:{"width": Units.dp(200), "height":Units.dp(50)}
-    property var previewSizeSliderV:{"width": Units.dp(50), "height":Units.dp(200)}
+    property var previewSizeSliderH:{"width": Units.dp(200), "height":Units.dp(60)}
+    property var previewSizeSliderV:{"width": Units.dp(60), "height":Units.dp(200)}
 
-    property var createNewSizeSteering:{"width": Units.dp(150), "height":Units.dp(150)}
-    property var createNewSizeMoving:{"width": Units.dp(150), "height":Units.dp(150)}
-    property var createNewSizeButtons:{"width": Units.dp(140), "height":Units.dp(70)}
-    property var createNewSizeButtonsV:{"width": Units.dp(70), "height":Units.dp(140)}
-    property var createNewSizeSliderH:{"width": Units.dp(250), "height":Units.dp(50)}
-    property var createNewSizeSliderV:{"width": Units.dp(50), "height":Units.dp(250)}
+    property var createNewSizeSteering:{"width": Units.dp(160), "height":Units.dp(160)}
+    property var createNewSizeMoving:{"width": Units.dp(160), "height":Units.dp(160)}
+    property var createNewSizeButtons:{"width": Units.dp(200), "height":Units.dp(100)}
+    property var createNewSizeButtonsV:{"width": Units.dp(100), "height":Units.dp(200)}
+    property var createNewSizeSliderH:{"width": Units.dp(240), "height":Units.dp(60)}
+    property var createNewSizeSliderV:{"width": Units.dp(60), "height":Units.dp(240)}
 
 
     property var pathArray:[
@@ -55,8 +49,6 @@ Item {
                 "qrc:/ModelsControls/ButtonsV.qml",
                     "qrc:/ModelsControls/SliderH.qml",
                         "qrc:/ModelsControls/SliderV.qml"]
-
-
 
     Component{
         id: joySteering

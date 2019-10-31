@@ -75,8 +75,8 @@ Item {
             currentProfileIndex: root.currentProfileIndex,
             cid: root.generateCID(),
             type:type,
-            "x": root.width/2-width/2,
-            "y": root.height/2-height/2,
+            "x": canvas.startX + canvas.cellSize*2,
+            "y": canvas.startY + canvas.cellSize*2,
             "width": width,
             "height": height,
             inverted:false,
@@ -93,6 +93,68 @@ Item {
 
     function showPropertyPage(link){
         controlPropertyList.show(link);
+    }
+
+    property alias realCellSize:canvas.cellSize
+    property alias startX:canvas.startX
+    property alias startY:canvas.startY
+
+    Canvas{
+        id:canvas
+        anchors.fill: parent
+        visible: editorMode
+
+        property int cellSize: Units.dp(40)
+
+        property int verticalLineCount: parseInt(root.height / cellSize);
+        property int startY: parseInt((root.height - ((verticalLineCount-1) * cellSize))/2)
+        property int horizontalLinecount: parseInt(root.width / cellSize);
+        property int startX: parseInt((root.width - ((horizontalLinecount-1) * cellSize))/2)
+
+        onPaint: {
+            var ctx = canvas.getContext("2d");
+
+            ctx.reset();
+
+            var cellDevidedY = parseInt(root.height / (cellSize/2));
+            var cellDevidedX = parseInt(root.width / (cellSize/2));
+
+            for(var i = 0; i < cellDevidedY; i++){
+                ctx.lineWidth = Units.dp(1);
+                ctx.strokeStyle = Qt.darker(Material.primary, 1.5);
+                ctx.beginPath();
+                ctx.moveTo(0, parseInt(startY-cellSize/2) + (cellSize * i));
+                ctx.lineTo(root.width, parseInt(startY-cellSize/2) + (cellSize * i));
+                ctx.stroke();
+            }
+
+            for(i = 0; i < cellDevidedX; i++){
+                ctx.lineWidth = Units.dp(1);
+                ctx.strokeStyle = Qt.darker(Material.primary, 1.5);
+                ctx.beginPath();
+                ctx.moveTo(parseInt(startX-cellSize/2) + (cellSize * i), 0);
+                ctx.lineTo(parseInt(startX-cellSize/2) + (cellSize * i), root.width);
+                ctx.stroke();
+            }
+
+            for(i = 0; i < verticalLineCount; i++){
+                ctx.lineWidth = Units.dp(1);
+                ctx.strokeStyle = Qt.darker(Material.primary, 1);
+                ctx.beginPath();
+                ctx.moveTo(0, startY + (cellSize * i));
+                ctx.lineTo(root.width, startY + (cellSize * i));
+                ctx.stroke();
+            }
+
+            for(i = 0; i < horizontalLinecount; i++){
+                ctx.lineWidth = Units.dp(1);
+                ctx.strokeStyle = Qt.darker(Material.primary, 1);
+                ctx.beginPath();
+                ctx.moveTo(startX + (cellSize * i), 0);
+                ctx.lineTo(startX + (cellSize * i), root.height);
+                ctx.stroke();
+            }
+        }
     }
 
     Label {
@@ -262,5 +324,6 @@ Item {
         opacity: 0.6
         z:1
     }
+
 }
 

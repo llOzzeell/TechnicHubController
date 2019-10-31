@@ -9,8 +9,8 @@ Parent{
     id:root
     height: width*4
     //type: 4
-    property int minWidth: Units.dp(40)
-    property int maxWidth: Units.dp(70)
+    property int minWidth: Units.dp(60)
+    property int maxWidth: Units.dp(80)
 
     name: ConstList_Text.control_name_vslider
 
@@ -35,8 +35,8 @@ Parent{
     onSizeMinusClicked: {
         if(width > minWidth) {
 
-            width -= Units.dp(10);
-            height = width*5;
+            width -= Units.dp(20);
+            height = width*4;
         }
         touchPoint.y = root.height - touchPoint.height
     }
@@ -44,8 +44,8 @@ Parent{
     onSizePlusClicked: {
         if(width < maxWidth) {
 
-            width += Units.dp(10);
-            height = width*5;
+            width += Units.dp(20);
+            height = width*4;
         }
         touchPoint.y = root.height - touchPoint.height
     }

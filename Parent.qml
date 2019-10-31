@@ -33,6 +33,10 @@ Item {
     
     property string name: ""
 
+    property int startX:parent.startX
+    property int startY:parent.startY
+    property int cellSize:parent.realCellSize/2
+
     signal sizePlusClicked()
     signal sizeMinusClicked()
     signal propClicked(var link)
@@ -81,17 +85,6 @@ Item {
         notReadyItem.checkVisible()
     }
 
-    Rectangle {
-        id: glowRectangle
-        color: "#00000000"
-        anchors.fill: parent
-        anchors.margins: -Units.dp(2)
-        border.width: Units.dp(2)
-        border.color: Material.accent
-        radius: Math.min(rectangle.width, rectangle.height)/2
-        visible: root.glow
-    }
-
     MultiPointTouchArea {
         id:touchArea
         anchors.fill: parent
@@ -124,43 +117,63 @@ Item {
                 }
                 if(_touchUpdated){
 
-                    var delta = Qt.point(tpoint.x-startPoint.x, tpoint.y-startPoint.y)
-
-                    var newX = root.x + delta.x
-
-                    if(newX < 0) newX = 0;
-                    if(newX > Screen.width - root.width) newX = Screen.width - root.width;
-
-                    if(newX > 0 && newX < Screen.width - root.width){
-                        root.x += delta.x;
+                    if(Math.abs(tpoint.x-touchArea.startPoint.x) > root.cellSize){
+                        if(tpoint.x-touchArea.startPoint.x > 0){
+                            root.x += root.cellSize;
+                        }
+                        else{
+                            root.x -= root.cellSize;
+                        }
                     }
-
-                    var newY = (root.y + delta.y)
-
-                    if(newY < controlName.topMarginValue) newY = controlName.topMarginValue;
-                    if(newY > Screen.height - root.height) newY = Screen.height - root.height;
-
-                    if(newY > controlName.topMarginValue && newY < Screen.height - root.height){
-                        root.y += delta.y;
+                    if(Math.abs(tpoint.y-touchArea.startPoint.y) > root.cellSize){
+                        if(tpoint.y-touchArea.startPoint.y > 0){
+                            root.y += root.cellSize;
+                        }
+                        else{
+                            root.y -= root.cellSize;
+                        }
                     }
                 }
             }
         }
     }
 
-    Item {
-        id: propButtonsItem
+    Rectangle {
+        id: editorModeFade
+        color: Material.background
+        radius: Math.min(width, height)/2
+        visible: editorMode
+        z: 2
+        opacity: 0.8
         anchors.fill: parent
+    }
+
+    Rectangle {
+        id: glowRectangle
+        color: "#00000000"
+        anchors.fill: parent
+        border.width: Units.dp(1)
+        border.color: Material.accent
+        radius: Math.min(editorModeFade.width, editorModeFade.height)/2
+        z: 2
+        visible: root.glow
+    }
+
+    Rectangle {
+        id: positionFrame
+        color: "#00000000"
         z: 2
         visible: editorMode
+        border.width: Units.dp(1)
+        border.color: Material.accent
+        anchors.fill: parent
+    }
 
-        Rectangle {
-            id: rectangle
-            color: Material.background
-            radius: Math.min(width, height)/2
-            opacity: 0.8
-            anchors.fill: parent
-        }
+    Item {
+        id: propButtonsItem
+        visible: editorMode
+        anchors.fill: parent
+        z: 2
 
         Item {
             id: btnItem
@@ -210,6 +223,8 @@ Item {
         }
     }
 
+
+
     Item {
         id: notReadyItem
         anchors.fill: parent
@@ -221,9 +236,9 @@ Item {
         function checkVisible(){
             if(!paletteMode){
 
-                   if(!root.editorMode && root.chName === "" && root.chAddress === "" ||
-                      !root.editorMode && ports[0] === 0 && ports[1] === 0 && ports[2] === 0 && ports[3] === 0 ) notReadyItem.visible = true;
-                   else notReadyItem.visible = false;
+                if(!root.editorMode && root.chName === "" && root.chAddress === "" ||
+                        !root.editorMode && ports[0] === 0 && ports[1] === 0 && ports[2] === 0 && ports[3] === 0 ) notReadyItem.visible = true;
+                else notReadyItem.visible = false;
             }
             else notReadyItem.visible = false;
         }
@@ -258,6 +273,7 @@ Item {
             }
         }
     }
+
 
     RoundButton {
         id: controlName
@@ -316,10 +332,13 @@ Item {
             }
         }
     }
+
 }
+
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:16;anchors_width:48}
+    D{i:0;autoSize:true;height:480;width:640}D{i:5;anchors_height:200;anchors_width:200}
+D{i:17;anchors_width:48}
 }
 ##^##*/

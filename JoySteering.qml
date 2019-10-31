@@ -19,13 +19,13 @@ Parent{
         requiredParameters.servoangle = true;
     }
 
-    property int minWidth: Units.dp(150)
-    property int maxWidth: Units.dp(190)
+    property int minWidth: Units.dp(160)
+    property int maxWidth: Units.dp(200)
 
     onSizeMinusClicked: {
         if(width > minWidth) {
 
-            width -= Units.dp(10);
+            width -= Units.dp(20);
             height = width;
         }
         touchPoint.x = root.width/2 - touchPoint.width/2
@@ -34,14 +34,14 @@ Parent{
     onSizePlusClicked: {
         if(width < maxWidth) {
 
-            width += Units.dp(10);
+            width += Units.dp(20);
             height = width;
         }
         touchPoint.x = root.width/2 - touchPoint.width/2
     }
 
     property int angle:0
-    width: 180
+    width: 160
 
     onTouchPressed: {
         vibrate("middle");

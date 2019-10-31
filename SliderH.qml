@@ -10,8 +10,8 @@ Parent{
     id:root
     height: width/4
     //type: 4
-    property int minWidth: Units.dp(40)
-    property int maxWidth: Units.dp(70)
+    property int minWidth: Units.dp(60)
+    property int maxWidth: Units.dp(80)
 
     name: ConstList_Text.control_name_hslider
 
@@ -33,16 +33,16 @@ Parent{
     onSizeMinusClicked: {
         if(height > minWidth) {
 
-            height -= Units.dp(10);
-            width = height*5;
+            height -= Units.dp(20);
+            width = height*4;
         }
     }
 
     onSizePlusClicked: {
         if(height < maxWidth) {
 
-            height += Units.dp(10);
-            width = height*5;
+            height += Units.dp(20);
+            width = height*4;
         }
     }
 

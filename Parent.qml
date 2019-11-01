@@ -33,9 +33,7 @@ Item {
     
     property string name: ""
 
-    property int startX:parent.startX
-    property int startY:parent.startY
-    property int cellSize:parent.realCellSize/2
+    property int cellSize: parent.cellSize
 
     signal sizePlusClicked()
     signal sizeMinusClicked()
@@ -85,6 +83,12 @@ Item {
         notReadyItem.checkVisible()
     }
 
+    property bool gridSnap:true
+
+    function setGridSnap(value){
+        gridSnap = value;
+    }
+
     MultiPointTouchArea {
         id:touchArea
         anchors.fill: parent
@@ -116,25 +120,62 @@ Item {
                     touchArea.startPoint.y = tpoint.y;
                 }
                 if(_touchUpdated){
-
-                    if(Math.abs(tpoint.x-touchArea.startPoint.x) > root.cellSize){
-                        if(tpoint.x-touchArea.startPoint.x > 0){
-                            root.x += root.cellSize;
-                        }
-                        else{
-                            root.x -= root.cellSize;
-                        }
+                    if(root.gridSnap){
+                        withBinding();
                     }
-                    if(Math.abs(tpoint.y-touchArea.startPoint.y) > root.cellSize){
-                        if(tpoint.y-touchArea.startPoint.y > 0){
-                            root.y += root.cellSize;
-                        }
-                        else{
-                            root.y -= root.cellSize;
-                        }
+                    else{
+                        absolute();
                     }
                 }
             }
+        }
+
+        function absolute(){
+            var delta = Qt.point(tpoint.x-startPoint.x, tpoint.y-startPoint.y)
+
+            var newX = root.x + delta.x
+
+            if(newX < 0) newX = 0;
+            if(newX > Screen.width - root.width) newX = Screen.width - root.width;
+
+            if(newX > 0 && newX < Screen.width - root.width){
+                root.x += delta.x;
+            }
+
+            var newY = (root.y + delta.y)
+
+            if(newY < controlName.topMarginValue) newY = controlName.topMarginValue;
+            if(newY > Screen.height - root.height) newY = Screen.height - root.height;
+
+            if(newY > controlName.topMarginValue && newY < Screen.height - root.height){
+                root.y += delta.y;
+            }
+        }
+
+        function withBinding(){
+            if(Math.abs(tpoint.x-touchArea.startPoint.x) > root.cellSize){
+                snapToGrid();
+                if(tpoint.x-touchArea.startPoint.x > 0){
+                    root.x += root.cellSize;
+                }
+                else{
+                    root.x -= root.cellSize;
+                }
+            }
+            if(Math.abs(tpoint.y-touchArea.startPoint.y) > root.cellSize){
+                snapToGrid();
+                if(tpoint.y-touchArea.startPoint.y > 0){
+                    root.y += root.cellSize;
+                }
+                else{
+                    root.y -= root.cellSize;
+                }
+            }
+        }
+
+        function snapToGrid(){
+            console.log("--------------------------------")
+            console.log("--------------------------------")
         }
     }
 
@@ -163,7 +204,7 @@ Item {
         id: positionFrame
         color: "#00000000"
         z: 2
-        visible: editorMode
+        visible: editorMode && gridSnap
         border.width: Units.dp(1)
         border.color: Material.accent
         anchors.fill: parent
@@ -218,12 +259,10 @@ Item {
                 icon.height: Units.dp(24)
                 icon.source: "qrc:/assets/icons/settings.svg"
                 anchors.verticalCenter: sizeP.verticalCenter
-                onClicked: if(root.editorMode)root.parent.showPropertyPage(root);
+                onClicked: if(root.editorMode)root.parent.showProperty(root);
             }
         }
     }
-
-
 
     Item {
         id: notReadyItem
@@ -273,7 +312,6 @@ Item {
             }
         }
     }
-
 
     RoundButton {
         id: controlName
@@ -335,10 +373,3 @@ Item {
 
 }
 
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}D{i:5;anchors_height:200;anchors_width:200}
-D{i:17;anchors_width:48}
-}
-##^##*/

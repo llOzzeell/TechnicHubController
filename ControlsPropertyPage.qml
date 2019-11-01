@@ -26,7 +26,6 @@ Item {
         flickable.contentY = 0;
     }
 
-
     CustomPane{
         id:background
         anchors.fill: parent
@@ -270,9 +269,3 @@ Item {
     }
 
 }
-
-/*##^##
-Designer {
-    D{i:2;anchors_height:300;anchors_width:300;anchors_x:0;anchors_y:57}D{i:19;anchors_width:200}
-}
-##^##*/

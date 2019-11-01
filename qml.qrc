@@ -18,6 +18,7 @@
         <file>About.qml</file>
         <file>Connector.qml</file>
         <file>ProfilePlayer.qml</file>
+        <file>VisualEditor.qml</file>
     </qresource>
     <qresource prefix="/assets">
         <file>icons/toolbar_menu.svg</file>
@@ -42,6 +43,8 @@
         <file>icons/reverseArrow.svg</file>
         <file>icons/notReady.svg</file>
         <file>icons/angleArrow.svg</file>
+        <file>icons/gridON.svg</file>
+        <file>icons/gridOFF.svg</file>
     </qresource>
     <qresource prefix="/Controls">
         <file>Sidepanel_Delegate.qml</file>

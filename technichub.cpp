@@ -1,6 +1,6 @@
 #include "technichub.h"
 
-Technichub::Technichub()
+Technichub::Technichub():lastServoValue(0)
 {
 
 }
@@ -104,18 +104,12 @@ void Technichub::characteristicUpdated(const QLowEnergyCharacteristic &character
 
 void Technichub::parseCharsUpdates(const QByteArray &newValue)
 {
-    static int oldBattery = 0;
-
     if(newValue[2] == 1){ // hub property
-        if(newValue[3] == 6 && newValue[4] == 6)batteryLevel = newValue[5]; // battery % value updated
+        if(newValue[3] == 6 && newValue[4] == 6){
+            batteryLevel = newValue[5]; // battery % value updated
+            emit paramsChanged(address, name, getParamList());
+        }
     }
-
-    if(oldBattery != batteryLevel){
-
-        emit paramsChanged(address, name, getParamList());
-    }
-
-    oldBattery = batteryLevel;
 }
 
 /////////////////////////////////////////////////
@@ -126,6 +120,7 @@ void Technichub::writeNoResponce(QByteArray &data)
 
     if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithoutResponse);
     else qDebug() << "service1623 == nullptr: "<< service1623;
+
 }
 
 void Technichub::writeResponce(QByteArray &data)
@@ -134,6 +129,7 @@ void Technichub::writeResponce(QByteArray &data)
 
     if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithResponse);
     else qDebug() << "service1623 == nullptr: "<< service1623;
+
 }
 
 /////////////////////////////////////////////////////
@@ -183,30 +179,12 @@ void Technichub::setBatteryUpdates(bool value)
     stream << quint8(0); // common header \ message length
     stream << quint8(0);
     stream << quint8(1);
-    stream << quint8(6);
+    stream << quint8(6); // prop type
+    stream << quint8(0); //operation
 
-    quint8 trigger = value ? 2 : 3;
-
-    stream << trigger;
     data[0] = quint8(data.count());
-    writeNoResponce(data);
-}
 
-void Technichub::setRSSIUpdates(bool value)
-{
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::ReadWrite);
-    stream.setByteOrder(QDataStream::LittleEndian);
-
-    stream << quint8(0); // common header \ message length
-    stream << quint8(0);
-    stream << quint8(1);
-    stream << quint8(5);
-
-    quint8 trigger = value ? 2 : 3;
-
-    stream << trigger;
-    data[0] = quint8(data.count());
+    data[4] = value ? 2 : 3;
     writeNoResponce(data);
 }
 
@@ -254,8 +232,92 @@ QStringList Technichub::getParamList()
     return list;
 }
 
+quint8 Technichub::calcServoSpeed(int current, int target)
+{
+    if(qAbs(target - current) <= 5) return quint8(10);
+        if(qAbs(target - current) <= 10) return quint8(15);
+        if(qAbs(target - current) <= 20) return quint8(25);
+        if(qAbs(target - current) <= 40) return quint8(45);
+        if(qAbs(target - current) >= 50) return quint8(65);
+        if(qAbs(target - current) >= 70) return quint8(99);
+
+        return quint8(99);
+}
+
+quint8 Technichub::calcServoPower(int current, int target)
+{
+    if(qAbs(target - current) <= 5) return quint8(30);
+        if(qAbs(target - current) <= 10) return quint8(35);
+        if(qAbs(target - current) <= 20) return quint8(45);
+        if(qAbs(target - current) <= 40) return quint8(50);
+        if(qAbs(target - current) >= 50) return quint8(60);
+
+        return quint8(59);
+}
+
 bool Technichub::isConnected()
 {
     if(controller->state() != QLowEnergyController::ConnectedState) return false;
     else return true;
 }
+
+void Technichub::runMotor(int speed, int p1, int p2, int p3, int p4)
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::ReadWrite);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    if(speed == 0) speed = 127;
+
+    stream << quint8(0);
+    stream << quint8(0);
+    stream << quint8(0x81);
+    stream << quint8(4);
+    stream << quint8(0x11);
+    stream << quint8(0x01);
+    stream << qint8(speed);
+    stream << quint8(0x64);
+    stream << quint8(0x7f);
+    stream << quint8(0);
+    data[0] = quint8(data.count());
+
+    int portArr[4]{p1,p2,p3,p4};
+
+    for(int i = 0; i < 4; i++){
+        if(portArr[i]){
+            data[3] = Ports::getPortByIndex(i);
+            writeNoResponce(data);
+        }
+    }
+}
+
+void Technichub::rotateMotor(int angle, int p1, int p2, int p3, int p4)
+{
+    if(lastServoValue != angle){
+
+            QByteArray data;
+            QDataStream stream(&data, QIODevice::ReadWrite);
+            stream.setByteOrder(QDataStream::LittleEndian);
+
+            stream << quint8(0);
+            stream << quint8(0);
+            stream << quint8(0x81);
+            stream << quint8(Ports::getServoPort(p1, p2, p3, p4));
+            stream << quint8(0x11);
+            stream << quint8(0x0d);
+            stream << qint32(angle);
+
+            stream << calcServoSpeed(lastServoValue, angle);
+            stream << calcServoPower(lastServoValue, angle);
+
+            stream << quint8(0x7e);
+            stream << quint8(0);
+
+            data[0] = quint8(data.count());
+            writeNoResponce(data);
+            lastServoValue = angle;
+    }
+}
+
+
+

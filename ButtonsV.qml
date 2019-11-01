@@ -11,7 +11,7 @@ import "qrc:/Controls"
 Parent{
     id:root
    height: width*2
-    //type: 3
+
     property int minWidth: Units.dp(100)
     property int maxWidth: Units.dp(140)
 

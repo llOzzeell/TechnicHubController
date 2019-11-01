@@ -23,7 +23,7 @@ Item {
 
     property bool taptic: cpp_Settings.getTapTick();
 
-    property int cellSize: vEditor.cellSize
+    property var gridParamArray:{"gridSnap": vEditor.gridSnap, "cellSize":canvas.cellSize, "startX":canvas.startX, "startY":canvas.startY}
 
     Connections{
         target:cpp_Settings
@@ -71,6 +71,34 @@ Item {
         vEditor.showPropertyPage(element);
     }
 
+    function generateCID(){
+        var cid = (+new Date).toString(16);
+        return cid;
+    }
+
+    function createNewControl(type, path, width, height){
+        var component = Qt.createComponent(path)
+        var propObj = {
+            currentProfileIndex: root.currentProfileIndex,
+            cid: root.generateCID(),
+            type:type,
+            "x": gridParamArray.startX + gridParamArray.cellSize*4,
+            "y": gridParamArray.startY + gridParamArray.cellSize*4,
+            "width": width,
+            "height": height,
+            inverted:false,
+            servoangle:90,
+            speedlimit:100,
+            ports:[0,0,0,0],
+            chName:"",
+            chAddress:"",
+            z:0
+        };
+        var obj = component.createObject(root, propObj);
+        saveState.connect(obj.save);
+        emptyLoaded = false;
+    }
+
     Connections{
         target:cpp_Connector
         onQmlDisconnected:{
@@ -78,10 +106,52 @@ Item {
         }
     }
 
+    Canvas{
+        id:canvas
+        anchors.fill: parent
+        visible: editorMode && vEditor.gridSnap
+
+        property int cellSize: Units.dp(20)
+
+        property int verticalLineCount: parseInt(root.height / cellSize);
+        property int startY: parseInt( (root.height - (verticalLineCount-1) * cellSize)/2 )
+        property int horizontalLineCount: parseInt(root.width / cellSize);
+        property int startX: parseInt( (root.width - (horizontalLineCount-1) * cellSize)/2 )
+
+        onPaint: {
+            var ctx = canvas.getContext("2d");
+
+            ctx.reset();
+
+            var lineDarker = cpp_Settings.getDarkMode() ? 1.5 : 2
+            var lineLighter = cpp_Settings.getDarkMode() ? 1 : 1.5
+
+            for(var i = 0; i < verticalLineCount; i++){
+                ctx.lineWidth = Units.dp(1);
+
+                ctx.strokeStyle = i % 2 == 0 ? Qt.darker(Material.primary, lineLighter) : Qt.darker(Material.primary, lineDarker)
+                ctx.beginPath();
+                ctx.moveTo(0, startY + (cellSize * i));
+                ctx.lineTo(root.width, startY + (cellSize * i));
+                ctx.stroke();
+            }
+
+            for(i = 0; i < horizontalLineCount; i++){
+                ctx.lineWidth = Units.dp(1);
+                ctx.strokeStyle = i % 2 == 0 ? Qt.darker(Material.primary, lineLighter) : Qt.darker(Material.primary, lineDarker)
+                ctx.beginPath();
+                ctx.moveTo(startX + (cellSize * i), 0);
+                ctx.lineTo(startX + (cellSize * i), root.height);
+                ctx.stroke();
+            }
+        }
+    }
+
     Label {
         id: lostConnectionLabel
         height: Units.dp(26)
         text: qsTr("Lost connection with one of the hubs. Reconnect to continue.")
+        z: 2
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: editButton.verticalCenter
         verticalAlignment: Text.AlignVCenter
@@ -90,7 +160,6 @@ Item {
         font.pixelSize: Qt.application.font.pixelSize
         visible: false
         opacity: 0.6
-        z: 10
     }
 
     ToolButton {
@@ -113,6 +182,7 @@ Item {
 
     EmptyProfile {
         id: emptyProfile
+        z: 2
         anchors.fill: parent
         visible: (!root.editorMode && root.emptyLoaded)
         onGoEditClicked: root.editorMode = true;
@@ -132,8 +202,21 @@ Item {
 
     VisualEditor{
         id:vEditor
+        z: 3
         anchors.fill: parent
         visible: editorMode
+        onCreateNew:{
+            root.createNewControl(type, path, width, height);
+        }
+        onSaveClicked: {
+            root.saveState();
+            if(cpp_Controller.isNotEmpty()){
+                root.editorMode = false;
+            }
+            else{
+                stackView.pop();
+            }
+        }
     }
 }
 

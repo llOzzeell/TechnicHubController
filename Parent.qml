@@ -33,7 +33,7 @@ Item {
     
     property string name: ""
 
-    property int cellSize: parent.cellSize
+    property var gridParamArray: parent.gridParamArray
 
     signal sizePlusClicked()
     signal sizeMinusClicked()
@@ -83,12 +83,6 @@ Item {
         notReadyItem.checkVisible()
     }
 
-    property bool gridSnap:true
-
-    function setGridSnap(value){
-        gridSnap = value;
-    }
-
     MultiPointTouchArea {
         id:touchArea
         anchors.fill: parent
@@ -120,7 +114,7 @@ Item {
                     touchArea.startPoint.y = tpoint.y;
                 }
                 if(_touchUpdated){
-                    if(root.gridSnap){
+                    if(gridParamArray.gridSnap){
                         withBinding();
                     }
                     else{
@@ -153,29 +147,57 @@ Item {
         }
 
         function withBinding(){
-            if(Math.abs(tpoint.x-touchArea.startPoint.x) > root.cellSize){
+
+            if(!isBounded()){
                 snapToGrid();
-                if(tpoint.x-touchArea.startPoint.x > 0){
-                    root.x += root.cellSize;
-                }
-                else{
-                    root.x -= root.cellSize;
-                }
             }
-            if(Math.abs(tpoint.y-touchArea.startPoint.y) > root.cellSize){
-                snapToGrid();
-                if(tpoint.y-touchArea.startPoint.y > 0){
-                    root.y += root.cellSize;
+
+            moveX(); moveY();
+        }
+
+        function moveX(){
+            if(Math.abs(tpoint.x-touchArea.startPoint.x) > gridParamArray.cellSize){
+
+                var moveToRight = (tpoint.x-touchArea.startPoint.x > 0);
+
+                if(moveToRight){
+                    if((root.x + gridParamArray.cellSize + root.width) > root.parent.width)return;
                 }
                 else{
-                    root.y -= root.cellSize;
+                    if((root.x - gridParamArray.cellSize) < 0)return;
                 }
+
+                root.x += moveToRight ? gridParamArray.cellSize : -gridParamArray.cellSize;
+            }
+        }
+
+        function moveY(){
+            if(Math.abs(tpoint.y-touchArea.startPoint.y) > gridParamArray.cellSize){
+
+                var moveToBottom = (tpoint.y-touchArea.startPoint.y > 0);
+
+                if(moveToBottom){
+                    if((root.y + gridParamArray.cellSize + root.height) > root.parent.height)return;
+                }
+                else{
+                    if((root.y - gridParamArray.cellSize) < 0)return;
+                }
+
+                root.y += moveToBottom ? gridParamArray.cellSize : -gridParamArray.cellSize;
             }
         }
 
         function snapToGrid(){
-            console.log("--------------------------------")
-            console.log("--------------------------------")
+            root.x -= (root.x - gridParamArray.startX) % gridParamArray.cellSize;
+            root.y -= (root.y - gridParamArray.startY) % gridParamArray.cellSize;
+        }
+
+        function isBounded(){
+
+            var xshift = ((root.x - gridParamArray.startX) % gridParamArray.cellSize) == 0;
+            var yshift = ((root.y - gridParamArray.startY) % gridParamArray.cellSize) == 0;
+
+            return xshift && yshift;
         }
     }
 
@@ -204,7 +226,7 @@ Item {
         id: positionFrame
         color: "#00000000"
         z: 2
-        visible: editorMode && gridSnap
+        visible: editorMode && gridParamArray.gridSnap
         border.width: Units.dp(1)
         border.color: Material.accent
         anchors.fill: parent
@@ -293,7 +315,7 @@ Item {
             id: mouseArea
             z: 2
             anchors.fill: parent
-            onClicked: root.parent.showPropertyPage(root);
+            onClicked: root.parent.showProperty(root);
         }
 
         Image {

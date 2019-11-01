@@ -11,6 +11,30 @@
 #include <QDataStream>
 #include <QtMath>
 
+struct Ports{
+
+    static const quint8 A = 0;
+    static const quint8 B = 1;
+    static const quint8 C = 2;
+    static const quint8 D = 3;
+
+    static quint8 getServoPort(int p1, int p2, int p3, int p4){
+        if(p1)return A;
+        else if(p2) return B;
+        else if(p3) return C;
+        else if(p4) return D;
+        return quint8(4);
+    }
+
+    static quint8 getPortByIndex(int index){
+        if(index == 0)return A;
+        else if(index == 1) return B;
+        else if(index == 2) return C;
+        else if(index == 3) return D;
+        return quint8(4);
+    }
+};
+
 class Technichub : public QObject
 {
     Q_OBJECT
@@ -32,6 +56,8 @@ private:
     QString address=""; // using in qml
     quint8 batteryLevel=0; // using in qml
 
+    int lastServoValue;
+
 signals:
 
     void lostConnection(QString address, QString name);
@@ -39,8 +65,6 @@ signals:
     void successConnected(QString address, int type);
 
     void batteryLevelUpdated(int battery);
-
-    void rssiLevelUpdated(int rssi);
 
     void paramsChanged(QString address, QString name, QStringList list);
 
@@ -72,7 +96,15 @@ public slots:
 
     bool isConnected();
 
+    void runMotor(int speed, int p1, int p2, int p3, int p4);
+
+    void rotateMotor(int angle, int p1, int p2, int p3, int p4);
+
 private slots:
+
+    quint8 calcServoSpeed(int current, int target);
+
+    quint8 calcServoPower(int current, int target);
 
     void getNewService(const QBluetoothUuid &s);
 
@@ -95,8 +127,6 @@ private slots:
     void disableAll();
 
     void setBatteryUpdates(bool value);
-
-    void setRSSIUpdates(bool value);
 
 };
 

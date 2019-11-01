@@ -16,7 +16,7 @@
 class AppSettings: public QObject{
     Q_OBJECT
 public:
-    AppSettings(QQmlApplicationEngine *engine):darkMode(true), tapTick(true), hubInfo(true), controlsLabelVisible(true), currentLanguage(0){
+    AppSettings(QQmlApplicationEngine *engine):darkMode(true), tapTick(true), hubInfo(true), gridSnap(true), controlsLabelVisible(true), currentLanguage(0){
 
         loadFile();
         translator.setEngine(engine);
@@ -35,6 +35,7 @@ private:
     Translator translator;
     int currentLanguage;
     bool controlsLabelVisible;
+    bool gridSnap;
 
 signals:
 
@@ -64,6 +65,7 @@ public slots:
             in >> currentLanguage;
             in >> hubInfo;
             in >> controlsLabelVisible;
+            in >> gridSnap;
         }
         file.close();
         emit themeChanged(darkMode);
@@ -83,6 +85,7 @@ public slots:
         out << currentLanguage;
         out << hubInfo;
         out << controlsLabelVisible;
+        out << gridSnap;
 
         file.close();
 
@@ -126,6 +129,15 @@ public slots:
         controlsLabelVisible = value;
         saveFile();
         emit controlsLabelVisibleChanged(controlsLabelVisible);
+    }
+
+    bool getGridSnap(){
+        return gridSnap;
+    }
+
+    void setGridSnap(bool value){
+        gridSnap = value;
+        saveFile();
     }
 
     void setImmersiveMode(bool value){

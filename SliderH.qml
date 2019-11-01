@@ -9,7 +9,6 @@ import Qt.labs.calendar 1.0
 Parent{
     id:root
     height: width/4
-    //type: 4
     property int minWidth: Units.dp(60)
     property int maxWidth: Units.dp(80)
 

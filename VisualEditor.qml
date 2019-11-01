@@ -13,101 +13,16 @@ Item {
     height: parent.height
     onHeightChanged: canvas.requestPaint();
 
+    signal createNew(int type, string path, int width, int height)
+
     property var linkToPalette: controlsPalette
 
-    property int cellSize:canvas.cellSize/2
+    property alias gridSnap: gridButton.gridSnap
 
-    signal gridSnapChanged(bool value)
-
-    function generateCID(){
-        var cid = (+new Date).toString(16);
-        return cid;
-    }
-
-    function createNewControl(type, path, width, height){
-        var component = Qt.createComponent(path)
-        var propObj = {
-            currentProfileIndex: root.currentProfileIndex,
-            cid: root.generateCID(),
-            type:type,
-            "x": canvas.startX + canvas.cellSize*2,
-            "y": canvas.startY + canvas.cellSize*2,
-            "width": width,
-            "height": height,
-            inverted:false,
-            servoangle:90,
-            speedlimit:100,
-            ports:[0,0,0,0],
-            chName:"",
-            chAddress:"",
-            z:0
-        };
-        var obj = component.createObject(parent, propObj);
-        parent.saveState.connect(obj.save);
-        gridSnapChanged.connect(obj.setGridSnap);
-        parent.emptyLoaded = false;
-    }
+    signal saveClicked()
 
     function showPropertyPage(link){
         controlPropertyList.show(link);
-    }
-
-    Canvas{
-        id:canvas
-        anchors.fill: parent
-        visible: gridButton.gridSnap
-
-        property int cellSize: Units.dp(40)
-
-        property int verticalLineCount: parseInt(root.height / cellSize);
-        property int startY: parseInt((root.height - ((verticalLineCount-1) * cellSize))/2)
-        property int horizontalLinecount: parseInt(root.width / cellSize);
-        property int startX: parseInt((root.width - ((horizontalLinecount-1) * cellSize))/2)
-
-        onPaint: {
-            var ctx = canvas.getContext("2d");
-
-            ctx.reset();
-
-            var cellDevidedY = parseInt(root.height / (cellSize/2));
-            var cellDevidedX = parseInt(root.width / (cellSize/2));
-
-            for(var i = 0; i < cellDevidedY; i++){
-                ctx.lineWidth = Units.dp(1);
-                ctx.strokeStyle = Qt.darker(Material.primary, 1.5);
-                ctx.beginPath();
-                ctx.moveTo(0, parseInt(startY-cellSize/2) + (cellSize * i));
-                ctx.lineTo(root.width, parseInt(startY-cellSize/2) + (cellSize * i));
-                ctx.stroke();
-            }
-
-            for(i = 0; i < cellDevidedX; i++){
-                ctx.lineWidth = Units.dp(1);
-                ctx.strokeStyle = Qt.darker(Material.primary, 1.5);
-                ctx.beginPath();
-                ctx.moveTo(parseInt(startX-cellSize/2) + (cellSize * i), 0);
-                ctx.lineTo(parseInt(startX-cellSize/2) + (cellSize * i), root.width);
-                ctx.stroke();
-            }
-
-            for(i = 0; i < verticalLineCount; i++){
-                ctx.lineWidth = Units.dp(1);
-                ctx.strokeStyle = Qt.darker(Material.primary, 1);
-                ctx.beginPath();
-                ctx.moveTo(0, startY + (cellSize * i));
-                ctx.lineTo(root.width, startY + (cellSize * i));
-                ctx.stroke();
-            }
-
-            for(i = 0; i < horizontalLinecount; i++){
-                ctx.lineWidth = Units.dp(1);
-                ctx.strokeStyle = Qt.darker(Material.primary, 1);
-                ctx.beginPath();
-                ctx.moveTo(startX + (cellSize * i), 0);
-                ctx.lineTo(startX + (cellSize * i), root.height);
-                ctx.stroke();
-            }
-        }
     }
 
     Label {
@@ -188,11 +103,11 @@ Item {
         icon.width: Units.dp(24)
         font.pixelSize: Qt.application.font.pixelSize
 
-        property bool gridSnap: true
+        property bool gridSnap: cpp_Settings.getGridSnap();
 
         onClicked: {
             gridSnap = !gridSnap;
-            root.gridSnapChanged(gridSnap);
+            cpp_Settings.setGridSnap(gridSnap);
         }
     }
 
@@ -212,7 +127,8 @@ Item {
         visible: !editButton.visible
         font.pixelSize: Qt.application.font.pixelSize
         onClicked: {
-
+            if(controlsPalette.isVisible)controlsPalette.hide();
+            root.saveClicked();
         }
     }
 
@@ -220,10 +136,10 @@ Item {
         id: controlsPalette
         width: root.width
         height: root.height
-        z: 5
+        z: 1
         anchors.fill: parent
         enabled: isVisible
-        onComponentChoosed: createNewControl(type, path, width, height);
+        onComponentChoosed: root.createNew(type, path, width, height);
     }
 }
 

@@ -5,7 +5,6 @@ import ".."
 
 Item {
     id:root
-    z: 10
 
     Rectangle {
         id: rectangle

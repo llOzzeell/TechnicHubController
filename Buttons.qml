@@ -12,7 +12,6 @@ Parent{
     id:root
     height: width/2
 
-    //type: 2
     property int minWidth: Units.dp(100)
     property int maxWidth: Units.dp(140)
 

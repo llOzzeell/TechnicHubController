@@ -16,7 +16,6 @@ Item {
     Connections{
         target:cpp_Settings
         onHubInfoChanged:{
-            console.log("HUBINFO: " + value);
             hubInfoVisible = value;
         }
     }

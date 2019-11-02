@@ -24,9 +24,17 @@
         <translation type="vanished">Ссылка на форум</translation>
     </message>
     <message>
-        <location filename="../About.qml" line="30"/>
         <source>Version: 1.2.1</source>
-        <translation>Версия: 1.2.2</translation>
+        <translation type="vanished">Версия: 1.2.2</translation>
+    </message>
+    <message>
+        <source>Version: 1.3</source>
+        <translation type="obsolete">Версия: 1.2.2 {1.3?}</translation>
+    </message>
+    <message>
+        <location filename="../About.qml" line="30"/>
+        <source>Version: </source>
+        <translation>Версия: </translation>
     </message>
     <message>
         <location filename="../About.qml" line="44"/>
@@ -142,12 +150,12 @@
     <message>
         <location filename="../ConstList_Text.qml" line="32"/>
         <source>Battery % on main screen</source>
-        <translation>Заряд Батареи на гл. экране</translation>
+        <translation>Отображать заряд бат. при игре</translation>
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="33"/>
         <source>Name labels on controls</source>
-        <translation>Ярлыки имен на эл. управления</translation>
+        <translation>Отображать имя элемента упр.</translation>
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="34"/>
@@ -223,7 +231,7 @@
 <context>
     <name>ControlsPropertyPage</name>
     <message>
-        <location filename="../ControlsPropertyPage.qml" line="240"/>
+        <location filename="../ControlsPropertyPage.qml" line="239"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -231,7 +239,7 @@
 <context>
     <name>EmptyProfile</name>
     <message>
-        <location filename="../EmptyProfile.qml" line="34"/>
+        <location filename="../EmptyProfile.qml" line="33"/>
         <source>Editor</source>
         <translation>Редактор</translation>
     </message>
@@ -239,7 +247,7 @@
 <context>
     <name>Parent</name>
     <message>
-        <location filename="../Parent.qml" line="291"/>
+        <location filename="../Parent.qml" line="369"/>
         <source>No name</source>
         <translation>Без имени</translation>
     </message>
@@ -247,12 +255,11 @@
 <context>
     <name>ProfilePlayer</name>
     <message>
-        <location filename="../ProfilePlayer.qml" line="101"/>
         <source>No hub is connected, only editor mode is available.</source>
-        <translation>Нет подключенных хабов, доступен только режим редактора.</translation>
+        <translation type="vanished">Нет подключенных хабов, доступен только режим редактора.</translation>
     </message>
     <message>
-        <location filename="../ProfilePlayer.qml" line="126"/>
+        <location filename="../ProfilePlayer.qml" line="153"/>
         <source>Lost connection with one of the hubs. Reconnect to continue.</source>
         <translation>Потеряно соединение с одним из хабов. Переподключите для продолжения.</translation>
     </message>
@@ -271,6 +278,14 @@
         <location filename="../Profiles_Delegate.qml" line="175"/>
         <source>No name</source>
         <translation>Без имени</translation>
+    </message>
+</context>
+<context>
+    <name>VisualEditor</name>
+    <message>
+        <location filename="../VisualEditor.qml" line="31"/>
+        <source>No hub is connected, only editor mode is available.</source>
+        <translation>Нет подключенных хабов, доступен только режим редактора.</translation>
     </message>
 </context>
 </TS>

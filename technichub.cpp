@@ -116,7 +116,7 @@ void Technichub::parseCharsUpdates(const QByteArray &newValue)
 
 void Technichub::writeNoResponce(QByteArray &data)
 {
-    debugOutHex(data, "set:");
+    //debugOutHex(data, "set:");
 
     if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithoutResponse);
     else qDebug() << "service1623 == nullptr: "<< service1623;
@@ -125,7 +125,7 @@ void Technichub::writeNoResponce(QByteArray &data)
 
 void Technichub::writeResponce(QByteArray &data)
 {
-    debugOutHex(data, "set:");
+    //debugOutHex(data, "set:");
 
     if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithResponse);
     else qDebug() << "service1623 == nullptr: "<< service1623;

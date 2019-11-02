@@ -27,7 +27,7 @@ Item {
     Label {
         id: appVersion
         height: Units.dp(26)
-        text: qsTr("Version: 1.2.1")
+        text: qsTr("Version: ") + "1.3"
         anchors.top: appName.bottom
         anchors.topMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter

@@ -22,6 +22,7 @@ Parent{
         requiredParameters.inversion = true;
         requiredParameters.speedlimit = true;
         requiredParameters.multichoose = true;
+        requiredParameters.workAsServo = true;
     }
 
     onSizeMinusClicked: {
@@ -95,7 +96,8 @@ Parent{
                 reverse.color = Qt.lighter(Material.accent, 1.2);
                 reverse.isPressed = true;
 
-                cpp_Controller.runMotor(inverted? speedlimit: -speedlimit, chAddress, ports[0], ports[1], ports[2], ports[3])
+                if(!workAsServo)cpp_Controller.runMotor(inverted? speedlimit: -speedlimit, chAddress, ports[0], ports[1], ports[2], ports[3])
+                else cpp_Controller.rotateMotor(inverted? servoangle: -servoangle, chAddress, ports[0], ports[1], ports[2], ports[3]);
             }
 
             function release(){
@@ -103,7 +105,8 @@ Parent{
                 reverse.color = Material.primary;
                 reverse.isPressed = false;
 
-                cpp_Controller.runMotor(0, chAddress, ports[0], ports[1], ports[2], ports[3])
+                if(!workAsServo)cpp_Controller.runMotor(0, chAddress, ports[0], ports[1], ports[2], ports[3])
+                else cpp_Controller.rotateMotor(0, chAddress, ports[0], ports[1], ports[2], ports[3]);
             }
 
             ToolButton{
@@ -153,7 +156,8 @@ Parent{
                 forward.color = Qt.lighter(Material.accent, 1.2);
                 forward.isPressed = true;
 
-                cpp_Controller.runMotor(inverted? -speedlimit: speedlimit, chAddress, ports[0], ports[1], ports[2], ports[3])
+                if(!workAsServo)cpp_Controller.runMotor(inverted? -speedlimit: speedlimit, chAddress, ports[0], ports[1], ports[2], ports[3])
+                else cpp_Controller.rotateMotor(inverted? -servoangle: servoangle, chAddress, ports[0], ports[1], ports[2], ports[3]);
             }
 
             function release(){
@@ -161,7 +165,8 @@ Parent{
                 forward.color = Material.primary;
                 forward.isPressed = false;
 
-                cpp_Controller.runMotor(0, chAddress, ports[0], ports[1], ports[2], ports[3])
+                if(!workAsServo)cpp_Controller.runMotor(0, chAddress, ports[0], ports[1], ports[2], ports[3])
+                else cpp_Controller.rotateMotor(0, chAddress, ports[0], ports[1], ports[2], ports[3]);
             }
 
             ToolButton{

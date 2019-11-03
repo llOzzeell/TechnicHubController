@@ -278,7 +278,7 @@ void Technichub::runMotor(int speed, int p1, int p2, int p3, int p4)
     stream << qint8(speed);
     stream << quint8(0x64);
     stream << quint8(0x7f);
-    stream << quint8(0);
+    stream << quint8(0x2);
     data[0] = quint8(data.count());
 
     int portArr[4]{p1,p2,p3,p4};

@@ -15,6 +15,7 @@ Item {
             inverted.checked = linkToControl.inverted;
             servo.value = linkToControl.servoangle;
             speedlimit.value = linkToControl.speedlimit;
+            workAsServo.checked = linkToControl.workAsServo;
             availablePorts.linkToPortsArrayOfControl = linkToControl.ports;
             availableDevices.loadDeviceList();
         }
@@ -50,7 +51,6 @@ Item {
         Column {
             id: column
             width: parent.width
-            height: inversionsItem.height + servoItem.height + speedlimitItem.height + portsItem.height + devicesItem.height + 6 * spacing
             spacing: Units.dp(10)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.margins: Units.dp(20)
@@ -83,6 +83,48 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     onCheckedChanged:{
                         linkToControl.inverted = checked;
+                    }
+                }
+            }
+
+            Item{
+                id:workAsServoItem
+                height:Units.dp(40)
+                width:parent.width
+                visible: linkToControl !== undefined ? linkToControl.requiredParameters.workAsServo : false
+
+                Label {
+                    height: Units.dp(26)
+                    text: ConstList_Text.control_propertypage_workasservo
+                    fontSizeMode: Text.VerticalFit
+                    anchors.right: inverted.left
+                    anchors.rightMargin: 0
+                    verticalAlignment: Text.AlignVCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: Qt.application.font.pixelSize
+                }
+                CustomSwitch {
+                    id:workAsServo
+                    width: Units.dp(38)
+                    height: Units.dp(48)
+                    checked: false
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    onCheckedChanged:{
+                        linkToControl.workAsServo = checked;
+
+                        linkToControl.requiredParameters.servoangle = checked;
+                        linkToControl.requiredParameters.speedlimit = !checked;
+                        linkToControl.requiredParameters.multichoose = !checked;
+                        availablePorts.multipleChoose = !checked;
+
+                        servoItem.visible = checked;
+                        speedlimitItem.visible = !checked;
+
+                        availablePorts.clear();
                     }
                 }
             }
@@ -228,7 +270,6 @@ Item {
                     anchors.left: parent.left
                 }
             }
-
 
         }
     }

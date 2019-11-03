@@ -60,7 +60,8 @@ Item {
                 chName:control.chName,
                 chAddress:control.chAddress,
                 name:control.name,
-                z:0
+                z:0,
+                workAsServo:control.workAsServo
             };
             var obj = component.createObject(root, propObj);
             saveState.connect(obj.save);
@@ -92,7 +93,8 @@ Item {
             ports:[0,0,0,0],
             chName:"",
             chAddress:"",
-            z:0
+            z:0,
+            workAsServo:false
         };
         var obj = component.createObject(root, propObj);
         saveState.connect(obj.save);

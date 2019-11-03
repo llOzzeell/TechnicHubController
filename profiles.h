@@ -27,6 +27,7 @@ struct Control{
     QString controlledHubName = "";
     QString controlledHubAddress = "";
     QString name = "";
+    bool workAsServo = false;
 
     friend QDataStream& operator <<(QDataStream &out, const Control &p);
     friend QDataStream& operator >>(QDataStream &in, Control &p);
@@ -81,6 +82,7 @@ public:
         var.insert("chName", con.controlledHubName);
         var.insert("chAddress", con.controlledHubAddress);
         var.insert("name", con.name);
+        var.insert("workAsServo", con.workAsServo);
         return var;
     }
 

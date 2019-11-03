@@ -29,7 +29,14 @@ Item {
                 port.Material.background = Material.primary
             }
         })
-   }
+    }
+
+    function clear(){
+        buttonsArray.forEach(function(port, index){
+            linkToPortsArrayOfControl[index] = 0;
+            port.Material.background = Material.primary;
+        })
+    }
 
     Row {
         id: row

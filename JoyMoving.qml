@@ -15,6 +15,7 @@ Parent{
     Component.onCompleted:{
         requiredParameters.ports = true;
         requiredParameters.inversion = true;
+        requiredParameters.speedlimit = true;
         requiredParameters.multichoose = true;
     }
 
@@ -55,7 +56,7 @@ Parent{
         if(sp % 10 == 0 || sp % 5 == 0){
             speedReady(sp);
         }
-        if(sp % 10 == 0 && sp > -100 && sp < 100){
+        if(sp % 10 == 0 && sp > -speedlimit && sp < speedlimit){
             vibrate("weak");
         }
     }
@@ -64,7 +65,7 @@ Parent{
         if(y < touchPoint.width/2) y = (touchPoint.width/2);
         if(y > root.width - touchPoint.width/2) y = (root.width - touchPoint.width/2);
         touchPoint.y = y-touchPoint.width/2;
-        var sp = Math.round(100 * 2/(root.width-touchPoint.width)*(y - root.width/2));
+        var sp = Math.round(speedlimit * 2/(root.width-touchPoint.width)*(y - root.width/2));
         speed = -sp;
         return -sp;
     }

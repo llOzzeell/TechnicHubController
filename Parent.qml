@@ -33,6 +33,8 @@ Item {
     
     property string name: ""
 
+    property bool workAsServo: false
+
     property var gridParamArray: parent.gridParamArray
 
     signal sizePlusClicked()
@@ -43,7 +45,7 @@ Item {
     signal touchReleased(int x, int y);
     signal touchUpdated(int x, int y)
 
-    property var requiredParameters:{"ports":false,"inversion":false,"servoangle":false, "speedlimit":false, "multichoose":false}
+    property var requiredParameters:{"ports":false,"inversion":false,"servoangle":false, "speedlimit":false, "multichoose":false, "workAsServo":false}
 
     property bool editorMode:root.parent.editorMode
     onEditorModeChanged: {
@@ -70,7 +72,8 @@ Item {
             port4: ports[3],
             chName: chName,
             chAddress: chAddress,
-            name: name};
+            name: name,
+            workAsServo: workAsServo};
         cpp_Profiles.p_addOrUpdateControl(currentProfileIndex, cid, propObj);
     }
 

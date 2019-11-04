@@ -61,7 +61,8 @@ Item {
                 chAddress:control.chAddress,
                 name:control.name,
                 z:0,
-                workAsServo:control.workAsServo
+                workAsServo:control.workAsServo,
+                scaleStep:control.scaleStep
             };
             var obj = component.createObject(root, propObj);
             saveState.connect(obj.save);
@@ -94,7 +95,8 @@ Item {
             chName:"",
             chAddress:"",
             z:0,
-            workAsServo:false
+            workAsServo:false,
+            scaleStep:0
         };
         var obj = component.createObject(root, propObj);
         saveState.connect(obj.save);
@@ -220,5 +222,6 @@ Item {
             }
         }
     }
+
 }
 

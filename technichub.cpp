@@ -114,22 +114,13 @@ void Technichub::parseCharsUpdates(const QByteArray &newValue)
 
 /////////////////////////////////////////////////
 
-void Technichub::writeNoResponce(QByteArray &data)
+void Technichub::writeData(QByteArray &data)
 {
     //debugOutHex(data, "set:");
 
-    if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithoutResponse);
-    else qDebug() << "service1623 == nullptr: "<< service1623;
+    if(service1623 == nullptr)return;
 
-}
-
-void Technichub::writeResponce(QByteArray &data)
-{
-    //debugOutHex(data, "set:");
-
-    if(service1623)service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithResponse);
-    else qDebug() << "service1623 == nullptr: "<< service1623;
-
+    service1623->writeCharacteristic(chars1624,data,QLowEnergyService::WriteWithoutResponse);
 }
 
 /////////////////////////////////////////////////////
@@ -185,7 +176,26 @@ void Technichub::setBatteryUpdates(bool value)
     data[0] = quint8(data.count());
 
     data[4] = value ? 2 : 3;
-    writeNoResponce(data);
+    writeData(data);
+}
+
+void Technichub::setDecelerationProfile(quint8 port, quint16 time)
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::ReadWrite);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    stream << quint8(0);
+    stream << quint8(0);
+    stream << quint8(0x81);
+    stream << port;
+    stream << quint8(0x10);
+    stream << quint8(0x06);
+    stream << time;
+    stream << quint8(0);
+    data[0] = quint8(data.count());
+
+    writeData(data);
 }
 
 ///////////////////////////////////
@@ -277,8 +287,7 @@ void Technichub::runMotor(int speed, int p1, int p2, int p3, int p4)
     stream << quint8(0x01);
     stream << qint8(speed);
     stream << quint8(0x64);
-    stream << quint8(0x7f);
-    stream << quint8(0x2);
+    stream << quint8(0x0);
     data[0] = quint8(data.count());
 
     int portArr[4]{p1,p2,p3,p4};
@@ -286,7 +295,7 @@ void Technichub::runMotor(int speed, int p1, int p2, int p3, int p4)
     for(int i = 0; i < 4; i++){
         if(portArr[i]){
             data[3] = Ports::getPortByIndex(i);
-            writeNoResponce(data);
+            writeData(data);
         }
     }
 }
@@ -314,7 +323,7 @@ void Technichub::rotateMotor(int angle, int p1, int p2, int p3, int p4)
             stream << quint8(0);
 
             data[0] = quint8(data.count());
-            writeNoResponce(data);
+            writeData(data);
             lastServoValue = angle;
     }
 }

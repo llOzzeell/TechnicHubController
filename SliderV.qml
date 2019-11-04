@@ -7,9 +7,8 @@ import "qrc:/Controls"
 
 Parent{
     id:root
-    height: width*4
-    property int minWidth: Units.dp(60)
-    property int maxWidth: Units.dp(80)
+    implicitWidth:Units.dp(60)
+    implicitHeight:Units.dp(160)
 
     name: ConstList_Text.control_name_vslider
 
@@ -32,19 +31,21 @@ Parent{
     }
 
     onSizeMinusClicked: {
-        if(width > minWidth) {
+        if(scaleStep > 0) {
 
             width -= Units.dp(20);
             height = width*4;
+            scaleStep--;
         }
         touchPoint.y = root.height - touchPoint.height
     }
 
     onSizePlusClicked: {
-        if(width < maxWidth) {
+        if(scaleStep < 1) {
 
             width += Units.dp(20);
             height = width*4;
+            scaleStep++;
         }
         touchPoint.y = root.height - touchPoint.height
     }
@@ -119,15 +120,15 @@ Parent{
 
     CustomCircle{
         id:touchPoint
-        y:root.height - touchPoint.height
-        height: root.width
+        y:root.height - width
+        height:width
+        borderWidth: Units.dp(6)
+        borderColor: ConstList_Color.controls_border_color
+        color: Qt.darker(Material.primary, 1.05)
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
-        borderWidth: Units.dp(6)
-        borderColor: ConstList_Color.controls_border_color
-        color: Qt.darker(Material.primary, 1.05)
 
         property int startPoint: root.height - touchPoint.height/2
         property int endPoint: touchPoint.height/2;

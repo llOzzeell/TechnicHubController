@@ -13,6 +13,9 @@ Item {
     property bool glow:false
     property int rotatePropItem:0
 
+    property int scaleStep:0
+    onScaleStepChanged: console.log("SCALESTEP: " + scaleStep)
+
     property int currentProfileIndex:-1
 
     property string cid:""
@@ -73,7 +76,8 @@ Item {
             chName: chName,
             chAddress: chAddress,
             name: name,
-            workAsServo: workAsServo};
+            workAsServo: workAsServo,
+            scaleStep: scaleStep};
         cpp_Profiles.p_addOrUpdateControl(currentProfileIndex, cid, propObj);
     }
 

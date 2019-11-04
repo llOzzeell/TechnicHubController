@@ -9,7 +9,8 @@ import "qrc:/assets"
 Parent{
     id:root
 
-    height:width
+    implicitWidth: Units.dp(160)
+    implicitHeight: Units.dp(160)
 
     name: ConstList_Text.control_name_steering
 
@@ -19,29 +20,27 @@ Parent{
         requiredParameters.servoangle = true;
     }
 
-    property int minWidth: Units.dp(160)
-    property int maxWidth: Units.dp(200)
-
     onSizeMinusClicked: {
-        if(width > minWidth) {
+        if(scaleStep > 0) {
 
             width -= Units.dp(20);
             height = width;
+            scaleStep--;
         }
         touchPoint.x = root.width/2 - touchPoint.width/2
     }
 
     onSizePlusClicked: {
-        if(width < maxWidth) {
+        if(scaleStep < 2) {
 
             width += Units.dp(20);
             height = width;
+            scaleStep++;
         }
         touchPoint.x = root.width/2 - touchPoint.width/2
     }
 
     property int angle:0
-    width: 160
 
     onTouchPressed: {
         vibrate("middle");
@@ -90,38 +89,6 @@ Parent{
         anchors.fill: parent
         borderWidth: Units.dp(6)
         borderColor: ConstList_Color.controls_border_color
-
-//        Item {
-//            id: angleArrowItem
-//            width: root.width
-//            height: width
-//            rotation: root.angle
-
-//            Behavior on rotation {
-//                NumberAnimation{
-//                    duration: 100
-//                }
-//            }
-
-//            Image {
-//                id: image
-//                width: Units.dp(32)
-//                height: Units.dp(32)
-//                anchors.horizontalCenterOffset: 0
-//                anchors.topMargin: background.borderWidth * 1.2
-//                anchors.top: parent.top
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                source: "qrc:/assets/icons/angleArrow.svg"
-//                visible: false
-//            }
-
-//            ColorOverlay{
-//                source:image
-//                anchors.fill: image
-//                color:Material.accent
-//                rotation:-90
-//            }
-//        }
     }
 
     Rectangle {
@@ -141,7 +108,7 @@ Parent{
 
     Rectangle {
         id: directionLine
-        height: root.height/14
+        height: root.height/12
         color: ConstList_Color.controls_border_color
         radius: height/2
         anchors.right: parent.right

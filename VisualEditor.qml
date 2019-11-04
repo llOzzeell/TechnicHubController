@@ -54,19 +54,27 @@ Item {
         function show(link){
             visible = true;
             position = 1;
-            propPage.linkToControl = link;
+            loader._link = link;
+            loader.sourceComponent = propPage;
         }
 
         function collapse(){
             position = 0;
             visible = false;
-            propPage.linkToControl = undefined;
+            loader._link = undefined;
+            loader.sourceComponent = undefined;
         }
 
-        ControlsPropertyPage{
-            id:propPage
+        Loader{
+            id:loader
             anchors.fill: parent
-            onHide: controlPropertyList.collapse();
+            property var _link
+        }
+
+        Component{
+            id:propPage
+            ControlsPropertyPage{Component.onCompleted: hide.connect(controlPropertyList.collapse)}
+
         }
     }
 

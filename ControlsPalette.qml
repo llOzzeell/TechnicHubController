@@ -6,9 +6,7 @@ import "qrc:/ModelsControls"
 
 Item {
     id:root
-    //opacity: 0
     visible: false
-    z: 11
 
     signal componentChoosed(int type, string path, int width, int height)
     onComponentChoosed: hide()
@@ -27,20 +25,12 @@ Item {
         return root.pathArray[type];
     }
 
-    property var previewSizeSteering:{"width": Units.dp(160), "height":Units.dp(160)}
-    property var previewSizeMoving:{"width": Units.dp(160), "height":Units.dp(160)}
-    property var previewSizeButtons:{"width": Units.dp(180), "height":Units.dp(90)}
-    property var previewSizeButtonsV:{"width": Units.dp(90), "height":Units.dp(180)}
-    property var previewSizeSliderH:{"width": Units.dp(200), "height":Units.dp(60)}
-    property var previewSizeSliderV:{"width": Units.dp(60), "height":Units.dp(200)}
-
     property var createNewSizeSteering:{"width": Units.dp(160), "height":Units.dp(160)}
     property var createNewSizeMoving:{"width": Units.dp(160), "height":Units.dp(160)}
     property var createNewSizeButtons:{"width": Units.dp(200), "height":Units.dp(100)}
     property var createNewSizeButtonsV:{"width": Units.dp(100), "height":Units.dp(200)}
     property var createNewSizeSliderH:{"width": Units.dp(240), "height":Units.dp(60)}
     property var createNewSizeSliderV:{"width": Units.dp(60), "height":Units.dp(240)}
-
 
     property var pathArray:[
     "qrc:/ModelsControls/JoySteering.qml",
@@ -50,181 +40,26 @@ Item {
                     "qrc:/ModelsControls/SliderH.qml",
                         "qrc:/ModelsControls/SliderV.qml"]
 
-    Component{
-        id: joySteering
-        JoySteering {
-            width: root.previewSizeSteering.width
-            height: root.previewSizeSteering.height
-            editorMode: false
-            paletteMode: true
-            name:ConstList_Text.control_name_steering
-            MouseArea{
-                anchors.fill: parent
-                onClicked: root.componentChoosed(0,root.pathArray[0], root.createNewSizeSteering.width,root.createNewSizeSteering.height)
-            }
-            Label{
-                text: ConstList_Text.control_name_steering
-                anchors.topMargin: Units.dp(5)
-                anchors.top: parent.bottom
-                font.pixelSize: Qt.application.font.pixelSize * 1.2
-                font.weight: Font.Medium
-                anchors.horizontalCenter: parent.horizontalCenter
-                Behavior on opacity{
-                    NumberAnimation{
-                        duration: 1
-                    }
-                }
-            }
-        }
-    }
-
-    Component{
-        id: joyMoving
-        JoyMoving {
-            width: root.previewSizeMoving.width
-            height: root.previewSizeMoving.height
-            editorMode: false
-            paletteMode: true
-            name:ConstList_Text.control_name_moving
-            MouseArea{
-                anchors.fill: parent
-                onClicked: root.componentChoosed(1,root.pathArray[1], root.createNewSizeMoving.width,root.createNewSizeMoving.height)
-            }
-            Label{
-                text: ConstList_Text.control_name_moving
-                anchors.topMargin: Units.dp(5)
-                anchors.top: parent.bottom
-                font.pixelSize: Qt.application.font.pixelSize * 1.2
-                font.weight: Font.Medium
-                anchors.horizontalCenter: parent.horizontalCenter
-                Behavior on opacity{
-                    NumberAnimation{
-                        duration: 1
-                    }
-                }
-            }
-        }
-    }
-
-    Component{
-        id: buttons
-        Buttons {
-            width: root.previewSizeButtons.width
-            height: root.previewSizeButtons.height
-            editorMode: false
-            paletteMode: true
-            name:ConstList_Text.control_name_buttons
-            MouseArea{
-                anchors.fill: parent
-                onClicked: root.componentChoosed(2,root.pathArray[2], root.createNewSizeButtons.width,root.createNewSizeButtons.height)
-            }
-            Label{
-                text: ConstList_Text.control_name_buttons
-                anchors.topMargin: Units.dp(5)
-                anchors.top: parent.bottom
-                font.pixelSize: Qt.application.font.pixelSize * 1.2
-                font.weight: Font.Medium
-                anchors.horizontalCenter: parent.horizontalCenter
-                Behavior on opacity{
-                    NumberAnimation{
-                        duration: 1
-                    }
-                }
-            }
-        }
-    }
-
-    Component{
-        id: buttonsV
-        ButtonsV {
-            width: root.previewSizeButtonsV.width
-            height: root.previewSizeButtonsV.height
-            editorMode: false
-            paletteMode: true
-            name:ConstList_Text.control_name_buttonsV
-            MouseArea{
-                anchors.fill: parent
-                onClicked: root.componentChoosed(3,root.pathArray[3], root.createNewSizeButtonsV.width,root.createNewSizeButtonsV.height)
-            }
-            Label{
-                text: ConstList_Text.control_name_buttonsV
-                anchors.topMargin: Units.dp(5)
-                anchors.top: parent.bottom
-                font.pixelSize: Qt.application.font.pixelSize * 1.2
-                font.weight: Font.Medium
-                anchors.horizontalCenter: parent.horizontalCenter
-                Behavior on opacity{
-                    NumberAnimation{
-                        duration: 1
-                    }
-                }
-            }
-        }
-    }
-
-    Component{
-        id:hslider
-        SliderH{
-            width: root.previewSizeSliderH.width
-            height: root.previewSizeSliderH.height
-            editorMode: false
-            paletteMode: true
-            name:ConstList_Text.control_name_hslider
-            MouseArea{
-                anchors.fill: parent
-                onClicked: root.componentChoosed(4,root.pathArray[4], root.createNewSizeSliderH.width,root.createNewSizeSliderH.height)
-            }
-            Label{
-                text: ConstList_Text.control_name_hslider
-                anchors.topMargin: Units.dp(5)
-                anchors.top: parent.bottom
-                font.pixelSize: Qt.application.font.pixelSize * 1.2
-                font.weight: Font.Medium
-                anchors.horizontalCenter: parent.horizontalCenter
-                Behavior on opacity{
-                    NumberAnimation{
-                        duration: 1
-                    }
-                }
-            }
-        }
-    }
-
-    Component{
-        id:vslider
-        SliderV{
-            width: root.previewSizeSliderV.width
-            height: root.previewSizeSliderV.height
-            editorMode: false
-            paletteMode: true
-            name:ConstList_Text.control_name_vslider
-            MouseArea{
-                anchors.fill: parent
-                onClicked: root.componentChoosed(5,root.pathArray[5], root.createNewSizeSliderV.width,root.createNewSizeSliderV.height)
-            }
-            Label{
-                text: ConstList_Text.control_name_vslider
-                anchors.topMargin: Units.dp(5)
-                anchors.top: parent.bottom
-                font.pixelSize: Qt.application.font.pixelSize * 1.2
-                font.weight: Font.Medium
-                anchors.horizontalCenter: parent.horizontalCenter
-                Behavior on opacity{
-                    NumberAnimation{
-                        duration: 1
-                    }
-                }
-            }
-        }
-    }
-
     //////////////////////////////////////////////////
+
 
     Rectangle {
         id: background
-        color: Material.background
+        color: Material.primary
         anchors.fill: parent
         opacity: 0.95
+    }
+
+    Label {
+        id: label
+        text: qsTr("Palette of controls")
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.bottom: flickable.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: Qt.application.font.pixelSize * 2
     }
 
     MouseArea {
@@ -238,6 +73,7 @@ Item {
     Flickable {
         id: flickable
         height: column.height
+        maximumFlickVelocity: 3500
         flickableDirection: Flickable.HorizontalFlick
         anchors.right: parent.right
         anchors.rightMargin: column.spacing
@@ -249,15 +85,7 @@ Item {
 
         Row {
             id: column
-            width: root.previewSizeSteering.width +
-                   root.previewSizeMoving.width +
-                   root.previewSizeButtons.width +
-                   root.previewSizeButtonsV.width +
-                   root.previewSizeSliderH.width +
-                   root.previewSizeSliderV.width +
-                   spacing * 6
-
-            height: Units.dp(160)
+            height: Units.dp(240)
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 0
             anchors.top: parent.top
@@ -266,34 +94,144 @@ Item {
 
             Loader{
                 anchors.verticalCenter: parent.verticalCenter
-                sourceComponent: joySteering
+                Component.onCompleted:{ setSource("qrc:/Controls/ControlsPalette_Delegate.qml",
+                                                 {
+                                                     "width":Units.dp(400),
+                                                     "height":Units.dp(240),
+                                                     "name":ConstList_Text.control_name_steering,
+                                                     "sourceString":pathArray[0],
+                                                     "invertPossible":true,
+                                                     "steeringPossible":true,
+                                                     "servoanglePossible":true,
+                                                     "movingPossible":false,
+                                                     "speedlimitPossible":false,
+
+                                                      "type":0,
+                                                      "newWidth":Units.dp(160),
+                                                      "newHeight":Units.dp(160)
+                                                 });
+                }
+                onLoaded: item.clicked.connect(root.componentChoosed);
             }
 
             Loader{
                 anchors.verticalCenter: parent.verticalCenter
-                sourceComponent: joyMoving
+                Component.onCompleted:{ setSource("qrc:/Controls/ControlsPalette_Delegate.qml",
+                                                 {
+                                                     "width":Units.dp(400),
+                                                     "height":Units.dp(240),
+                                                     "name":ConstList_Text.control_name_moving,
+                                                     "sourceString":pathArray[1],
+                                                     "invertPossible":true,
+                                                     "steeringPossible":false,
+                                                     "servoanglePossible":false,
+                                                     "movingPossible":true,
+                                                     "speedlimitPossible":true,
+
+                                                      "type":1,
+                                                      "newWidth":Units.dp(160),
+                                                      "newHeight":Units.dp(160)
+                                                 });
+                }
+                onLoaded: item.clicked.connect(root.componentChoosed);
             }
 
             Loader{
                 anchors.verticalCenter: parent.verticalCenter
-                sourceComponent: buttons
+                Component.onCompleted:{ setSource("qrc:/Controls/ControlsPalette_Delegate.qml",
+                                                 {
+                                                     "width":Units.dp(400),
+                                                     "height":Units.dp(240),
+                                                     "name":ConstList_Text.control_name_buttons,
+                                                     "sourceString":pathArray[2],
+                                                     "invertPossible":true,
+                                                     "steeringPossible":true,
+                                                     "servoanglePossible":true,
+                                                     "movingPossible":true,
+                                                     "speedlimitPossible":true,
+
+                                                      "type":2,
+                                                      "newWidth":Units.dp(160),
+                                                      "newHeight":Units.dp(80)
+                                                 });
+                }
+                onLoaded: item.clicked.connect(root.componentChoosed);
             }
 
             Loader{
                 anchors.verticalCenter: parent.verticalCenter
-                sourceComponent: buttonsV
+                Component.onCompleted:{ setSource("qrc:/Controls/ControlsPalette_Delegate.qml",
+                                                 {
+                                                     "width":Units.dp(400),
+                                                     "height":Units.dp(240),
+                                                     "name":ConstList_Text.control_name_buttonsV,
+                                                     "sourceString":pathArray[3],
+                                                     "invertPossible":true,
+                                                     "steeringPossible":false,
+                                                     "servoanglePossible":false,
+                                                     "movingPossible":true,
+                                                     "speedlimitPossible":true,
+
+                                                      "type":3,
+                                                      "newWidth":Units.dp(80),
+                                                      "newHeight":Units.dp(160)
+                                                 });
+                }
+                onLoaded: item.clicked.connect(root.componentChoosed);
+
             }
 
             Loader{
                 anchors.verticalCenter: parent.verticalCenter
-                sourceComponent: hslider
+                Component.onCompleted:{ setSource("qrc:/Controls/ControlsPalette_Delegate.qml",
+                                                 {
+                                                     "width":Units.dp(400),
+                                                     "height":Units.dp(240),
+                                                     "name":ConstList_Text.control_name_hslider,
+                                                     "sourceString":pathArray[4],
+                                                     "invertPossible":true,
+                                                     "steeringPossible":false,
+                                                     "servoanglePossible":false,
+                                                     "movingPossible":true,
+                                                     "speedlimitPossible":false,
+
+                                                      "type":4,
+                                                      "newWidth":Units.dp(240),
+                                                      "newHeight":Units.dp(60)
+                                                 });
+                }
+                onLoaded: item.clicked.connect(root.componentChoosed);
             }
 
             Loader{
                 anchors.verticalCenter: parent.verticalCenter
-                sourceComponent: vslider
+                Component.onCompleted:{ setSource("qrc:/Controls/ControlsPalette_Delegate.qml",
+                                                 {
+                                                     "width":Units.dp(400),
+                                                     "height":Units.dp(240),
+                                                     "name":ConstList_Text.control_name_vslider,
+                                                     "sourceString":pathArray[5],
+                                                     "invertPossible":true,
+                                                     "steeringPossible":false,
+                                                     "servoanglePossible":false,
+                                                     "movingPossible":true,
+                                                     "speedlimitPossible":false,
+
+                                                      "type":5,
+                                                      "newWidth":Units.dp(60),
+                                                      "newHeight":Units.dp(240)
+                                                 });
+
+                }
+                onLoaded: item.clicked.connect(root.componentChoosed);
             }
         }
     }
+
 }
 
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

@@ -19,7 +19,8 @@ QDataStream& operator << (QDataStream &out, const Control &p)
         << p.controlledHubName
         << p.controlledHubAddress
         << p.name
-        << p.workAsServo;
+        << p.workAsServo
+        << p.scaleStep;
     return out;
 }
 
@@ -41,7 +42,8 @@ QDataStream& operator >> (QDataStream &in, Control &p)
        >> p.controlledHubName
        >> p.controlledHubAddress
        >> p.name
-       >> p.workAsServo;
+       >> p.workAsServo
+       >> p.scaleStep;
     return in;
 }
 
@@ -171,6 +173,7 @@ void Profiles::p_addOrUpdateControl(int index, QString cid, QVariantMap jscontro
     con.controlledHubAddress = qvariant_cast<QString>(jscontrol.value("chAddress"));
     con.name = qvariant_cast<QString>(jscontrol.value("name"));
     con.workAsServo = qvariant_cast<bool>(jscontrol.value("workAsServo"));
+    con.scaleStep = qvariant_cast<int>(jscontrol.value("scaleStep"));
     profiles[index].addOrUpdateControl(cid, con);
 
     saveFile();

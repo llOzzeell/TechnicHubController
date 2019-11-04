@@ -8,9 +8,8 @@ import Qt.labs.calendar 1.0
 
 Parent{
     id:root
-    height: width/4
-    property int minWidth: Units.dp(60)
-    property int maxWidth: Units.dp(80)
+    implicitWidth:Units.dp(160)
+    implicitHeight:Units.dp(60)
 
     name: ConstList_Text.control_name_hslider
 
@@ -30,18 +29,20 @@ Parent{
     }
 
     onSizeMinusClicked: {
-        if(height > minWidth) {
+        if(scaleStep > 0) {
 
             height -= Units.dp(20);
             width = height*4;
+            scaleStep--;
         }
     }
 
     onSizePlusClicked: {
-        if(height < maxWidth) {
+        if(scaleStep < 1) {
 
             height += Units.dp(20);
             width = height*4;
+            scaleStep++;
         }
     }
 
@@ -115,12 +116,15 @@ Parent{
 
     CustomCircle{
         id:touchPoint
-        width: root.height
-        height: root.height
-        anchors.verticalCenter: parent.verticalCenter
+        x:0
+        width:height
         borderWidth: Units.dp(6)
         borderColor: ConstList_Color.controls_border_color
         color: Qt.darker(Material.primary, 1.05)
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
 
         property int startPoint: touchPoint.width/2
         property int endPoint: root.width - startPoint;

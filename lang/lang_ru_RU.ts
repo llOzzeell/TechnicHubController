@@ -46,6 +46,11 @@
         <source>Forum</source>
         <translation>Форум</translation>
     </message>
+    <message>
+        <location filename="../About.qml" line="75"/>
+        <source>LEGO® is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this project.</source>
+        <translation>LEGO® is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this project.</translation>
+    </message>
 </context>
 <context>
     <name>AvailableDevices</name>
@@ -189,8 +194,32 @@
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="44"/>
+        <source>Vertical buttons</source>
+        <translation>Вертикальные кнопки</translation>
+    </message>
+    <message>
+        <location filename="../ConstList_Text.qml" line="46"/>
+        <source>Vertical slider</source>
+        <translation>Вертикальный слайдер</translation>
+    </message>
+    <message>
+        <location filename="../ConstList_Text.qml" line="49"/>
+        <source>Ports</source>
+        <translation>Порты</translation>
+    </message>
+    <message>
+        <location filename="../ConstList_Text.qml" line="53"/>
+        <source>Rotate angle</source>
+        <translation>Угол поворота</translation>
+    </message>
+    <message>
+        <location filename="../ConstList_Text.qml" line="54"/>
+        <source>Speed limit</source>
+        <translation>Лимит скорости</translation>
+    </message>
+    <message>
         <source>Buttons vert.</source>
-        <translation>Кнопки верт.</translation>
+        <translation type="vanished">Кнопки верт.</translation>
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="45"/>
@@ -198,14 +227,12 @@
         <translation>Слайдер</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="46"/>
         <source>Slider vert.</source>
-        <translation>Слайдер верт.</translation>
+        <translation type="vanished">Слайдер верт.</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="49"/>
         <source>Hub ports</source>
-        <translation>Порты хаба</translation>
+        <translation type="vanished">Порты хаба</translation>
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="51"/>
@@ -214,24 +241,68 @@
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="52"/>
+        <source>Steering mode</source>
+        <translation>Режим серво</translation>
+    </message>
+    <message>
         <source>Servo angle</source>
-        <translation>Угол серво</translation>
+        <translation type="vanished">Угол серво</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="53"/>
         <source>Motor speed</source>
-        <translation>Скорость мотора</translation>
+        <translation type="vanished">Скорость мотора</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="56"/>
+        <location filename="../ConstList_Text.qml" line="57"/>
         <source>Profile is empty. Add items in editor mode.</source>
         <translation>Профиль пуст. Добавьте элементы в режиме редактора.</translation>
     </message>
 </context>
 <context>
+    <name>ControlsPalette</name>
+    <message>
+        <location filename="../ControlsPalette.qml" line="55"/>
+        <source>Palette of controls</source>
+        <translation>Список элементов</translation>
+    </message>
+</context>
+<context>
+    <name>ControlsPalette_Delegate</name>
+    <message>
+        <location filename="../ControlsPalette_Delegate.qml" line="37"/>
+        <source>Control name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ControlsPalette_Delegate.qml" line="64"/>
+        <source>Inversion possible</source>
+        <translation>Инвертируемый</translation>
+    </message>
+    <message>
+        <location filename="../ControlsPalette_Delegate.qml" line="81"/>
+        <source>Steering possible</source>
+        <translation>Режим серво</translation>
+    </message>
+    <message>
+        <location filename="../ControlsPalette_Delegate.qml" line="98"/>
+        <source>Changable steering angle</source>
+        <translation>Изменяемый угол поворота</translation>
+    </message>
+    <message>
+        <location filename="../ControlsPalette_Delegate.qml" line="115"/>
+        <source>Moving possible</source>
+        <translation>Режим передвижения</translation>
+    </message>
+    <message>
+        <location filename="../ControlsPalette_Delegate.qml" line="132"/>
+        <source>Motor speed limit possible</source>
+        <translation>Ограничение скорости мотора</translation>
+    </message>
+</context>
+<context>
     <name>ControlsPropertyPage</name>
     <message>
-        <location filename="../ControlsPropertyPage.qml" line="239"/>
+        <location filename="../ControlsPropertyPage.qml" line="282"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -247,7 +318,7 @@
 <context>
     <name>Parent</name>
     <message>
-        <location filename="../Parent.qml" line="369"/>
+        <location filename="../Parent.qml" line="376"/>
         <source>No name</source>
         <translation>Без имени</translation>
     </message>
@@ -259,7 +330,7 @@
         <translation type="vanished">Нет подключенных хабов, доступен только режим редактора.</translation>
     </message>
     <message>
-        <location filename="../ProfilePlayer.qml" line="153"/>
+        <location filename="../ProfilePlayer.qml" line="157"/>
         <source>Lost connection with one of the hubs. Reconnect to continue.</source>
         <translation>Потеряно соединение с одним из хабов. Переподключите для продолжения.</translation>
     </message>

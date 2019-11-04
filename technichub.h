@@ -70,13 +70,11 @@ signals:
 
 public slots:
 
+    bool isConnected();
+
     void disconnect();
 
     void tryConnect(QBluetoothDeviceInfo device);
-
-    void writeNoResponce(QByteArray &data);
-
-    void writeResponce(QByteArray &data);
 
     int getType();
 
@@ -94,13 +92,13 @@ public slots:
 
     QStringList getParamList();
 
-    bool isConnected();
-
     void runMotor(int speed, int p1, int p2, int p3, int p4);
 
     void rotateMotor(int angle, int p1, int p2, int p3, int p4);
 
 private slots:
+
+    void writeData(QByteArray &data);
 
     quint8 calcServoSpeed(int current, int target);
 
@@ -127,6 +125,8 @@ private slots:
     void disableAll();
 
     void setBatteryUpdates(bool value);
+
+    void setDecelerationProfile(quint8 port, quint16 time);
 
 };
 

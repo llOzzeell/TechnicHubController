@@ -8,7 +8,8 @@ import "qrc:/Controls"
 Parent{
     id:root
 
-    height:width
+    implicitWidth: Units.dp(160)
+    implicitHeight: Units.dp(160)
 
     name: ConstList_Text.control_name_moving
 
@@ -19,23 +20,22 @@ Parent{
         requiredParameters.multichoose = true;
     }
 
-    property int minWidth: Units.dp(160)
-    property int maxWidth: Units.dp(200)
-
     onSizeMinusClicked: {
-        if(width > minWidth) {
+        if(scaleStep > 0) {
 
             width -= Units.dp(20);
             height = width;
+            scaleStep--;
         }
         touchPoint.y = root.height/2 - touchPoint.height/2
     }
 
     onSizePlusClicked: {
-        if(width < maxWidth) {
+        if(scaleStep < 2) {
 
             width += Units.dp(20);
             height = width;
+            scaleStep++;
         }
         touchPoint.y = root.height/2 - touchPoint.height/2
     }
@@ -110,7 +110,8 @@ Parent{
 
     Rectangle {
         id: directionLine
-        width: root.width/14
+        width: root.width/12
+        height: root.height/12
         color: ConstList_Color.controls_border_color
         radius: height/2
         anchors.bottom: parent.bottom

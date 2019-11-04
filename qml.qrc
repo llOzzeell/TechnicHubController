@@ -66,6 +66,7 @@
         <file>AvailablePorts.qml</file>
         <file>EmptyProfile.qml</file>
         <file>CustomProgressBar.qml</file>
+        <file>ControlsPalette_Delegate.qml</file>
     </qresource>
     <qresource prefix="/ModelsControls">
         <file>Parent.qml</file>

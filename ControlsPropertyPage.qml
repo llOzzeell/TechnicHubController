@@ -8,6 +8,8 @@ Item {
     id:root
     width: 300
 
+    Component.onCompleted: linkToControl = parent._link;
+
     property var linkToControl
     onLinkToControlChanged: {
         if(linkToControl !== undefined){
@@ -24,7 +26,7 @@ Item {
     signal hide()
     onHide:{
         linkToControl.glow = false;
-        flickable.contentY = 0;
+        //flickable.contentY = 0;
     }
 
     CustomPane{
@@ -97,7 +99,7 @@ Item {
                     height: Units.dp(26)
                     text: ConstList_Text.control_propertypage_workasservo
                     fontSizeMode: Text.VerticalFit
-                    anchors.right: inverted.left
+                    anchors.right: workAsServo.left
                     anchors.rightMargin: 0
                     verticalAlignment: Text.AlignVCenter
                     anchors.left: parent.left

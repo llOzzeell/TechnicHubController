@@ -32,10 +32,12 @@ Item {
     }
 
     function clear(){
-        buttonsArray.forEach(function(port, index){
-            linkToPortsArrayOfControl[index] = 0;
-            port.Material.background = Material.primary;
-        })
+        if(linkToPortsArrayOfControl !== undefined){
+            buttonsArray.forEach(function(port, index){
+                linkToPortsArrayOfControl[index] = 0;
+                port.Material.background = Material.primary;
+            })
+        }
     }
 
     Row {

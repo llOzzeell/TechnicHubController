@@ -41,17 +41,17 @@ QtObject{
     readonly property string control_name_steering: qsTr("Steering")
     readonly property string control_name_moving: qsTr("Moving")
     readonly property string control_name_buttons: qsTr("Buttons")
-    readonly property string control_name_buttonsV: qsTr("Buttons vert.")
+    readonly property string control_name_buttonsV: qsTr("Vertical buttons")
     readonly property string control_name_hslider: qsTr("Slider")
-    readonly property string control_name_vslider: qsTr("Slider vert.")
+    readonly property string control_name_vslider: qsTr("Vertical slider")
 
     //Controls property page prop names
-    readonly property string control_propertypage_ports: qsTr("Hub ports")
+    readonly property string control_propertypage_ports: qsTr("Ports")
     readonly property string control_propertypage_hubs: qsTr("Connected hubs")
     readonly property string control_propertypage_inversion: qsTr("Inversion")
     readonly property string control_propertypage_workasservo: qsTr("Steering mode")
-    readonly property string control_propertypage_servoangle: qsTr("Servo angle")
-    readonly property string control_propertypage_speedlimit: qsTr("Motor speed")
+    readonly property string control_propertypage_servoangle: qsTr("Rotate angle")
+    readonly property string control_propertypage_speedlimit: qsTr("Speed limit")
 
     //EmptyProfile text
     readonly property string empty_profile_text: qsTr("Profile is empty. Add items in editor mode.")

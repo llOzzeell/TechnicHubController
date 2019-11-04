@@ -10,10 +10,8 @@ import "qrc:/Controls"
 
 Parent{
     id:root
-    height: width/2
-
-    property int minWidth: Units.dp(100)
-    property int maxWidth: Units.dp(140)
+    width:Units.dp(160)
+    height:Units.dp(80)
 
     name: ConstList_Text.control_name_buttons
 
@@ -26,18 +24,20 @@ Parent{
     }
 
     onSizeMinusClicked: {
-        if(height > minWidth) {
+        if(scaleStep > 0) {
 
             height -= Units.dp(20);
             width = height*2;
+            scaleStep--;
         }
     }
 
     onSizePlusClicked: {
-        if(height < maxWidth) {
+        if(scaleStep < 3) {
 
             height += Units.dp(20);
             width = height*2;
+            scaleStep++;
         }
     }
 

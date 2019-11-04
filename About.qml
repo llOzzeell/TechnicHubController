@@ -69,6 +69,19 @@ Item {
         }
     }
 
+    Label {
+        id: label
+        width: root.width/1.5
+        text: qsTr("LEGO® is a trademark of the LEGO Group of companies which does not sponsor, authorize or endorse this project.")
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Units.dp(50)
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.WordWrap
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: Qt.application.font.pixelSize * 0.5
+    }
+
 }
 
 /*##^##

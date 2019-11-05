@@ -26,7 +26,6 @@ Item {
     signal hide()
     onHide:{
         linkToControl.glow = false;
-        //flickable.contentY = 0;
     }
 
     CustomPane{
@@ -126,7 +125,7 @@ Item {
                         servoItem.visible = checked;
                         speedlimitItem.visible = !checked;
 
-                        availablePorts.clear();
+                        if(!availablePorts.onlyOnePortChoosed())availablePorts.clear();
                     }
                 }
             }
@@ -237,6 +236,7 @@ Item {
                     width:componentwidth
                     multipleChoose: linkToControl !== undefined ? linkToControl.requiredParameters.multichoose : false
                     _enabled: (availableDevices.isNotEmpty && availableDevices.hubChoosed)
+                    currentHubAddress: availableDevices.currentHubAddress
                 }
             }
 
@@ -272,7 +272,6 @@ Item {
                     anchors.left: parent.left
                 }
             }
-
         }
     }
 

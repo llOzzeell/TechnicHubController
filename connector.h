@@ -36,6 +36,8 @@ signals:
 
     void deviceParamsChanged(QString address, QString name, QStringList list);
 
+    void externalPortsIOchanged(QString address, QList<bool> list);
+
     void devicesChanged(QVector<Technichub*> newList);
 
 private slots:
@@ -50,13 +52,13 @@ public slots:
 
     void connectDevice(QString address);
 
-    void connectDeviceDirect(QBluetoothDeviceInfo device);
-
     bool disconnectDevice(QString address);
 
     void updateConnectedDeviceName(QString address, QString name);
 
     void deleteFromList(QString address);
+
+    QList<bool> getHubPortsState(QString address);
 };
 
 #endif // CONNECTOR_H

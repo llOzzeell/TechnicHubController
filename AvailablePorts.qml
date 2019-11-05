@@ -18,6 +18,17 @@ Item {
         if(linkToPortsArrayOfControl !== undefined)colorize();
     }
 
+    function onlyOnePortChoosed(){
+        var counter = 0;
+        buttonsArray.forEach(function(port, index){
+            if(linkToPortsArrayOfControl[index] > 0){
+                counter++;
+            }
+            if(counter > 1) return false;
+        })
+        return true;
+    }
+
     property var buttonsArray:[portA,portB, portC, portD]
 
     function colorize(){
@@ -40,6 +51,30 @@ Item {
         }
     }
 
+    property string currentHubAddress:""
+    onCurrentHubAddressChanged: {
+        var list = cpp_Connector.getHubPortsState(currentHubAddress);
+        portAconnected = list[0];
+        portBconnected = list[1];
+        portCconnected = list[2];
+        portDconnected = list[3];
+    }
+
+    property bool portAconnected:false
+    property bool portBconnected:false
+    property bool portCconnected:false
+    property bool portDconnected:false
+
+    Component.onCompleted: {
+        if(currentHubAddress.length > 0){
+            var list = cpp_Connector.getHubPortsState(currentHubAddress);
+            portAconnected = list[0];
+            portBconnected = list[1];
+            portCconnected = list[2];
+            portDconnected = list[3];
+        }
+    }
+
     Row {
         id: row
         width: portA.width * 4 + spacing * 3
@@ -56,7 +91,8 @@ Item {
             height:Units.dp(44)
             font.pixelSize: Qt.application.font.pixelSize * 0.9
             Material.background: Material.primary
-            enabled: _enabled
+            enabled: _enabled && root.portAconnected
+            opacity: enabled ? 1 : 0.7
             onClicked:{
                 if(multipleChoose){
                     if(linkToPortsArrayOfControl[0] > 0)linkToPortsArrayOfControl[0] = 0;
@@ -80,7 +116,8 @@ Item {
             height:Units.dp(44)
             font.pixelSize: Qt.application.font.pixelSize * 0.9
             Material.background: Material.primary
-            enabled: _enabled
+            enabled: _enabled && root.portBconnected
+            opacity: enabled ? 1 : 0.7
             onClicked:{
                 if(multipleChoose){
                     if(linkToPortsArrayOfControl[1] > 0)linkToPortsArrayOfControl[1] = 0;
@@ -104,7 +141,8 @@ Item {
             height:Units.dp(44)
             font.pixelSize: Qt.application.font.pixelSize * 0.9
             Material.background: Material.primary
-            enabled: _enabled
+            enabled: _enabled && root.portCconnected
+            opacity: enabled ? 1 : 0.7
             onClicked:{
                 if(multipleChoose){
                     if(linkToPortsArrayOfControl[2] > 0)linkToPortsArrayOfControl[2] = 0;
@@ -128,7 +166,8 @@ Item {
             height:Units.dp(44)
             font.pixelSize: Qt.application.font.pixelSize * 0.9
             Material.background: Material.primary
-            enabled: _enabled
+            enabled: _enabled && root.portDconnected
+            opacity: enabled ? 1 : 0.7
             onClicked:{
                 if(multipleChoose){
                     if(linkToPortsArrayOfControl[3] > 0)linkToPortsArrayOfControl[3] = 0;
@@ -145,5 +184,16 @@ Item {
         }
     }
 
-
+    Connections{
+        target: cpp_Connector
+        onExternalPortsIOchanged:{
+            if(address == root.currentHubAddress){
+                clear();
+                portAconnected = list[0];
+                portBconnected = list[1];
+                portCconnected = list[2];
+                portDconnected = list[3];
+            }
+        }
+    }
 }

@@ -37,7 +37,6 @@ Item {
         delegate: ConnectedDevices_Delegate{
             _isConnected: isConnected
             _isFavorite: isFavorite
-            //_factoryName: factoryName
             Component.onCompleted: {
              disconnectClicked.connect(root.disconnectDelegateClicked);
                 favoriteClicked.connect(root.favoriteDelegateClicked);

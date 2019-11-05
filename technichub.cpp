@@ -11,6 +11,16 @@ Technichub::~Technichub()
     delete service1623;
 }
 
+QList<bool> Technichub::getPortsState()
+{
+    QList<bool> list;
+    list.append(portsState[0]);
+    list.append(portsState[1]);
+    list.append(portsState[2]);
+    list.append(portsState[3]);
+    return list;
+}
+
 void Technichub::disconnect()
 {
     controller->disconnectFromDevice();
@@ -61,7 +71,6 @@ void Technichub::serviceScanDone()
     if (service1623->state() == QLowEnergyService::DiscoveryRequired) {
         qDebug() << "Service state: QLowEnergyService::DiscoveryRequired";
         connect(service1623, &QLowEnergyService::stateChanged, this, &Technichub::serviceDetailsDiscovered);
-        //connect(service1623, &QLowEnergyService::characteristicRead, this, &Technichub::getCharsValue);
         service1623->discoverDetails();
         return;
     }
@@ -80,7 +89,6 @@ void Technichub::serviceDetailsDiscovered()
             qDebug() << "Chars 1624 found.";
             setNotification(true);
             connect(service1623, &QLowEnergyService::characteristicChanged, this, &Technichub::characteristicUpdated);
-            //setRSSIUpdates(true);
             setBatteryUpdates(true);
         }
     }
@@ -98,9 +106,8 @@ void Technichub::debugOutHex(const QByteArray &arr, QString description)
 void Technichub::characteristicUpdated(const QLowEnergyCharacteristic &characteristic, const QByteArray &data)
 {
     Q_UNUSED(characteristic)
-    debugOutHex(data, "CHARS CHANGED get:");
+    //debugOutHex(data, "CHARS CHANGED get:");
     switch(data[2]){
-
         case 1: parseHubProperty(data); break;
         case 4: parseHubIO(data); break;
     }
@@ -116,10 +123,15 @@ void Technichub::parseHubProperty(const QByteArray &data)
 
 void Technichub::parseHubIO(const QByteArray &data)
 {
-    portsState[static_cast<int>(data[3])] = static_cast<bool>(data[4]);
-    QList<bool> list{portsState[0], portsState[1], portsState[2], portsState[3]};
-    emit externalPortsIOchanged(list);
-    qDebug() << "PORT A: " << portsState[0] << "PORT B: " << portsState[1] << "PORT C: " << portsState[2] << "PORT D: " << portsState[3];
+    if((data[3] >= 0) && (data[3] <= 3)){
+        portsState[static_cast<int>(data[3])] = static_cast<bool>(data[4]);
+        QList<bool> list;
+        list.append(portsState[0]);
+        list.append(portsState[1]);
+        list.append(portsState[2]);
+        list.append(portsState[3]);
+        emit externalPortsIOchanged(address, list);
+    }
 }
 
 /////////////////////////////////////////////////

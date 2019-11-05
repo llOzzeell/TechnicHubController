@@ -76,9 +76,19 @@
 <context>
     <name>ConnectedDevices_Delegate</name>
     <message>
-        <location filename="../ConnectedDevices_Delegate.qml" line="64"/>
+        <location filename="../ConnectedDevices_Delegate.qml" line="131"/>
+        <source>Hub address</source>
+        <translation>Адрес</translation>
+    </message>
+    <message>
+        <location filename="../ConnectedDevices_Delegate.qml" line="158"/>
         <source>Battery</source>
         <translation>Батарея</translation>
+    </message>
+    <message>
+        <location filename="../ConnectedDevices_Delegate.qml" line="203"/>
+        <source>Connected ports</source>
+        <translation>Подключенные порты</translation>
     </message>
 </context>
 <context>
@@ -261,7 +271,7 @@
 <context>
     <name>ControlsPalette</name>
     <message>
-        <location filename="../ControlsPalette.qml" line="55"/>
+        <location filename="../ControlsPalette.qml" line="48"/>
         <source>Palette of controls</source>
         <translation>Список элементов</translation>
     </message>
@@ -269,27 +279,22 @@
 <context>
     <name>ControlsPalette_Delegate</name>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="37"/>
-        <source>Control name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="64"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="75"/>
         <source>Inversion possible</source>
         <translation>Инвертируемый</translation>
     </message>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="81"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="92"/>
         <source>Motor rotation possible</source>
         <translation>Поворот на заданный угол</translation>
     </message>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="98"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="109"/>
         <source>Changable rotation angle</source>
         <translation>Изменяемый угол поворота</translation>
     </message>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="115"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="126"/>
         <source>Motor run possible</source>
         <translation>Вращение мотора</translation>
     </message>
@@ -306,7 +311,7 @@
         <translation type="vanished">Режим передвижения</translation>
     </message>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="132"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="143"/>
         <source>Motor speed limit possible</source>
         <translation>Ограничение скорости мотора</translation>
     </message>

@@ -10,10 +10,13 @@ Item {
     property bool hubChoosed: (listView.currentIndex >= 0)
     clip: true
 
+    property string currentHubAddress:""
+
     function highlightIfPossible(){
         for(var i = 0; i < deviceModel.count; i++){
             if(deviceModel.get(i).address === linkToControl.chAddress){
                 listView.currentIndex = i;
+                root.currentHubAddress = deviceModel.get(i).address;
                 return;
             }
         }
@@ -95,6 +98,7 @@ Item {
                     listView.currentIndex = index;
                     linkToControl.chName = deviceModel.get(index).name;
                     linkToControl.chAddress = deviceModel.get(index).address;
+                    root.currentHubAddress = deviceModel.get(index).address;
                 }
             }
         }

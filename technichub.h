@@ -70,9 +70,11 @@ signals:
 
     void paramsChanged(QString address, QString name, QStringList list);
 
-    void externalPortsIOchanged(QList<bool> list);
+    void externalPortsIOchanged(QString address, QList<bool> list);
 
 public slots:
+
+    QList<bool> getPortsState();
 
     bool isConnected();
 

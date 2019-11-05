@@ -210,6 +210,7 @@ Item {
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
+                visible: linkToControl !== undefined ? linkToControl.requiredParameters.ports : false
 
                 Label {
                     id: portsLabel
@@ -244,7 +245,7 @@ Item {
                 id:devicesItem
                 width:parent.width
                 height: Units.dp(140)
-                visible: linkToControl !== undefined ? linkToControl.requiredParameters.ports : false
+                visible: if(linkToControl !== undefined)linkToControl.type === 6? true : linkToControl.requiredParameters.ports // if tilt this always will show
 
                 Label {
                     id:devicesLabel
@@ -278,9 +279,9 @@ Item {
     RoundButton {
         id: saveButton
         height: Units.dp(44)
-        text: qsTr("Close")
-        rightPadding: Units.dp(12)
-        leftPadding: Units.dp(12)
+        text: qsTr("Save")
+        rightPadding: Units.dp(24)
+        leftPadding: Units.dp(24)
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: Qt.application.font.pixelSize
         anchors.bottom: parent.bottom

@@ -90,6 +90,7 @@ void Technichub::serviceDetailsDiscovered()
             setNotification(true);
             connect(service1623, &QLowEnergyService::characteristicChanged, this, &Technichub::characteristicUpdated);
             setBatteryUpdates(true);
+            setTiltUpdates();
         }
     }
 }
@@ -108,8 +109,9 @@ void Technichub::characteristicUpdated(const QLowEnergyCharacteristic &character
     Q_UNUSED(characteristic)
     //debugOutHex(data, "CHARS CHANGED get:");
     switch(data[2]){
-        case 1: parseHubProperty(data); break;
-        case 4: parseHubIO(data); break;
+        case 0x01: parseHubProperty(data); break;
+        case 0x04: parseHubIO(data); break;
+        case 0x45: parseSensorValue(data); break;
     }
 }
 
@@ -131,6 +133,17 @@ void Technichub::parseHubIO(const QByteArray &data)
         list.append(portsState[2]);
         list.append(portsState[3]);
         emit externalPortsIOchanged(address, list);
+    }
+}
+
+void Technichub::parseSensorValue(const QByteArray &data)
+{
+    if((data[3] == 0x63)){ // tilt
+
+        qint16 x,y;
+        y = data[7]; y = y << 8; y += data[6];
+        x = data[9]; x = x << 8; x += data[8];
+        emit tiltDegreesChanged(address, x, y);
     }
 }
 
@@ -198,6 +211,27 @@ void Technichub::setBatteryUpdates(bool value)
     data[0] = quint8(data.count());
 
     data[4] = value ? 2 : 3;
+    writeData(data);
+}
+
+void Technichub::setTiltUpdates()
+{
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::ReadWrite);
+    stream.setByteOrder(QDataStream::LittleEndian);
+
+    stream << quint8(0);
+    stream << quint8(0);
+    stream << quint8(0x41);
+    stream << quint8(0x63);
+    stream << quint8(0);
+    stream << quint8(1);
+    stream << quint8(0);
+    stream << quint8(0);
+    stream << quint8(0);
+    stream << quint8(1);
+
+    data[0] = quint8(data.count());
     writeData(data);
 }
 

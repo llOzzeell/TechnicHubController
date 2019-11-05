@@ -45,6 +45,8 @@
         <file>icons/angleArrow.svg</file>
         <file>icons/gridON.svg</file>
         <file>icons/gridOFF.svg</file>
+        <file>icons/carFront.svg</file>
+        <file>icons/carSide.svg</file>
     </qresource>
     <qresource prefix="/Controls">
         <file>Sidepanel_Delegate.qml</file>
@@ -77,6 +79,7 @@
         <file>ButtonsV.qml</file>
         <file>SliderV.qml</file>
         <file>BatteryWidget.qml</file>
+        <file>TiltMonitor.qml</file>
     </qresource>
     <qresource prefix="/lang"/>
 </RCC>

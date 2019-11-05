@@ -26,6 +26,7 @@ Parent{
         requiredParameters.inversion = true;
         requiredParameters.multichoose = true;
     }
+
     Component.onDestruction: {
         stop();
     }

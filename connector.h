@@ -38,6 +38,8 @@ signals:
 
     void externalPortsIOchanged(QString address, QList<bool> list);
 
+    void tiltDegreesChanged(QString address, int x, int y);
+
     void devicesChanged(QVector<Technichub*> newList);
 
 private slots:

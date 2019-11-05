@@ -44,6 +44,7 @@ QtObject{
     readonly property string control_name_buttonsV: qsTr("Vertical buttons")
     readonly property string control_name_hslider: qsTr("Slider")
     readonly property string control_name_vslider: qsTr("Vertical slider")
+    readonly property string control_name_tilt: qsTr("Tilt monitor")
 
     //Controls property page prop names
     readonly property string control_propertypage_ports: qsTr("Ports")

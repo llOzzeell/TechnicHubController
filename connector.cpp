@@ -32,6 +32,7 @@ void Connector::connectDevice(QString address)
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::lostConnection, this, &Connector::deviceDisconnected);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::paramsChanged, this, &Connector::deviceParamsChanged);
             connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::externalPortsIOchanged, this, &Connector::externalPortsIOchanged);
+            connect(connectedDevicesList[connectedDevicesList.count()-1], &Technichub::tiltDegreesChanged, this, &Connector::tiltDegreesChanged);
         }
         counter++;
     }

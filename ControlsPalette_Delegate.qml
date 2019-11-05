@@ -13,6 +13,8 @@ Item {
     property bool servoanglePossible:false
     property bool movingPossible:false
     property bool speedlimitPossible:false
+    property bool tiltXPossible:false
+    property bool tiltYPossible:false
 
     property int type:-1
     property int newWidth:0
@@ -51,6 +53,7 @@ Item {
                         case "buttonsV": return ConstList_Text.control_name_buttonsV;
                             case "hslider": return ConstList_Text.control_name_hslider;
                                 case "vslider": return ConstList_Text.control_name_vslider;
+                                    case "tilt": return ConstList_Text.control_name_tilt;
             }
         }
     }
@@ -148,6 +151,40 @@ Item {
                 horizontalAlignment: Text.AlignLeft
             }
         }
+
+        Item {
+            id: tiltX
+            width: parent.width
+            height: Units.dp(20)
+            Label {
+                id: label7
+                height: Units.dp(20)
+                text: qsTr("Shows lateral tilt (X axis)")
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignLeft
+                font.pixelSize: Qt.application.font.pixelSize
+                fontSizeMode: Text.VerticalFit
+                anchors.fill: parent
+            }
+            visible: tiltXPossible
+        }
+
+        Item {
+            id: tiltY
+            width: parent.width
+            height: Units.dp(20)
+            Label {
+                id: label8
+                height: Units.dp(20)
+                text: qsTr("Shows a longitudinal tilt (Y axis)")
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: Qt.application.font.pixelSize
+                fontSizeMode: Text.VerticalFit
+                anchors.fill: parent
+            }
+            visible: tiltYPossible
+        }
     }
 
     Item {
@@ -178,9 +215,3 @@ Item {
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:14;anchors_height:240;anchors_width:240}
-}
-##^##*/

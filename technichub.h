@@ -72,6 +72,8 @@ signals:
 
     void externalPortsIOchanged(QString address, QList<bool> list);
 
+    void tiltDegreesChanged(QString address, int x, int y);
+
 public slots:
 
     QList<bool> getPortsState();
@@ -126,6 +128,8 @@ private slots:
 
     void parseHubIO(const QByteArray &data);
 
+    void parseSensorValue(const QByteArray &data);
+
     void setNotification(bool value);
 
     void setIndication(bool value);
@@ -133,6 +137,8 @@ private slots:
     void disableAll();
 
     void setBatteryUpdates(bool value);
+
+    void setTiltUpdates();
 
 };
 

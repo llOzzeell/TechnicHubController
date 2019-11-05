@@ -302,13 +302,17 @@ Item {
         Component.onCompleted: checkVisible();
 
         function checkVisible(){
-            if(!paletteMode){
 
-                if(!root.editorMode && root.chName === "" && root.chAddress === "" ||
-                        !root.editorMode && ports[0] === 0 && ports[1] === 0 && ports[2] === 0 && ports[3] === 0 ) notReadyItem.visible = true;
+            if(paletteMode) { notReadyItem.visible = false; return; }
+
+            if(!root.editorMode && root.chName === "" && root.chAddress === ""){
+
+                if(type == 6){notReadyItem.visible = true; return; }
+
+                if(ports[0] === 0 && ports[1] === 0 && ports[2] === 0 && ports[3] === 0 ) notReadyItem.visible = true;
                 else notReadyItem.visible = false;
             }
-            else notReadyItem.visible = false;
+            else if(type == 6){notReadyItem.visible = false; return; }
         }
 
         Rectangle {
@@ -348,7 +352,7 @@ Item {
         opacity: 0.5
         enabled: true
         font.pixelSize: Qt.application.font.pixelSize
-        visible: !paletteMode && valueFromSetting
+        visible: !paletteMode && valueFromSetting && root.type != 6
         anchors.topMargin: -topMarginValue
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter

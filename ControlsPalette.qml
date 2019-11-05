@@ -31,7 +31,9 @@ Item {
             "qrc:/ModelsControls/Buttons.qml",
                 "qrc:/ModelsControls/ButtonsV.qml",
                     "qrc:/ModelsControls/SliderH.qml",
-                        "qrc:/ModelsControls/SliderV.qml"]
+                        "qrc:/ModelsControls/SliderV.qml",
+                            "qrc:/ModelsControls/TiltMonitor.qml"
+    ]
 
     //////////////////////////////////////////////////
 
@@ -98,6 +100,8 @@ Item {
                                                      "servoanglePossible":true,
                                                      "movingPossible":false,
                                                      "speedlimitPossible":false,
+                                                      "tiltXPossible":false,
+                                                      "tiltYPossible":false,
 
                                                       "type":0,
                                                       "newWidth":Units.dp(160),
@@ -120,6 +124,8 @@ Item {
                                                      "servoanglePossible":false,
                                                      "movingPossible":true,
                                                      "speedlimitPossible":true,
+                                                      "tiltXPossible":false,
+                                                      "tiltYPossible":false,
 
                                                       "type":1,
                                                       "newWidth":Units.dp(160),
@@ -142,6 +148,8 @@ Item {
                                                      "servoanglePossible":true,
                                                      "movingPossible":true,
                                                      "speedlimitPossible":true,
+                                                      "tiltXPossible":false,
+                                                      "tiltYPossible":false,
 
                                                       "type":2,
                                                       "newWidth":Units.dp(160),
@@ -164,6 +172,8 @@ Item {
                                                      "servoanglePossible":false,
                                                      "movingPossible":true,
                                                      "speedlimitPossible":true,
+                                                      "tiltXPossible":false,
+                                                      "tiltYPossible":false,
 
                                                       "type":3,
                                                       "newWidth":Units.dp(80),
@@ -187,6 +197,8 @@ Item {
                                                      "servoanglePossible":false,
                                                      "movingPossible":true,
                                                      "speedlimitPossible":false,
+                                                      "tiltXPossible":false,
+                                                      "tiltYPossible":false,
 
                                                       "type":4,
                                                       "newWidth":Units.dp(240),
@@ -209,10 +221,37 @@ Item {
                                                      "servoanglePossible":false,
                                                      "movingPossible":true,
                                                      "speedlimitPossible":false,
+                                                     "tiltXPossible":false,
+                                                     "tiltYPossible":false,
 
                                                       "type":5,
                                                       "newWidth":Units.dp(60),
                                                       "newHeight":Units.dp(240)
+                                                 });
+
+                }
+                onLoaded: item.clicked.connect(root.componentChoosed);
+            }
+
+            Loader{
+                anchors.verticalCenter: parent.verticalCenter
+                Component.onCompleted:{ setSource("qrc:/Controls/ControlsPalette_Delegate.qml",
+                                                 {
+                                                      "width":Units.dp(400),
+                                                      "height":Units.dp(240),
+                                                     "name":"tilt",
+                                                     "sourceString":pathArray[6],
+                                                     "invertPossible":false,
+                                                     "steeringPossible":false,
+                                                     "servoanglePossible":false,
+                                                     "movingPossible":false,
+                                                     "speedlimitPossible":false,
+                                                      "tiltXPossible":true,
+                                                      "tiltYPossible":true,
+
+                                                      "type":6,
+                                                      "newWidth":Units.dp(160),
+                                                      "newHeight":Units.dp(80)
                                                  });
 
                 }
@@ -223,8 +262,3 @@ Item {
 
 }
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

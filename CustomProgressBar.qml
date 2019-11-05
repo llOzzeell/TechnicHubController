@@ -11,11 +11,19 @@ ProgressBar {
     property alias color :  progress.color
 
     background: Rectangle {
+        id:back
         implicitWidth: 200
         height: Units.dp(4)
-        color: Qt.darker(progress.color,1.8)
+        color: cpp_Settings.getDarkMode() ? Qt.lighter(progress.color,1.8) : Qt.darker(progress.color,1.8)
         radius: height/2
         opacity: 0.2
+    }
+
+    Connections{
+        target:cpp_Settings
+        onThemeChanged:{
+            back.color = value ? Qt.lighter(progress.color,1.8) : Qt.darker(progress.color,1.8)
+        }
     }
 
     contentItem: Item {

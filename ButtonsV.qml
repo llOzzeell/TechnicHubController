@@ -10,8 +10,8 @@ import "qrc:/Controls"
 
 Parent{
     id:root
-    implicitWidth:Units.dp(80)
-    implicitHeight:Units.dp(160)
+    implicitWidth:Units.dp(70)
+    implicitHeight:Units.dp(140)
 
     name: ConstList_Text.control_name_buttonsV
 

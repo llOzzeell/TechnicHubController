@@ -7,8 +7,8 @@ import "qrc:/Controls"
 
 Parent{
     id:root
-    implicitWidth:Units.dp(60)
-    implicitHeight:Units.dp(160)
+    implicitWidth:Units.dp(50)
+    implicitHeight:Units.dp(140)
 
     name: ConstList_Text.control_name_vslider
 

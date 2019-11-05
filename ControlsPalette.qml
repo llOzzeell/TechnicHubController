@@ -25,13 +25,6 @@ Item {
         return root.pathArray[type];
     }
 
-    property var createNewSizeSteering:{"width": Units.dp(160), "height":Units.dp(160)}
-    property var createNewSizeMoving:{"width": Units.dp(160), "height":Units.dp(160)}
-    property var createNewSizeButtons:{"width": Units.dp(200), "height":Units.dp(100)}
-    property var createNewSizeButtonsV:{"width": Units.dp(100), "height":Units.dp(200)}
-    property var createNewSizeSliderH:{"width": Units.dp(240), "height":Units.dp(60)}
-    property var createNewSizeSliderV:{"width": Units.dp(60), "height":Units.dp(240)}
-
     property var pathArray:[
     "qrc:/ModelsControls/JoySteering.qml",
         "qrc:/ModelsControls/JoyMoving.qml",

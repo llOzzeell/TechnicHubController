@@ -35,7 +35,7 @@ Item {
     Label {
         id: label
         text: qsTr("Control name")
-        font.pixelSize: Qt.application.font.pixelSize * 1.2
+        font.pixelSize: Qt.application.font.pixelSize * 1.3
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         anchors.bottom: element.top
@@ -49,7 +49,7 @@ Item {
         anchors.rightMargin: Units.dp(10)
         anchors.leftMargin: Units.dp(20)
         anchors.verticalCenter: element.verticalCenter
-        spacing: Units.dp(5)
+        spacing: Units.dp(10)
         anchors.left: parent.left
         anchors.right: element.left
 
@@ -78,7 +78,7 @@ Item {
             Label {
                 id: label4
                 height: Units.dp(20)
-                text: qsTr("Steering possible")
+                text: qsTr("Motor rotation possible")
                 fontSizeMode: Text.VerticalFit
                 anchors.fill: parent
                 verticalAlignment: Text.AlignVCenter
@@ -95,7 +95,7 @@ Item {
             Label {
                 id: label6
                 height: Units.dp(20)
-                text: qsTr("Changable steering angle")
+                text: qsTr("Changable rotation angle")
                 fontSizeMode: Text.VerticalFit
                 anchors.fill: parent
                 verticalAlignment: Text.AlignVCenter
@@ -112,7 +112,7 @@ Item {
             Label {
                 id: label5
                 height: Units.dp(20)
-                text: qsTr("Moving possible")
+                text: qsTr("Motor run possible")
                 fontSizeMode: Text.VerticalFit
                 anchors.fill: parent
                 verticalAlignment: Text.AlignVCenter

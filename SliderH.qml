@@ -8,8 +8,8 @@ import Qt.labs.calendar 1.0
 
 Parent{
     id:root
-    implicitWidth:Units.dp(160)
-    implicitHeight:Units.dp(60)
+    implicitWidth:Units.dp(140)
+    implicitHeight:Units.dp(50)
 
     name: ConstList_Text.control_name_hslider
 

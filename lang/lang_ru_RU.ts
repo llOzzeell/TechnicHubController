@@ -280,18 +280,30 @@
     </message>
     <message>
         <location filename="../ControlsPalette_Delegate.qml" line="81"/>
-        <source>Steering possible</source>
-        <translation>Режим серво</translation>
+        <source>Motor rotation possible</source>
+        <translation>Поворот на заданный угол</translation>
     </message>
     <message>
         <location filename="../ControlsPalette_Delegate.qml" line="98"/>
-        <source>Changable steering angle</source>
+        <source>Changable rotation angle</source>
         <translation>Изменяемый угол поворота</translation>
     </message>
     <message>
         <location filename="../ControlsPalette_Delegate.qml" line="115"/>
+        <source>Motor run possible</source>
+        <translation>Вращение мотора</translation>
+    </message>
+    <message>
+        <source>Steering possible</source>
+        <translation type="vanished">Режим серво</translation>
+    </message>
+    <message>
+        <source>Changable steering angle</source>
+        <translation type="vanished">Изменяемый угол поворота</translation>
+    </message>
+    <message>
         <source>Moving possible</source>
-        <translation>Режим передвижения</translation>
+        <translation type="vanished">Режим передвижения</translation>
     </message>
     <message>
         <location filename="../ControlsPalette_Delegate.qml" line="132"/>

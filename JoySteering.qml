@@ -9,8 +9,8 @@ import "qrc:/assets"
 Parent{
     id:root
 
-    implicitWidth: Units.dp(160)
-    implicitHeight: Units.dp(160)
+    implicitWidth: Units.dp(140)
+    implicitHeight: Units.dp(140)
 
     name: ConstList_Text.control_name_steering
 

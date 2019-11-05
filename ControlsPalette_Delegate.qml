@@ -18,7 +18,7 @@ Item {
     property int newWidth:0
     property int newHeight:0
 
-    property alias name: label.text
+    property string name
     property string sourceString
     onSourceStringChanged: {
         if(sourceString.length > 0){
@@ -34,7 +34,7 @@ Item {
 
     Label {
         id: label
-        text: qsTr("Control name")
+        text: getConstText(root.name);
         font.pixelSize: Qt.application.font.pixelSize * 1.3
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -42,6 +42,17 @@ Item {
         anchors.bottomMargin: 0
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
+
+        function getConstText(name){
+            switch(name){
+            case "steering": return ConstList_Text.control_name_steering;
+                case "moving": return ConstList_Text.control_name_moving;
+                    case "buttons": return ConstList_Text.control_name_buttons;
+                        case "buttonsV": return ConstList_Text.control_name_buttonsV;
+                            case "hslider": return ConstList_Text.control_name_hslider;
+                                case "vslider": return ConstList_Text.control_name_vslider;
+            }
+        }
     }
 
     Column {

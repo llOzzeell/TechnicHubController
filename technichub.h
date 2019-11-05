@@ -58,6 +58,8 @@ private:
 
     int lastServoValue;
 
+    bool portsState[4]{false, false, false, false};
+
 signals:
 
     void lostConnection(QString address, QString name);
@@ -67,6 +69,8 @@ signals:
     void batteryLevelUpdated(int battery);
 
     void paramsChanged(QString address, QString name, QStringList list);
+
+    void externalPortsIOchanged(QList<bool> list);
 
 public slots:
 
@@ -114,9 +118,11 @@ private slots:
 
     void debugOutHex(const QByteArray &arr, QString description);
 
-    void characteristicUpdated(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue);
+    void characteristicUpdated(const QLowEnergyCharacteristic &characteristic, const QByteArray &data);
 
-    void parseCharsUpdates(const QByteArray &newValue);
+    void parseHubProperty(const QByteArray &data);
+
+    void parseHubIO(const QByteArray &data);
 
     void setNotification(bool value);
 
@@ -125,8 +131,6 @@ private slots:
     void disableAll();
 
     void setBatteryUpdates(bool value);
-
-    void setDecelerationProfile(quint8 port, quint16 time);
 
 };
 

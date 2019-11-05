@@ -95,21 +95,31 @@ void Technichub::debugOutHex(const QByteArray &arr, QString description)
     qDebug() << str;
 }
 
-void Technichub::characteristicUpdated(const QLowEnergyCharacteristic &characteristic, const QByteArray &newValue)
+void Technichub::characteristicUpdated(const QLowEnergyCharacteristic &characteristic, const QByteArray &data)
 {
     Q_UNUSED(characteristic)
-    //debugOutHex(newValue, "CHARS CHANGED get:");
-    parseCharsUpdates(newValue);
+    debugOutHex(data, "CHARS CHANGED get:");
+    switch(data[2]){
+
+        case 1: parseHubProperty(data); break;
+        case 4: parseHubIO(data); break;
+    }
 }
 
-void Technichub::parseCharsUpdates(const QByteArray &newValue)
+void Technichub::parseHubProperty(const QByteArray &data)
 {
-    if(newValue[2] == 1){ // hub property
-        if(newValue[3] == 6 && newValue[4] == 6){
-            batteryLevel = newValue[5]; // battery % value updated
-            emit paramsChanged(address, name, getParamList());
-        }
+    if(data[3] == 6 && data[4] == 6){
+        batteryLevel = data[5]; // battery % value updated
+        emit paramsChanged(address, name, getParamList());
     }
+}
+
+void Technichub::parseHubIO(const QByteArray &data)
+{
+    portsState[static_cast<int>(data[3])] = static_cast<bool>(data[4]);
+    QList<bool> list{portsState[0], portsState[1], portsState[2], portsState[3]};
+    emit externalPortsIOchanged(list);
+    qDebug() << "PORT A: " << portsState[0] << "PORT B: " << portsState[1] << "PORT C: " << portsState[2] << "PORT D: " << portsState[3];
 }
 
 /////////////////////////////////////////////////
@@ -176,25 +186,6 @@ void Technichub::setBatteryUpdates(bool value)
     data[0] = quint8(data.count());
 
     data[4] = value ? 2 : 3;
-    writeData(data);
-}
-
-void Technichub::setDecelerationProfile(quint8 port, quint16 time)
-{
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::ReadWrite);
-    stream.setByteOrder(QDataStream::LittleEndian);
-
-    stream << quint8(0);
-    stream << quint8(0);
-    stream << quint8(0x81);
-    stream << port;
-    stream << quint8(0x10);
-    stream << quint8(0x06);
-    stream << time;
-    stream << quint8(0);
-    data[0] = quint8(data.count());
-
     writeData(data);
 }
 

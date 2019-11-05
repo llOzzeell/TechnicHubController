@@ -91,7 +91,7 @@ Item {
                                                  {
                                                      "width":Units.dp(400),
                                                      "height":Units.dp(240),
-                                                     "name":ConstList_Text.control_name_steering,
+                                                     "name":"steering",
                                                      "sourceString":pathArray[0],
                                                      "invertPossible":true,
                                                      "steeringPossible":true,
@@ -113,7 +113,7 @@ Item {
                                                  {
                                                      "width":Units.dp(400),
                                                      "height":Units.dp(240),
-                                                     "name":ConstList_Text.control_name_moving,
+                                                     "name":"moving",
                                                      "sourceString":pathArray[1],
                                                      "invertPossible":true,
                                                      "steeringPossible":false,
@@ -135,7 +135,7 @@ Item {
                                                  {
                                                      "width":Units.dp(400),
                                                      "height":Units.dp(240),
-                                                     "name":ConstList_Text.control_name_buttons,
+                                                     "name":"buttons",
                                                      "sourceString":pathArray[2],
                                                      "invertPossible":true,
                                                      "steeringPossible":true,
@@ -157,7 +157,7 @@ Item {
                                                  {
                                                      "width":Units.dp(400),
                                                      "height":Units.dp(240),
-                                                     "name":ConstList_Text.control_name_buttonsV,
+                                                     "name":"buttonsV",
                                                      "sourceString":pathArray[3],
                                                      "invertPossible":true,
                                                      "steeringPossible":false,
@@ -180,7 +180,7 @@ Item {
                                                  {
                                                      "width":Units.dp(400),
                                                      "height":Units.dp(240),
-                                                     "name":ConstList_Text.control_name_hslider,
+                                                     "name":"hslider",
                                                      "sourceString":pathArray[4],
                                                      "invertPossible":true,
                                                      "steeringPossible":false,
@@ -202,7 +202,7 @@ Item {
                                                  {
                                                      "width":Units.dp(400),
                                                      "height":Units.dp(240),
-                                                     "name":ConstList_Text.control_name_vslider,
+                                                     "name":"vslider",
                                                      "sourceString":pathArray[5],
                                                      "invertPossible":true,
                                                      "steeringPossible":false,

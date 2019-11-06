@@ -37,6 +37,7 @@ Item {
     Label {
         id: label
         text: getConstText(root.name);
+        font.weight: Font.DemiBold
         font.pixelSize: Qt.application.font.pixelSize * 1.3
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter

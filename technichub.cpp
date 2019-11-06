@@ -125,7 +125,7 @@ void Technichub::parseHubProperty(const QByteArray &data)
 
 void Technichub::parseHubIO(const QByteArray &data)
 {
-    if((data[3] >= 0) && (data[3] <= 3)){
+    if(data[3] <= 3){
         portsState[static_cast<int>(data[3])] = static_cast<bool>(data[4]);
         QList<bool> list;
         list.append(portsState[0]);
@@ -141,8 +141,17 @@ void Technichub::parseSensorValue(const QByteArray &data)
     if((data[3] == 0x63)){ // tilt
 
         qint16 x,y;
-        y = data[7]; y = y << 8; y += data[6];
-        x = data[9]; x = x << 8; x += data[8];
+        y = data[7];
+        y = y << 8;
+        y += data[6];
+        x = data[9];
+        x = x << 8;
+        x += data[8];
+
+        x = x * -1;
+        if(x > 90) x = 91;
+        if(x < -90) x = -91;
+
         emit tiltDegreesChanged(address, x, y);
     }
 }

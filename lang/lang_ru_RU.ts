@@ -55,12 +55,12 @@
 <context>
     <name>AvailableDevices</name>
     <message>
-        <location filename="../AvailableDevices.qml" line="48"/>
+        <location filename="../AvailableDevices.qml" line="51"/>
         <source>No connected hubs</source>
         <translation>Нет подключенных хабов</translation>
     </message>
     <message>
-        <location filename="../AvailableDevices.qml" line="85"/>
+        <location filename="../AvailableDevices.qml" line="88"/>
         <source>Hub </source>
         <translation>Хаб</translation>
     </message>
@@ -68,7 +68,7 @@
 <context>
     <name>ConnectedDevices</name>
     <message>
-        <location filename="../ConnectedDevices.qml" line="81"/>
+        <location filename="../ConnectedDevices.qml" line="80"/>
         <source>No connected hubs.</source>
         <translation>Нет подключенных хабов.</translation>
     </message>
@@ -76,7 +76,7 @@
 <context>
     <name>ConnectedDevices_Delegate</name>
     <message>
-        <location filename="../ConnectedDevices_Delegate.qml" line="131"/>
+        <location filename="../ConnectedDevices_Delegate.qml" line="129"/>
         <source>Hub address</source>
         <translation>Адрес</translation>
     </message>
@@ -86,7 +86,7 @@
         <translation>Батарея</translation>
     </message>
     <message>
-        <location filename="../ConnectedDevices_Delegate.qml" line="203"/>
+        <location filename="../ConnectedDevices_Delegate.qml" line="204"/>
         <source>Connected ports</source>
         <translation>Подключенные порты</translation>
     </message>
@@ -113,7 +113,7 @@
     </message>
     <message>
         <location filename="../ConstList_Text.qml" line="18"/>
-        <location filename="../ConstList_Text.qml" line="50"/>
+        <location filename="../ConstList_Text.qml" line="51"/>
         <source>Connected hubs</source>
         <translation>Подключенные хабы</translation>
     </message>
@@ -213,17 +213,22 @@
         <translation>Вертикальный слайдер</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="49"/>
+        <location filename="../ConstList_Text.qml" line="47"/>
+        <source>Tilt monitor</source>
+        <translation>Монитор наклона</translation>
+    </message>
+    <message>
+        <location filename="../ConstList_Text.qml" line="50"/>
         <source>Ports</source>
         <translation>Порты</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="53"/>
+        <location filename="../ConstList_Text.qml" line="54"/>
         <source>Rotate angle</source>
         <translation>Угол поворота</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="54"/>
+        <location filename="../ConstList_Text.qml" line="55"/>
         <source>Speed limit</source>
         <translation>Лимит скорости</translation>
     </message>
@@ -245,12 +250,12 @@
         <translation type="vanished">Порты хаба</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="51"/>
+        <location filename="../ConstList_Text.qml" line="52"/>
         <source>Inversion</source>
         <translation>Инверсия</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="52"/>
+        <location filename="../ConstList_Text.qml" line="53"/>
         <source>Steering mode</source>
         <translation>Режим серво</translation>
     </message>
@@ -263,7 +268,7 @@
         <translation type="vanished">Скорость мотора</translation>
     </message>
     <message>
-        <location filename="../ConstList_Text.qml" line="57"/>
+        <location filename="../ConstList_Text.qml" line="58"/>
         <source>Profile is empty. Add items in editor mode.</source>
         <translation>Профиль пуст. Добавьте элементы в режиме редактора.</translation>
     </message>
@@ -271,7 +276,7 @@
 <context>
     <name>ControlsPalette</name>
     <message>
-        <location filename="../ControlsPalette.qml" line="48"/>
+        <location filename="../ControlsPalette.qml" line="50"/>
         <source>Palette of controls</source>
         <translation>Список элементов</translation>
     </message>
@@ -279,24 +284,34 @@
 <context>
     <name>ControlsPalette_Delegate</name>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="75"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="79"/>
         <source>Inversion possible</source>
         <translation>Инвертируемый</translation>
     </message>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="92"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="96"/>
         <source>Motor rotation possible</source>
         <translation>Поворот на заданный угол</translation>
     </message>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="109"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="113"/>
         <source>Changable rotation angle</source>
         <translation>Изменяемый угол поворота</translation>
     </message>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="126"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="130"/>
         <source>Motor run possible</source>
         <translation>Вращение мотора</translation>
+    </message>
+    <message>
+        <location filename="../ControlsPalette_Delegate.qml" line="163"/>
+        <source>Shows lateral tilt (X axis)</source>
+        <translation>Боковой поворот (ось Х)</translation>
+    </message>
+    <message>
+        <location filename="../ControlsPalette_Delegate.qml" line="180"/>
+        <source>Shows a longitudinal tilt (Y axis)</source>
+        <translation>Продольный поворот (ось Y)</translation>
     </message>
     <message>
         <source>Steering possible</source>
@@ -311,7 +326,7 @@
         <translation type="vanished">Режим передвижения</translation>
     </message>
     <message>
-        <location filename="../ControlsPalette_Delegate.qml" line="143"/>
+        <location filename="../ControlsPalette_Delegate.qml" line="147"/>
         <source>Motor speed limit possible</source>
         <translation>Ограничение скорости мотора</translation>
     </message>
@@ -319,9 +334,13 @@
 <context>
     <name>ControlsPropertyPage</name>
     <message>
-        <location filename="../ControlsPropertyPage.qml" line="282"/>
         <source>Close</source>
-        <translation>Закрыть</translation>
+        <translation type="vanished">Закрыть</translation>
+    </message>
+    <message>
+        <location filename="../ControlsPropertyPage.qml" line="282"/>
+        <source>Save</source>
+        <translation>Сохранить</translation>
     </message>
 </context>
 <context>
@@ -335,7 +354,7 @@
 <context>
     <name>Parent</name>
     <message>
-        <location filename="../Parent.qml" line="376"/>
+        <location filename="../Parent.qml" line="379"/>
         <source>No name</source>
         <translation>Без имени</translation>
     </message>

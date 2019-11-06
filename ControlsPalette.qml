@@ -78,6 +78,13 @@ Item {
         contentWidth: column.width;
         contentHeight: column.height
 
+        ScrollBar.horizontal: CustomScrollbar {
+            height: Units.dp(24)
+            anchors.bottomMargin: -height * 2;
+            anchors.bottom: parent.bottom;
+            policy: ScrollBar.AlwaysOn
+        }
+
         Row {
             id: column
             height: Units.dp(240)
@@ -85,7 +92,7 @@ Item {
             anchors.bottomMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 0
-            spacing: Units.dp(60)
+            spacing: Units.dp(20)
 
             Loader{
                 anchors.verticalCenter: parent.verticalCenter
@@ -262,3 +269,9 @@ Item {
 
 }
 
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

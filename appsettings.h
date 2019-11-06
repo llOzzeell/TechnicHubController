@@ -33,9 +33,10 @@ private:
     bool hubInfo;
     QQuickWindow *window = nullptr;
     Translator translator;
-    int currentLanguage;
-    bool controlsLabelVisible;
     bool gridSnap;
+    bool controlsLabelVisible;
+    int currentLanguage;
+
 
 signals:
 

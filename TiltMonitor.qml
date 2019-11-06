@@ -31,6 +31,13 @@ Parent{
         }
     }
 
+    onEditorModeChanged: {
+        if(editorMode){
+            axisX = 0;
+            axisY = 0;
+        }
+    }
+
     onSizePlusClicked: {
         if(scaleStep < 3) {
 
@@ -60,7 +67,6 @@ Parent{
             id: element2
             width: parent.width
             height: parent.width
-            opacity: 0.6
             rotation: root.axisX
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -90,28 +96,39 @@ Parent{
 
                 Image {
                     id: image2
-                    width: parent.width/1.4
+                    width: parent.width/1.2
                     height: width
-                    anchors.verticalCenterOffset: -5
+                    anchors.verticalCenterOffset: Units.dp(-8)
                     fillMode: Image.PreserveAspectFit
                     anchors.verticalCenter: parent.verticalCenter
                     source: "qrc:assets/icons/carFront.svg"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
-        }
 
-        Label {
-            id: label
-            text: Math.abs(root.axisX) + "°"
-            anchors.fill: parent
-            visible: true
-            font.weight: Font.Thin
-            fontSizeMode: Text.VerticalFit
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: root.height/3
-            anchors.margins: Units.dp(10)
+            Label {
+                id: label
+                text: getAngleText(root.axisX) + "°"
+                anchors.topMargin: 0
+                anchors.bottom: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottomMargin: 0
+                visible: true
+                font.weight: Font.Thin
+                fontSizeMode: Text.HorizontalFit
+                verticalAlignment: Text.AlignBottom
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: root.height/3
+                anchors.margins: Units.dp(10)
+
+                function getAngleText(x){
+                    x = Math.abs(x);
+                    if(x > 90) return ">90";
+                    else return x;
+                }
+            }
         }
 
 
@@ -132,7 +149,6 @@ Parent{
             id: element3
             width: parent.width
             height: parent.width
-            opacity: 0.6
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             rotation: root.axisY
@@ -161,28 +177,33 @@ Parent{
 
                 Image {
                     id: image1
-                    width: parent.width/1.4
+                    width: parent.width/1.2
                     height: width
-                    anchors.verticalCenterOffset: -5
+                    anchors.verticalCenterOffset: Units.dp(-8)
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:assets/icons/carSide.svg"
                 }
             }
-        }
 
-        Label {
-            id: label1
-            text:  Math.abs(root.axisY) + "°"
-            anchors.fill: parent
-            visible: true
-            font.weight: Font.Thin
-            fontSizeMode: Text.VerticalFit
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: root.height/3
-            anchors.margins: Units.dp(10)
+            Label {
+                id: label1
+                text:  Math.abs(root.axisY) + "°"
+                anchors.topMargin: 0
+                anchors.bottom: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottomMargin: 0
+                visible: true
+                font.weight: Font.Thin
+                fontSizeMode: Text.HorizontalFit
+                verticalAlignment: Text.AlignBottom
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: root.height/3
+                anchors.margins: Units.dp(10)
+            }
         }
 
 
@@ -192,12 +213,8 @@ Parent{
         target:cpp_Connector
         onTiltDegreesChanged:{
             if(address === chAddress && !editorMode){
-                axisX = x * -1;
+                axisX = x;
                 axisY = y;
-            }
-            else{
-                axisX = 0;
-                axisY = 0;
             }
         }
     }

@@ -14,7 +14,6 @@ Item {
     property int rotatePropItem:0
 
     property int scaleStep:0
-    onScaleStepChanged: console.log("SCALESTEP: " + scaleStep)
 
     property int currentProfileIndex:-1
 
